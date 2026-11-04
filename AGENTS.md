@@ -75,8 +75,6 @@ tools/                    media_kit.py (drawing kit) + draw_attention.py (per-pa
 
 ## How the content works (short version)
 
-- A story's `slug` is its source's stable id: the arXiv id (`1706.03762`), a DOI, or a blog post's slug. It names the
-  data file, the media folder and the URL (`/papers/<slug>`). Old URLs go in the entry's `aliases` and redirect.
 - `public/data/site.json` lists papers. `papers/<slug>.json` = metadata + `summary` + `tags` + ordered `blocks`.
 - Block types: `lead`, `story`, `comic`, `facts` (see `src/types.ts`). Adding one means: a type, a component in
   `src/blocks/`, and a registry entry.
@@ -115,8 +113,8 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
   exported images are in `design/exports/`, with a review brief in `design/README.md`; the editable source is a
   claude.ai design canvas (copied into `design/canvas-source/`).
 - Design review by Codex (2026-11-04) accepted. Changes are recorded as decisions 18–25.
-- Second real story added: "Why a bigger deer breaks" (arXiv 2408.04070, a preprint), now the front-page lead.
-  Fact-check record: `docs/fact-checks/2408.04070.md`.
+- Second real story added: "Why a bigger deer breaks" (`size-shapes-life`, arXiv 2408.04070, a preprint), now the front-page lead.
+  Fact-check record: `docs/fact-checks/size-shapes-life.md`.
 - Next: see `docs/roadmap.md`. Fixtures from a second field and a real company blog come before more pages.
 
 ## Keeping this file true

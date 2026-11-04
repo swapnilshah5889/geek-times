@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "slug": "2408.04070",
+  "slug": "size-shapes-life",
   "pageTitle": "Why a bigger deer breaks",
   "summary": "If a deer grew five times bigger in every direction, it would weigh 125 times more but its leg bones would get only 25 times thicker. This paper shows how that one rule of size shapes lungs, guts, legs, eating habits and even bird flight.",
   "hook": {
@@ -16,7 +16,7 @@
       {
         "media": {
           "type": "svg",
-          "src": "2408.04070/lead/deer.svg",
+          "src": "size-shapes-life/lead/deer.svg",
           "width": 600,
           "height": 340,
           "alt": "A small deer next to a deer five times bigger whose thin legs are cracking under its weight. Below: make a deer 5 times bigger and it weighs 125 times more, but its leg bones get only 25 times thicker."
@@ -26,7 +26,7 @@
       {
         "media": {
           "type": "svg",
-          "src": "2408.04070/lead/cube.svg",
+          "src": "size-shapes-life/lead/cube.svg",
           "width": 600,
           "height": 340,
           "alt": "One big cube chopped into 125 little cubes. The outside surface gets 5 times bigger while the total amount of stuff stays the same."
@@ -254,7 +254,7 @@
             "caption": "<b>Fig. 1.</b> A deer five times bigger is 125 times heavier, but its leg bones are only 25 times thicker.",
             "media": {
               "type": "svg",
-              "src": "2408.04070/lead/deer.svg",
+              "src": "size-shapes-life/lead/deer.svg",
               "width": 600,
               "height": 340,
               "alt": "A small deer next to a deer five times bigger whose thin legs are cracking under its weight. Below: make a deer 5 times bigger and it weighs 125 times more, but its leg bones get only 25 times thicker."
@@ -265,7 +265,7 @@
             "caption": "<b>Fig. 2.</b> Chop one cube into 125 little ones: the stuff stays the same, the outside grows 5 times.",
             "media": {
               "type": "svg",
-              "src": "2408.04070/lead/cube.svg",
+              "src": "size-shapes-life/lead/cube.svg",
               "width": 600,
               "height": 340,
               "alt": "One big cube chopped into 125 little cubes. The outside surface gets 5 times bigger while the total amount of stuff stays the same."
@@ -288,7 +288,7 @@
           "caption": "Say a deer grew five times bigger in every direction: five times taller, longer and wider. Is it five times stronger? Not quite. Its weight grows 5 × 5 × 5 = 125 times, but the slice across its leg bones grows only 5 × 5 = 25 times. Each bit of bone now carries five times more load.",
           "media": {
             "type": "svg",
-            "src": "2408.04070/story/01-too-big.svg",
+            "src": "size-shapes-life/story/01-too-big.svg",
             "width": 440,
             "height": 215,
             "alt": "A small deer and a deer five times bigger stand side by side. The big one is not five times stronger, only five times taller."
@@ -301,7 +301,7 @@
           "caption": "Cut one big cube into 125 little cubes. You still have the same amount of stuff, but now there are lots of new faces. The outside grows 5 times bigger while the inside stays the same. So the smaller something is, the more outside it has for its inside.",
           "media": {
             "type": "svg",
-            "src": "2408.04070/story/02-the-chop.svg",
+            "src": "size-shapes-life/story/02-the-chop.svg",
             "width": 440,
             "height": 215,
             "alt": "A big cube is chopped into 125 little cubes, and every little cube has its own outside."
@@ -314,7 +314,7 @@
           "caption": "A tiny rotifer breathes through its skin. Make it twice as wide and its body needs 8 times more air, but its skin grows only 4 times. So bigger animals add outside: lungs and gills with many folds, and long guts with folded walls. Their legs get thicker too, like an elephant’s.",
           "media": {
             "type": "svg",
-            "src": "2408.04070/story/03-the-fixes.svg",
+            "src": "size-shapes-life/story/03-the-fixes.svg",
             "width": 440,
             "height": 215,
             "alt": "Three fixes bodies use: thick legs, folded lungs and a long folded gut."
@@ -331,7 +331,7 @@
           },
           "media": {
             "type": "svg",
-            "src": "2408.04070/story/04-birds.svg",
+            "src": "size-shapes-life/story/04-birds.svg",
             "width": 440,
             "height": 215,
             "alt": "A chart of 14 bird species: birds with more weight per wing area cruise faster, along a straight line."
@@ -358,7 +358,7 @@
               "caption": "Take one big cube. Its faces are the <b>outside</b>. The stuff in the middle is the <b>inside</b>.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/01a-one-cube.svg",
+                "src": "size-shapes-life/comic/01a-one-cube.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "One big cube. Its faces are the outside, and the stuff in the middle is the inside."
@@ -368,7 +368,7 @@
               "caption": "Now <b>chop</b> it five times each way. That makes 125 little cubes.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/01b-chop.svg",
+                "src": "size-shapes-life/comic/01b-chop.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "Red dashed cut lines show a big cube being chopped into five slices each way."
@@ -378,7 +378,7 @@
               "caption": "Same stuff inside. But every little cube has its own faces, so there is <b>5 times more outside</b>.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/01c-many-cubes.svg",
+                "src": "size-shapes-life/comic/01c-many-cubes.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "Many little cubes together: the same amount of stuff, five times more outside."
@@ -397,7 +397,7 @@
               "caption": "Grow a deer <b>5 times bigger</b> in every direction: taller, longer and wider.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/02a-two-deer.svg",
+                "src": "size-shapes-life/comic/02a-two-deer.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "A small deer and a deer five times bigger in every direction."
@@ -407,7 +407,7 @@
               "caption": "Its weight is <b>5 × 5 × 5 = 125</b> times more. The slice across its leg bone is only <b>5 × 5 = 25</b> times bigger.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/02b-125-vs-25.svg",
+                "src": "size-shapes-life/comic/02b-125-vs-25.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "Weight grows like a cube of blocks, 125 of them. The leg bone slice grows like a flat square, only 25 of them."
@@ -417,7 +417,7 @@
               "caption": "Each bit of bone now holds <b>5 times</b> more weight. <b>Crack!</b> Big animals need thicker legs, like elephants.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/02c-crack.svg",
+                "src": "size-shapes-life/comic/02c-crack.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "The big deer’s thin legs buckle and crack under its weight."
@@ -435,7 +435,7 @@
               "caption": "A tiny rotifer breathes <b>straight through its skin</b>. For its size, that is enough air.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/03a-rotifer.svg",
+                "src": "size-shapes-life/comic/03a-rotifer.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "A tiny rotifer breathes air straight through its skin; little oxygen dots drift in."
@@ -445,7 +445,7 @@
               "caption": "Make it <b>twice as wide</b>: its body needs 8 times more air, but its skin is only 4 times bigger.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/03b-too-big.svg",
+                "src": "size-shapes-life/comic/03b-too-big.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "If a rotifer were twice as wide, its body would need 8 times more air but its skin would grow only 4 times."
@@ -455,7 +455,7 @@
               "caption": "So bigger animals grow <b>folded surfaces</b>: branching lungs, comb-like gills and a long, folded gut.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/03c-folds.svg",
+                "src": "size-shapes-life/comic/03c-folds.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "Big animals grow folded surfaces: branching lungs, comb-like gills and a coiled, folded gut."
@@ -473,7 +473,7 @@
               "caption": "A warm body loses heat through its <b>outside</b>. A mouse has lots of outside for its size. An elephant has much less.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/04a-heat.svg",
+                "src": "size-shapes-life/comic/04a-heat.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "A mouse with many heat waves rising off it, next to an elephant with only a few."
@@ -483,7 +483,7 @@
               "caption": "So small animals, like mice and hummingbirds, need <b>rich, high-calorie food</b> again and again, such as nuts and sugary nectar.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/04b-snacks.svg",
+                "src": "size-shapes-life/comic/04b-snacks.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "The mouse nibbles seeds and a hummingbird sips sugary nectar: small animals eat rich food again and again."
@@ -493,7 +493,7 @@
               "caption": "Big animals lose less heat for their size, so an elephant can live on <b>leaves</b>, and a huge blue whale on tiny <b>krill</b>.",
               "media": {
                 "type": "svg",
-                "src": "2408.04070/comic/04c-big-eaters.svg",
+                "src": "size-shapes-life/comic/04c-big-eaters.svg",
                 "width": 320,
                 "height": 220,
                 "alt": "An elephant eats low-calorie leaves while a huge blue whale eats tiny krill: big bodies lose less heat for their size."
@@ -518,7 +518,7 @@
           },
           "media": {
             "type": "svg",
-            "src": "2408.04070/facts/chop.svg",
+            "src": "size-shapes-life/facts/chop.svg",
             "width": 160,
             "height": 100,
             "alt": "A big cube next to many little cubes."
@@ -534,7 +534,7 @@
           },
           "media": {
             "type": "svg",
-            "src": "2408.04070/facts/deer.svg",
+            "src": "size-shapes-life/facts/deer.svg",
             "width": 160,
             "height": 100,
             "alt": "A deer with thick leg bones marked 25 and a heavy body marked 125."
@@ -550,7 +550,7 @@
           },
           "media": {
             "type": "svg",
-            "src": "2408.04070/facts/heat.svg",
+            "src": "size-shapes-life/facts/heat.svg",
             "width": 160,
             "height": 100,
             "alt": "A flame for the heat the body gives off."
@@ -566,7 +566,7 @@
           },
           "media": {
             "type": "svg",
-            "src": "2408.04070/facts/wings.svg",
+            "src": "size-shapes-life/facts/wings.svg",
             "width": 160,
             "height": 100,
             "alt": "A small bird with small wings and a big bird with big wings."
@@ -582,7 +582,7 @@
           },
           "media": {
             "type": "svg",
-            "src": "2408.04070/facts/line.svg",
+            "src": "size-shapes-life/facts/line.svg",
             "width": 160,
             "height": 100,
             "alt": "A line through fourteen dots, sloping up at one half."

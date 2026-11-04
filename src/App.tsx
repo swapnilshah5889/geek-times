@@ -52,12 +52,6 @@ function currentRoute(): Route {
 async function load(route: Route): Promise<View> {
   const archive = await loadArchive();
   if (route.page === 'paper') {
-    const asked = route.slug;
-    const entry = archive.site.papers.find(p => p.slug === asked || p.aliases?.includes(asked));
-    if (entry && entry.slug !== asked) {
-      window.history.replaceState(null, '', paperHref(entry.slug) + window.location.hash);
-      route = { page: 'paper', slug: entry.slug };
-    }
     const story = storyById(archive.library, route.slug);
     if (story && !story.real) return { page: 'sample', archive, slug: route.slug };
     return { page: 'paper', edition: await loadEdition(route.slug), archive };

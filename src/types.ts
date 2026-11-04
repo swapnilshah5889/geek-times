@@ -18,8 +18,6 @@ export interface PaperEntry {
   title: string;
   /** URL of the paper document: a static JSON file now, an API endpoint later. */
   dataUrl: string;
-  /** Older URLs for this paper; they redirect to /papers/<slug>. */
-  aliases?: string[];
 }
 
 export interface PaperDoc {
