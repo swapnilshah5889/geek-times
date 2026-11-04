@@ -117,7 +117,7 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 - Design review by Codex (2026-11-04) accepted. Changes are recorded as decisions 18–25.
 - Second real story added: "Why a bigger deer breaks" (`size-shapes-life`, arXiv 2408.04070, a preprint), now the front-page lead.
   Fact-check record: `docs/fact-checks/size-shapes-life.md`.
-- Next: see `docs/roadmap.md`. Fixtures from a second field and a real company blog come before more pages.
+- Next: see `docs/production-plan.md` (review findings, achieved, remaining phases) and `docs/roadmap.md`. Fixtures from a second field and a real company blog come before more pages.
 
 ## Keeping this file true
 
