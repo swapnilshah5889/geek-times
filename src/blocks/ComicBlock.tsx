@@ -5,9 +5,9 @@ import { MotionButton, MotionGroup } from '../components/motion';
 import { Rich } from '../components/Rich';
 import type { ComicBlock as ComicData, Strip } from '../types';
 
-function ComicStrip({ strip, n }: { strip: Strip; n: number }) {
+function ComicStrip({ strip, n, anchor }: { strip: Strip; n: number; anchor: string }) {
   return (
-    <article className="strip">
+    <article className="strip" id={strip.id ?? anchor}>
       <header>
         <span className="chapnum">{pad(n)}</span>
         <div><h3>{strip.title}</h3>{strip.kicker && <span className="kicker">{strip.kicker}</span>}</div>
@@ -34,7 +34,7 @@ export function ComicBlock({ block }: { block: ComicData }) {
         <div className="story-intro"><h2>{block.title}</h2><MotionButton noun="the comics" /></div>
         {block.deck && <p className="comic-deck"><Rich text={block.deck} /></p>}
         {block.howTo && <p className="howto"><span className="label">How to read it</span> <Rich text={block.howTo} /></p>}
-        {block.strips.map((s, i) => <ComicStrip strip={s} n={i + 1} key={s.title} />)}
+        {block.strips.map((s, i) => <ComicStrip strip={s} n={i + 1} anchor={`${block.id}-${i + 1}`} key={s.title} />)}
       </section>
     </MotionGroup>
   );

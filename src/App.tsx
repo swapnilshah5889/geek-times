@@ -1,22 +1,31 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { loadArchive, loadEdition, type Archive, type Edition } from './data/load';
+import { FeedPage } from './pages/FeedPage';
+import { HomePage } from './pages/HomePage';
 import { PaperPage } from './pages/PaperPage';
 import { SearchPage } from './pages/SearchPage';
 
-type Route = { page: 'search' } | { page: 'paper'; slug: string | null };
-type View = { page: 'search'; archive: Archive } | { page: 'paper'; edition: Edition };
+type ArchivePage = 'home' | 'feed' | 'search';
+type Route = { page: ArchivePage } | { page: 'paper'; slug: string };
+type View = { page: ArchivePage; archive: Archive } | { page: 'paper'; edition: Edition };
 
-// ?search (with optional q= and tag=) opens the archive search; ?paper=<slug> (or nothing) opens an issue.
+// /            front page (bento of covers and bite-size moments)
+// ?paper=slug  one issue
+// ?feed        snack mode: swipe through moments
+// ?search      the archive, with optional q= and tag=
 function currentRoute(): Route {
   const params = new URLSearchParams(window.location.search);
+  const slug = params.get('paper');
+  if (slug) return { page: 'paper', slug };
+  if (params.has('feed')) return { page: 'feed' };
   if (params.has('search') || params.has('q') || params.has('tag')) return { page: 'search' };
-  return { page: 'paper', slug: params.get('paper') };
+  return { page: 'home' };
 }
 
 async function load(route: Route): Promise<View> {
-  return route.page === 'search'
-    ? { page: 'search', archive: await loadArchive() }
-    : { page: 'paper', edition: await loadEdition(route.slug) };
+  return route.page === 'paper'
+    ? { page: 'paper', edition: await loadEdition(route.slug) }
+    : { page: route.page, archive: await loadArchive() };
 }
 
 export function App() {
@@ -33,7 +42,9 @@ export function App() {
   let content: ReactNode;
   if (error) content = <main><p className="load-error">Sorry, this page could not be loaded. {error}</p></main>;
   else if (!view) content = <main aria-busy="true"><p className="loading">Setting the type…</p></main>;
+  else if (view.page === 'paper') content = <PaperPage edition={view.edition} />;
+  else if (view.page === 'feed') content = <FeedPage archive={view.archive} />;
   else if (view.page === 'search') content = <SearchPage archive={view.archive} />;
-  else content = <PaperPage edition={view.edition} />;
+  else content = <HomePage archive={view.archive} />;
   return content;
 }

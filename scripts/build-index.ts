@@ -4,7 +4,7 @@
 // for reviewing AI-generated issues before they are imported.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { PaperDoc, PaperTag, SearchIndex, SiteConfig, TagBasis, TagVocabulary } from '../src/types.ts';
+import type { Cover, Moment, PaperDoc, PaperTag, SearchIndex, SiteConfig, TagBasis, TagVocabulary } from '../src/types.ts';
 
 const PUBLIC = join(import.meta.dirname, '..', 'public');
 const read = <T>(path: string): T => JSON.parse(readFileSync(join(PUBLIC, path), 'utf8')) as T;
@@ -62,15 +62,59 @@ function checkPaperTags(doc: PaperDoc, known: Set<string>): PaperTag[] {
   return (doc.tags ?? []).filter(t => t.status === 'approved' && known.has(t.tag));
 }
 
+/** Captions may hold inline markup; cards are links themselves, so they get plain text. */
+const plain = (rich: string) => rich.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+
+/** The paper's home page cover: its own `cover`, or else built from the lead block. */
+function coverOf(doc: PaperDoc): Cover | undefined {
+  if (doc.cover) return doc.cover;
+  const lead = doc.blocks.find(b => b.type === 'lead');
+  if (!lead) return undefined;
+  return { kicker: lead.kicker, headline: lead.headline, dek: lead.deck, media: lead.slideshow.slides[0].media };
+}
+
+/** Bite-size cards for the home page and feed: every comic strip, story chapter and fact. */
+function momentsOf(doc: PaperDoc): Moment[] {
+  const where = `${doc.slug}.json`;
+  const link = (anchor?: string) => `?paper=${doc.slug}${anchor ? `#${anchor}` : ''}`;
+  const out: Moment[] = [];
+  for (const block of doc.blocks) {
+    if (block.type === 'comic') {
+      block.strips.forEach((strip, i) => {
+        const pick = strip.coverPanel ?? strip.panels.length - 1;
+        const panel = strip.panels[pick];
+        if (!panel) { errors.push(`${where}: strip "${strip.title}" coverPanel ${pick} does not exist`); return; }
+        const id = strip.id ?? `${block.id}-${i + 1}`;
+        out.push({ id, paper: doc.slug, kind: 'strip', kicker: `How it works · ${String(i + 1).padStart(2, '0')}`,
+          title: strip.title, text: plain(panel.caption), media: panel.media, provenance: strip.provenance, href: link(id) });
+      });
+    } else if (block.type === 'story') {
+      block.chapters.forEach((ch, i) => {
+        const id = `${block.id}-${i + 1}`;
+        out.push({ id, paper: doc.slug, kind: 'chapter', kicker: ch.part, title: ch.title, text: plain(ch.caption),
+          media: ch.media, provenance: ch.provenance, href: link(id) });
+      });
+    } else if (block.type === 'facts') {
+      block.facts.forEach((f, i) => {
+        out.push({ id: `${block.id}-${i + 1}`, paper: doc.slug, kind: 'fact', kicker: 'From the paper', title: f.figure,
+          figure: f.figure, text: plain(f.text), media: f.media, provenance: 'evidence', href: link(block.id) });
+      });
+    }
+  }
+  return out;
+}
+
 const site = read<SiteConfig>('data/site.json');
 const vocab = read<TagVocabulary>('data/tags.json');
 const known = new Set(checkVocabulary(vocab).keys());
 
-const index: SearchIndex = { schemaVersion: 1, papers: [] };
+const index: SearchIndex = { schemaVersion: 1, featured: site.defaultPaper, papers: [] };
 for (const entry of site.papers) {
   const doc = read<PaperDoc>(entry.dataUrl);
   if (doc.slug !== entry.slug) errors.push(`${entry.dataUrl}: slug "${doc.slug}" does not match site.json "${entry.slug}"`);
   const tags = checkPaperTags(doc, known);
+  const cover = coverOf(doc);
+  if (!cover) { errors.push(`${entry.dataUrl}: needs a "cover" or a lead block`); continue; }
   index.papers.push({
     slug: doc.slug,
     title: doc.paper.title,
@@ -79,6 +123,8 @@ for (const entry of site.papers) {
     authors: doc.paper.authors,
     year: doc.paper.year,
     issue: doc.issue.number,
+    cover,
+    moments: momentsOf(doc),
     tags: tags.map(t => ({ id: t.tag, relevance: t.relevance })).sort((a, b) => b.relevance - a.relevance),
   });
 }
@@ -90,4 +136,5 @@ if (errors.length) {
   process.exit(1);
 }
 writeFileSync(join(PUBLIC, 'data', 'search-index.json'), JSON.stringify(index, null, 2) + '\n');
-console.log(`search index: ${index.papers.length} paper(s), ${vocab.tags.length} tags in vocabulary`);
+const moments = index.papers.reduce((n, p) => n + p.moments.length, 0);
+console.log(`search index: ${index.papers.length} paper(s), ${moments} moments, ${vocab.tags.length} tags in vocabulary`);

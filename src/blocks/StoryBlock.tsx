@@ -13,7 +13,7 @@ export function StoryBlock({ block }: { block: StoryData }) {
         <div className="story-intro"><h2>{block.title}</h2><MotionButton noun="picture story" /></div>
         <div className="chapters">
           {block.chapters.map((c, i) => (
-            <article className="chapter" key={c.title}>
+            <article className="chapter" key={c.title} id={`${block.id}-${i + 1}`}>
               <header><span className="chapnum">{pad(i + 1)}</span><span className="label">{c.part}</span><Stamp kind={c.provenance} /></header>
               <h3>{c.title}</h3>
               <figure>
