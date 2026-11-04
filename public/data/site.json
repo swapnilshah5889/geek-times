@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "name": "The Geeky Times",
+  "motto": "Research, in pictures.",
+  "tagline": "An independent illustrated science edition",
+  "navLabel": "✦   The illustrated paper",
+  "mediaBaseUrl": "media/",
+  "defaultPaper": "attention-is-all-you-need",
+  "papers": [
+    {
+      "slug": "attention-is-all-you-need",
+      "title": "Attention Is All You Need",
+      "dataUrl": "data/papers/attention-is-all-you-need.json"
+    }
+  ]
+}

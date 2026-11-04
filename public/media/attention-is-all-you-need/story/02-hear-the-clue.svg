@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 215" role="img"><title>Routes from with, spots and flew lead straight to bat. Flew has the strongest route in this illustration.</title><style>text{fill:#28261e;font:17px Georgia,serif}.micro{font:bold 12px 'Courier New',monospace;letter-spacing:1px}.strong{font:bold 20px Georgia,serif}
+.post{animation:handoff 5.5s linear infinite}.direct{stroke-dasharray:6 8;animation:trace 1.5s linear infinite}
+.typed{animation:printword 6s infinite;opacity:0}.typed.two{animation-name:secondword}.typed.three{animation-name:thirdword}
+@keyframes handoff{0%,10%{transform:translate(0,0)}23%,32%{transform:translate(96px,0)}45%,55%{transform:translate(192px,0)}70%,100%{transform:translate(288px,0)}}
+@keyframes printword{0%,8%{opacity:0}15%,100%{opacity:1}}@keyframes secondword{0%,32%{opacity:0}40%,100%{opacity:1}}@keyframes thirdword{0%,58%{opacity:0}66%,100%{opacity:1}}
+@keyframes trace{to{stroke-dashoffset:-30}}
+@media(prefers-reduced-motion:reduce){.typed{opacity:1}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style><defs><pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"/></pattern></defs><rect width="440" height="215" fill="#b8cec0"/><rect width="440" height="215" fill="url(#dots)" opacity=".27"/><path d="M171 71 Q123.0 46 75 72" fill="none" stroke="#faf3d7" stroke-width="5.8"/><path d="M171 71 Q123.0 46 75 72" class="direct" fill="none" stroke="#833c2f" stroke-width="1.8"/><path d="M267 71 Q171.0 12 75 72" fill="none" stroke="#faf3d7" stroke-width="6.5"/><path d="M267 71 Q171.0 12 75 72" class="direct" fill="none" stroke="#833c2f" stroke-width="2.5"/><path d="M363 71 Q219.0 -9 75 72" fill="none" stroke="#faf3d7" stroke-width="10"/><path d="M363 71 Q219.0 -9 75 72" class="direct" fill="none" stroke="#833c2f" stroke-width="6"/><g transform="translate(75,0)" stroke="#322e24" stroke-width="2" stroke-linecap="round">
+    <path d="M-16 125v11l-8 2m39 -13v11l8 2" fill="none"/>
+    <rect x="-38" y="69" width="76" height="57" rx="10" fill="#efae78"/>
+    <path d="M-38 97l-10 -5m86 4l9 -6" fill="none"/>
+    <g fill="#322e24" stroke="none"><circle cx="-7" cy="80" r="2"/><circle cx="7" cy="80" r="2"/></g><path d="M-3 85q3 3 6 0" fill="none"/></g><text x="75" y="113" class="strong" text-anchor="middle">bat</text><g transform="translate(171,0)" stroke="#322e24" stroke-width="2" stroke-linecap="round">
+    <path d="M-16 125v11l-8 2m39 -13v11l8 2" fill="none"/>
+    <rect x="-38" y="69" width="76" height="57" rx="10" fill="#f7d79b"/>
+    <path d="M-38 97l-10 -5m86 4l9 -6" fill="none"/>
+    <g fill="#322e24" stroke="none"><circle cx="-7" cy="80" r="2"/><circle cx="7" cy="80" r="2"/></g><path d="M-3 85q3 3 6 0" fill="none"/></g><text x="171" y="113" class="strong" text-anchor="middle">with</text><g transform="translate(267,0)" stroke="#322e24" stroke-width="2" stroke-linecap="round">
+    <path d="M-16 125v11l-8 2m39 -13v11l8 2" fill="none"/>
+    <rect x="-38" y="69" width="76" height="57" rx="10" fill="#f7d79b"/>
+    <path d="M-38 97l-10 -5m86 4l9 -6" fill="none"/>
+    <g fill="#322e24" stroke="none"><circle cx="-7" cy="80" r="2"/><circle cx="7" cy="80" r="2"/></g><path d="M-3 85q3 3 6 0" fill="none"/></g><text x="267" y="113" class="strong" text-anchor="middle">spots</text><g transform="translate(363,0)" stroke="#322e24" stroke-width="2" stroke-linecap="round">
+    <path d="M-16 125v11l-8 2m39 -13v11l8 2" fill="none"/>
+    <rect x="-38" y="69" width="76" height="57" rx="10" fill="#a2c2a7"/>
+    <path d="M-38 97l-10 -5m86 4l9 -6" fill="none"/>
+    <g fill="#322e24" stroke="none"><circle cx="-7" cy="80" r="2"/><circle cx="7" cy="80" r="2"/></g><path d="M-3 85q3 3 6 0" fill="none"/></g><text x="363" y="113" class="strong" text-anchor="middle">flew</text><text x="220" y="170" class="" text-anchor="middle">“Flew” gives “bat” a stronger clue.</text><text x="220" y="196" class="micro" text-anchor="middle">THICKER LINE = MORE WEIGHT</text></svg>

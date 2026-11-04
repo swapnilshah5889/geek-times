@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 215" role="img"><title>An illustrated press reads The bat flew and prints Die Fledermaus flog, one word at a time.</title><style>text{fill:#28261e;font:17px Georgia,serif}.micro{font:bold 12px 'Courier New',monospace;letter-spacing:1px}.strong{font:bold 20px Georgia,serif}
+.post{animation:handoff 5.5s linear infinite}.direct{stroke-dasharray:6 8;animation:trace 1.5s linear infinite}
+.typed{animation:printword 6s infinite;opacity:0}.typed.two{animation-name:secondword}.typed.three{animation-name:thirdword}
+@keyframes handoff{0%,10%{transform:translate(0,0)}23%,32%{transform:translate(96px,0)}45%,55%{transform:translate(192px,0)}70%,100%{transform:translate(288px,0)}}
+@keyframes printword{0%,8%{opacity:0}15%,100%{opacity:1}}@keyframes secondword{0%,32%{opacity:0}40%,100%{opacity:1}}@keyframes thirdword{0%,58%{opacity:0}66%,100%{opacity:1}}
+@keyframes trace{to{stroke-dashoffset:-30}}
+@media(prefers-reduced-motion:reduce){.typed{opacity:1}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style><defs><pattern id="dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"/></pattern></defs><rect width="440" height="215" fill="#c2d4cf"/><rect width="440" height="215" fill="url(#dots)" opacity=".27"/><text x="220" y="23" class="micro" text-anchor="middle">READ THE WHOLE ENGLISH SENTENCE</text><text x="220" y="49" class="strong" text-anchor="middle">The bat flew.</text><path d="M60 89h320l-19 60H79Z" fill="#719f9d" stroke="#302d25" stroke-width="3"/>
+<rect x="98" y="61" width="244" height="32" rx="15" fill="#dc9665" stroke="#302d25" stroke-width="3"/>
+<path d="M114 75h212" stroke="#4c463b" stroke-width="4"/>
+<circle cx="77" cy="109" r="9" fill="#edca75" stroke="#302d25" stroke-width="2"/>
+<path d="M112 117h216l18 64H94Z" fill="#fcf0cb" stroke="#302d25" stroke-width="2"/>
+<path d="M103 168h233" stroke="#b9a98b" stroke-dasharray="2 4"/><text x="132" y="153" class="typed" text-anchor="middle">Die</text><text x="218" y="153" class="typed two" text-anchor="middle">Fledermaus</text><text x="296" y="153" class="typed three" text-anchor="middle">flog.</text><text x="220" y="201" class="micro" text-anchor="middle">WRITE THE GERMAN WORDS IN ORDER</text></svg>
