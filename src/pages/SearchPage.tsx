@@ -39,7 +39,7 @@ export function SearchPage({ archive }: { archive: Archive }) {
         <h2>Find a paper</h2>
         <form className="search-box" role="search" onSubmit={e => e.preventDefault()}>
           <input type="search" value={q} onChange={e => setQuery(e.target.value)}
-            placeholder="Try “translation”, “attention”, “chatbots” or “Google”" aria-label="Search papers" autoFocus />
+            placeholder="Search by topic, title or author" aria-label="Search papers" autoFocus />
         </form>
         {tags.length > 0 && (
           <p className="active-tags">

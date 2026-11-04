@@ -15,7 +15,7 @@ export function MapPage({ archive }: { archive: Archive }) {
   const [fields, setFields] = useState<string[]>(library.fields.map(f => f.id));
   const [show, setShow] = useState({ paper: true, blog: true, open: true });
   const [from, setFrom] = useState(1900);
-  const [pickedId, setPicked] = useState<string>(first && library.nodes.some(n => n.id === first) ? first : 'transformer');
+  const [pickedId, setPicked] = useState<string>(first && library.nodes.some(n => n.id === first) ? first : (library.nodes.find(n => n.story === library.front.lead) ?? library.nodes[0]).id);
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -53,7 +53,7 @@ export function MapPage({ archive }: { archive: Archive }) {
 
       <div className="mp-body">
         <aside aria-label="Filters" className="mp-filters">
-          <label>Find a paper or idea<input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Try “attention”" /></label>
+          <label>Find a paper or idea<input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Title or author" /></label>
           <div><span className="label">Fields</span>{library.fields.map(f => pressed(fields.includes(f.id), f.label, () => toggleField(f.id)))}</div>
           <div><span className="label">Show</span>
             {pressed(show.paper, 'Papers', () => toggle('paper'))}

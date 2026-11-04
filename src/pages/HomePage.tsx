@@ -8,7 +8,7 @@ import { headlineOf, latestIssue, realPaper, roleLabel, storiesOf, storyById, tr
 import { MediaBaseContext } from '../lib/mediaBase';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
-import type { LibraryStory, Moment } from '../types';
+import type { LibraryStory, Moment, SearchEntry } from '../types';
 
 const today = () => new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
@@ -40,8 +40,8 @@ function Lead({ archive }: { archive: Archive }) {
         <h2><a href={paperHref(lead.id)}>{paper.cover.headline.text} <em>{paper.cover.headline.accent}</em></a></h2>
         <p className="f-lead-dek">{paper.summary}</p>
         <div className="f-lead-foot">
-          <p><b>{paper.title}</b> · <i>{paper.authors}, {paper.year}</i> · <span className="f-trust" title="Checked by other scientists before it was published">{trustLabel(lead.trust)}</span>{' '}
-            <small>(checked by other scientists)</small></p>
+          <p><b>{paper.title}</b> · <i>{paper.authors}, {paper.year}</i> · <span className="f-trust" title={lead.trust === 'peer_reviewed' ? 'Checked by other scientists before it was published' : undefined}>{trustLabel(lead.trust)}</span>{' '}
+            {lead.trust === 'peer_reviewed' && <small>(checked by other scientists)</small>}</p>
           <a className="f-more" href={paperHref(lead.id)}>Read the illustrated story →</a>
         </div>
       </article>
@@ -85,11 +85,12 @@ function MoreFromIssue({ archive }: { archive: Archive }) {
 }
 
 function Snacks({ archive }: { archive: Archive }) {
-  const paper = archive.index.papers.find(p => p.slug === archive.library.front.lead);
-  const moments = paper?.moments ?? [];
-  const strips = moments.filter(m => m.kind === 'strip' && m.media).slice(0, 2);
-  const fact = moments.find(m => m.kind === 'fact' && m.claim === 'model_design');
-  const sample = storiesOf(archive.library, ['crispr'])[0];
+  // Snacks mix every paper: comic panels and numbers in turn, then one story card.
+  const all = archive.index.papers.flatMap(p => p.moments);
+  const perPaper = archive.index.papers.map(p => p.moments.filter(m => m.kind === 'strip' && m.media));
+  const strips = [...perPaper.map(q => q[0]), ...perPaper.map(q => q[1])].filter(Boolean).slice(0, 2);
+  const fact = all.find(m => m.kind === 'fact' && m.claim === 'model_design') ?? all.find(m => m.kind === 'fact');
+  const sample = archive.library.stories.find(s => s.art);
   const count = archive.index.papers.reduce((n, p) => n + p.moments.length, 0);
   return (
     <section id="snacks" aria-labelledby="s-snacks" className="f-snacks">
@@ -182,23 +183,30 @@ function RealWorld({ archive }: { archive: Archive }) {
 }
 
 function Numbers({ archive }: { archive: Archive }) {
-  const paper = archive.index.papers.find(p => p.slug === archive.library.front.lead);
-  const facts = (paper?.moments ?? []).filter(m => m.kind === 'fact' && m.claim && m.figure && m.figure.length < 9).slice(0, 4);
-  if (!facts.length) return null;
-  const trust = trustLabel(storyById(archive.library, archive.library.front.lead)?.trust).split(' ')[0].toLowerCase();
+  const { library, index } = archive;
+  // One number at a time from each paper in turn, so the row can mix papers as the library grows.
+  const queues = index.papers.map(p => ({ paper: p, facts: p.moments.filter(m => m.kind === 'fact' && m.claim && m.figure && m.figure.length < 9) }));
+  const picks: { paper: SearchEntry; m: Moment }[] = [];
+  for (let i = 0; picks.length < 4 && queues.some(q => q.facts[i]); i++) {
+    for (const q of queues) if (q.facts[i] && picks.length < 4) picks.push({ paper: q.paper, m: q.facts[i] });
+  }
+  if (!picks.length) return null;
   return (
     <section aria-labelledby="s-numbers" className="f-section">
-      <SectionHead id="s-numbers" title="Numbers from the papers" hint="Model design = how it was built. Measured result = what the tests found." />
+      <SectionHead id="s-numbers" title="Numbers from the papers" />
       <div className="f-grid f-grid-4">
-        {facts.map(m => (
-          <a key={m.id} className="f-number" href={appHref(m.href)}>
-            <span className="label">
-              {m.claim === 'measured_result' ? `Measured result · ${trust}` : `From the paper · ${CLAIM_LABEL[m.claim!]}`} · {sectionOf(m)}
-            </span>
-            <b>{m.figure}</b>
-            <span className="f-number-text">{m.text}</span>
-          </a>
-        ))}
+        {picks.map(({ paper, m }) => {
+          const trust = trustLabel(storyById(library, paper.slug)?.trust).split(' ')[0].toLowerCase();
+          return (
+            <a key={paper.slug + m.id} className="f-number" href={appHref(m.href)}>
+              <span className="label">
+                {paper.title} · {m.claim === 'measured_result' ? `measured result${trust ? ` · ${trust}` : ''}` : CLAIM_LABEL[m.claim!]} · {sectionOf(m)}
+              </span>
+              <b>{m.figure}</b>
+              <span className="f-number-text">{m.text}</span>
+            </a>
+          );
+        })}
       </div>
     </section>
   );
