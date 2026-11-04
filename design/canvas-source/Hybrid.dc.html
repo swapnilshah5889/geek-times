@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Front page D: broadsheet top, bento below</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f6f0df}
+a{color:#27251e;text-underline-offset:3px}a:hover{color:#a13324}
+</style>
+</helmet>
+<div style="min-height: 100vh; background-color: #f6f0df; background-image: radial-gradient(rgba(143,121,96,.22) .7px, transparent .8px); background-size: 6px 6px; color: #27251e; font-family: Georgia, 'Times New Roman', serif;">
+<div style="max-width: 1240px; margin: 0 auto; padding: 24px 48px 48px; box-sizing: border-box;">
+
+<header>
+<div style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid #27251e; padding-bottom: 8px; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">
+<span>Wednesday, November 4, 2026</span><span>An independent illustrated science edition</span><span>Vol. I · No. 001</span>
+</div>
+<h1 style="margin: 0; padding: 14px 0 0; text-align: center; font-size: 104px; line-height: 1.04; font-weight: 900; letter-spacing: -.075em;">The Geeky Times</h1>
+<p style="margin: 0; padding: 0 0 14px; text-align: center; font-style: italic; font-size: 18px;">Research, in pictures. Big science anyone can read.</p>
+<nav aria-label="Sections" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; border-top: 4px double #27251e; border-bottom: 1px solid #27251e; padding: 9px 0; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">
+<div style="display: flex; gap: 22px; flex-wrap: wrap;"><a href="#lead" style="color: #a13324;">Front page</a><a href="#explore">AI &amp; computers</a><a href="#explore">Biology</a><a href="#explore">Space</a><a href="#explore">Physics</a><a href="#explore">Medicine</a></div>
+<div style="display: flex; gap: 22px;"><a href="#explore">Swipe the snacks ▶</a><a href="#explore">Search ⌕</a></div>
+</nav>
+</header>
+
+<section id="lead" aria-label="Top stories" style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 36px; padding: 28px 0 30px;">
+<article style="display: flex; flex-direction: column; gap: 14px;">
+<div style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Today’s lead · AI &amp; language · Issue 001</div>
+<a href="#lead" aria-label="Open the issue: One word, two worlds" style="display: block; border: 1px solid #27251e;"><dc-import name="LeadArt" hint-size="100%,452px"></dc-import></a>
+<h2 style="margin: 4px 0 0; font-size: 76px; line-height: .94; letter-spacing: -.06em;"><a href="#lead" style="text-decoration: none;">One word, <em style="color: #a13324;">two worlds.</em></a></h2>
+<p style="margin: 0; font-size: 23px; line-height: 1.38; max-width: 36em;">Translation machines used to read words one after another. This paper showed a new design, the Transformer, that lets every word look at every other word at once. It became the base of today’s AI chatbots.</p>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-top: 1px solid #948b77; padding-top: 10px;">
+<p style="margin: 0; font-size: 15px;"><b>Attention Is All You Need</b> · <i>Vaswani and colleagues, 2017</i></p>
+<a href="#lead" style="font: 700 12px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Read the illustrated issue →</a>
+</div>
+</article>
+
+<aside style="display: flex; flex-direction: column; gap: 20px; border-left: 1px solid #948b77; padding-left: 32px;">
+<article style="display: flex; flex-direction: column; gap: 8px;">
+<dc-import name="SampleArt" kind="dna" hint-size="100%,224px"></dc-import>
+<div style="display: flex; gap: 8px; align-items: center; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>Biology</span><span style="border: 1px solid #a13324; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 34px; line-height: 1; letter-spacing: -.045em;"><a href="#lead" style="text-decoration: none;">Scissors for DNA</a></h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.45;">Scientists turned a germ-fighting trick from bacteria into a tool that cuts DNA exactly where they choose.</p>
+<p style="margin: 0; font-size: 14px; font-style: italic; color: #5e5748;">CRISPR–Cas9 · Jinek and colleagues, 2012</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #27251e; padding-top: 16px;">
+<div style="display: flex; gap: 8px; align-items: center; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>AI &amp; biology</span><span style="border: 1px solid #a13324; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 30px; line-height: 1.02; letter-spacing: -.045em;"><a href="#lead" style="text-decoration: none;">The protein-folding puzzle</a></h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.45;">Proteins fold into tiny 3D shapes that decide what they do. An AI learned to predict those shapes from the recipe of building blocks.</p>
+<p style="margin: 0; font-size: 14px; font-style: italic; color: #5e5748;">AlphaFold · Jumper and colleagues, 2021</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #27251e; padding-top: 16px;">
+<div style="display: flex; gap: 8px; align-items: center; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>Medicine</span><span style="border: 1px solid #a13324; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 26px; line-height: 1.05; letter-spacing: -.04em;"><a href="#lead" style="text-decoration: none;">The mold that fought germs</a></h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.45;">A mold that grew by accident on a lab dish stopped the bacteria around it, and led to the first antibiotics.</p>
+<p style="margin: 0; font-size: 14px; font-style: italic; color: #5e5748;">Penicillin · Fleming, 1929</p>
+</article>
+</aside>
+</section>
+
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; border-top: 4px double #27251e; padding-top: 12px; margin-bottom: 20px;">
+<h2 id="explore-title" style="margin: 0; font-size: 40px; line-height: 1; letter-spacing: -.045em;">Keep exploring</h2>
+<span style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Below the fold · Bite-size stories, snacks and numbers</span>
+</div>
+
+<section id="explore" aria-labelledby="explore-title" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-flow: dense; gap: 18px;">
+
+<a href="#explore" style="grid-row: span 2; display: flex; flex-direction: column; gap: 14px; padding: 18px; background: #27251e; color: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.08), 0 14px 30px -14px rgba(39,37,30,.45); text-decoration: none;">
+<div style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #f6e3a1;">Snack mode</div>
+<div style="border: 7px solid #fbf3dc; border-radius: 24px; overflow: hidden; background: #f6f0df; display: flex; flex-direction: column;">
+<dc-import name="PanelMeter" hint-size="100%,170px"></dc-import>
+<p style="margin: 0; padding: 10px 12px 12px; color: #27251e; font-size: 15px; line-height: 1.4;">“Bat” asks around: “flew” helps it most.</p>
+</div>
+<h3 style="margin: 0; font-size: 34px; line-height: 1; letter-spacing: -.045em;">Swipe the snacks</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.45;">Bite-size pictures from today’s research, one swipe at a time.</p>
+<span style="margin-top: auto; font: 700 12px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #f6e3a1;">Start swiping ▶</span>
+</a>
+
+<a href="#explore" style="grid-column: span 2; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); background: #2b3542; color: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28); text-decoration: none;">
+<dc-import name="SampleArt" kind="waves" hint-size="100%,220px"></dc-import>
+<div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; justify-content: center;">
+<div style="display: flex; gap: 8px; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #f6e3a1;"><span>Space</span><span style="border: 1px solid #f6e3a1; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 30px; line-height: 1; letter-spacing: -.045em;">Space shook, and we heard it</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.45;">Two black holes crashed far away. Detectors on Earth caught the ripple.</p>
+</div>
+</a>
+
+<div style="display: flex; flex-direction: column; justify-content: space-between; gap: 10px; padding: 18px; background: #f3e3b5; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+<div style="display: flex; justify-content: space-between; gap: 8px; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>From the paper</span><span style="background: #a13324; color: #fbf3dc; padding: 0 6px;">Real result</span></div>
+<b style="font-size: 76px; line-height: .9; letter-spacing: -.06em; color: #a13324;">512</b>
+<p style="margin: 0; font-size: 16px; line-height: 1.42;">numbers make up one word’s code in the Transformer’s base model.</p>
+<a href="#explore" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">Paper §3.1 ↗</a>
+</div>
+
+<a href="#explore" style="display: flex; flex-direction: column; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28); text-decoration: none;">
+<dc-import name="SampleArt" kind="stairs" hint-size="100%,180px"></dc-import>
+<div style="padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid rgba(39,37,30,.14);">
+<div style="display: flex; gap: 8px; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>AI</span><span style="border: 1px solid #a13324; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 25px; line-height: 1.02; letter-spacing: -.04em;">Shortcuts that go deeper</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.42;">Shortcut paths let picture-recognizing networks grow much deeper.</p>
+</div>
+</a>
+
+<a href="#explore" style="display: flex; flex-direction: column; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28); text-decoration: none;">
+<dc-import name="PanelWings" hint-size="100%,190px"></dc-import>
+<div style="padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid rgba(39,37,30,.14);">
+<div style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">How it works · 03</div>
+<h3 style="margin: 0; font-size: 25px; line-height: 1.02; letter-spacing: -.04em;">Blend it in</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.42;">“Bat” mixes in meaning from “flew” and knows it has wings.</p>
+</div>
+</a>
+
+<a href="#explore" style="display: flex; flex-direction: column; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28); text-decoration: none;">
+<dc-import name="SampleArt" kind="particle" hint-size="100%,180px"></dc-import>
+<div style="padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid rgba(39,37,30,.14);">
+<div style="display: flex; gap: 8px; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>Physics</span><span style="border: 1px solid #a13324; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 25px; line-height: 1.02; letter-spacing: -.04em;">The particle that was missing</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.42;">A long-predicted particle tied to how basic particles get their mass.</p>
+</div>
+</a>
+
+<div style="grid-column: span 2; display: flex; flex-direction: column; gap: 12px; padding: 18px 20px; background: #e4ecdd; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+<div style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Explore by topic</div>
+<h3 style="margin: 0; font-size: 30px; line-height: 1; letter-spacing: -.045em;">What are you curious about?</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<a href="#explore" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Smart computers</a>
+<a href="#explore" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Language and words</a>
+<a href="#explore" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Space</a>
+<a href="#explore" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Your body</a>
+<a href="#explore" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Tiny particles</a>
+<a href="#explore" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Medicine</a>
+<a href="#explore" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Chatbots</a>
+<a href="#explore" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Translation</a>
+</div>
+<a href="#explore" style="margin-top: auto; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Search everything →</a>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 18px; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+<div style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324; margin-bottom: 6px;">Inside today’s issue</div>
+<a href="#lead" style="display: flex; gap: 10px; padding: 6px 0; border-top: 1px solid #27251e; font-size: 17px; line-height: 1.3; text-decoration: none;"><b style="color: #a13324; font-style: italic;">01</b>Pass the note</a>
+<a href="#lead" style="display: flex; gap: 10px; padding: 6px 0; border-top: 1px dotted #948b77; font-size: 17px; line-height: 1.3; text-decoration: none;"><b style="color: #a13324; font-style: italic;">02</b>Hear the clue directly</a>
+<a href="#lead" style="display: flex; gap: 10px; padding: 6px 0; border-top: 1px dotted #948b77; font-size: 17px; line-height: 1.3; text-decoration: none;"><b style="color: #a13324; font-style: italic;">03</b>A comic in six strips</a>
+<a href="#lead" style="display: flex; gap: 10px; padding: 6px 0; border-top: 1px dotted #948b77; font-size: 17px; line-height: 1.3; text-decoration: none;"><b style="color: #a13324; font-style: italic;">04</b>The translation test</a>
+</div>
+
+<div style="display: flex; flex-direction: column; justify-content: space-between; gap: 10px; padding: 18px; background: #f3e3b5; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+<div style="display: flex; justify-content: space-between; gap: 8px; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>From the paper</span><span style="background: #a13324; color: #fbf3dc; padding: 0 6px;">Real result</span></div>
+<b style="font-size: 64px; line-height: .9; letter-spacing: -.06em; color: #a13324;">12 hours</b>
+<p style="margin: 0; font-size: 16px; line-height: 1.42;">to train the base model on one computer with 8 graphics chips.</p>
+<a href="#explore" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">Paper §5.2 ↗</a>
+</div>
+
+</section>
+
+<footer style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 34px; border-top: 1px solid #27251e; padding-top: 12px; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">
+<span>The Geeky Times ✦ Issue 001</span><a href="#explore">The archive →</a>
+</footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2400}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

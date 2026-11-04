@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lead illustration: the bat at dusk</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.la-text{font-family:Georgia,serif}.la-tiny{font:bold 12px 'Courier New',monospace;letter-spacing:2px}
+.la-wing{animation:la-flap 1.2s ease-in-out infinite alternate;transform-origin:290px 145px}
+.la-flying{animation:la-drift 2.5s ease-in-out infinite alternate}
+.la-signal{stroke-dasharray:5 10;animation:la-trace 1.4s linear infinite}
+@keyframes la-flap{to{transform:scaleY(.8)}}@keyframes la-drift{to{transform:translate(8px,-9px)}}@keyframes la-trace{to{stroke-dashoffset:-30}}
+@media(prefers-reduced-motion:reduce){.la-wing,.la-flying,.la-signal{animation:none}}
+</style>
+</helmet>
+<div style="width: 100%; line-height: 0; background: #82acad;">
+<svg viewBox="0 0 600 340" role="img" aria-label="A bat with wings flies past the moon at dusk. Below it: The bat flew at dusk." style="display: block; width: 100%; height: auto;">
+<defs><pattern id="la-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern><pattern id="la-stripes" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(25)"><path d="M0 0V8" stroke="#27251e" stroke-width="2" opacity=".25"></path></pattern><path id="la-star" fill="#ffe597" d="M0 -8L2 -2 8 0 2 2 0 8 -2 2 -8 0 -2 -2Z"></path></defs>
+<rect width="600" height="340" fill="#82acad"></rect><circle cx="424" cy="102" r="64" fill="#f8cf72" stroke="#27251e" stroke-width="2"></circle><circle cx="424" cy="102" r="64" fill="url(#la-dots)"></circle><use href="#la-star" x="75" y="93"></use><use href="#la-star" x="349" y="48"></use><use href="#la-star" x="499" y="162"></use><path d="M0 210Q93 141 194 203T393 195T600 165V340H0Z" fill="#5b8584"></path><path d="M0 234Q120 177 243 233T472 203T600 195V340H0Z" fill="url(#la-stripes)"></path>
+<g class="la-flying"><g class="la-wing" fill="#343444" stroke="#26251f" stroke-width="3" stroke-linejoin="round"><path d="M291 145Q244 77 142 74Q165 106 158 138Q184 116 206 161Q225 141 246 180Q264 160 288 176L300 181Q321 153 342 166Q352 129 380 137Q379 103 411 84Q335 89 300 142Z"></path><path d="M151 78Q202 93 246 175M153 77Q190 101 206 154M402 87Q359 105 342 159" stroke="#aaa0a4" fill="none" stroke-width="2"></path></g><path d="M275 136L273 113L287 125Q292 123 299 124L311 111L309 139Q316 161 292 180Q267 166 275 136Z" fill="#393444" stroke="#25241e" stroke-width="3"></path><g fill="#ffe899"><circle cx="284" cy="139" r="2.8"></circle><circle cx="301" cy="138" r="2.8"></circle></g></g>
+<rect x="14" y="14" width="145" height="23" fill="#f6f0df"></rect><text x="24" y="30" class="la-tiny" fill="#28261e">PLATE 01 / DUSK</text>
+<rect x="0" y="238" width="600" height="102" fill="#efe5c9"></rect><path d="M0 238H600" stroke="#29261e" stroke-width="2"></path><text x="300" y="283" text-anchor="middle" class="la-text" fill="#28261e" font-size="30">The bat flew at dusk.</text><path d="M296 291Q266 321 231 291" fill="none" stroke="#a13324" class="la-signal" stroke-width="3"></path><text x="300" y="327" text-anchor="middle" class="la-tiny" fill="#8d3226">FOLLOW THE CONTEXT CLUE</text>
+</svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":600,"height":340}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

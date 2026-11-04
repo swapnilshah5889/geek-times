@@ -1,0 +1,30 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-04T18:30:00Z" },
+  "title": "Geeky Times front page options",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 2240, "title": "A · Classic broadsheet", "expand": "fill" },
+    "Bento.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 2040, "title": "B · Modern bento", "expand": "fill" },
+    "Magazine.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 2320, "title": "C · Magazine cover + grid", "expand": "fill" },
+    "Hybrid.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 2400, "title": "D · Broadsheet top, bento below (chosen)", "expand": "fill" },
+    "LeadArt.dc.html": { "x": 0, "y": 2720, "w": 600, "h": 340, "title": "Part · Lead illustration (real)" },
+    "PanelWings.dc.html": { "x": 680, "y": 2720, "w": 320, "h": 220, "title": "Part · Comic panel: wings (real)" },
+    "PanelMeter.dc.html": { "x": 1080, "y": 2720, "w": 320, "h": 220, "title": "Part · Comic panel: match meter (real)" },
+    "SampleArt.dc.html": { "x": 1480, "y": 2720, "w": 400, "h": 250, "title": "Part · Sample story art" },
+    "Front.dc.html": { "x": 0, "y": 3480, "w": 1440, "h": 3600, "title": "1 · Front page D, full Keep exploring", "expand": "fill" },
+    "Issue.dc.html": { "x": 1520, "y": 3480, "w": 1440, "h": 2300, "title": "2 · Issue page", "expand": "fill" },
+    "Story.dc.html": { "x": 3040, "y": 3480, "w": 1440, "h": 1800, "title": "3 · Story page: family tree", "expand": "fill" },
+    "Company.dc.html": { "x": 4560, "y": 3480, "w": 1440, "h": 1700, "title": "4 · Company page", "expand": "fill" },
+    "Map.dc.html": { "x": 6080, "y": 3480, "w": 1440, "h": 1100, "title": "5 · Explore map", "expand": "fill" },
+    "DataModel.dc.html": { "x": 7600, "y": 3480, "w": 2328, "h": 1700, "title": "6 · Data model (class diagram)" }
+  },
+  "order": ["Main.dc.html", "Bento.dc.html", "Magazine.dc.html", "Hybrid.dc.html", "LeadArt.dc.html", "PanelWings.dc.html", "PanelMeter.dc.html", "SampleArt.dc.html", "Front.dc.html", "Issue.dc.html", "Story.dc.html", "Company.dc.html", "Map.dc.html", "DataModel.dc.html"],
+  "notes": {
+    "heading": { "x": 0, "y": -300, "text": "The Geeky Times · desktop front pages", "kind": "title1", "maxW": 6000 },
+    "parts": { "x": 0, "y": 2420, "text": "Shared parts used by every layout", "kind": "title1", "maxW": 1880 },
+    "pages": { "x": 0, "y": 3180, "text": "Product pages and data model", "kind": "title1", "maxW": 9928 }
+  },
+  "designSystems": []
+}

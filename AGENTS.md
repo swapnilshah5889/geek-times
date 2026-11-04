@@ -56,6 +56,7 @@ docs/
   roadmap.md              what's done, what's next, in order
   tagging.md              tag rules
 skills/                   step-by-step playbooks any agent can follow (open SKILL.md format)
+design/                   exported mockups (PNG + standalone HTML) and the review brief: design/README.md
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
 public/data/              content: site.json, tags.json, papers/<slug>.json (search-index.json is generated)
 public/media/<slug>/      standalone animated SVGs (moving to a CDN later)
@@ -98,8 +99,9 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 
 - Done: data-driven React site, Attention story with comic strips, tags + search, bento front page + swipe feed
   (branches `feature/paper-tags` → `feature/home-bento` → `feature/project-knowledge`, stacked and not yet merged).
-- Designing: front page **D**, issue page, story family tree, company page, explore map. The design canvas is a
-  claude.ai artifact the owner can share. Designs are summarized in `docs/product-plan.md`.
+- Designing: front page **D**, issue page, story family tree, company page, explore map, data model. The
+  exported images are in `design/exports/`, with a review brief in `design/README.md`; the editable source is a
+  claude.ai design canvas (copied into `design/canvas-source/`).
 - Next: see `docs/roadmap.md`.
 
 ## Keeping this file true

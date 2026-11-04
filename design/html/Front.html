@@ -1,0 +1,585 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Front page D with full Keep exploring</title><style>
+body{margin:0;background:#f6f0df}
+a{color:#27251e;text-underline-offset:3px}a:hover{color:#a13324}
+
+body{margin:0}
+.la-text{font-family:Georgia,serif}.la-tiny{font:bold 12px 'Courier New',monospace;letter-spacing:2px}
+.la-wing{animation:la-flap 1.2s ease-in-out infinite alternate;transform-origin:290px 145px}
+.la-flying{animation:la-drift 2.5s ease-in-out infinite alternate}
+.la-signal{stroke-dasharray:5 10;animation:la-trace 1.4s linear infinite}
+@keyframes la-flap{to{transform:scaleY(.8)}}@keyframes la-drift{to{transform:translate(8px,-9px)}}@keyframes la-trace{to{stroke-dashoffset:-30}}
+@media(prefers-reduced-motion:reduce){.la-wing,.la-flying,.la-signal{animation:none}}
+
+body{margin:0}
+.sa-tag{font:bold 11px 'Courier New',monospace;letter-spacing:1.5px;fill:#28261e}
+.sa-sfx{font:italic 900 26px Georgia,serif;fill:#a13324;stroke:#fff8e3;stroke-width:5px;paint-order:stroke}
+.sa-spin{transform-box:view-box;transform-origin:200px 125px;animation:sa-spin 14s linear infinite}
+.sa-pulse{transform-box:fill-box;transform-origin:center;animation:sa-pulse 2.4s ease-in-out infinite}
+@keyframes sa-spin{to{transform:rotate(360deg)}}@keyframes sa-pulse{50%{transform:scale(1.15);opacity:.6}}
+@media(prefers-reduced-motion:reduce){.sa-spin,.sa-pulse{animation:none}}
+
+body{margin:0}
+.pm-w{font:bold 20px Georgia,serif;fill:#28261e}.pm-micro{font:bold 12px 'Courier New',monospace;letter-spacing:1px;fill:#28261e}
+.pm-sfx{font:italic 900 22px Georgia,serif;fill:#a13324;stroke:#fff8e3;stroke-width:5px;paint-order:stroke}
+.pm-meter{transform-box:fill-box;transform-origin:left center;animation:pm-meter 6s ease-out infinite}
+.pm-pulse{transform-box:fill-box;transform-origin:center;animation:pm-pulse 1.8s ease-in-out infinite}
+@keyframes pm-meter{0%{transform:scaleX(0)}35%,100%{transform:scaleX(1)}}@keyframes pm-pulse{50%{transform:scale(1.1)}}
+@media(prefers-reduced-motion:reduce){.pm-meter,.pm-pulse{animation:none}}
+
+body{margin:0}
+.pw-w{font:bold 20px Georgia,serif;fill:#28261e}.pw-b{font:18px Georgia,serif;fill:#28261e}
+.pw-twinkle{transform-box:fill-box;transform-origin:center;animation:pw-twinkle 2.4s ease-in-out infinite}
+.pw-flap{transform-box:fill-box;transform-origin:center;animation:pw-flap .45s ease-in-out infinite alternate}
+@keyframes pw-twinkle{50%{transform:scale(.5);opacity:.4}}@keyframes pw-flap{to{transform:scaleY(.8)}}
+@media(prefers-reduced-motion:reduce){.pw-twinkle,.pw-flap{animation:none}}
+</style></head><body>
+
+<div style="min-height: 100vh; background-color: #f6f0df; background-image: radial-gradient(rgba(143,121,96,.22) .7px, transparent .8px); background-size: 6px 6px; color: #27251e; font-family: Georgia, 'Times New Roman', serif;">
+<div style="max-width: 1240px; margin: 0 auto; padding: 24px 48px 56px; box-sizing: border-box;">
+
+<header>
+<div style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid #27251e; padding-bottom: 8px; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">
+<span>Wednesday, November 4, 2026</span><span>An independent illustrated science edition</span><span>Vol. I · No. 001</span>
+</div>
+<h1 style="margin: 0; padding: 14px 0 0; text-align: center; font-size: 104px; line-height: 1.04; font-weight: 900; letter-spacing: -.075em;">The Geeky Times</h1>
+<p style="margin: 0; padding: 0 0 14px; text-align: center; font-style: italic; font-size: 18px;">Research, in pictures. Big science anyone can read.</p>
+<nav aria-label="Sections" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; border-top: 4px double #27251e; border-bottom: 1px solid #27251e; padding: 9px 0; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">
+<div style="display: flex; gap: 22px; flex-wrap: wrap;"><a href="#lead" style="color: #a13324;">Front page</a><a href="#topics">AI &amp; computers</a><a href="#topics">Biology</a><a href="#topics">Space</a><a href="#topics">Physics</a><a href="#real">In the real world</a><a href="#issues">Issues</a></div>
+<div style="display: flex; gap: 22px;"><a href="#snacks">Swipe the snacks ▶</a><a href="#lead">Search ⌕</a></div>
+</nav>
+</header>
+
+<section id="lead" aria-label="Top stories" style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 36px; padding: 28px 0 30px;">
+<article style="display: flex; flex-direction: column; gap: 14px;">
+<div style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Issue 001 · Lead story · AI &amp; language</div>
+<a href="#lead" aria-label="Open the story: One word, two worlds" style="display: block; border: 1px solid #27251e;">
+
+<div style="width: 100%; line-height: 0; background: #82acad;">
+<svg viewBox="0 0 600 340" role="img" aria-label="A bat with wings flies past the moon at dusk. Below it: The bat flew at dusk." style="display: block; width: 100%; height: auto;">
+<defs><pattern id="la-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern><pattern id="la-stripes" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(25)"><path d="M0 0V8" stroke="#27251e" stroke-width="2" opacity=".25"></path></pattern><path id="la-star" fill="#ffe597" d="M0 -8L2 -2 8 0 2 2 0 8 -2 2 -8 0 -2 -2Z"></path></defs>
+<rect width="600" height="340" fill="#82acad"></rect><circle cx="424" cy="102" r="64" fill="#f8cf72" stroke="#27251e" stroke-width="2"></circle><circle cx="424" cy="102" r="64" fill="url(#la-dots)"></circle><use href="#la-star" x="75" y="93"></use><use href="#la-star" x="349" y="48"></use><use href="#la-star" x="499" y="162"></use><path d="M0 210Q93 141 194 203T393 195T600 165V340H0Z" fill="#5b8584"></path><path d="M0 234Q120 177 243 233T472 203T600 195V340H0Z" fill="url(#la-stripes)"></path>
+<g class="la-flying"><g class="la-wing" fill="#343444" stroke="#26251f" stroke-width="3" stroke-linejoin="round"><path d="M291 145Q244 77 142 74Q165 106 158 138Q184 116 206 161Q225 141 246 180Q264 160 288 176L300 181Q321 153 342 166Q352 129 380 137Q379 103 411 84Q335 89 300 142Z"></path><path d="M151 78Q202 93 246 175M153 77Q190 101 206 154M402 87Q359 105 342 159" stroke="#aaa0a4" fill="none" stroke-width="2"></path></g><path d="M275 136L273 113L287 125Q292 123 299 124L311 111L309 139Q316 161 292 180Q267 166 275 136Z" fill="#393444" stroke="#25241e" stroke-width="3"></path><g fill="#ffe899"><circle cx="284" cy="139" r="2.8"></circle><circle cx="301" cy="138" r="2.8"></circle></g></g>
+<rect x="14" y="14" width="145" height="23" fill="#f6f0df"></rect><text x="24" y="30" class="la-tiny" fill="#28261e">PLATE 01 / DUSK</text>
+<rect x="0" y="238" width="600" height="102" fill="#efe5c9"></rect><path d="M0 238H600" stroke="#29261e" stroke-width="2"></path><text x="300" y="283" text-anchor="middle" class="la-text" fill="#28261e" font-size="30">The bat flew at dusk.</text><path d="M296 291Q266 321 231 291" fill="none" stroke="#a13324" class="la-signal" stroke-width="3"></path><text x="300" y="327" text-anchor="middle" class="la-tiny" fill="#8d3226">FOLLOW THE CONTEXT CLUE</text>
+</svg>
+</div>
+</a>
+<h2 style="margin: 4px 0 0; font-size: 76px; line-height: .94; letter-spacing: -.06em;"><a href="#lead" style="text-decoration: none;">One word, <em style="color: #a13324;">two worlds.</em></a></h2>
+<p style="margin: 0; font-size: 23px; line-height: 1.38; max-width: 36em;">Translation machines used to read words one after another. This paper showed a new design, the Transformer, that lets every word look at every other word at once. It became the base of today’s AI chatbots.</p>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-top: 1px solid #948b77; padding-top: 10px;">
+<p style="margin: 0; font-size: 15px;"><b>Attention Is All You Need</b> · <i>Vaswani and colleagues, 2017</i> · <span style="font: 700 11px 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase;">Peer-reviewed paper</span></p>
+<a href="#lead" style="font: 700 12px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Read the illustrated story →</a>
+</div>
+</article>
+<aside style="display: flex; flex-direction: column; gap: 20px; border-left: 1px solid #948b77; padding-left: 32px;">
+<article style="display: flex; flex-direction: column; gap: 8px;">
+
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: dna" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#e8d0c4"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+<g fill="none" stroke-width="7" stroke-linecap="round">
+<path d="M40 70C80 70 80 180 120 180S160 70 200 70S240 180 280 180S320 70 360 70" stroke="#a13324"></path>
+<path d="M40 180C80 180 80 70 120 70S160 180 200 180S240 70 280 70S320 180 360 180" stroke="#377675"></path>
+</g>
+<g stroke="#322e24" stroke-width="3"><path d="M60 92V158M100 110V140M140 110V140M180 92V158M220 92V158M300 92V158M340 110V140"></path></g>
+<g stroke="#322e24" stroke-width="6" stroke-linecap="round"><path d="M232 104L292 126"></path><path d="M232 146L292 124"></path></g>
+<circle cx="222" cy="100" r="13" fill="#f6e3a1" stroke="#322e24" stroke-width="4"></circle><circle cx="222" cy="150" r="13" fill="#f6e3a1" stroke="#322e24" stroke-width="4"></circle>
+<g class="sa-pulse"><text x="318" y="62" class="sa-sfx" text-anchor="middle">SNIP!</text></g>
+
+
+
+
+
+
+
+
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+
+<div style="display: flex; gap: 8px; align-items: center; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>Feature · Biology</span><span style="border: 1px solid #a13324; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 34px; line-height: 1; letter-spacing: -.045em;"><a href="#lead" style="text-decoration: none;">Scissors for DNA</a></h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.45;">Scientists turned a germ-fighting trick from bacteria into a tool that cuts DNA exactly where they choose.</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #27251e; padding-top: 16px;">
+<div style="display: flex; gap: 8px; align-items: center; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>Feature · AI &amp; biology</span><span style="border: 1px solid #a13324; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 30px; line-height: 1.02; letter-spacing: -.045em;"><a href="#lead" style="text-decoration: none;">The protein-folding puzzle</a></h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.45;">An AI learned to predict a protein’s 3D shape from the recipe of building blocks.</p>
+</article>
+<article style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #27251e; padding-top: 16px;">
+<div style="display: flex; gap: 8px; align-items: center; font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;"><span>From the vault · Medicine</span><span style="border: 1px solid #a13324; padding: 0 6px;">Sample</span></div>
+<h3 style="margin: 0; font-size: 26px; line-height: 1.05; letter-spacing: -.04em;"><a href="#lead" style="text-decoration: none;">The mold that fought germs</a></h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.45;">A mold on a lab dish stopped the bacteria around it, and led to the first antibiotics.</p>
+</article>
+</aside>
+</section>
+
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; border-top: 4px double #27251e; padding-top: 12px;">
+<h2 style="margin: 0; font-size: 44px; line-height: 1; letter-spacing: -.05em;">Keep exploring</h2>
+<span style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Ten ways in · Sample stories marked</span>
+</div>
+
+<section aria-labelledby="s-more" style="margin-top: 26px;">
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #27251e; padding-top: 10px; margin-bottom: 16px;"><h3 id="s-more" style="margin: 0; font-size: 28px; letter-spacing: -.04em;">More from Issue 001</h3><a href="#issues" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Whole issue →</a></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;">
+<a href="#lead" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: waves" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#3d4a5a"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+
+
+
+
+<g fill="none" stroke="#f6e3a1" stroke-width="3" stroke-dasharray="8 7">
+<circle cx="200" cy="125" r="52" opacity=".95"></circle><circle cx="200" cy="125" r="84" opacity=".7"></circle><circle cx="200" cy="125" r="116" opacity=".5"></circle><circle cx="200" cy="125" r="150" opacity=".3"></circle>
+</g>
+<g class="sa-spin"><circle cx="178" cy="125" r="17" fill="#1f1d17" stroke="#efae78" stroke-width="4"></circle><circle cx="222" cy="125" r="17" fill="#1f1d17" stroke="#efae78" stroke-width="4"></circle></g>
+<circle cx="356" cy="210" r="16" fill="#82acad" stroke="#322e24" stroke-width="3"></circle><path d="M346 204q8 -6 14 2q4 6 10 2" fill="none" stroke="#5b8584" stroke-width="3"></path>
+
+
+
+
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<div style="padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px;"><span style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Feature · Space · Sample</span><h4 style="margin: 0; font-size: 25px; line-height: 1.02; letter-spacing: -.04em;">Space shook, and we heard it</h4><p style="margin: 0; font-size: 15px; line-height: 1.45;">Two black holes crashed. Detectors on Earth caught the ripple.</p></div></a>
+<a href="#lead" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: stairs" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#f0e3c6"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+
+
+
+
+
+
+<g stroke="#322e24" stroke-width="2.5">
+<rect x="170" y="196" width="64" height="24" rx="4" fill="#f7d79b"></rect><rect x="170" y="164" width="64" height="24" rx="4" fill="#efae78"></rect><rect x="170" y="132" width="64" height="24" rx="4" fill="#a2c2a7"></rect><rect x="170" y="100" width="64" height="24" rx="4" fill="#f7d79b"></rect><rect x="170" y="68" width="64" height="24" rx="4" fill="#efae78"></rect><rect x="170" y="36" width="64" height="24" rx="4" fill="#a2c2a7"></rect>
+</g>
+<g fill="none" stroke="#a13324" stroke-width="4" stroke-linecap="round">
+<path d="M168 208C120 196 120 148 166 144"></path><path d="M236 176C284 164 284 116 238 112"></path><path d="M168 112C120 100 120 52 166 48"></path>
+</g>
+<g fill="#a13324"><path d="M166 144l-10 -6v12z"></path><path d="M238 112l10 -6v12z"></path><path d="M166 48l-10 -6v12z"></path></g>
+<g class="sa-pulse"><text x="320" y="70" class="sa-sfx" text-anchor="middle">SKIP!</text></g>
+
+
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<div style="padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px;"><span style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Feature · AI · Sample</span><h4 style="margin: 0; font-size: 25px; line-height: 1.02; letter-spacing: -.04em;">Shortcuts that go deeper</h4><p style="margin: 0; font-size: 15px; line-height: 1.45;">Shortcut paths let picture-recognizing networks grow much deeper.</p></div></a>
+<a href="#lead" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: particle" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#ead9b6"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+
+
+
+
+
+
+
+
+<g class="sa-spin" fill="none" stroke="#322e24" stroke-width="2.5">
+<ellipse cx="200" cy="125" rx="150" ry="46"></ellipse><ellipse cx="200" cy="125" rx="150" ry="46" transform="rotate(60 200 125)"></ellipse><ellipse cx="200" cy="125" rx="150" ry="46" transform="rotate(-60 200 125)"></ellipse>
+</g>
+<circle cx="200" cy="125" r="34" fill="#efae78" stroke="#322e24" stroke-width="3"></circle><circle cx="200" cy="125" r="34" fill="url(#sa-dots)"></circle>
+<g class="sa-pulse"><circle cx="200" cy="125" r="48" fill="none" stroke="#a13324" stroke-width="3"></circle></g>
+<g stroke="#322e24" stroke-width="2"><circle cx="66" cy="96" r="8" fill="#a2c2a7"></circle><circle cx="338" cy="160" r="8" fill="#f7d79b"></circle><circle cx="262" cy="34" r="8" fill="#c3b2d8"></circle></g>
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<div style="padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px;"><span style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Brief · Physics · Sample</span><h4 style="margin: 0; font-size: 25px; line-height: 1.02; letter-spacing: -.04em;">The particle that was missing</h4><p style="margin: 0; font-size: 15px; line-height: 1.45;">A long-predicted particle tied to how basic particles get their mass.</p></div></a>
+</div>
+</section>
+
+<section id="snacks" aria-labelledby="s-snacks" style="margin-top: 36px; background: #27251e; color: #fbf3dc; border-radius: 16px; padding: 22px 24px 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 24px; align-items: center;">
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<span style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #f6e3a1;">Snack mode</span>
+<h3 id="s-snacks" style="margin: 0; font-size: 38px; line-height: 1; letter-spacing: -.045em;">Swipe the snacks</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.45;">One picture, one idea, one swipe. Each card opens the full story.</p>
+<a href="#snacks" style="align-self: flex-start; padding: 12px 16px; border-radius: 999px; background: #f6e3a1; color: #27251e; text-decoration: none; font: 700 12px/1 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase;">Start swiping ▶</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px;">
+<a href="#snacks" style="display: flex; flex-direction: column; background: #f6f0df; color: #27251e; border-radius: 18px; overflow: hidden; border: 5px solid #fbf3dc; text-decoration: none;">
+
+<div style="width: 100%; line-height: 0; background: #f0e3c6;">
+<svg viewBox="0 0 320 220" role="img" aria-label="A match meter: The 10 percent, bat 20 percent, flew 70 percent." style="display: block; width: 100%; height: auto;">
+<defs><pattern id="pm-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="320" height="220" fill="#f0e3c6"></rect><rect width="320" height="220" fill="url(#pm-dots)" opacity=".22"></rect>
+<text x="160" y="30" class="pm-micro" text-anchor="middle">MATCH-O-METER</text>
+<text x="18" y="68" class="pm-w" text-anchor="start">The</text><rect x="76" y="52" width="170" height="22" fill="#ddcfb0" stroke="#322e24" stroke-width="2"></rect><rect class="pm-meter" x="76" y="52" width="17" height="22" fill="#cfa64b"></rect><text x="302" y="70" class="pm-w" text-anchor="end">10%</text>
+<text x="18" y="114" class="pm-w" text-anchor="start">bat</text><rect x="76" y="98" width="170" height="22" fill="#ddcfb0" stroke="#322e24" stroke-width="2"></rect><rect class="pm-meter" x="76" y="98" width="34" height="22" fill="#c86f3f" style="animation-delay: .25s;"></rect><text x="302" y="116" class="pm-w" text-anchor="end">20%</text>
+<text x="18" y="160" class="pm-w" text-anchor="start">flew</text><rect x="76" y="144" width="170" height="22" fill="#ddcfb0" stroke="#322e24" stroke-width="2"></rect><rect class="pm-meter" x="76" y="144" width="119" height="22" fill="#377675" style="animation-delay: .5s;"></rect><text x="302" y="162" class="pm-w" text-anchor="end">70%</text>
+<g class="pm-pulse"><text x="160" y="204" class="pm-sfx" text-anchor="middle">“flew” matches best!</text></g>
+</svg>
+</div>
+<span style="padding: 10px 12px 14px; font-size: 15px; line-height: 1.35;"><b>“Bat” asks around</b><br>Which word helps it most?</span></a>
+<a href="#snacks" style="display: flex; flex-direction: column; background: #f6f0df; color: #27251e; border-radius: 18px; overflow: hidden; border: 5px solid #fbf3dc; text-decoration: none;">
+
+<div style="width: 100%; line-height: 0; background: #82acad;">
+<svg viewBox="0 0 320 220" role="img" aria-label="Bat, now tinted green, grows flapping wings and says it is the one with wings." style="display: block; width: 100%; height: auto;">
+<defs><g id="pw-wb" stroke="#322e24" stroke-width="2" stroke-linecap="round"><path d="M-14 25v10l-8 2M14 25v10l8 2M-34 2l-10-5M34 2l10-6" fill="none"></path><rect x="-34" y="-25" width="68" height="50" rx="10" fill="currentColor"></rect><circle cx="-7" cy="-14" r="2" fill="#322e24" stroke="none"></circle><circle cx="7" cy="-14" r="2" fill="#322e24" stroke="none"></circle><path d="M-3 -9q3 3 6 0" fill="none"></path></g><path id="pw-star" d="M0 -10L3 -3 10 0 3 3 0 10 -3 3 -10 0 -3 -3Z" fill="#ffe597" stroke="#322e24" stroke-width="1"></path><pattern id="pw-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="320" height="220" fill="#82acad"></rect><rect width="320" height="220" fill="url(#pw-dots)" opacity=".22"></rect>
+<g class="pw-twinkle"><use href="#pw-star" x="40" y="160"></use></g><g class="pw-twinkle" style="animation-delay: .7s;"><use href="#pw-star" x="282" y="150"></use></g><g class="pw-twinkle" style="animation-delay: 1.4s;"><use href="#pw-star" x="300" y="70"></use></g><g class="pw-twinkle" style="animation-delay: 2s;"><use href="#pw-star" x="24" y="96"></use></g>
+<g transform="translate(-100 30)"><g class="pw-flap" fill="#343444" stroke="#26251f" stroke-width="2" stroke-linejoin="round"><path d="M228 90Q208 66 182 68Q191 81 187 94Q200 88 205 103Q214 95 228 104Z"></path><path d="M292 90Q312 66 338 68Q329 81 333 94Q320 88 315 103Q306 95 292 104Z"></path></g></g>
+<g transform="translate(160 126)"><use href="#pw-wb" style="color: #b5b98f;"></use><text x="0" y="12" class="pw-w" text-anchor="middle">bat</text></g>
+<rect x="56" y="12" width="208" height="44" rx="16" fill="#fff8e3" stroke="#322e24" stroke-width="2"></rect><path d="M167 54L176 96L185 54" fill="#fff8e3" stroke="#322e24" stroke-width="2" stroke-linejoin="round"></path><text x="160" y="40" class="pw-b" text-anchor="middle">I’m the one with wings!</text>
+</svg>
+</div>
+<span style="padding: 10px 12px 14px; font-size: 15px; line-height: 1.35;"><b>Blend it in</b><br>“Bat” learns it has wings.</span></a>
+<a href="#snacks" style="display: flex; flex-direction: column; justify-content: center; gap: 6px; background: #f3e3b5; color: #27251e; border-radius: 18px; border: 5px solid #fbf3dc; padding: 14px; text-decoration: none;"><span style="font: 700 10px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Real result</span><b style="font-size: 56px; line-height: .9; letter-spacing: -.06em; color: #a13324;">8</b><span style="font-size: 15px; line-height: 1.35;">lookers working side by side.</span></a>
+<a href="#snacks" style="display: flex; flex-direction: column; background: #f6f0df; color: #27251e; border-radius: 18px; overflow: hidden; border: 5px solid #fbf3dc; text-decoration: none;">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: dna" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#e8d0c4"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+<g fill="none" stroke-width="7" stroke-linecap="round">
+<path d="M40 70C80 70 80 180 120 180S160 70 200 70S240 180 280 180S320 70 360 70" stroke="#a13324"></path>
+<path d="M40 180C80 180 80 70 120 70S160 180 200 180S240 70 280 70S320 180 360 180" stroke="#377675"></path>
+</g>
+<g stroke="#322e24" stroke-width="3"><path d="M60 92V158M100 110V140M140 110V140M180 92V158M220 92V158M300 92V158M340 110V140"></path></g>
+<g stroke="#322e24" stroke-width="6" stroke-linecap="round"><path d="M232 104L292 126"></path><path d="M232 146L292 124"></path></g>
+<circle cx="222" cy="100" r="13" fill="#f6e3a1" stroke="#322e24" stroke-width="4"></circle><circle cx="222" cy="150" r="13" fill="#f6e3a1" stroke="#322e24" stroke-width="4"></circle>
+<g class="sa-pulse"><text x="318" y="62" class="sa-sfx" text-anchor="middle">SNIP!</text></g>
+
+
+
+
+
+
+
+
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<span style="padding: 10px 12px 14px; font-size: 15px; line-height: 1.35;"><b>Snip!</b><br>Sample snack card.</span></a>
+</div>
+</section>
+
+<section id="real" aria-labelledby="s-real" style="margin-top: 36px;">
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #27251e; padding-top: 10px; margin-bottom: 16px;"><h3 id="s-real" style="margin: 0; font-size: 28px; letter-spacing: -.04em;">In the real world <span style="font-size: 18px; font-style: italic; font-weight: 400; color: #5e5748;">from company engineering blogs</span></h3><a href="#real" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">All companies →</a></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;">
+<a href="#real" style="display: flex; flex-direction: column; gap: 10px; padding: 18px; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);"><span style="font: 700 13px/1.4 'Courier New', monospace; letter-spacing: .06em; text-transform: uppercase;">[Company name] Engineering</span><h4 style="margin: 0; font-size: 25px; line-height: 1.05; letter-spacing: -.04em;">How a streaming service picks your next show</h4><p style="margin: 0; font-size: 15px; line-height: 1.45;">Sample blog story: the recommendation system behind the home screen.</p><span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto;"><span style="font: 700 10px/1.6 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; background: #f6e3a1;">Company-reported</span><span style="font: 700 10px/1.6 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; border: 1px solid #27251e;">Sample</span></span></a>
+<a href="#real" style="display: flex; flex-direction: column; gap: 10px; padding: 18px; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);"><span style="font: 700 13px/1.4 'Courier New', monospace; letter-spacing: .06em; text-transform: uppercase;">[Company name] Engineering</span><h4 style="margin: 0; font-size: 25px; line-height: 1.05; letter-spacing: -.04em;">How a social network decides what you see first</h4><p style="margin: 0; font-size: 15px; line-height: 1.45;">Sample blog story: ranking a feed for millions of people at once.</p><span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto;"><span style="font: 700 10px/1.6 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; background: #f6e3a1;">Company-reported</span><span style="font: 700 10px/1.6 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; background: #e4ecdd;">Puts into practice: Transformer</span></span></a>
+<a href="#real" style="display: flex; flex-direction: column; gap: 10px; padding: 18px; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);"><span style="font: 700 13px/1.4 'Courier New', monospace; letter-spacing: .06em; text-transform: uppercase;">[Company name] Engineering</span><h4 style="margin: 0; font-size: 25px; line-height: 1.05; letter-spacing: -.04em;">How a ride app guesses when your car arrives</h4><p style="margin: 0; font-size: 15px; line-height: 1.45;">Sample blog story: predicting travel times from city traffic.</p><span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto;"><span style="font: 700 10px/1.6 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; background: #f6e3a1;">Company-reported</span><span style="font: 700 10px/1.6 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; border: 1px solid #27251e;">Sample</span></span></a>
+</div>
+</section>
+
+<section id="topics" aria-labelledby="s-topics" style="margin-top: 36px;">
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #27251e; padding-top: 10px; margin-bottom: 16px;"><h3 id="s-topics" style="margin: 0; font-size: 28px; letter-spacing: -.04em;">AI &amp; computers</h3><a href="#topics" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">See all 12 →</a></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;">
+<a href="#lead" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden;">
+
+<div style="width: 100%; line-height: 0; background: #f0e3c6;">
+<svg viewBox="0 0 320 220" role="img" aria-label="A match meter: The 10 percent, bat 20 percent, flew 70 percent." style="display: block; width: 100%; height: auto;">
+<defs><pattern id="pm-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="320" height="220" fill="#f0e3c6"></rect><rect width="320" height="220" fill="url(#pm-dots)" opacity=".22"></rect>
+<text x="160" y="30" class="pm-micro" text-anchor="middle">MATCH-O-METER</text>
+<text x="18" y="68" class="pm-w" text-anchor="start">The</text><rect x="76" y="52" width="170" height="22" fill="#ddcfb0" stroke="#322e24" stroke-width="2"></rect><rect class="pm-meter" x="76" y="52" width="17" height="22" fill="#cfa64b"></rect><text x="302" y="70" class="pm-w" text-anchor="end">10%</text>
+<text x="18" y="114" class="pm-w" text-anchor="start">bat</text><rect x="76" y="98" width="170" height="22" fill="#ddcfb0" stroke="#322e24" stroke-width="2"></rect><rect class="pm-meter" x="76" y="98" width="34" height="22" fill="#c86f3f" style="animation-delay: .25s;"></rect><text x="302" y="116" class="pm-w" text-anchor="end">20%</text>
+<text x="18" y="160" class="pm-w" text-anchor="start">flew</text><rect x="76" y="144" width="170" height="22" fill="#ddcfb0" stroke="#322e24" stroke-width="2"></rect><rect class="pm-meter" x="76" y="144" width="119" height="22" fill="#377675" style="animation-delay: .5s;"></rect><text x="302" y="162" class="pm-w" text-anchor="end">70%</text>
+<g class="pm-pulse"><text x="160" y="204" class="pm-sfx" text-anchor="middle">“flew” matches best!</text></g>
+</svg>
+</div>
+<span style="padding: 12px 14px 14px; font-size: 18px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em;">One word, two worlds</span></a>
+<a href="#topics" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden;">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: stairs" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#f0e3c6"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+
+
+
+
+
+
+<g stroke="#322e24" stroke-width="2.5">
+<rect x="170" y="196" width="64" height="24" rx="4" fill="#f7d79b"></rect><rect x="170" y="164" width="64" height="24" rx="4" fill="#efae78"></rect><rect x="170" y="132" width="64" height="24" rx="4" fill="#a2c2a7"></rect><rect x="170" y="100" width="64" height="24" rx="4" fill="#f7d79b"></rect><rect x="170" y="68" width="64" height="24" rx="4" fill="#efae78"></rect><rect x="170" y="36" width="64" height="24" rx="4" fill="#a2c2a7"></rect>
+</g>
+<g fill="none" stroke="#a13324" stroke-width="4" stroke-linecap="round">
+<path d="M168 208C120 196 120 148 166 144"></path><path d="M236 176C284 164 284 116 238 112"></path><path d="M168 112C120 100 120 52 166 48"></path>
+</g>
+<g fill="#a13324"><path d="M166 144l-10 -6v12z"></path><path d="M238 112l10 -6v12z"></path><path d="M166 48l-10 -6v12z"></path></g>
+<g class="sa-pulse"><text x="320" y="70" class="sa-sfx" text-anchor="middle">SKIP!</text></g>
+
+
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<span style="padding: 12px 14px 14px; font-size: 18px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em;">Shortcuts that go deeper <span style="font: 700 10px 'Courier New', monospace; color: #a13324;">SAMPLE</span></span></a>
+<a href="#topics" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden;">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: protein" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#c9d3c0"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+
+
+<path d="M70 190C90 60 160 60 170 130S250 200 260 110S330 40 340 150" fill="none" stroke="#6b4f36" stroke-width="5"></path>
+<g stroke="#322e24" stroke-width="2.5">
+<circle cx="70" cy="190" r="13" fill="#efae78"></circle><circle cx="92" cy="118" r="13" fill="#a2c2a7"></circle><circle cx="128" cy="84" r="13" fill="#f7d79b"></circle><circle cx="163" cy="105" r="13" fill="#c3b2d8"></circle><circle cx="182" cy="158" r="13" fill="#efae78"></circle><circle cx="222" cy="178" r="13" fill="#a2c2a7"></circle><circle cx="254" cy="132" r="13" fill="#f7d79b"></circle><circle cx="284" cy="78" r="13" fill="#c3b2d8"></circle><circle cx="322" cy="86" r="13" fill="#efae78"></circle><circle cx="340" cy="150" r="13" fill="#a2c2a7"></circle>
+</g>
+<g class="sa-pulse"><text x="330" y="222" class="sa-sfx" text-anchor="middle">FOLD!</text></g>
+
+
+
+
+
+
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<span style="padding: 12px 14px 14px; font-size: 18px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em;">The protein-folding puzzle <span style="font: 700 10px 'Courier New', monospace; color: #a13324;">SAMPLE</span></span></a>
+<a href="#topics" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; text-decoration: none; background: #e4ecdd; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; padding: 18px; text-align: center;"><b style="font-size: 44px; line-height: 1; letter-spacing: -.05em;">+9</b><span style="font-size: 17px;">more AI stories</span><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">See all →</span></a>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #27251e; padding-top: 10px; margin: 26px 0 16px;"><h3 style="margin: 0; font-size: 28px; letter-spacing: -.04em;">Your body &amp; medicine</h3><a href="#topics" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">See all →</a></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;">
+<a href="#topics" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden;">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: dna" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#e8d0c4"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+<g fill="none" stroke-width="7" stroke-linecap="round">
+<path d="M40 70C80 70 80 180 120 180S160 70 200 70S240 180 280 180S320 70 360 70" stroke="#a13324"></path>
+<path d="M40 180C80 180 80 70 120 70S160 180 200 180S240 70 280 70S320 180 360 180" stroke="#377675"></path>
+</g>
+<g stroke="#322e24" stroke-width="3"><path d="M60 92V158M100 110V140M140 110V140M180 92V158M220 92V158M300 92V158M340 110V140"></path></g>
+<g stroke="#322e24" stroke-width="6" stroke-linecap="round"><path d="M232 104L292 126"></path><path d="M232 146L292 124"></path></g>
+<circle cx="222" cy="100" r="13" fill="#f6e3a1" stroke="#322e24" stroke-width="4"></circle><circle cx="222" cy="150" r="13" fill="#f6e3a1" stroke="#322e24" stroke-width="4"></circle>
+<g class="sa-pulse"><text x="318" y="62" class="sa-sfx" text-anchor="middle">SNIP!</text></g>
+
+
+
+
+
+
+
+
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<span style="padding: 12px 14px 14px; font-size: 18px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em;">Scissors for DNA <span style="font: 700 10px 'Courier New', monospace; color: #a13324;">SAMPLE</span></span></a>
+<a href="#topics" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden;">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: mold" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#e4ecdd"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+
+
+
+
+
+
+
+
+
+
+<ellipse cx="200" cy="132" rx="160" ry="96" fill="#fff8e3" stroke="#322e24" stroke-width="3"></ellipse>
+<ellipse cx="200" cy="132" rx="146" ry="84" fill="none" stroke="#b9a98b" stroke-width="2"></ellipse>
+<g fill="#c86f3f"><circle cx="90" cy="110" r="5"></circle><circle cx="110" cy="160" r="5"></circle><circle cx="300" cy="96" r="5"></circle><circle cx="318" cy="150" r="5"></circle><circle cx="270" cy="186" r="5"></circle><circle cx="128" cy="78" r="5"></circle><circle cx="96" cy="136" r="5"></circle><circle cx="290" cy="122" r="5"></circle></g>
+<circle cx="200" cy="130" r="64" fill="none" stroke="#a13324" stroke-width="2" stroke-dasharray="5 6"></circle>
+<g class="sa-pulse"><path d="M170 130q10 -34 32 -26q26 -14 30 16q18 20 -6 34q-14 22 -36 8q-30 4 -20 -32z" fill="#7c9f80" stroke="#322e24" stroke-width="3"></path></g>
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<span style="padding: 12px 14px 14px; font-size: 18px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em;">The mold that fought germs <span style="font: 700 10px 'Courier New', monospace; color: #a13324;">SAMPLE</span></span></a>
+<a href="#topics" style="display: flex; flex-direction: column; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden;">
+
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="Sample art: protein" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#c9d3c0"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+
+
+
+<path d="M70 190C90 60 160 60 170 130S250 200 260 110S330 40 340 150" fill="none" stroke="#6b4f36" stroke-width="5"></path>
+<g stroke="#322e24" stroke-width="2.5">
+<circle cx="70" cy="190" r="13" fill="#efae78"></circle><circle cx="92" cy="118" r="13" fill="#a2c2a7"></circle><circle cx="128" cy="84" r="13" fill="#f7d79b"></circle><circle cx="163" cy="105" r="13" fill="#c3b2d8"></circle><circle cx="182" cy="158" r="13" fill="#efae78"></circle><circle cx="222" cy="178" r="13" fill="#a2c2a7"></circle><circle cx="254" cy="132" r="13" fill="#f7d79b"></circle><circle cx="284" cy="78" r="13" fill="#c3b2d8"></circle><circle cx="322" cy="86" r="13" fill="#efae78"></circle><circle cx="340" cy="150" r="13" fill="#a2c2a7"></circle>
+</g>
+<g class="sa-pulse"><text x="330" y="222" class="sa-sfx" text-anchor="middle">FOLD!</text></g>
+
+
+
+
+
+
+
+
+
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+<span style="padding: 12px 14px 14px; font-size: 18px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em;">The protein-folding puzzle <span style="font: 700 10px 'Courier New', monospace; color: #a13324;">SAMPLE</span></span></a>
+<a href="#topics" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; text-decoration: none; background: #e4ecdd; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; padding: 18px; text-align: center;"><b style="font-size: 44px; line-height: 1; letter-spacing: -.05em;">+5</b><span style="font-size: 17px;">more stories</span><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">See all →</span></a>
+</div>
+</section>
+
+<section aria-labelledby="s-lines" style="margin-top: 36px;">
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #27251e; padding-top: 10px; margin-bottom: 16px;"><h3 id="s-lines" style="margin: 0; font-size: 28px; letter-spacing: -.04em;">Storylines: how ideas evolved</h3><a href="#s-lines" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Explore the map →</a></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px;">
+<a href="#s-lines" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+<span style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Storyline · 5 steps</span>
+<h4 style="margin: 0; font-size: 28px; line-height: 1.02; letter-spacing: -.045em;">How machines learned to read</h4>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 3px solid #27251e; padding-top: 10px; gap: 6px;">
+<span style="font-size: 13px; line-height: 1.3;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">1997</b>LSTM memory cells</span>
+<span style="font-size: 13px; line-height: 1.3;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">2014</b>Sequence to sequence</span>
+<span style="font-size: 13px; line-height: 1.3;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">2014</b>First attention</span>
+<span style="font-size: 13px; line-height: 1.3; font-weight: 700;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">2017</b>The Transformer</span>
+<span style="font-size: 13px; line-height: 1.3;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">2018 →</b>BERT, GPT and chatbots</span>
+</div>
+</a>
+<a href="#s-lines" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; text-decoration: none; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; box-shadow: 0 1px 2px rgba(39,37,30,.06), 0 12px 28px -14px rgba(39,37,30,.28);">
+<span style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Storyline · Sample</span>
+<h4 style="margin: 0; font-size: 28px; line-height: 1.02; letter-spacing: -.045em;">From a moldy dish to modern medicine</h4>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 3px solid #27251e; padding-top: 10px; gap: 6px;">
+<span style="font-size: 13px; line-height: 1.3;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">[Year]</b>[Step one]</span>
+<span style="font-size: 13px; line-height: 1.3;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">[Year]</b>[Step two]</span>
+<span style="font-size: 13px; line-height: 1.3;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">[Year]</b>[Step three]</span>
+<span style="font-size: 13px; line-height: 1.3;"><b style="display: block; font: 700 12px 'Courier New', monospace; color: #a13324;">[Year]</b>[Step four]</span>
+</div>
+</a>
+</div>
+</section>
+
+<section aria-labelledby="s-numbers" style="margin-top: 36px;">
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #27251e; padding-top: 10px; margin-bottom: 16px;"><h3 id="s-numbers" style="margin: 0; font-size: 28px; letter-spacing: -.04em;">Numbers from the papers</h3><span style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Every number has a source</span></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; background: #f3e3b5; border: 1px solid rgba(39,37,30,.2); border-radius: 12px;"><span style="font: 700 10px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Peer-reviewed · §3.1</span><b style="font-size: 52px; line-height: .9; letter-spacing: -.06em; color: #a13324;">6 + 6</b><span style="font-size: 15px; line-height: 1.4;">floors in the Transformer’s reader and writer.</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; background: #f3e3b5; border: 1px solid rgba(39,37,30,.2); border-radius: 12px;"><span style="font: 700 10px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Peer-reviewed · §3.2.2</span><b style="font-size: 52px; line-height: .9; letter-spacing: -.06em; color: #a13324;">8</b><span style="font-size: 15px; line-height: 1.4;">lookers (attention heads) side by side.</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; background: #f3e3b5; border: 1px solid rgba(39,37,30,.2); border-radius: 12px;"><span style="font: 700 10px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Peer-reviewed · §3.1</span><b style="font-size: 52px; line-height: .9; letter-spacing: -.06em; color: #a13324;">512</b><span style="font-size: 15px; line-height: 1.4;">numbers in each word’s code (base model).</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 18px; background: #f3e3b5; border: 1px solid rgba(39,37,30,.2); border-radius: 12px;"><span style="font: 700 10px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Peer-reviewed · §5.2</span><b style="font-size: 52px; line-height: .9; letter-spacing: -.06em; color: #a13324;">12 h</b><span style="font-size: 15px; line-height: 1.4;">to train the base model on 8 graphics chips.</span></div>
+</div>
+</section>
+
+<section aria-labelledby="s-words" style="margin-top: 36px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 18px;">
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 20px; background: #e4ecdd; border: 1px solid rgba(39,37,30,.2); border-radius: 12px;">
+<span style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Grown-up words</span>
+<h3 id="s-words" style="margin: 0; font-size: 28px; letter-spacing: -.04em;">Learn the real names</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<a href="#s-words" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Self-attention</a>
+<a href="#s-words" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Embeddings</a>
+<a href="#s-words" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Positional encoding</a>
+<a href="#s-words" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Multi-head attention</a>
+<a href="#s-words" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Masked attention</a>
+<a href="#s-words" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">Feed-forward network</a>
+<a href="#s-words" style="padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #fbf3dc; font-size: 15px; text-decoration: none;">BLEU score</a>
+</div>
+<a href="#s-words" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Glossary A–Z →</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 20px; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px;">
+<span style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">On this day · Sample</span>
+<b style="font-size: 44px; line-height: .95; letter-spacing: -.05em;">[Year]</b>
+<p style="margin: 0; font-size: 16px; line-height: 1.45;">[A famous paper] was published. See how it changed what came next.</p>
+<a href="#s-words" style="margin-top: auto; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Open its family tree →</a>
+</div>
+</section>
+
+<section id="issues" aria-labelledby="s-issues" style="margin-top: 36px;">
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #27251e; padding-top: 10px; margin-bottom: 16px;"><h3 id="s-issues" style="margin: 0; font-size: 28px; letter-spacing: -.04em;">Back issues</h3><a href="#issues" style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">All volumes →</a></div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px;">
+<a href="#issues" style="aspect-ratio: 3 / 4; display: flex; flex-direction: column; justify-content: space-between; padding: 14px; border-radius: 10px; background: #82acad; border: 1px solid rgba(39,37,30,.3); text-decoration: none;"><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">Vol. I · No. 001</span><b style="font-size: 24px; line-height: 1.02; letter-spacing: -.04em;">How machines learned to read</b><span style="font-size: 13px;">5 stories · this week</span></a>
+<a href="#issues" style="aspect-ratio: 3 / 4; display: flex; flex-direction: column; justify-content: space-between; padding: 14px; border-radius: 10px; background: #efae78; border: 1px solid rgba(39,37,30,.3); text-decoration: none;"><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">Vol. 0 · Special 3</span><b style="font-size: 24px; line-height: 1.02; letter-spacing: -.04em;">Space and time</b><span style="font-size: 13px;">Sample · 8 classics</span></a>
+<a href="#issues" style="aspect-ratio: 3 / 4; display: flex; flex-direction: column; justify-content: space-between; padding: 14px; border-radius: 10px; background: #a2c2a7; border: 1px solid rgba(39,37,30,.3); text-decoration: none;"><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">Vol. 0 · Special 2</span><b style="font-size: 24px; line-height: 1.02; letter-spacing: -.04em;">Biology’s big breaks</b><span style="font-size: 13px;">Sample · 7 classics</span></a>
+<a href="#issues" style="aspect-ratio: 3 / 4; display: flex; flex-direction: column; justify-content: space-between; padding: 14px; border-radius: 10px; background: #c3b2d8; border: 1px solid rgba(39,37,30,.3); text-decoration: none;"><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">Vol. 0 · Special 1</span><b style="font-size: 24px; line-height: 1.02; letter-spacing: -.04em;">The AI classics</b><span style="font-size: 13px;">Sample · 10 classics</span></a>
+<a href="#issues" style="aspect-ratio: 3 / 4; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; padding: 14px; border-radius: 10px; background: #fbf3dc; border: 1px dashed rgba(39,37,30,.5); text-decoration: none; text-align: center;"><b style="font-size: 22px; letter-spacing: -.03em;">Every issue</b><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Browse volumes →</span></a>
+</div>
+</section>
+
+<section aria-labelledby="s-news" style="margin-top: 36px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: 24px 26px; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 16px;">
+<div><span style="font: 700 11px/1.4 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Every Friday</span><h3 id="s-news" style="margin: 4px 0 6px; font-size: 32px; line-height: 1; letter-spacing: -.045em;">Get each new issue</h3><p style="margin: 0; font-size: 16px; line-height: 1.45;">Big science, in pictures, in your inbox once a week.</p></div>
+<form style="display: flex; gap: 10px; flex-wrap: wrap;"><label for="email" style="position: absolute; left: -9999px;">Email address</label><input id="email" type="email" placeholder="you@example.com" style="flex: 1; min-width: 220px; padding: 14px 16px; font: 17px Georgia, serif; border: 1px solid #27251e; border-radius: 999px; background: #f6f0df;"><button type="submit" style="padding: 14px 20px; border: 0; border-radius: 999px; background: #a13324; color: #fbf3dc; font: 700 12px 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase; cursor: pointer;">Subscribe</button></form>
+</section>
+
+<footer style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 36px; border-top: 1px solid #27251e; padding-top: 12px; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">
+<span>The Geeky Times ✦ Vol. I · Issue 001</span><a href="#issues">The archive →</a>
+</footer>
+
+</div>
+</div>
+</body></html>

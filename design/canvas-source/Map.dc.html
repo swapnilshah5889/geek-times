@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Explore map</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#f6f0df}
+a{color:#27251e;text-underline-offset:3px}a:hover{color:#a13324}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #f6f0df; color: #27251e; font-family: Georgia, 'Times New Roman', serif;">
+
+<header style="border-bottom: 1px solid #27251e;">
+<div style="max-width: 1340px; margin: 0 auto; padding: 14px 40px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+<a href="#top" style="font-size: 34px; font-weight: 900; letter-spacing: -.065em; text-decoration: none;">The Geeky Times</a>
+<nav aria-label="Sections" style="display: flex; gap: 22px; flex-wrap: wrap; font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;"><a href="#top">Front page</a><a href="#top">Issues</a><a href="#top">Topics</a><a href="#top">Storylines</a><a href="#top" style="color: #a13324;">Map</a><a href="#top">Search ⌕</a></nav>
+</div>
+</header>
+
+<main id="top" style="max-width: 1340px; margin: 0 auto; padding: 20px 40px 40px; box-sizing: border-box;">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 14px;">
+<h1 style="margin: 0; font-size: 46px; line-height: 1; letter-spacing: -.055em;">The map of ideas</h1>
+<span style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Mockup · sample layout of nodes</span>
+</div>
+
+<div style="display: grid; grid-template-columns: 240px minmax(0, 1fr) 300px; gap: 18px; align-items: start;">
+<aside aria-label="Filters" style="display: flex; flex-direction: column; gap: 14px; padding: 18px; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px;">
+<label style="display: flex; flex-direction: column; gap: 6px; font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase;">Find a paper or idea<input type="search" placeholder="Try “attention”" style="padding: 10px 12px; font: 15px Georgia, serif; border: 1px solid #27251e; border-radius: 999px; background: #f6f0df;"></label>
+<div style="display: flex; flex-direction: column; gap: 6px;"><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Fields</span>
+<button type="button" aria-pressed="true" style="text-align: left; padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #f6f0df; font: 15px Georgia, serif; color: #27251e; cursor: pointer;">✓ AI &amp; computers</button>
+<button type="button" aria-pressed="true" style="text-align: left; padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #f6f0df; font: 15px Georgia, serif; color: #27251e; cursor: pointer;">✓ Biology &amp; medicine</button>
+<button type="button" aria-pressed="true" style="text-align: left; padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #f6f0df; font: 15px Georgia, serif; color: #27251e; cursor: pointer;">✓ Space</button>
+<button type="button" aria-pressed="true" style="text-align: left; padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #f6f0df; font: 15px Georgia, serif; color: #27251e; cursor: pointer;">✓ Physics</button></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Show</span>
+<button type="button" aria-pressed="true" style="text-align: left; padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #f6f0df; font: 15px Georgia, serif; color: #27251e; cursor: pointer;">✓ Papers</button>
+<button type="button" aria-pressed="true" style="text-align: left; padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #f6f0df; font: 15px Georgia, serif; color: #27251e; cursor: pointer;">✓ Engineering blogs</button>
+<button type="button" aria-pressed="true" style="text-align: left; padding: 8px 12px; border-radius: 999px; border: 1px solid #27251e; background: #f6f0df; font: 15px Georgia, serif; color: #27251e; cursor: pointer;">✓ Not explained yet</button></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><span style="font: 700 11px 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Years</span><div aria-hidden="true" style="height: 6px; border-radius: 999px; background: linear-gradient(90deg, #ddcfb0 0 55%, #a13324 55% 100%);"></div><span style="font-size: 13px;">1990 – 2026</span></div>
+</aside>
+
+<div style="background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px; overflow: hidden; line-height: 0;">
+<svg viewBox="0 0 800 600" role="img" aria-label="A map of research grouped into four fields, with lines linking related papers. The Transformer is highlighted in the AI cluster." style="display: block; width: 100%; height: auto;">
+<rect width="800" height="600" fill="#fbf3dc"></rect>
+<ellipse cx="250" cy="220" rx="210" ry="160" fill="#82acad" opacity=".22"></ellipse>
+<ellipse cx="590" cy="190" rx="170" ry="130" fill="#a2c2a7" opacity=".3"></ellipse>
+<ellipse cx="230" cy="470" rx="170" ry="105" fill="#5d6aa1" opacity=".16"></ellipse>
+<ellipse cx="600" cy="460" rx="160" ry="110" fill="#efae78" opacity=".24"></ellipse>
+<g font-family="Courier New, monospace" font-weight="700" font-size="13" letter-spacing="1.5" fill="#4f4a3e"><text x="90" y="86">AI &amp; COMPUTERS</text><text x="500" y="76">BIOLOGY &amp; MEDICINE</text><text x="100" y="410">SPACE</text><text x="520" y="368">PHYSICS</text></g>
+<g stroke="#948b77" stroke-width="1.5" fill="none">
+<path d="M120 230L185 205L250 215L320 220L400 180M320 220L390 260M320 220L300 300M250 215L240 150M185 205L170 290"></path>
+<path d="M520 160L580 200L650 170M580 200L600 260M650 170L700 230"></path>
+<path d="M300 300L540 230" stroke-dasharray="4 5"></path>
+<path d="M170 470L240 450L300 500M240 450L250 520"></path>
+<path d="M560 450L620 430L680 480M620 430L610 510"></path>
+<path d="M400 180L560 450" stroke-dasharray="4 5"></path>
+</g>
+<g stroke="#322e24" stroke-width="2">
+<circle cx="120" cy="230" r="9" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="185" cy="205" r="9" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="250" cy="215" r="9" fill="#ece6d6" stroke-dasharray="3 3"></circle>
+<circle cx="320" cy="220" r="16" fill="#f6e3a1" stroke="#a13324" stroke-width="3"></circle>
+<circle cx="400" cy="180" r="10" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="390" cy="260" r="10" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="300" cy="300" r="9" fill="#377675"></circle><circle cx="240" cy="150" r="8" fill="#377675"></circle><circle cx="170" cy="290" r="8" fill="#ece6d6" stroke-dasharray="3 3"></circle>
+<circle cx="520" cy="160" r="9" fill="#4f7a66"></circle><circle cx="580" cy="200" r="12" fill="#4f7a66"></circle><circle cx="650" cy="170" r="9" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="600" cy="260" r="9" fill="#4f7a66"></circle><circle cx="700" cy="230" r="8" fill="#ece6d6" stroke-dasharray="3 3"></circle>
+<circle cx="170" cy="470" r="9" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="240" cy="450" r="12" fill="#5d6aa1"></circle><circle cx="300" cy="500" r="8" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="250" cy="520" r="8" fill="#5d6aa1"></circle>
+<circle cx="560" cy="450" r="9" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="620" cy="430" r="12" fill="#c86f3f"></circle><circle cx="680" cy="480" r="8" fill="#ece6d6" stroke-dasharray="3 3"></circle><circle cx="610" cy="510" r="8" fill="#c86f3f"></circle>
+<rect x="381" y="250" width="18" height="18" rx="3" fill="#f7d79b"></rect><rect x="531" y="221" width="18" height="18" rx="3" fill="#f7d79b"></rect>
+</g>
+<g font-family="Georgia, serif" font-size="14" fill="#27251e"><text x="320" y="252" text-anchor="middle" font-weight="700">The Transformer</text><text x="404" y="292">blog post</text></g>
+</svg>
+</div>
+
+<aside aria-label="Selected" style="display: flex; flex-direction: column; gap: 12px; padding: 18px; background: #fbf3dc; border: 1px solid rgba(39,37,30,.2); border-radius: 12px;">
+<span style="font: 700 11px/1.5 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; color: #a13324;">Selected · Paper · 2017</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 1; letter-spacing: -.045em;">Attention Is All You Need</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.45;">Explained in Issue 001 as “One word, two worlds.”</p>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+<div style="padding: 10px; border-radius: 10px; background: #f6f0df; border: 1px solid rgba(39,37,30,.15);"><b style="display: block; font-size: 26px; color: #a13324;">[n]</b><span style="font-size: 13px;">ideas it built on</span></div>
+<div style="padding: 10px; border-radius: 10px; background: #f6f0df; border: 1px solid rgba(39,37,30,.15);"><b style="display: block; font-size: 26px; color: #a13324;">[n]</b><span style="font-size: 13px;">works that grew from it</span></div>
+</div>
+<a href="#top" style="padding: 12px 16px; border-radius: 999px; background: #27251e; color: #fbf3dc; text-decoration: none; text-align: center; font: 700 12px/1 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase;">Read the story →</a>
+<a href="#top" style="padding: 12px 16px; border-radius: 999px; border: 1px solid #27251e; text-decoration: none; text-align: center; font: 700 12px/1 'Courier New', monospace; letter-spacing: .08em; text-transform: uppercase;">Open family tree</a>
+<div style="border-top: 1px solid rgba(39,37,30,.2); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
+<span><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #377675; vertical-align: middle;"></span> Explained paper (colour = field)</span>
+<span><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1px dashed #322e24; background: #ece6d6; vertical-align: middle;"></span> Not explained yet</span>
+<span><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #f7d79b; border: 1px solid #322e24; vertical-align: middle;"></span> Engineering blog post</span>
+<span>Dashed lines link ideas across fields.</span>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
