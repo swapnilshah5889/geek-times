@@ -145,6 +145,9 @@ export interface Moment {
   media?: Media;
   /** Big number for fact cards, e.g. "512". */
   figure?: string;
+  claim?: ClaimKind;
+  /** Where in the paper a fact comes from, e.g. "Paper §3.1". */
+  sourceLabel?: string;
   provenance?: Provenance;
   href: string;
 }
@@ -257,8 +260,12 @@ export interface FactsBlock extends BlockBase {
   facts: Fact[];
 }
 
+/** What kind of claim a number is: how the thing was built, or what the tests found. Never both. */
+export type ClaimKind = 'illustration' | 'model_design' | 'measured_result';
+
 export interface Fact {
   figure: string;
+  claim?: ClaimKind;
   text: RichText;
   source?: { label: string; url: string };
   media?: Media;
@@ -266,3 +273,112 @@ export interface Fact {
 
 export type Block = LeadBlock | StoryBlock | ComicBlock | FactsBlock;
 export type BlockType = Block['type'];
+
+// ---- Library: the editorial layer around papers (front page, issues, companies, map) ----
+
+/** Where a field's cloud sits on the 800 × 600 map. */
+export interface LibraryField {
+  id: string; label: string; color: string;
+  cluster: { cx: number; cy: number; rx: number; ry: number; labelX: number; labelY: number };
+}
+export type SampleArtKind = 'dna' | 'protein' | 'waves' | 'stairs' | 'particle' | 'mold';
+export type StoryRole = 'lead' | 'feature' | 'brief' | 'vault' | 'real_world';
+
+export interface LibraryStory {
+  id: string;
+  /** True for the one story that has a real page; everything else is layout-only and labelled Sample. */
+  sample: boolean;
+  real?: boolean;
+  headline: string;
+  accent?: string;
+  dek: string;
+  desk: string;
+  fields: string[];
+  role: StoryRole;
+  kind: 'paper' | 'blog' | 'classic';
+  title: string;
+  authors: string;
+  year: number;
+  trust?: 'peer_reviewed' | 'preprint' | 'company_reported';
+  art?: SampleArtKind;
+  minutes: number;
+  note?: string;
+  issue?: string;
+  company?: string;
+  builtOn?: string;
+  vaultNote?: string;
+}
+
+export interface LibraryIssue {
+  id: string;
+  volume: string;
+  number: string;
+  title: string;
+  color: string;
+  sample: boolean;
+  published?: string;
+  editorNote?: string;
+  stories?: string[];
+  covers?: string;
+  classics?: number;
+}
+
+export interface LibraryCompany {
+  id: string;
+  name: string;
+  sector: string;
+  blurb: string;
+  postsFollowed: number;
+  posts: string[];
+  builtOn: string[];
+  coming: string[];
+}
+
+export interface Storyline {
+  id: string;
+  title: string;
+  sample: boolean;
+  steps: { year: string; label: string; current?: boolean }[];
+}
+
+export interface GraphNode {
+  id: string;
+  title: string;
+  authors: string;
+  year: number;
+  field: string;
+  type: 'paper' | 'blog';
+  x: number;
+  y: number;
+  /** Story id when we have explained it. */
+  story?: string;
+  /** Short label for the map. */
+  short?: string;
+  blurb?: string;
+}
+
+export interface GraphRelation {
+  from: string;
+  to: string;
+  kind: 'builds_on' | 'improves_on' | 'uses_method';
+  note: string;
+  cited?: boolean;
+  crossField?: boolean;
+}
+
+export interface Library {
+  schemaVersion: 1;
+  fields: LibraryField[];
+  stories: LibraryStory[];
+  front: {
+    lead: string; aside: string[]; more: string[];
+    topics: { field: string; label: string; stories: string[] }[];
+    real: string[]; storylines: string[]; vault: string;
+    onThisDay: { year: string; text: string; story: string };
+  };
+  issues: LibraryIssue[];
+  companies: LibraryCompany[];
+  storylines: Storyline[];
+  nodes: GraphNode[];
+  relations: GraphRelation[];
+}

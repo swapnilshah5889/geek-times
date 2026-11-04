@@ -175,3 +175,13 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - Virality comes from curiosity and clarity, not deception: every hook line must be true and answered by the
       issue (see `skills/explain-source`).
     - Motion obeys the same pause switch and reduced-motion setting as every other graphic.
+
+29. **The front page is design D, built from data.** (Supersedes the grid rule in decision 27; the owner picked D and asked
+    for it, and the pages around it, to be built.)
+    - `public/data/library.json` is the editorial layer: stories, front-page picks, issues, companies, storylines and the
+      idea graph (`nodes` + `relations`). Real papers still live in `papers/<slug>.json`.
+    - Everything in the library that is not a converted paper has `sample: true`, is labelled "Sample" on screen, and
+      links to a placeholder page with no findings. Samples hold the layout until real stories replace them.
+    - New routes: `/issues[/<id>]`, `/companies[/<id>]`, `/map` (with a list view), plus a family tree on story pages.
+    - `npm run data` checks that every library reference points at something that exists.
+    - The cover `hook` (decision 28) stays in the data but the front page does not use it yet.

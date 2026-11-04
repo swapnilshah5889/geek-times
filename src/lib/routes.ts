@@ -16,3 +16,7 @@ export function currentPath(): string {
   const rest = path.startsWith(BASE) ? path.slice(BASE.length) : path.replace(/^\//, '');
   return decodeURIComponent(rest).replace(/\/$/, '');
 }
+
+export const issueHref = (id: string) => appHref(`issues/${encodeURIComponent(id)}`);
+export const companyHref = (id: string) => appHref(`companies/${encodeURIComponent(id)}`);
+export const mapHref = (focus?: string) => appHref(`map${focus ? `?focus=${encodeURIComponent(focus)}` : ''}`);

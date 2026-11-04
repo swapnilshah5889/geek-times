@@ -1,4 +1,4 @@
-import type { PaperDoc, SearchIndex, SiteConfig, TagVocabulary } from '../types';
+import type { Library, PaperDoc, SearchIndex, SiteConfig, TagVocabulary } from '../types';
 
 const BASE = new URL(import.meta.env.BASE_URL, window.location.origin);
 
@@ -29,6 +29,7 @@ export function mediaBaseFor(site: SiteConfig): string {
 
 export const loadSite = () => getJson<SiteConfig>('data/site.json');
 export const loadVocabulary = () => getJson<TagVocabulary>('data/tags.json');
+export const loadLibrary = () => getJson<Library>('data/library.json');
 export const loadSearchIndex = () => getJson<SearchIndex>('data/search-index.json');
 
 export interface Edition {
@@ -52,9 +53,10 @@ export interface Archive {
   site: SiteConfig;
   vocab: TagVocabulary;
   index: SearchIndex;
+  library: Library;
 }
 
 export async function loadArchive(): Promise<Archive> {
-  const [site, vocab, index] = await Promise.all([loadSite(), loadVocabulary(), loadSearchIndex()]);
-  return { site, vocab, index };
+  const [site, vocab, index, library] = await Promise.all([loadSite(), loadVocabulary(), loadSearchIndex(), loadLibrary()]);
+  return { site, vocab, index, library };
 }
