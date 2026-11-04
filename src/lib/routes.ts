@@ -10,7 +10,7 @@ export const feedHref = () => appHref('?feed');
 export const paperHref = (slug: string, anchor?: string) =>
   appHref(`papers/${encodeURIComponent(slug)}${anchor ? `#${anchor}` : ''}`);
 
-/** The current path without the deploy base, e.g. "papers/attention-is-all-you-need". */
+/** The current path without the deploy base, e.g. "papers/1706.03762". */
 export function currentPath(): string {
   const path = window.location.pathname;
   const rest = path.startsWith(BASE) ? path.slice(BASE.length) : path.replace(/^\//, '');

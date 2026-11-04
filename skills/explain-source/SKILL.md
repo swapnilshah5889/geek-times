@@ -5,7 +5,7 @@ description: Turn a research paper or a company engineering blog post into a Gee
 
 # Explain a source as a Geeky Times story
 
-The reference example is `public/data/papers/attention-is-all-you-need.json`. Match its tone, structure and honesty.
+The reference example is `public/data/papers/1706.03762.json`. Match its tone, structure and honesty.
 
 ## 1. Read and understand
 

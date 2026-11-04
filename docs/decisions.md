@@ -185,3 +185,8 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - New routes: `/issues[/<id>]`, `/companies[/<id>]`, `/map` (with a list view), plus a family tree on story pages.
     - `npm run data` checks that every library reference points at something that exists.
     - The cover `hook` (decision 28) stays in the data but the front page does not use it yet.
+
+30. **A paper's URL uses its source id, not a title-based slug.** `/papers/1706.03762` and `/papers/2408.04070`.
+    - The `slug` is the arXiv id (or a DOI, or a blog post's slug). It also names the data file and the media folder.
+    - Old title-based URLs stay valid as `aliases` in `site.json` and redirect to the new one.
+    - The hosting setup must serve `index.html` for these paths even though they contain a dot.

@@ -29,7 +29,7 @@ Rules that apply the whole way through (full text in `AGENTS.md`):
 
 ## 1. Write the story JSON (`explain-source`)
 
-Create `public/data/papers/<slug>.json`. Use `attention-is-all-you-need.json` as the shape reference.
+Create `public/data/papers/<slug>.json`. Use `1706.03762.json` as the shape reference.
 - Blocks, in order: `lead`, `story` (4 chapters), `comic` (4–6 strips × 3 panels), `facts` (4–6 numbers).
 - Top level: `summary`, `hook` (sticker, teaser, cta, readMinutes, optional stat and frames), `issue`, `paper`, `tags`.
 - **Every fact gets `claim`:** `model_design` (how it was built or argued) or `measured_result` (what a test found).

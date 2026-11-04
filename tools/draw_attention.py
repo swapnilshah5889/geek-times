@@ -1,8 +1,8 @@
 """Draws the comic panels and fact icons for "Attention Is All You Need".
 
 Run from the repo root:  python3 tools/draw_attention.py
-Writes standalone SVG files to public/media/attention-is-all-you-need/{comic,facts}/.
-Words, captions and which file goes where live in public/data/papers/attention-is-all-you-need.json.
+Writes standalone SVG files to public/media/1706.03762/{comic,facts}/.
+Words, captions and which file goes where live in public/data/papers/1706.03762.json.
 """
 import math
 from pathlib import Path
@@ -10,7 +10,7 @@ from pathlib import Path
 from media_kit import (COL, EIGHT, INK, RED, anim, bubble, buddy, can, gear, mini_bat, panel, stick_bat,
                        standalone, t, write)
 
-OUT = Path(__file__).resolve().parent.parent / 'public' / 'media' / 'attention-is-all-you-need'
+OUT = Path(__file__).resolve().parent.parent / 'public' / 'media' / '1706.03762'
 PANELS = []   # (file name, title, body)
 
 

@@ -2,15 +2,15 @@
 ("Why a bigger deer breaks", from arXiv 2408.04070).
 
 Run from the repo root:  python3 tools/draw_scaling.py
-Writes standalone SVG files to public/media/size-shapes-life/{lead,story,comic,facts}/.
-Words, captions and which file goes where live in public/data/papers/size-shapes-life.json.
+Writes standalone SVG files to public/media/2408.04070/{lead,story,comic,facts}/.
+Words, captions and which file goes where live in public/data/papers/2408.04070.json.
 """
 import math
 from pathlib import Path
 
 from media_kit import COMIC_CSS, INK, RED, anim, bubble, panel, standalone, t, write
 
-OUT = Path(__file__).resolve().parent.parent / 'public' / 'media' / 'size-shapes-life'
+OUT = Path(__file__).resolve().parent.parent / 'public' / 'media' / '2408.04070'
 FILES = []   # (relative path, title, viewbox, body, css)
 
 BROWN, FAWN, SAND, MINT, SKY = '#7b5a3c', '#efae78', '#f7d79b', '#a2c2a7', '#82acad'

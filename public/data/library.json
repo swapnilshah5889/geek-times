@@ -57,7 +57,7 @@
   ],
   "stories": [
     {
-      "id": "attention-is-all-you-need",
+      "id": "1706.03762",
       "real": true,
       "headline": "One word,",
       "accent": "two worlds.",
@@ -78,7 +78,7 @@
       "sample": false
     },
     {
-      "id": "size-shapes-life",
+      "id": "2408.04070",
       "real": true,
       "headline": "Why a bigger deer",
       "accent": "breaks.",
@@ -224,7 +224,7 @@
       "trust": "company_reported",
       "company": "streaming",
       "minutes": 6,
-      "builtOn": "attention-is-all-you-need",
+      "builtOn": "1706.03762",
       "sample": true
     },
     {
@@ -303,14 +303,14 @@
     }
   ],
   "front": {
-    "lead": "size-shapes-life",
+    "lead": "2408.04070",
     "aside": [
       "crispr",
       "alphafold",
       "penicillin"
     ],
     "more": [
-      "attention-is-all-you-need",
+      "1706.03762",
       "ligo",
       "resnet"
     ],
@@ -319,7 +319,7 @@
         "field": "ai",
         "label": "AI & computers",
         "stories": [
-          "attention-is-all-you-need",
+          "1706.03762",
           "resnet",
           "alphafold"
         ]
@@ -328,7 +328,7 @@
         "field": "bio",
         "label": "Your body & medicine",
         "stories": [
-          "size-shapes-life",
+          "2408.04070",
           "crispr",
           "penicillin"
         ]
@@ -361,9 +361,9 @@
       "published": "Friday, [publish date]",
       "editorNote": "[Two or three sentences from the editor: why these stories belong together this week, and where to start reading.]",
       "stories": [
-        "size-shapes-life"
+        "2408.04070"
       ],
-      "covers": "size-shapes-life",
+      "covers": "2408.04070",
       "sample": false
     },
     {
@@ -375,14 +375,14 @@
       "published": "Friday, [publish date]",
       "editorNote": "[Two or three sentences from the editor: why these stories belong together this week, and where to start reading.]",
       "stories": [
-        "attention-is-all-you-need",
+        "1706.03762",
         "resnet",
         "alphafold",
         "blog-social",
         "ligo",
         "penicillin"
       ],
-      "covers": "attention-is-all-you-need",
+      "covers": "1706.03762",
       "sample": false
     },
     {
@@ -565,7 +565,7 @@
       "type": "paper",
       "x": 320,
       "y": 220,
-      "story": "attention-is-all-you-need",
+      "story": "1706.03762",
       "short": "The Transformer"
     },
     {
@@ -756,7 +756,7 @@
       "type": "paper",
       "x": 690,
       "y": 275,
-      "story": "size-shapes-life"
+      "story": "2408.04070"
     }
   ],
   "relations": [

@@ -5,17 +5,23 @@
   "tagline": "An independent illustrated science edition",
   "navLabel": "✦   The illustrated paper",
   "mediaBaseUrl": "media/",
-  "defaultPaper": "attention-is-all-you-need",
+  "defaultPaper": "1706.03762",
   "papers": [
     {
-      "slug": "attention-is-all-you-need",
+      "slug": "1706.03762",
       "title": "Attention Is All You Need",
-      "dataUrl": "data/papers/attention-is-all-you-need.json"
+      "dataUrl": "data/papers/1706.03762.json",
+      "aliases": [
+        "attention-is-all-you-need"
+      ]
     },
     {
-      "slug": "size-shapes-life",
+      "slug": "2408.04070",
       "title": "Integrating Evolutionary Biology into Physics Classroom",
-      "dataUrl": "data/papers/size-shapes-life.json"
+      "dataUrl": "data/papers/2408.04070.json",
+      "aliases": [
+        "size-shapes-life"
+      ]
     }
   ]
 }
