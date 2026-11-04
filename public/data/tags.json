@@ -86,6 +86,38 @@
 
     { "id": "everyday/language", "facet": "everyday", "label": "Language and words", "aliases": ["words", "reading", "talking"] },
     { "id": "everyday/translation", "facet": "everyday", "label": "Translating languages", "aliases": ["other languages", "German", "French"] },
-    { "id": "everyday/smart-computers", "facet": "everyday", "label": "Smart computers", "aliases": ["robots", "AI", "thinking machines"] }
+    { "id": "everyday/smart-computers", "facet": "everyday", "label": "Smart computers", "aliases": ["robots", "AI", "thinking machines"] },
+
+    { "id": "field/physics", "facet": "field", "label": "Physics" },
+    { "id": "field/biology", "facet": "field", "label": "Biology" },
+
+    { "id": "area/biophysics", "facet": "area", "label": "Biophysics", "aliases": ["biological physics"] },
+    { "id": "area/physics-education", "facet": "area", "label": "Physics education", "aliases": ["teaching physics"] },
+    { "id": "area/evolutionary-biology", "facet": "area", "label": "Evolutionary biology" },
+
+    { "id": "concept/surface-area-to-volume-ratio", "facet": "concept", "label": "Surface area to volume ratio", "aliases": ["A/V ratio", "surface to volume", "surface area to volume"] },
+    { "id": "concept/scaling-laws", "facet": "concept", "label": "Scaling laws", "aliases": ["scaling", "square-cube law", "size and shape"] },
+    { "id": "concept/diffusion", "facet": "concept", "label": "Diffusion", "aliases": ["oxygen diffusion"] },
+    { "id": "concept/heat-loss", "facet": "concept", "label": "Heat loss", "aliases": ["staying warm", "radiative cooling"] },
+    { "id": "concept/load-bearing", "facet": "concept", "label": "Load bearing", "aliases": ["stress", "pressure on bones"] },
+    { "id": "concept/wing-loading", "facet": "concept", "label": "Wing loading", "aliases": ["wing area"] },
+    { "id": "concept/natural-selection", "facet": "concept", "label": "Natural selection" },
+    { "id": "concept/supercapacitors", "facet": "concept", "label": "Supercapacitors", "aliases": ["batteries", "graphene"] },
+
+    { "id": "technique/concept-cartoon-clicker-questions", "facet": "technique", "label": "Concept cartoon clicker questions", "aliases": ["clicker questions", "concept cartoons"] },
+
+    { "id": "use/lungs-and-gills", "facet": "use", "label": "Lungs and gills", "aliases": ["breathing", "respiratory system"] },
+    { "id": "use/aircraft-design", "facet": "use", "label": "Aircraft design", "aliases": ["aviation", "airplanes"] },
+
+    { "id": "organization/university-of-maryland-eastern-shore", "facet": "organization", "label": "University of Maryland Eastern Shore" },
+
+    { "id": "author/kausik-s-das", "facet": "author", "label": "Kausik S Das", "aliases": ["Das"] },
+    { "id": "author/larry-gonick", "facet": "author", "label": "Larry Gonick", "aliases": ["Gonick"] },
+    { "id": "author/salem-al-mosleh", "facet": "author", "label": "Salem Al Mosleh", "aliases": ["Al Mosleh"] },
+
+    { "id": "everyday/animals", "facet": "everyday", "label": "Animals and their bodies", "aliases": ["animal bodies", "deer"] },
+    { "id": "everyday/size-and-shape", "facet": "everyday", "label": "Big and small", "aliases": ["big and small", "giants"] },
+    { "id": "everyday/staying-warm", "facet": "everyday", "label": "Staying warm", "aliases": ["body heat"] },
+    { "id": "everyday/flying", "facet": "everyday", "label": "Flying", "aliases": ["birds", "wings"] }
   ]
 }

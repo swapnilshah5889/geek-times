@@ -42,10 +42,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#abstract1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Physics"
-      }
+      "status": "approved"
     },
     {
       "tag": "field/biology",
@@ -53,10 +50,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#abstract1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Biology"
-      }
+      "status": "approved"
     },
     {
       "tag": "area/biophysics",
@@ -64,11 +58,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#abstract1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Biophysics",
-        "parent": "field/physics"
-      }
+      "status": "approved"
     },
     {
       "tag": "area/physics-education",
@@ -76,11 +66,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#abstract1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Physics education",
-        "parent": "field/physics"
-      }
+      "status": "approved"
     },
     {
       "tag": "area/evolutionary-biology",
@@ -88,11 +74,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S3",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Evolutionary biology",
-        "parent": "field/biology"
-      }
+      "status": "approved"
     },
     {
       "tag": "concept/surface-area-to-volume-ratio",
@@ -100,10 +82,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S2",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Surface area to volume ratio"
-      }
+      "status": "approved"
     },
     {
       "tag": "concept/scaling-laws",
@@ -111,10 +90,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Scaling laws"
-      }
+      "status": "approved"
     },
     {
       "tag": "concept/diffusion",
@@ -122,10 +98,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S3.SS1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Diffusion"
-      }
+      "status": "approved"
     },
     {
       "tag": "concept/heat-loss",
@@ -133,10 +106,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S3.SS3",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Heat loss"
-      }
+      "status": "approved"
     },
     {
       "tag": "concept/load-bearing",
@@ -144,10 +114,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S3.SS4",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Load bearing"
-      }
+      "status": "approved"
     },
     {
       "tag": "concept/wing-loading",
@@ -155,10 +122,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S4.SS1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Wing loading"
-      }
+      "status": "approved"
     },
     {
       "tag": "concept/natural-selection",
@@ -166,10 +130,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Natural selection"
-      }
+      "status": "approved"
     },
     {
       "tag": "concept/supercapacitors",
@@ -177,10 +138,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S4.SS2",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Supercapacitors"
-      }
+      "status": "approved"
     },
     {
       "tag": "technique/concept-cartoon-clicker-questions",
@@ -188,10 +146,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#abstract1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Concept cartoon clicker questions"
-      }
+      "status": "approved"
     },
     {
       "tag": "use/lungs-and-gills",
@@ -199,10 +154,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S3.SS1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Lungs and gills"
-      }
+      "status": "approved"
     },
     {
       "tag": "use/aircraft-design",
@@ -210,10 +162,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070#S4.SS1",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Aircraft design"
-      }
+      "status": "approved"
     },
     {
       "tag": "organization/university-of-maryland-eastern-shore",
@@ -221,10 +170,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "University of Maryland Eastern Shore"
-      }
+      "status": "approved"
     },
     {
       "tag": "author/kausik-s-das",
@@ -232,10 +178,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Kausik S Das"
-      }
+      "status": "approved"
     },
     {
       "tag": "author/larry-gonick",
@@ -243,10 +186,7 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Larry Gonick"
-      }
+      "status": "approved"
     },
     {
       "tag": "author/salem-al-mosleh",
@@ -254,50 +194,35 @@
       "basis": "paper",
       "evidence": "https://arxiv.org/html/2408.04070",
       "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Salem Al Mosleh"
-      }
+      "status": "approved"
     },
     {
       "tag": "everyday/animals",
       "relevance": 0.8,
       "basis": "editorial",
-      "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Animals and their bodies"
-      }
+      "source": "editor",
+      "status": "approved"
     },
     {
       "tag": "everyday/size-and-shape",
       "relevance": 0.9,
       "basis": "editorial",
-      "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Big and small"
-      }
+      "source": "editor",
+      "status": "approved"
     },
     {
       "tag": "everyday/staying-warm",
       "relevance": 0.4,
       "basis": "editorial",
-      "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Staying warm"
-      }
+      "source": "editor",
+      "status": "approved"
     },
     {
       "tag": "everyday/flying",
       "relevance": 0.4,
       "basis": "editorial",
-      "source": "ai",
-      "status": "suggested",
-      "proposed": {
-        "label": "Flying"
-      }
+      "source": "editor",
+      "status": "approved"
     }
   ],
   "issue": {

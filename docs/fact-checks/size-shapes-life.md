@@ -21,4 +21,4 @@ Checked against the arXiv HTML text and abstract page on 2026-11-04. Anchors bel
 Claim kinds: the 125-vs-25, 5×, 1,250 and 4×→2× numbers are `model_design` (derivations and estimates). Only the 0.50 slope
 across 14 species is a `measured_result`, from data the authors collected from their Ref. [27].
 
-Open for the owner: all tags are `suggested` (new vocabulary), so none appear on the site until approved.
+Tags: 24 new vocabulary entries were approved by the owner on 2026-11-04; all 27 tags on the story are approved.
