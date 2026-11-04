@@ -1,4 +1,4 @@
-"""Shared drawing kit for Geeky Times media.
+"""Shared drawing kit for The Geeky Times media.
 
 Every graphic is written as a standalone, self-contained animated SVG file: its own <style>, <defs> and
 reduced-motion rule, no scripts and no outside references. The same file therefore works as an <img>,

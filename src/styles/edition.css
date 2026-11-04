@@ -1,4 +1,4 @@
-/* Geeky Times: newspaper layout for any paper's data. Graphics carry their own styles. */
+/* The Geeky Times: newspaper layout for any paper's data. Graphics carry their own styles. */
 :root{--ink:#27251e;--paper:#f6f0df;--red:#a13324;--line:#948b77}
 *{box-sizing:border-box}
 body{margin:0;color:var(--ink);background:var(--paper);font-family:Georgia,'Times New Roman',serif;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='1' cy='1' r='.6' fill='%238f7960' opacity='.19'/%3E%3C/svg%3E")}
@@ -6,7 +6,7 @@ main{max-width:1210px;margin:auto;padding:24px clamp(18px,4vw,60px) 44px}
 .meta,.label,nav,.controls,footer{font:700 11px/1.5 'Courier New',monospace;text-transform:uppercase;letter-spacing:.095em}
 .meta,nav,footer,.controls{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .meta{border-bottom:1px solid;padding-bottom:8px}
-.mast{font-size:clamp(46px,8.1vw,104px);letter-spacing:-.078em;font-weight:900;line-height:1.08;text-align:center;padding:12px 0 0}
+.mast{font-size:clamp(30px,9.6vw,104px);letter-spacing:-.078em;font-weight:900;line-height:1.08;text-align:center;padding:12px 0 0}
 .motto{text-align:center;font-style:italic;padding:0 0 16px}
 nav{border-top:4px double;border-bottom:1px solid;padding:8px 0}nav .links{display:flex;gap:18px;flex-wrap:wrap}
 a{color:inherit;text-underline-offset:3px}

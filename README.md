@@ -1,4 +1,4 @@
-# Geeky Times
+# The Geeky Times
 
 Research papers explained in pictures, for anyone, kids included. Issue 001 covers
 "Attention Is All You Need" (Vaswani et al., 2017).
