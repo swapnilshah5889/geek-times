@@ -9,8 +9,10 @@ Desktop mockups for The Geeky Times, exported from the design canvas on 2026-11-
 - renamed story tabs and plain-language explanations
 - larger labels
 - a real year control and a list view on the map
-- the v2 data model They're the agreed direction
-before building. The reasons behind them are in `../docs/decisions.md` and `../docs/product-plan.md`.
+- the v2 data model
+
+They're the agreed direction before building. The reasons behind them are in `../docs/decisions.md` and
+`../docs/product-plan.md`.
 
 | # | Image | What it shows |
 |---|---|---|
@@ -48,7 +50,8 @@ Please comment on:
 4. **Navigation model:** issues/volumes as packaging, plus topics, storylines, the graph and search for discovery. Does it hold
    together?
 5. **Data model:** can it support everything in the pages above? Look for missing fields or relations, and things that
-   will hurt at scale (for example the generic `Block`/`BlockItem`, and `Relation` between sources).
+   will hurt at scale (for example the typed `PublishedVersion` document plus extracted `Moment` and `Fact` tables, and
+   `Relation` with `RelationEvidence`).
 6. **Accessibility and responsiveness risks** to fix before building (mobile comes after desktop).
 7. **Build order:** anything in `../docs/roadmap.md` that should move?
 
