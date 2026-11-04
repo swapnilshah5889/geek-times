@@ -317,7 +317,6 @@ export interface LibraryIssue {
   color: string;
   sample: boolean;
   published?: string;
-  editorNote?: string;
   stories?: string[];
   covers?: string;
   classics?: number;
@@ -372,8 +371,6 @@ export interface Library {
   stories: LibraryStory[];
   front: {
     lead: string; aside: string[]; more: string[];
-    /** The issue the "More from" row belongs to; defaults to the latest issue. */
-    moreIssue?: string;
     topics: { field: string; label: string; stories: string[] }[];
     real: string[]; storylines: string[]; vault: string;
     onThisDay: { year: string; text: string; story: string };

@@ -35,7 +35,7 @@ Follow `convert-paper` steps 6–8. In short:
 
 ## After content model v2 (roadmap item 3)
 
-Issues become their own records (`volume`, `number`, `title`, `theme`, `editorNote`, `publishedAt`, `stories` with
+Issues become their own records (`volume`, `number`, `title`, `theme`, `publishedAt`, `stories` with
 roles). Assemble one by picking the week's best published stories, choosing the lead (the most visual, broadest
 appeal), and adding vault picks suggested by the graph (unexplained or old nodes with many links). Then write a
 2–3 sentence editor's note.

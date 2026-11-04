@@ -341,8 +341,7 @@
       "year": "[Year]",
       "text": "[A famous paper] was published. See how it changed what came next.",
       "story": "penicillin"
-    },
-    "moreIssue": "001"
+    }
   },
   "issues": [
     {
@@ -352,7 +351,6 @@
       "title": "Why size matters",
       "color": "#a2c2a7",
       "published": "Friday, [publish date]",
-      "editorNote": "[Two or three sentences from the editor: why these stories belong together this week, and where to start reading.]",
       "stories": [
         "size-shapes-life"
       ],
@@ -366,7 +364,6 @@
       "title": "How machines learned to read",
       "color": "#82acad",
       "published": "Friday, [publish date]",
-      "editorNote": "[Two or three sentences from the editor: why these stories belong together this week, and where to start reading.]",
       "stories": [
         "attention-is-all-you-need",
         "resnet",

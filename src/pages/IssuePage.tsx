@@ -43,7 +43,7 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
 
   return (
     <SitePage archive={archive} title={`Issue ${issue.number}: ${issue.title}`} active="issues">
-      <Crumbs items={[{ href: appHref('issues'), label: 'Issues' }, `Volume ${issue.volume}`, `Issue ${issue.number}`]} />
+      <Crumbs items={[{ href: appHref('issues'), label: 'Editions' }, `Volume ${issue.volume}`, `Issue ${issue.number}`]} />
       <section className="is-hero">
         <div className="is-cover" style={{ background: issue.color }}>
           <div className="label-ink is-cover-top"><span>The Geeky Times</span><span>Vol. {issue.volume} · {issue.volume === 'I' ? `No. ${issue.number}` : issue.number}</span></div>
@@ -53,9 +53,6 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
         <div className="is-intro">
           <span className="label">Volume {issue.volume} · Issue {issue.number}{issue.published ? ` · Published ${issue.published}` : ''}{issue.sample && ' · Sample'}</span>
           <h1>{words.join(' ')} <em>{last}</em></h1>
-          {issue.editorNote && (
-            <div className="is-note"><span className="label">Editor’s note · Sample</span><p>{issue.editorNote}</p></div>
-          )}
           {stories.length > 0 ? (
             <>
               <div className="is-stats"><span>{stories.length} stories</span><span>{mix}</span><span>About {Math.round(total / 5) * 5} minutes</span></div>

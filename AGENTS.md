@@ -103,8 +103,8 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 - **Design language:** cream newsprint (`#f6f0df`), ink (`#27251e`), red accent (`#a13324`), Georgia serif
   headlines, Courier labels, halftone dots, muted cartoon colours, word-buddy characters. Front page = layout **D**
   (broadsheet above the fold, soft bento below). Desktop first, mobile next.
-- **Navigation is the same on every page:** Front page · Explore (Topics, Storylines, Map) · Issues · Real world ·
-  Snacks · Search.
+- **Navigation is the same on every page:** Front page · Explore (Topics, Storylines, Map) · Real world · Snacks · Editions ·
+  Search (decision 32: editions are a quiet extra).
 - **Every component ships responsive and accessible:** no horizontal overflow at 375px, labels ≥12px, 44px tap
   targets, keyboard rails, reduced motion respected.
 - **Ask before** anything public or irreversible (publishing, pushing to main, contacting companies, buying domains).

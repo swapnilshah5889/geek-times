@@ -104,7 +104,7 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 - [ ] Three to five more papers across fields, through `skills/convert-paper`, so every front-page section has real
       stories.
 - [ ] Verify family-tree and map relations with citations (`RelationEvidence`); hide unverified links from readers.
-- [ ] Real issue metadata: publish dates, editor's notes, at least two real back issues.
+- [ ] Real edition metadata: publish dates and at least two real past editions (no editor's note).
 - [ ] A switch that hides everything marked `sample` in production builds; remove all `[placeholder]` text.
 
 ### Phase 3: Platform

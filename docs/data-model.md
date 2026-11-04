@@ -52,7 +52,7 @@ classDiagram
   direction LR
 
   class Volume { number; title; kind: regular|special; year }
-  class Issue { volume→Volume; number; title; theme; editorNote; cover→MediaAsset; publishedAt; status }
+  class Issue { volume→Volume; number; title; theme; cover→MediaAsset; publishedAt; status }
   class IssueStory { issue→Issue; story→Story; position; role: lead|feature|brief|vault|real_world; presentation: full|brief|snack }
 
   class Story { slug (unique, public key); pageTitle; summary; readingLevel; status: draft|review|scheduled|published; publishedAt; cover→MediaAsset }

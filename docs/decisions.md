@@ -62,7 +62,7 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
 12. **Volumes and issues are the publishing rhythm, not the main navigation.**
     - A volume is a year.
     - An issue is a curated package of several stories (one lead, features, briefs, a "From the vault" classic), with
-      a theme and an editor's note.
+      a theme.
     - Discovery runs through topics, storylines, the graph and search.
 
     *Why:* issues create habit and shareable moments, but nobody searches by issue number.
@@ -203,3 +203,15 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       issue number, a volume or a date of ours. They show the desk and the source's own year ("Paper from 2017").
     - Issue membership lives only in `library.json` → `issues[].stories`. Our dates (`published`) live only on issues
       and volumes. The front page and issue pages may name the issue, because they *are* the issue.
+
+32. **Editions are a quiet, hand-made extra, not the focus of the app.** (The owner's call; builds on 12 and 31.)
+    - The owner assembles an issue by hand every week and a volume every month, to give readers a newspaper feel.
+      (The owner has not yet confirmed that a volume is a month rather than a year; until then volume labels stay as
+      they are.)
+    - Stories are the product. The front page is not "the current issue": the lead says "Lead story", the masthead has
+      no issue number, and the main row is "More top stories".
+    - Where editions show: a small "Editions" link in the nav (after Snacks), a "Weekly edition →" link in the
+      masthead's top-right corner, a "This week's edition" card in the front-page sidebar, one slim band near the
+      bottom, and "Editions / Past editions" links in the footer. The old row of back-issue covers is gone.
+    - Issue pages don't promise an editor's note or any other text we haven't written. They show the cover, the
+      contents with roles, the story cards and previous/next.
