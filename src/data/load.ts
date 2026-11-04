@@ -22,6 +22,11 @@ function getJson<T extends { schemaVersion?: number }>(url: string): Promise<T> 
   return cache.get(url) as Promise<T>;
 }
 
+/** A deployment can point media at a CDN without touching the data. */
+export function mediaBaseFor(site: SiteConfig): string {
+  return appUrl(import.meta.env.VITE_MEDIA_BASE_URL || site.mediaBaseUrl);
+}
+
 export const loadSite = () => getJson<SiteConfig>('data/site.json');
 export const loadVocabulary = () => getJson<TagVocabulary>('data/tags.json');
 export const loadSearchIndex = () => getJson<SearchIndex>('data/search-index.json');
@@ -40,9 +45,7 @@ export async function loadEdition(slug: string | null): Promise<Edition> {
   const entry = site.papers.find(p => p.slug === wanted);
   if (!entry) throw new Error(`No paper called “${wanted}”.`);
   const doc = await getJson<PaperDoc>(entry.dataUrl);
-  // A deployment can point media at a CDN without touching the data.
-  const mediaBaseUrl = appUrl(import.meta.env.VITE_MEDIA_BASE_URL || site.mediaBaseUrl);
-  return { site, doc, vocab, mediaBaseUrl };
+  return { site, doc, vocab, mediaBaseUrl: mediaBaseFor(site) };
 }
 
 export interface Archive {

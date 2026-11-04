@@ -180,6 +180,7 @@
         },
         {
           "title": "Many lookers",
+          "coverPanel": 1,
           "kicker": "Why one look is not enough",
           "provenance": "illustration",
           "grownUpWords": "multi-head attention, with 8 heads",

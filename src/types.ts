@@ -24,8 +24,10 @@ export interface PaperDoc {
   schemaVersion: 1;
   slug: string;
   pageTitle: string;
-  /** One or two plain-language sentences; shown on search results. */
+  /** One or two plain-language sentences; shown on the home page and in search results. */
   summary: string;
+  /** How the paper appears on the home page. Optional: without it, the lead block is used. */
+  cover?: Cover;
   issue: { volume: string; number: string; desk: string };
   paper: { title: string; authors: string; year: number; url: string };
   tags: PaperTag[];
@@ -98,9 +100,37 @@ export interface PaperTag {
   proposed?: Omit<TagDef, 'id' | 'facet'>;
 }
 
-/** Built from all papers by scripts/build-index.ts (a search query against the database later). */
+export interface Cover {
+  kicker: string;
+  headline: { text: string; accent?: string };
+  dek: string;
+  media: Media;
+}
+
+/**
+ * A bite-size piece of a paper (one comic strip, story chapter or fact) for home page cards and the
+ * swipe feed. Derived from the paper's blocks by scripts/build-index.ts; `href` deep-links into the issue.
+ */
+export interface Moment {
+  id: string;
+  paper: string;
+  kind: 'strip' | 'chapter' | 'fact';
+  kicker: string;
+  title: string;
+  /** Plain text (markup removed), so cards can be links. */
+  text: string;
+  media?: Media;
+  /** Big number for fact cards, e.g. "512". */
+  figure?: string;
+  provenance?: Provenance;
+  href: string;
+}
+
+/** Built from all papers by scripts/build-index.ts (queries against the database later). */
 export interface SearchIndex {
   schemaVersion: 1;
+  /** The paper the home page leads with. */
+  featured: string;
   papers: SearchEntry[];
 }
 
@@ -112,6 +142,8 @@ export interface SearchEntry {
   authors: string;
   year: number;
   issue: string;
+  cover: Cover;
+  moments: Moment[];
   tags: { id: string; relevance: number }[];
 }
 
@@ -180,6 +212,10 @@ export interface ComicBlock extends BlockBase {
 }
 
 export interface Strip {
+  /** Anchor for deep links (home page cards). Defaults to "<block id>-<n>". */
+  id?: string;
+  /** Which panel represents the strip on the home page and in the feed (0-based). Defaults to the last one. */
+  coverPanel?: number;
   title: string;
   kicker?: string;
   provenance?: Provenance;

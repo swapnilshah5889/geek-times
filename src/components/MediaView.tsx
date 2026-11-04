@@ -1,6 +1,6 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
-import { useEdition } from '../edition';
 import type { Media } from '../types';
+import { useMediaBase } from '../lib/mediaBase';
 import { useInView, useMotion } from '../lib/motion';
 
 // Renders one media entry. `src` is resolved against mediaBaseUrl, so moving files to a CDN or S3
@@ -72,7 +72,7 @@ function Video({ url, poster, paused }: { url: string; poster?: string; paused: 
 }
 
 export function MediaView({ media }: { media: Media }) {
-  const { mediaBaseUrl } = useEdition();
+  const mediaBaseUrl = useMediaBase();
   const { held } = useMotion();
   const box = useRef<HTMLDivElement>(null);
   const inView = useInView(box);

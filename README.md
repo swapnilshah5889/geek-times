@@ -38,7 +38,8 @@ src/
   components/motion.tsx        MotionGroup (a section's pause switch) and MotionButton
   lib/motion.ts                on-screen detection, reduced-motion hook, motion context
   lib/tags.ts                  tag lookups and paper search
-  pages/                       PaperPage (an issue) and SearchPage (the archive)
+  lib/front.ts                 front page and feed layout from the index
+  pages/                       HomePage (bento), PaperPage (an issue), FeedPage (swipe), SearchPage (archive)
   styles/edition.css           the newspaper look
 public/
   data/site.json               site settings, list of papers, mediaBaseUrl
@@ -53,8 +54,19 @@ tools/
   draw_attention.py            draws this paper's comic panels and fact icons into public/media
 ```
 
-Open a paper with `?paper=<slug>`. Without it you get `defaultPaper` from `site.json`. Search the archive with
-`?search`, adding `q=<words>` and `tag=<tag id>` (repeatable). Every search is a shareable link.
+Pages:
+
+| URL | Page |
+|---|---|
+| `/` | Front page: a newspaper bento with the featured issue (`defaultPaper` in `site.json`) as the hero and bite-size cards |
+| `?paper=<slug>` | One issue. Cards deep-link into it, e.g. `?paper=<slug>#machine-3` |
+| `?feed` | Snack mode: full-screen cards you swipe through, each one a piece of a paper with a link into the issue |
+| `?search` | The archive, with `q=<words>` and repeatable `tag=<tag id>`. Every search is a shareable link |
+
+The front page and the feed are built from **moments**: every comic strip, story chapter and fact, derived from
+the paper's blocks by `npm run data`. A strip's `coverPanel` picks which panel represents it. A paper's optional `cover`
+overrides the hero, which otherwise comes from its lead block. Nothing on the front page is hand-placed, so it fills
+up as papers are added (layout rules in `src/lib/front.ts`).
 
 ## The data
 
