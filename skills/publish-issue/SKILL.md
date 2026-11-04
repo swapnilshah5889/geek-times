@@ -17,15 +17,18 @@ description: Add finished stories to The Geeky Times and assemble them into an i
 - A volume is a year. Volume 0 holds launch special editions of classic papers.
 - Keep two dates apart: the source's original year, and our publish date.
 
-## Today (JSON, before content model v2)
+## Today (JSON files; the library drives the site)
 
+Follow `convert-paper` steps 6–8. In short:
 1. The story file is at `public/data/papers/<slug>.json` and has passed `explain-source`, `fact-check` and
    `tag-story`.
-2. Add `{slug, title, dataUrl}` to `public/data/site.json` → `papers`. Set `defaultPaper` to make it the front-page
-   lead.
-3. `npm run data` (it must pass), then `npm run build`.
-4. Check the front page, the story, the feed and search at 1280px and 375px.
-5. Commit on `feature/<slug>` and open a PR. The owner merges. Never push to `main`.
+2. Add `{slug, title, dataUrl}` to `public/data/site.json` → `papers`.
+3. Add or replace the story in `public/data/library.json` (`stories`, its issue's `stories`, optionally `front`, and its
+   `nodes` and `relations`). The front page reads the library, not `defaultPaper`.
+4. `npm run data` (it must pass), then `npm run build`.
+5. Check the front page, the story, the issue, the map, the feed and search at 1280px and 375px.
+6. Commit on the branch the owner approved (ask before creating one) and open a PR, or give the compare link if the
+   GitHub CLI is not signed in. The owner merges. Never push to `main`.
 
 ## After content model v2 (roadmap item 3)
 

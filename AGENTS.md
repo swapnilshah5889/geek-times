@@ -56,7 +56,7 @@ docs/
   data-model.md           current JSON model + target database schema (class diagram)
   roadmap.md              what's done, what's next, in order
   tagging.md              tag rules
-skills/                   step-by-step playbooks any agent can follow (open SKILL.md format)
+skills/                   playbooks any agent can follow (open SKILL.md format); start with skills/convert-paper
 design/                   exported mockups (PNG + standalone HTML) and the review brief: design/README.md
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
 public/data/              content: site.json, tags.json, library.json (editorial layer, samples), papers/<slug>.json (search-index.json is generated)

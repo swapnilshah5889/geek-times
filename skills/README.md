@@ -6,6 +6,7 @@ the one that matches the task before starting, and follow it.
 
 | Skill | Use it when |
 |---|---|
+| [convert-paper](convert-paper/SKILL.md) | **Start here** to turn any source into a published story: the whole route, step by step |
 | [explain-source](explain-source/SKILL.md) | Turning a research paper or engineering blog post into a story |
 | [fact-check](fact-check/SKILL.md) | Verifying evidence numbers, section anchors and `paper`-basis tags |
 | [tag-story](tag-story/SKILL.md) | Inferring and reviewing tags for a story |

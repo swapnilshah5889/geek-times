@@ -36,7 +36,7 @@ the same style otherwise.
    - panel captions of 1–2 short sentences, with one bold key word each
    - `grownUpWords`: the paper's real terms
    - `provenance: illustration`
-4. **`facts`:** 4–6 real numbers. Each needs `figure`, a kid-level `text`, `source {label: "Paper §x.y", url: …#anchor}`,
+4. **`facts`:** 4–6 real numbers. Each needs `figure`, `claim` (`model_design` or `measured_result`), a kid-level `text`, `source {label: "Paper §x.y", url: …#anchor}`,
    and an icon.
 5. **`hook`** (top-level, beside `summary`): the scroll-stopper on the front-page tile. It is what makes a stranger
    open the issue, so spend real effort on it. Fields: `sticker` (2–3 loud words, "Wait, what?"), `teaser` (one
@@ -69,6 +69,6 @@ what the panel shows.
 ## 6. Check and publish
 
 1. `fact-check` every evidence number and `paper`-basis tag.
-2. Add the story to `public/data/site.json`, then run `npm run data` and fix every error.
+2. Add the story to `public/data/site.json` and `public/data/library.json` (see `convert-paper` step 6), then run `npm run data` and fix every error.
 3. `npm run dev`, then look at the story, the front page tiles and the feed at 1280px and 375px.
-4. Commit on a feature branch and open a PR (never push to `main`).
+4. Commit on the branch the owner approved (ask before creating one) and open a PR. Never push to `main`.
