@@ -88,6 +88,8 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 
 - **Git:** never commit or push to `main`. Work on a `feature/<topic>` branch, push it, and open a PR. The owner
   merges.
+  **Ask the owner before creating a new branch**, and never make several at once or stack branches; by default
+  keep working on the current feature branch.
 - **Canvas before code (owner's rule):** show any visual or layout change on the design canvas first, with 1–2
   options, and build it into the app only after the owner picks one. Keep tiles calm: one illustration, real data in a
   line or two, no stacked gimmicks.
