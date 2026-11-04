@@ -7,3 +7,4 @@ __pycache__/
 .vscode/*
 !.vscode/extensions.json
 .idea
+public/data/search-index.json

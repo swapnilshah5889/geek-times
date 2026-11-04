@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "facets": [
+    { "id": "field", "label": "Field", "description": "The broad branch of science." },
+    { "id": "area", "label": "Area", "description": "A narrower area inside the field." },
+    { "id": "concept", "label": "Big ideas", "description": "Ideas the paper explains, introduces or depends on." },
+    { "id": "technique", "label": "Techniques", "description": "Named methods, models and tools." },
+    { "id": "task", "label": "Job it does", "description": "The problem the research is trying to solve." },
+    { "id": "dataset", "label": "Data used", "description": "Collections of examples used to train or test." },
+    { "id": "metric", "label": "How it's scored", "description": "The measurements used to judge results." },
+    { "id": "use", "label": "Used for", "description": "Where you meet this idea in real life." },
+    { "id": "impact", "label": "Led to", "description": "Later work that grew out of this paper." },
+    { "id": "organization", "label": "Where", "description": "Labs, companies and universities behind the work." },
+    { "id": "author", "label": "Who", "description": "The people who wrote the paper." },
+    { "id": "venue", "label": "Published in", "description": "The conference or journal." },
+    { "id": "everyday", "label": "Everyday topics", "description": "Kid-friendly themes to browse by." }
+  ],
+  "tags": [
+    { "id": "field/computer-science", "facet": "field", "label": "Computer science", "aliases": ["CS", "computing"] },
+
+    { "id": "area/artificial-intelligence", "facet": "area", "label": "Artificial intelligence", "aliases": ["AI"] },
+    { "id": "area/machine-learning", "facet": "area", "label": "Machine learning", "parent": "area/artificial-intelligence", "aliases": ["ML"] },
+    { "id": "area/deep-learning", "facet": "area", "label": "Deep learning", "parent": "area/machine-learning", "aliases": ["neural networks"] },
+    { "id": "area/natural-language-processing", "facet": "area", "label": "Natural language processing", "parent": "area/artificial-intelligence", "aliases": ["NLP", "computational linguistics", "language AI"] },
+
+    { "id": "concept/neural-network", "facet": "concept", "label": "Neural networks", "aliases": ["neural net", "artificial neural network"] },
+    { "id": "concept/attention", "facet": "concept", "label": "Attention", "aliases": ["attention mechanism"] },
+    { "id": "concept/self-attention", "facet": "concept", "label": "Self-attention", "parent": "concept/attention", "aliases": ["intra-attention"] },
+    { "id": "concept/scaled-dot-product-attention", "facet": "concept", "label": "Scaled dot-product attention", "parent": "concept/attention", "aliases": ["dot-product attention", "queries keys values", "QKV"] },
+    { "id": "concept/multi-head-attention", "facet": "concept", "label": "Multi-head attention", "parent": "concept/attention", "aliases": ["attention heads"] },
+    { "id": "concept/masked-attention", "facet": "concept", "label": "Masked attention", "parent": "concept/attention", "aliases": ["causal mask", "causal attention", "look-ahead mask"] },
+    { "id": "concept/encoder-decoder", "facet": "concept", "label": "Encoder–decoder", "aliases": ["encoder-decoder", "sequence to sequence", "seq2seq"] },
+    { "id": "concept/embeddings", "facet": "concept", "label": "Embeddings", "aliases": ["word embeddings", "word vectors", "token embeddings"] },
+    { "id": "concept/positional-encoding", "facet": "concept", "label": "Positional encoding", "aliases": ["position embeddings", "word order"] },
+    { "id": "concept/feed-forward-network", "facet": "concept", "label": "Feed-forward network", "parent": "concept/neural-network", "aliases": ["FFN", "MLP", "multilayer perceptron"] },
+    { "id": "concept/residual-connection", "facet": "concept", "label": "Residual connections", "parent": "concept/neural-network", "aliases": ["skip connections", "shortcut connections"] },
+    { "id": "concept/layer-normalization", "facet": "concept", "label": "Layer normalization", "parent": "concept/neural-network", "aliases": ["layer norm", "LayerNorm"] },
+    { "id": "concept/softmax", "facet": "concept", "label": "Softmax", "aliases": ["softmax function"] },
+    { "id": "concept/parallel-computing", "facet": "concept", "label": "Parallel computing", "aliases": ["parallelization", "GPUs", "doing many things at once"] },
+    { "id": "concept/autoregressive-generation", "facet": "concept", "label": "Autoregressive generation", "aliases": ["autoregressive", "one word at a time", "next-word prediction"] },
+    { "id": "concept/recurrent-neural-network", "facet": "concept", "label": "Recurrent neural networks", "parent": "concept/neural-network", "aliases": ["RNN", "LSTM", "GRU", "recurrence"] },
+    { "id": "concept/convolutional-neural-network", "facet": "concept", "label": "Convolutional neural networks", "parent": "concept/neural-network", "aliases": ["CNN", "ConvNet", "convolution"] },
+
+    { "id": "technique/transformer", "facet": "technique", "label": "Transformer", "aliases": ["transformer model", "transformer architecture"] },
+    { "id": "technique/adam-optimizer", "facet": "technique", "label": "Adam optimizer", "aliases": ["Adam"] },
+    { "id": "technique/byte-pair-encoding", "facet": "technique", "label": "Byte-pair encoding", "aliases": ["BPE", "subword tokenization", "word pieces", "tokenization"] },
+    { "id": "technique/label-smoothing", "facet": "technique", "label": "Label smoothing" },
+    { "id": "technique/dropout", "facet": "technique", "label": "Dropout", "aliases": ["residual dropout"] },
+    { "id": "technique/beam-search", "facet": "technique", "label": "Beam search" },
+
+    { "id": "task/sequence-transduction", "facet": "task", "label": "Sequence transduction", "aliases": ["sequence modeling", "sequence to sequence"] },
+    { "id": "task/machine-translation", "facet": "task", "label": "Machine translation", "parent": "task/sequence-transduction", "aliases": ["translation", "MT", "neural machine translation", "NMT"] },
+    { "id": "task/constituency-parsing", "facet": "task", "label": "Constituency parsing", "aliases": ["parsing", "syntax", "grammar trees"] },
+
+    { "id": "dataset/wmt-2014-en-de", "facet": "dataset", "label": "WMT 2014 English–German", "aliases": ["WMT14 En-De", "newstest2014"] },
+    { "id": "dataset/wmt-2014-en-fr", "facet": "dataset", "label": "WMT 2014 English–French", "aliases": ["WMT14 En-Fr"] },
+    { "id": "dataset/penn-treebank", "facet": "dataset", "label": "Penn Treebank (WSJ)", "aliases": ["PTB", "Wall Street Journal treebank", "WSJ"] },
+
+    { "id": "metric/bleu", "facet": "metric", "label": "BLEU score", "aliases": ["BLEU"] },
+    { "id": "metric/f1", "facet": "metric", "label": "F1 score", "aliases": ["F1", "F-score"] },
+
+    { "id": "use/translation-apps", "facet": "use", "label": "Translation apps", "aliases": ["Google Translate", "translators"] },
+    { "id": "use/chatbots", "facet": "use", "label": "Chatbots and AI assistants", "aliases": ["chatbot", "AI assistant", "ChatGPT"] },
+    { "id": "use/text-generation", "facet": "use", "label": "Writing text", "aliases": ["text generation", "autocomplete"] },
+
+    { "id": "impact/large-language-models", "facet": "impact", "label": "Large language models", "aliases": ["LLM", "LLMs", "foundation models"] },
+    { "id": "impact/bert", "facet": "impact", "label": "BERT", "parent": "impact/large-language-models" },
+    { "id": "impact/gpt", "facet": "impact", "label": "GPT models", "parent": "impact/large-language-models", "aliases": ["GPT", "ChatGPT", "generative pre-trained transformer"] },
+
+    { "id": "organization/google-brain", "facet": "organization", "label": "Google Brain", "parent": "organization/google", "aliases": ["Google"] },
+    { "id": "organization/google-research", "facet": "organization", "label": "Google Research", "parent": "organization/google", "aliases": ["Google"] },
+    { "id": "organization/google", "facet": "organization", "label": "Google" },
+    { "id": "organization/university-of-toronto", "facet": "organization", "label": "University of Toronto", "aliases": ["U of T", "UofT"] },
+
+    { "id": "author/ashish-vaswani", "facet": "author", "label": "Ashish Vaswani" },
+    { "id": "author/noam-shazeer", "facet": "author", "label": "Noam Shazeer" },
+    { "id": "author/niki-parmar", "facet": "author", "label": "Niki Parmar" },
+    { "id": "author/jakob-uszkoreit", "facet": "author", "label": "Jakob Uszkoreit" },
+    { "id": "author/llion-jones", "facet": "author", "label": "Llion Jones" },
+    { "id": "author/aidan-n-gomez", "facet": "author", "label": "Aidan N. Gomez", "aliases": ["Aidan Gomez"] },
+    { "id": "author/lukasz-kaiser", "facet": "author", "label": "Łukasz Kaiser", "aliases": ["Lukasz Kaiser"] },
+    { "id": "author/illia-polosukhin", "facet": "author", "label": "Illia Polosukhin" },
+
+    { "id": "venue/neurips-2017", "facet": "venue", "label": "NeurIPS 2017", "parent": "venue/neurips", "aliases": ["NIPS 2017"] },
+    { "id": "venue/neurips", "facet": "venue", "label": "NeurIPS", "aliases": ["NIPS", "Neural Information Processing Systems"] },
+
+    { "id": "everyday/language", "facet": "everyday", "label": "Language and words", "aliases": ["words", "reading", "talking"] },
+    { "id": "everyday/translation", "facet": "everyday", "label": "Translating languages", "aliases": ["other languages", "German", "French"] },
+    { "id": "everyday/smart-computers", "facet": "everyday", "label": "Smart computers", "aliases": ["robots", "AI", "thinking machines"] }
+  ]
+}

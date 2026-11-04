@@ -4,7 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "data": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build-index.ts",
+    "predev": "npm run data",
     "dev": "vite",
+    "prebuild": "npm run data",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b",
     "lint": "oxlint",
