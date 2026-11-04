@@ -3,11 +3,11 @@ import { Masthead } from '../components/Masthead';
 import { MediaView } from '../components/MediaView';
 import { MotionButton, MotionGroup } from '../components/motion';
 import { mediaBaseFor, type Archive } from '../data/load';
-import { frontPage, type Tile } from '../lib/front';
+import { frontPage } from '../lib/front';
 import { MediaBaseContext } from '../lib/mediaBase';
-import { appHref, feedHref, paperHref } from '../lib/routes';
+import { feedHref, paperHref } from '../lib/routes';
 import { searchHref, tagCounts, tagLookup } from '../lib/tags';
-import type { Moment, SearchEntry, TagVocabulary } from '../types';
+import type { SearchEntry, TagVocabulary } from '../types';
 
 const today = () => new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
@@ -23,31 +23,6 @@ function CoverTile({ paper, hero }: { paper: SearchEntry; hero: boolean }) {
         <p className="tile-byline"><b>{paper.title}</b> · {paper.authors}, {paper.year}</p>
         <span className="cta">Read the issue →</span>
       </div>
-    </a>
-  );
-}
-
-function MomentTile({ moment, size }: { moment: Moment; size: Tile['size'] }) {
-  const isFact = moment.kind === 'fact';
-  return (
-    <a className={`tile tile-moment tile-${size} moment-${moment.kind}`} href={appHref(moment.href)}>
-      <span className="tile-kicker label">
-        {moment.kicker}
-        {moment.provenance === 'evidence' && <span className="stamp stamp-evidence">Real result</span>}
-      </span>
-      {isFact ? (
-        <>
-          <b className="tile-figure">{moment.figure}</b>
-          {moment.media && <div className="tile-icon"><MediaView media={moment.media} /></div>}
-        </>
-      ) : (
-        <>
-          {moment.media && <div className="tile-media"><MediaView media={moment.media} /></div>}
-          <h3>{moment.title}</h3>
-        </>
-      )}
-      <p className="tile-text">{moment.text}</p>
-      <span className="cta">{isFact ? 'See the source →' : 'Read this part →'}</span>
     </a>
   );
 }
@@ -102,7 +77,6 @@ export function HomePage({ archive }: { archive: Archive }) {
             {tiles.map((tile, i) => {
               switch (tile.kind) {
                 case 'cover': return <CoverTile key={`c-${tile.paper.slug}`} paper={tile.paper} hero={tile.size === 'hero'} />;
-                case 'moment': return <MomentTile key={tile.moment.id + tile.paper.slug} moment={tile.moment} size={tile.size} />;
                 case 'feed': return <FeedTile key="feed" count={tile.count} />;
                 case 'topics': return <TopicsTile key={`t-${i}`} archive={archive} />;
               }

@@ -162,3 +162,9 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - `Moment.href` in the data is base-relative (`papers/<slug>#<anchor>`).
     - Old `?paper=<slug>` links redirect to the new path.
     - The host must serve `index.html` for unknown paths (SPA fallback); Vite's dev server already does.
+
+27. **The front page grid has exactly one tile per paper.**
+    - Comic panels, chapters and facts are bite-size *moments* of one paper; they appear in snack mode (`?feed`) and
+      search, never as grid tiles that look like separate stories.
+    - The page is a hero for the featured paper, the snacks tile, a topics tile, then one tile per other paper.
+    - It is fine for the page to be short while there is only one paper.
