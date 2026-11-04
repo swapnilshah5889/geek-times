@@ -168,3 +168,10 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       search, never as grid tiles that look like separate stories.
     - The page is a hero for the featured paper, the snacks tile, a topics tile, then one tile per other paper.
     - It is fine for the page to be short while there is only one paper.
+
+28. **Every paper ships a cover `hook`.** The front-page tile is built to stop a scroll: flipping art with a shout on
+    each frame, a sticker, one real-number badge, a one-line question in highlighter, and a verb-phrase button. It is
+    data (`hook` in the paper JSON, validated by `scripts/build-index.ts`), written by the converter.
+    - Virality comes from curiosity and clarity, not deception: every hook line must be true and answered by the
+      issue (see `skills/explain-source`).
+    - Motion obeys the same pause switch and reduced-motion setting as every other graphic.

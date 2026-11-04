@@ -38,6 +38,16 @@ the same style otherwise.
    - `provenance: illustration`
 4. **`facts`:** 4–6 real numbers. Each needs `figure`, a kid-level `text`, `source {label: "Paper §x.y", url: …#anchor}`,
    and an icon.
+5. **`hook`** (top-level, beside `summary`): the scroll-stopper on the front-page tile. It is what makes a stranger
+   open the issue, so spend real effort on it. Fields: `sticker` (2–3 loud words, "Wait, what?"), `teaser` (one
+   question or surprising claim in kid words that the paper answers), `cta` (the payoff as a verb phrase, "Crack the
+   bat puzzle"), `readMinutes`, optional `stat` (one real number from the facts block, ≤3 words of label), and
+   optional `frames` (the lead's two slides with a one-word shout each, "Wings!" / "Swing!", so the cover art flips).
+   Hook rules:
+   - Create a curiosity gap, never a false promise. The issue must answer the teaser.
+   - Every number is a verified fact. The sticker, teaser and CTA make no claim the paper does not support.
+   - No fake urgency, no "you won't believe". Surprise and a clear question are enough.
+   - Keep it short enough to read in one second at tile size.
 
 Also set `summary` (1–2 sentences for search and the front page), `pageTitle`, `paper` (title, authors, year, url) and
 `tags` (see `tag-story`).

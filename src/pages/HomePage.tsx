@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { Masthead } from '../components/Masthead';
 import { MediaView } from '../components/MediaView';
 import { MotionButton, MotionGroup } from '../components/motion';
+import { useMotion } from '../lib/motion';
 import { mediaBaseFor, type Archive } from '../data/load';
 import { frontPage } from '../lib/front';
 import { MediaBaseContext } from '../lib/mediaBase';
@@ -11,17 +12,47 @@ import type { SearchEntry, TagVocabulary } from '../types';
 
 const today = () => new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
+/** The cover art: flips between frames with a shout on each, so the tile moves before anyone reads it. */
+function CoverArt({ cover }: { cover: SearchEntry['cover'] }) {
+  const { held } = useMotion();
+  const frames = cover.hook?.frames;
+  if (!frames) return <div className="tile-media"><MediaView media={cover.media} /></div>;
+  return (
+    <div className={`tile-media cover-flip${held ? ' cover-held' : ''}`}>
+      {frames.map((f, i) => (
+        <div key={f.tag} className="cover-frame" style={{ animationDelay: `${i * 2.4}s` }} aria-hidden={i > 0}>
+          <MediaView media={f.media} />
+          <span className="cover-shout" style={{ animationDelay: `${i * 2.4}s` }}>{f.tag}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function CoverTile({ paper, hero }: { paper: SearchEntry; hero: boolean }) {
   const { cover } = paper;
+  const { hook } = cover;
   return (
-    <a className={`tile tile-cover ${hero ? 'tile-hero' : 'tile-wide'}`} href={paperHref(paper.slug)}>
-      <div className="tile-media"><MediaView media={cover.media} /></div>
+    <a className={`tile tile-cover ${hero ? 'tile-hero' : 'tile-wide'}${hook ? ' tile-hooked' : ''}`} href={paperHref(paper.slug)}>
+      <span className="label cover-kicker">
+        <span className="cover-new">{hero ? 'New today' : `Issue ${paper.issue}`}</span>
+        {hook && <span>{hook.readMinutes} min · {paper.moments.length} snacks</span>}
+      </span>
+      <div className="cover-stage">
+        <CoverArt cover={cover} />
+        {hook && <span className="cover-sticker" aria-hidden="true">{hook.sticker}</span>}
+        {hook?.stat && (
+          <span className="cover-stat">
+            <b>{hook.stat.figure}</b>
+            <small>{hook.stat.text}</small>
+          </span>
+        )}
+      </div>
       <div className="tile-body">
-        <span className="label">{hero ? `Today’s issue · No. ${paper.issue}` : `Issue ${paper.issue}`} &nbsp;/&nbsp; {cover.kicker.split(' / ')[0]}</span>
         <h2>{cover.headline.text} {cover.headline.accent && <em>{cover.headline.accent}</em>}</h2>
-        <p className="dek">{hero ? paper.summary : cover.dek}</p>
+        <p className="dek">{hook ? <mark>{hook.teaser}</mark> : hero ? paper.summary : cover.dek}</p>
         <p className="tile-byline"><b>{paper.title}</b> · {paper.authors}, {paper.year}</p>
-        <span className="cta">Read the issue →</span>
+        <span className="cover-cta">{hook?.cta ?? 'Read the issue'} <i aria-hidden="true">→</i></span>
       </div>
     </a>
   );
