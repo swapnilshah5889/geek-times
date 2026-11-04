@@ -1,64 +1,39 @@
-import { useEffect, useState } from 'react';
-import { BlockView } from './blocks';
-import { loadEdition, type Edition } from './data/load';
-import { EditionContext } from './edition';
+import { useEffect, useState, type ReactNode } from 'react';
+import { loadArchive, loadEdition, type Archive, type Edition } from './data/load';
+import { PaperPage } from './pages/PaperPage';
+import { SearchPage } from './pages/SearchPage';
 
-function Masthead({ site, doc }: Pick<Edition, 'site' | 'doc'>) {
-  const links = doc.blocks.filter(b => b.nav && b.id);
-  return (
-    <header>
-      <div className="meta">
-        <span>Vol. {doc.issue.volume} &nbsp;·&nbsp; No. {doc.issue.number}</span>
-        <span>{site.tagline}</span>
-        <span>{doc.issue.desk}</span>
-      </div>
-      <div className="mast">{site.name}</div>
-      <div className="motto">{site.motto}</div>
-      <nav>
-        <span>{site.navLabel}</span>
-        <span className="links">{links.map(b => <a key={b.id} href={`#${b.id}`}>{b.nav}</a>)}</span>
-      </nav>
-    </header>
-  );
+type Route = { page: 'search' } | { page: 'paper'; slug: string | null };
+type View = { page: 'search'; archive: Archive } | { page: 'paper'; edition: Edition };
+
+// ?search (with optional q= and tag=) opens the archive search; ?paper=<slug> (or nothing) opens an issue.
+function currentRoute(): Route {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('search') || params.has('q') || params.has('tag')) return { page: 'search' };
+  return { page: 'paper', slug: params.get('paper') };
 }
 
-type State = { status: 'loading' } | { status: 'error'; message: string } | { status: 'ready'; edition: Edition };
+async function load(route: Route): Promise<View> {
+  return route.page === 'search'
+    ? { page: 'search', archive: await loadArchive() }
+    : { page: 'paper', edition: await loadEdition(route.slug) };
+}
 
 export function App() {
-  const [state, setState] = useState<State>({ status: 'loading' });
+  const [view, setView] = useState<View | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const slug = new URLSearchParams(window.location.search).get('paper');
-    loadEdition(slug)
-      .then(edition => setState({ status: 'ready', edition }))
-      .catch((err: Error) => {
-        console.error(err);
-        setState({ status: 'error', message: err.message });
-      });
+    load(currentRoute()).then(setView).catch((err: Error) => {
+      console.error(err);
+      setError(err.message);
+    });
   }, []);
 
-  useEffect(() => {
-    if (state.status !== 'ready') return;
-    const { site, doc } = state.edition;
-    document.title = `${site.name} — ${doc.pageTitle}`;
-    if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
-  }, [state]);
-
-  if (state.status === 'loading') return <main aria-busy="true"><p className="loading">Setting the type…</p></main>;
-  if (state.status === 'error') return <main><p className="load-error">Sorry, this edition could not be loaded. {state.message}</p></main>;
-
-  const { edition } = state;
-  const { site, doc } = edition;
-  return (
-    <EditionContext.Provider value={edition}>
-      <main>
-        <Masthead site={site} doc={doc} />
-        {doc.blocks.map((block, i) => <BlockView block={block} key={block.id ?? i} />)}
-        <footer>
-          <span>{site.name} &nbsp; ✦ &nbsp; Issue {doc.issue.number}</span>
-          <a href={doc.paper.url}>Read the original paper ↗</a>
-        </footer>
-      </main>
-    </EditionContext.Provider>
-  );
+  let content: ReactNode;
+  if (error) content = <main><p className="load-error">Sorry, this page could not be loaded. {error}</p></main>;
+  else if (!view) content = <main aria-busy="true"><p className="loading">Setting the type…</p></main>;
+  else if (view.page === 'search') content = <SearchPage archive={view.archive} />;
+  else content = <PaperPage edition={view.edition} />;
+  return content;
 }

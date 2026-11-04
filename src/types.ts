@@ -24,9 +24,95 @@ export interface PaperDoc {
   schemaVersion: 1;
   slug: string;
   pageTitle: string;
+  /** One or two plain-language sentences; shown on search results. */
+  summary: string;
   issue: { volume: string; number: string; desk: string };
   paper: { title: string; authors: string; year: number; url: string };
+  tags: PaperTag[];
   blocks: Block[];
+}
+
+// ---------- Tags ----------
+// Tags come from a shared vocabulary (public/data/tags.json, a `tags` table later) so the same idea has
+// one id across every paper. Each paper links to tags with a relevance score and a note on where the
+// tag comes from, just like evidence facts.
+
+/** Groups of tags. Each answers a different question a reader might search by. */
+export type TagFacet =
+  | 'field'        // broad science: Computer science, Biology
+  | 'area'         // narrower area: Machine learning, Natural language processing
+  | 'concept'      // ideas the paper explains or depends on: Attention, Embeddings
+  | 'technique'    // named methods and models: Transformer, Adam optimizer
+  | 'task'         // the job being solved: Machine translation
+  | 'dataset'      // data used: WMT 2014 English–German
+  | 'metric'       // how results are scored: BLEU
+  | 'use'          // real-world uses today: Translation apps, Chatbots
+  | 'impact'       // what the work led to: Large language models
+  | 'organization' // where the authors worked
+  | 'author'
+  | 'venue'        // where it was published
+  | 'everyday';    // kid-friendly themes: Language and words
+
+export interface FacetDef {
+  id: TagFacet;
+  label: string;
+  description: string;
+}
+
+export interface TagDef {
+  /** "<facet>/<slug>", e.g. "concept/self-attention". Never changes once published. */
+  id: string;
+  facet: TagFacet;
+  label: string;
+  /** Broader tag in the same facet; searching the parent also finds its children. */
+  parent?: string;
+  /** Other names people search for: abbreviations, older terms, spellings. */
+  aliases?: string[];
+  description?: string;
+}
+
+export interface TagVocabulary {
+  schemaVersion: 1;
+  facets: FacetDef[];
+  tags: TagDef[];
+}
+
+/**
+ * Where a tag's claim comes from:
+ * - paper: stated in the paper (give `evidence`, a link to the section)
+ * - background: well-known context not in the paper, e.g. what it later led to
+ * - editorial: our framing for readers, e.g. kid-friendly themes
+ */
+export type TagBasis = 'paper' | 'background' | 'editorial';
+
+export interface PaperTag {
+  /** A TagDef id. If it isn't in the vocabulary yet, `proposed` describes the new tag. */
+  tag: string;
+  /** 0–1: how central this tag is to the paper. 1 = what the paper is about; 0.3 = mentioned detail. */
+  relevance: number;
+  basis: TagBasis;
+  evidence?: string;
+  source: 'ai' | 'editor';
+  /** Only approved tags are shown and searchable. AI output starts as suggested. */
+  status: 'suggested' | 'approved';
+  proposed?: Omit<TagDef, 'id' | 'facet'>;
+}
+
+/** Built from all papers by scripts/build-index.ts (a search query against the database later). */
+export interface SearchIndex {
+  schemaVersion: 1;
+  papers: SearchEntry[];
+}
+
+export interface SearchEntry {
+  slug: string;
+  title: string;
+  pageTitle: string;
+  summary: string;
+  authors: string;
+  year: number;
+  issue: string;
+  tags: { id: string; relevance: number }[];
 }
 
 export type MediaType = 'svg' | 'image' | 'video';
