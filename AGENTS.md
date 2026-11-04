@@ -20,8 +20,9 @@ The first story is "Attention Is All You Need" (Vaswani et al., 2017). It's the 
 
 1. **Kid-level language.** Short sentences and everyday metaphors. Every technical idea also gets its real name
    ("Grown-up words: …").
-2. **Illustration ≠ evidence.** Made-up numbers are labelled "Illustration · numbers invented". Real numbers carry a
-   source link to the exact section, plus a trust level (peer-reviewed / preprint / company-reported).
+2. **Every claim is labelled.** Exactly one of: "Illustration · numbers invented", "From the paper · model design",
+   or "Measured result" plus source trust (peer-reviewed / preprint / company-reported). Real claims link to the
+   exact section. The labels live in the data and are rendered the same way everywhere.
 3. **Fact-check before publishing.** Every evidence number and every `paper`-basis tag is checked against the source.
    See `skills/fact-check/`.
 4. **The UI renders data.** No story is hard-coded in components. Content lives in JSON now and a database later;
@@ -93,6 +94,10 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 - **Design language:** cream newsprint (`#f6f0df`), ink (`#27251e`), red accent (`#a13324`), Georgia serif
   headlines, Courier labels, halftone dots, muted cartoon colours, word-buddy characters. Front page = layout **D**
   (broadsheet above the fold, soft bento below). Desktop first, mobile next.
+- **Navigation is the same on every page:** Front page · Explore (Topics, Storylines, Map) · Issues · Real world ·
+  Snacks · Search.
+- **Every component ships responsive and accessible:** no horizontal overflow at 375px, labels ≥12px, 44px tap
+  targets, keyboard rails, reduced motion respected.
 - **Ask before** anything public or irreversible (publishing, pushing to main, contacting companies, buying domains).
 
 ## Current status (keep updated)
@@ -102,7 +107,8 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 - Designing: front page **D**, issue page, story family tree, company page, explore map, data model. The
   exported images are in `design/exports/`, with a review brief in `design/README.md`; the editable source is a
   claude.ai design canvas (copied into `design/canvas-source/`).
-- Next: see `docs/roadmap.md`.
+- Design review by Codex (2026-11-04) accepted. Changes are recorded as decisions 18–25.
+- Next: see `docs/roadmap.md`. Fixtures from a second field and a real company blog come before more pages.
 
 ## Keeping this file true
 

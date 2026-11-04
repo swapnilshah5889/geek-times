@@ -15,22 +15,25 @@ Tick items as they land. Keep the order unless the owner changes priorities.
 - [x] Front page layout exploration (A/B/C), with D chosen and softened
 - [x] Tool-neutral project knowledge: `AGENTS.md`, `docs/`, `skills/`
 
-## Next
+## Next (order revised after the Codex design review)
 
-1. [ ] **Design sign-off on the canvas.**
-   - Pages: front page D with full "Keep exploring", issue page, story family tree, company page, explore map.
-   - Class diagram of the target schema.
-2. [ ] **Routing:** React Router with real paths (`/stories/:slug`, `/issues/:v/:n`, `/topics/:tag`, `/feed`,
-       `/search`). Static hosting with an SPA fallback; consider pre-rendering for search engines.
-3. [ ] **Content model v2 in JSON:** sources vs stories, issues/volumes as their own files, `issue_stories` roles,
-       trust levels, relations, storylines. Keep the validator in step.
-4. [ ] **Build front page D** from data (lead/features from the current issue; the Keep exploring sections).
-5. [ ] **Issue, volume, topic and company pages.**
-6. [ ] **Family tree view** on story pages (timeline) and a first explore map.
-7. [ ] **Second and third real stories:** one paper from another field, and one company engineering blog post. They
-       test that the model is general.
-8. [ ] **Converter pipeline v1:** arXiv/DOI/blog URL in, draft story + tags + facts + relations out, review queue.
-9. [ ] **Backend:** Postgres schema from `data-model.md`, an API serving `PublishedVersion` documents, media on S3 +
-       CDN (with CORS for SVG inlining).
-10. [ ] **Mobile UI pass** (after desktop is settled).
-11. [ ] Newsletter, analytics ("most read"), and legal review (brand, copyright and fair use) before a public launch.
+Every item keeps two rules from day one: responsive stacking with no horizontal overflow, and the accessibility
+criteria in `decisions.md` #24.
+
+1. [x] **Apply the review to the designs and docs** (design export revision 2):
+   - trust labels (claim kind + source trust)
+   - stable navigation
+   - eight front-page sections
+   - plain-language labels and renamed story tabs
+   - an accessible map
+2. [ ] **Content model v2 + validators + migration from v1** (`docs/data-model.md` → Migrating).
+3. [ ] **Two real fixtures that test generality:** one paper from another field, and one real company engineering post.
+4. [ ] **Real routes and loaders** (React Router) reading the v2 fixtures.
+5. [ ] **Front page D and the issue page.**
+6. [ ] **Topic and company pages.**
+7. [ ] **Story family tree** using *verified* relations only.
+8. [ ] **Explore map**, once enough verified nodes and relations exist. Include the list view.
+9. [ ] **Converter + editorial review queue:** papers and blogs, `FeedEntry` states, `RelationEvidence` review.
+10. [ ] **Backend and storage:** Postgres, an API serving `PublishedVersion`, S3/CDN media with CORS.
+11. [ ] **Mobile polish**, with responsive behaviour tested throughout.
+12. [ ] Newsletter, analytics, and legal review (brand, copyright and fair use) before a public launch.

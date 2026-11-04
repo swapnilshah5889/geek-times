@@ -95,3 +95,64 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
 
 17. **Project knowledge lives in tool-neutral files.** `AGENTS.md`, `docs/`, `skills/` and `prompts/` are all plain
     markdown, so any model or person can resume the project. Nothing essential lives only in a vendor-specific folder.
+
+## 2026-11-04 · after the first design review (Codex)
+
+18. **Every claim gets a kind and its source gets a trust level.**
+    - Kind of claim:
+      - *Illustration · numbers invented*
+      - *From the paper · model design*: how the system is built, e.g. 8 heads
+      - *Measured result*: what an experiment found, e.g. 28.4 BLEU
+    - Source trust: peer-reviewed / preprint / company-reported.
+
+    Both are stored in the data and shown the same way everywhere: story panels, snacks, front-page cards, issue
+    pages, search.
+
+    *Why:* "Real result" was wrongly used for model settings, and invented numbers appeared on snack cards with no label.
+
+19. **Plain-language labels.** Terms like peer-reviewed, company-reported, storyline and family tree get a one-line
+    explanation the first time they appear.
+    - Story tabs: The big idea · How it works · Family tree ("papers before and after this one") · Evidence ·
+      Explore related ideas.
+
+20. **One stable global navigation:** Front page · Explore (Topics, Storylines, Map) · Issues · Real world · Snacks
+    · Search. Field names (AI, Biology…) live inside Explore and Topics, not the top bar.
+
+21. **The front page launches with eight "Keep exploring" areas**, in this order:
+    1. More from this issue
+    2. Swipe the snacks
+    3. Topics
+    4. In the real world
+    5. Numbers from the papers
+    6. Storylines
+    7. From the vault and On this day
+    8. Back issues
+
+    The newsletter comes after these. Grown-up words live inside stories and search for now. A section renders only
+    when it has meaningful content.
+
+22. **Stories stay typed documents; queryable parts are extracted into tables.** The published story is a versioned,
+    typed JSON document (the discriminated block union), not generic recursive `Block`/`BlockItem` rows. Moments, facts,
+    tags and media are extracted into their own tables for search, the front page and the feed. This supersedes the
+    generic block tables in decision 4's database sketch.
+
+23. **Schema additions:**
+    - `Moment`
+    - `IssueStory.role` gains `real_world`, plus a `presentation` field (full | brief | snack)
+    - `FeedEntry` (the review queue for discovered blog posts)
+    - `RelationEvidence[]` (several citations per relation, each reviewed)
+    - `SourceSnapshot` (paper revisions, blog edits, archive copies)
+    - structured facts (value, unit, metric, dataset, comparison)
+    - richer `MediaAsset` (MIME type, duration, captions, reduced-motion fallback, rights)
+    - `PublishedVersion.schemaVersion` and `PublishedVersion.contentHash`
+
+24. **Accessibility is an acceptance criterion for every component**, not a later pass:
+    - essential labels ≥12–13px
+    - 44px tap targets
+    - keyboard-operable rails with visible focus
+    - the map always has an accessible list view and real controls
+    - no horizontal overflow at phone width
+    - reduced motion respected, and animations paused off-screen
+
+25. **Prove generality early.** One real paper from another field and one real company engineering post become fixtures
+    *before* building more pages, so the model isn't shaped only around the Transformer story.
