@@ -38,7 +38,7 @@ export interface Edition {
   mediaBaseUrl: string;
 }
 
-/** Loads the site settings and the requested paper (?paper=<slug>, else the default). */
+/** Loads the site settings and the requested paper (/papers/<slug>, else the default). */
 export async function loadEdition(slug: string | null): Promise<Edition> {
   const [site, vocab] = await Promise.all([loadSite(), loadVocabulary()]);
   const wanted = slug ?? site.defaultPaper;

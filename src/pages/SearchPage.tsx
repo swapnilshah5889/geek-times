@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Masthead } from '../components/Masthead';
 import type { Archive } from '../data/load';
+import { homeHref, paperHref } from '../lib/routes';
 import { searchHref, searchPapers, tagCounts, tagLookup } from '../lib/tags';
 
 function readUrl() {
@@ -59,7 +60,7 @@ export function SearchPage({ archive }: { archive: Archive }) {
               {results.map(({ entry, matched }) => (
                 <li key={entry.slug}>
                   <span className="label">Issue {entry.issue} · {entry.year}</span>
-                  <h3><a href={`?paper=${entry.slug}`}>{entry.pageTitle}</a></h3>
+                  <h3><a href={paperHref(entry.slug)}>{entry.pageTitle}</a></h3>
                   <p className="result-paper"><b>{entry.title}</b> · {entry.authors}</p>
                   <p>{entry.summary}</p>
                   {matched.length > 0 && (
@@ -96,7 +97,7 @@ export function SearchPage({ archive }: { archive: Archive }) {
       </section>
       <footer>
         <span>{site.name} &nbsp; ✦ &nbsp; The archive</span>
-        <a href="./">Latest issue →</a>
+        <a href={homeHref()}>Latest issue →</a>
       </footer>
     </main>
   );

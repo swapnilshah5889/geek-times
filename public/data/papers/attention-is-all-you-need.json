@@ -10,6 +10,38 @@
     "url": "https://arxiv.org/html/1706.03762"
   },
   "summary": "Translation machines used to read words one after another. This paper showed a new design, the Transformer, that lets every word look at every other word at once. It translated better, trained faster, and became the base of today's AI chatbots.",
+  "hook": {
+    "sticker": "Wait, what?",
+    "teaser": "“The bat flew.” How does a computer know it’s the animal and not the baseball bat?",
+    "cta": "Crack the bat puzzle",
+    "readMinutes": 3,
+    "stat": {
+      "figure": "12 hours",
+      "text": "to train it"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "attention-is-all-you-need/lead/dusk.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A bat with wings flies past the moon. Below it: The bat flew at dusk."
+        },
+        "tag": "Wings!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "attention-is-all-you-need/lead/field.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A baseball bat swings at a ball. Below it: The bat hit the ball."
+        },
+        "tag": "Swing!"
+      }
+    ]
+  },
   "tags": [
     {"tag": "field/computer-science", "relevance": 1, "basis": "paper", "evidence": "https://arxiv.org/html/1706.03762#abstract1", "source": "editor", "status": "approved"},
     {"tag": "area/machine-learning", "relevance": 1, "basis": "paper", "evidence": "https://arxiv.org/html/1706.03762#abstract1", "source": "editor", "status": "approved"},

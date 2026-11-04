@@ -67,16 +67,24 @@ const plain = (rich: string) => rich.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, 
 
 /** The paper's home page cover: its own `cover`, or else built from the lead block. */
 function coverOf(doc: PaperDoc): Cover | undefined {
-  if (doc.cover) return doc.cover;
   const lead = doc.blocks.find(b => b.type === 'lead');
-  if (!lead) return undefined;
-  return { kicker: lead.kicker, headline: lead.headline, dek: lead.deck, media: lead.slideshow.slides[0].media };
+  const base = doc.cover ?? (lead && { kicker: lead.kicker, headline: lead.headline, dek: lead.deck, media: lead.slideshow.slides[0].media });
+  if (!base) return undefined;
+  const hook = doc.hook ?? base.hook;
+  if (hook) {
+    for (const key of ['sticker', 'teaser', 'cta'] as const) {
+      if (!hook[key]?.trim()) errors.push(`${doc.slug}.json: hook.${key} is empty`);
+    }
+    if (!(hook.readMinutes > 0)) errors.push(`${doc.slug}.json: hook.readMinutes must be a positive number`);
+    if (hook.frames && hook.frames.length < 2) errors.push(`${doc.slug}.json: hook.frames needs at least two frames`);
+  } else warnings.push(`${doc.slug}.json: no hook, so its front-page tile will be plain`);
+  return { ...base, hook };
 }
 
 /** Bite-size cards for the home page and feed: every comic strip, story chapter and fact. */
 function momentsOf(doc: PaperDoc): Moment[] {
   const where = `${doc.slug}.json`;
-  const link = (anchor?: string) => `?paper=${doc.slug}${anchor ? `#${anchor}` : ''}`;
+  const link = (anchor?: string) => `papers/${doc.slug}${anchor ? `#${anchor}` : ''}`;
   const out: Moment[] = [];
   for (const block of doc.blocks) {
     if (block.type === 'comic') {

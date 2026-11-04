@@ -2,58 +2,65 @@ import { useEffect, useMemo } from 'react';
 import { Masthead } from '../components/Masthead';
 import { MediaView } from '../components/MediaView';
 import { MotionButton, MotionGroup } from '../components/motion';
+import { useMotion } from '../lib/motion';
 import { mediaBaseFor, type Archive } from '../data/load';
-import { frontPage, type Tile } from '../lib/front';
+import { frontPage } from '../lib/front';
 import { MediaBaseContext } from '../lib/mediaBase';
+import { feedHref, paperHref } from '../lib/routes';
 import { searchHref, tagCounts, tagLookup } from '../lib/tags';
-import type { Moment, SearchEntry, TagVocabulary } from '../types';
+import type { SearchEntry, TagVocabulary } from '../types';
 
 const today = () => new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
-function CoverTile({ paper, hero }: { paper: SearchEntry; hero: boolean }) {
-  const { cover } = paper;
+/** The cover art: flips between frames with a shout on each, so the tile moves before anyone reads it. */
+function CoverArt({ cover }: { cover: SearchEntry['cover'] }) {
+  const { held } = useMotion();
+  const frames = cover.hook?.frames;
+  if (!frames) return <div className="tile-media"><MediaView media={cover.media} /></div>;
   return (
-    <a className={`tile tile-cover ${hero ? 'tile-hero' : 'tile-wide'}`} href={`?paper=${paper.slug}`}>
-      <div className="tile-media"><MediaView media={cover.media} /></div>
-      <div className="tile-body">
-        <span className="label">{hero ? `Today’s issue · No. ${paper.issue}` : `Issue ${paper.issue}`} &nbsp;/&nbsp; {cover.kicker.split(' / ')[0]}</span>
-        <h2>{cover.headline.text} {cover.headline.accent && <em>{cover.headline.accent}</em>}</h2>
-        <p className="dek">{hero ? paper.summary : cover.dek}</p>
-        <p className="tile-byline"><b>{paper.title}</b> · {paper.authors}, {paper.year}</p>
-        <span className="cta">Read the issue →</span>
-      </div>
-    </a>
+    <div className={`tile-media cover-flip${held ? ' cover-held' : ''}`}>
+      {frames.map((f, i) => (
+        <div key={f.tag} className="cover-frame" style={{ animationDelay: `${i * 2.4}s` }} aria-hidden={i > 0}>
+          <MediaView media={f.media} />
+          <span className="cover-shout" style={{ animationDelay: `${i * 2.4}s` }}>{f.tag}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 
-function MomentTile({ moment, size }: { moment: Moment; size: Tile['size'] }) {
-  const isFact = moment.kind === 'fact';
+function CoverTile({ paper, hero }: { paper: SearchEntry; hero: boolean }) {
+  const { cover } = paper;
+  const { hook } = cover;
   return (
-    <a className={`tile tile-moment tile-${size} moment-${moment.kind}`} href={moment.href}>
-      <span className="tile-kicker label">
-        {moment.kicker}
-        {moment.provenance === 'evidence' && <span className="stamp stamp-evidence">Real result</span>}
+    <a className={`tile tile-cover ${hero ? 'tile-hero' : 'tile-wide'}${hook ? ' tile-hooked' : ''}`} href={paperHref(paper.slug)}>
+      <span className="label cover-kicker">
+        <span className="cover-new">{hero ? 'New today' : `Issue ${paper.issue}`}</span>
+        {hook && <span>{hook.readMinutes} min · {paper.moments.length} snacks</span>}
       </span>
-      {isFact ? (
-        <>
-          <b className="tile-figure">{moment.figure}</b>
-          {moment.media && <div className="tile-icon"><MediaView media={moment.media} /></div>}
-        </>
-      ) : (
-        <>
-          {moment.media && <div className="tile-media"><MediaView media={moment.media} /></div>}
-          <h3>{moment.title}</h3>
-        </>
-      )}
-      <p className="tile-text">{moment.text}</p>
-      <span className="cta">{isFact ? 'See the source →' : 'Read this part →'}</span>
+      <div className="cover-stage">
+        <CoverArt cover={cover} />
+        {hook && <span className="cover-sticker" aria-hidden="true">{hook.sticker}</span>}
+        {hook?.stat && (
+          <span className="cover-stat">
+            <b>{hook.stat.figure}</b>
+            <small>{hook.stat.text}</small>
+          </span>
+        )}
+      </div>
+      <div className="tile-body">
+        <h2>{cover.headline.text} {cover.headline.accent && <em>{cover.headline.accent}</em>}</h2>
+        <p className="dek">{hook ? <mark>{hook.teaser}</mark> : hero ? paper.summary : cover.dek}</p>
+        <p className="tile-byline"><b>{paper.title}</b> · {paper.authors}, {paper.year}</p>
+        <span className="cover-cta">{hook?.cta ?? 'Read the issue'} <i aria-hidden="true">→</i></span>
+      </div>
     </a>
   );
 }
 
 function FeedTile({ count }: { count: number }) {
   return (
-    <a className="tile tile-feed tile-tall" href="?feed">
+    <a className="tile tile-feed tile-tall" href={feedHref()}>
       <span className="label">New &nbsp;/&nbsp; Snack mode</span>
       <div className="feed-stack" aria-hidden="true"><span /><span /><span /></div>
       <h3>Swipe the snacks</h3>
@@ -92,7 +99,7 @@ export function HomePage({ archive }: { archive: Archive }) {
       <MotionGroup>
         <main>
           <Masthead site={site} meta={[today(), featured ? `Issue ${featured.issue}` : '']}
-            links={[{ href: '?feed', label: 'Swipe the snacks ▶' }]} />
+            links={[{ href: feedHref(), label: 'Swipe the snacks ▶' }]} />
           <div className="front-head">
             <span className="label">The front page &nbsp;/&nbsp; Big science, in pictures anyone can read</span>
             <MotionButton noun="animations" />
@@ -101,7 +108,6 @@ export function HomePage({ archive }: { archive: Archive }) {
             {tiles.map((tile, i) => {
               switch (tile.kind) {
                 case 'cover': return <CoverTile key={`c-${tile.paper.slug}`} paper={tile.paper} hero={tile.size === 'hero'} />;
-                case 'moment': return <MomentTile key={tile.moment.id + tile.paper.slug} moment={tile.moment} size={tile.size} />;
                 case 'feed': return <FeedTile key="feed" count={tile.count} />;
                 case 'topics': return <TopicsTile key={`t-${i}`} archive={archive} />;
               }

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sample story art</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+.sa-tag{font:bold 11px 'Courier New',monospace;letter-spacing:1.5px;fill:#28261e}
+.sa-sfx{font:italic 900 26px Georgia,serif;fill:#a13324;stroke:#fff8e3;stroke-width:5px;paint-order:stroke}
+.sa-spin{transform-box:view-box;transform-origin:200px 125px;animation:sa-spin 14s linear infinite}
+.sa-pulse{transform-box:fill-box;transform-origin:center;animation:sa-pulse 2.4s ease-in-out infinite}
+@keyframes sa-spin{to{transform:rotate(360deg)}}@keyframes sa-pulse{50%{transform:scale(1.15);opacity:.6}}
+@media(prefers-reduced-motion:reduce){.sa-spin,.sa-pulse{animation:none}}
+</style>
+</helmet>
+<div style="width: 100%; line-height: 0;">
+<svg viewBox="0 0 400 250" role="img" aria-label="{{label}}" style="display: block; width: 100%; height: auto;">
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="{{bg}}"></rect>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"></rect>
+
+<sc-if value="{{isDna}}" hint-placeholder-val="{{true}}">
+<g fill="none" stroke-width="7" stroke-linecap="round">
+<path d="M40 70C80 70 80 180 120 180S160 70 200 70S240 180 280 180S320 70 360 70" stroke="#a13324"></path>
+<path d="M40 180C80 180 80 70 120 70S160 180 200 180S240 70 280 70S320 180 360 180" stroke="#377675"></path>
+</g>
+<g stroke="#322e24" stroke-width="3"><path d="M60 92V158M100 110V140M140 110V140M180 92V158M220 92V158M300 92V158M340 110V140"></path></g>
+<g stroke="#322e24" stroke-width="6" stroke-linecap="round"><path d="M232 104L292 126"></path><path d="M232 146L292 124"></path></g>
+<circle cx="222" cy="100" r="13" fill="#f6e3a1" stroke="#322e24" stroke-width="4"></circle><circle cx="222" cy="150" r="13" fill="#f6e3a1" stroke="#322e24" stroke-width="4"></circle>
+<g class="sa-pulse"><text x="318" y="62" class="sa-sfx" text-anchor="middle">SNIP!</text></g>
+</sc-if>
+
+<sc-if value="{{isProtein}}" hint-placeholder-val="{{false}}">
+<path d="M70 190C90 60 160 60 170 130S250 200 260 110S330 40 340 150" fill="none" stroke="#6b4f36" stroke-width="5"></path>
+<g stroke="#322e24" stroke-width="2.5">
+<circle cx="70" cy="190" r="13" fill="#efae78"></circle><circle cx="92" cy="118" r="13" fill="#a2c2a7"></circle><circle cx="128" cy="84" r="13" fill="#f7d79b"></circle><circle cx="163" cy="105" r="13" fill="#c3b2d8"></circle><circle cx="182" cy="158" r="13" fill="#efae78"></circle><circle cx="222" cy="178" r="13" fill="#a2c2a7"></circle><circle cx="254" cy="132" r="13" fill="#f7d79b"></circle><circle cx="284" cy="78" r="13" fill="#c3b2d8"></circle><circle cx="322" cy="86" r="13" fill="#efae78"></circle><circle cx="340" cy="150" r="13" fill="#a2c2a7"></circle>
+</g>
+<g class="sa-pulse"><text x="330" y="222" class="sa-sfx" text-anchor="middle">FOLD!</text></g>
+</sc-if>
+
+<sc-if value="{{isWaves}}" hint-placeholder-val="{{false}}">
+<g fill="none" stroke="#f6e3a1" stroke-width="3" stroke-dasharray="8 7">
+<circle cx="200" cy="125" r="52" opacity=".95"></circle><circle cx="200" cy="125" r="84" opacity=".7"></circle><circle cx="200" cy="125" r="116" opacity=".5"></circle><circle cx="200" cy="125" r="150" opacity=".3"></circle>
+</g>
+<g class="sa-spin"><circle cx="178" cy="125" r="17" fill="#1f1d17" stroke="#efae78" stroke-width="4"></circle><circle cx="222" cy="125" r="17" fill="#1f1d17" stroke="#efae78" stroke-width="4"></circle></g>
+<circle cx="356" cy="210" r="16" fill="#82acad" stroke="#322e24" stroke-width="3"></circle><path d="M346 204q8 -6 14 2q4 6 10 2" fill="none" stroke="#5b8584" stroke-width="3"></path>
+</sc-if>
+
+<sc-if value="{{isStairs}}" hint-placeholder-val="{{false}}">
+<g stroke="#322e24" stroke-width="2.5">
+<rect x="170" y="196" width="64" height="24" rx="4" fill="#f7d79b"></rect><rect x="170" y="164" width="64" height="24" rx="4" fill="#efae78"></rect><rect x="170" y="132" width="64" height="24" rx="4" fill="#a2c2a7"></rect><rect x="170" y="100" width="64" height="24" rx="4" fill="#f7d79b"></rect><rect x="170" y="68" width="64" height="24" rx="4" fill="#efae78"></rect><rect x="170" y="36" width="64" height="24" rx="4" fill="#a2c2a7"></rect>
+</g>
+<g fill="none" stroke="#a13324" stroke-width="4" stroke-linecap="round">
+<path d="M168 208C120 196 120 148 166 144"></path><path d="M236 176C284 164 284 116 238 112"></path><path d="M168 112C120 100 120 52 166 48"></path>
+</g>
+<g fill="#a13324"><path d="M166 144l-10 -6v12z"></path><path d="M238 112l10 -6v12z"></path><path d="M166 48l-10 -6v12z"></path></g>
+<g class="sa-pulse"><text x="320" y="70" class="sa-sfx" text-anchor="middle">SKIP!</text></g>
+</sc-if>
+
+<sc-if value="{{isParticle}}" hint-placeholder-val="{{false}}">
+<g class="sa-spin" fill="none" stroke="#322e24" stroke-width="2.5">
+<ellipse cx="200" cy="125" rx="150" ry="46"></ellipse><ellipse cx="200" cy="125" rx="150" ry="46" transform="rotate(60 200 125)"></ellipse><ellipse cx="200" cy="125" rx="150" ry="46" transform="rotate(-60 200 125)"></ellipse>
+</g>
+<circle cx="200" cy="125" r="34" fill="#efae78" stroke="#322e24" stroke-width="3"></circle><circle cx="200" cy="125" r="34" fill="url(#sa-dots)"></circle>
+<g class="sa-pulse"><circle cx="200" cy="125" r="48" fill="none" stroke="#a13324" stroke-width="3"></circle></g>
+<g stroke="#322e24" stroke-width="2"><circle cx="66" cy="96" r="8" fill="#a2c2a7"></circle><circle cx="338" cy="160" r="8" fill="#f7d79b"></circle><circle cx="262" cy="34" r="8" fill="#c3b2d8"></circle></g>
+</sc-if>
+
+<sc-if value="{{isMold}}" hint-placeholder-val="{{false}}">
+<ellipse cx="200" cy="132" rx="160" ry="96" fill="#fff8e3" stroke="#322e24" stroke-width="3"></ellipse>
+<ellipse cx="200" cy="132" rx="146" ry="84" fill="none" stroke="#b9a98b" stroke-width="2"></ellipse>
+<g fill="#c86f3f"><circle cx="90" cy="110" r="5"></circle><circle cx="110" cy="160" r="5"></circle><circle cx="300" cy="96" r="5"></circle><circle cx="318" cy="150" r="5"></circle><circle cx="270" cy="186" r="5"></circle><circle cx="128" cy="78" r="5"></circle><circle cx="96" cy="136" r="5"></circle><circle cx="290" cy="122" r="5"></circle></g>
+<circle cx="200" cy="130" r="64" fill="none" stroke="#a13324" stroke-width="2" stroke-dasharray="5 6"></circle>
+<g class="sa-pulse"><path d="M170 130q10 -34 32 -26q26 -14 30 16q18 20 -6 34q-14 22 -36 8q-30 4 -20 -32z" fill="#7c9f80" stroke="#322e24" stroke-width="3"></path></g>
+</sc-if>
+
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"></rect>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":"enum","options":["dna","protein","waves","stairs","particle","mold"],"default":"dna"},"$preview":{"width":400,"height":250}}'>
+class Component extends DCLogic {
+renderVals() {
+const kind = this.props.kind ?? 'dna';
+const looks = {
+dna: { bg: '#e8d0c4', label: 'Sample art: a DNA double helix with scissors cutting it.' },
+protein: { bg: '#c9d3c0', label: 'Sample art: a chain of beads folding into a shape.' },
+waves: { bg: '#3d4a5a', label: 'Sample art: two black holes sending ripples across space toward Earth.' },
+stairs: { bg: '#f0e3c6', label: 'Sample art: a stack of blocks with shortcut arrows skipping over them.' },
+particle: { bg: '#ead9b6', label: 'Sample art: a glowing particle inside spinning orbits.' },
+mold: { bg: '#e4ecdd', label: 'Sample art: a lab dish where a mold keeps bacteria away.' }
+};
+const look = looks[kind] || looks.dna;
+return {
+bg: look.bg,
+label: look.label,
+isDna: kind === 'dna',
+isProtein: kind === 'protein',
+isWaves: kind === 'waves',
+isStairs: kind === 'stairs',
+isParticle: kind === 'particle',
+isMold: kind === 'mold'
+};
+}
+}
+</script>
+</body>
+</html>

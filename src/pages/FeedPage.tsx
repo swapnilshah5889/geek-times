@@ -4,6 +4,8 @@ import { MotionGroup } from '../components/motion';
 import { appUrl, mediaBaseFor, type Archive } from '../data/load';
 import { feedItems } from '../lib/front';
 import { MediaBaseContext } from '../lib/mediaBase';
+import { appHref, homeHref, paperHref } from '../lib/routes';
+import { searchHref } from '../lib/tags';
 
 // Snack mode: one full-screen card per swipe, like a short-video feed, but each card is a piece of research.
 
@@ -47,9 +49,9 @@ export function FeedPage({ archive }: { archive: Archive }) {
       <MotionGroup>
         <div className="feed">
           <header className="feed-bar">
-            <a href="./" className="feed-brand">{site.name}</a>
+            <a href={homeHref()} className="feed-brand">{site.name}</a>
             <span className="feed-count">{Math.min(current + 1, items.length)} / {items.length}</span>
-            <a href="./" className="feed-close" aria-label="Back to the front page">✕</a>
+            <a href={homeHref()} className="feed-close" aria-label="Back to the front page">✕</a>
           </header>
           <div className="feed-scroller" ref={scroller} tabIndex={0} aria-label="Snack feed: scroll or swipe for the next card">
             {items.map((item, i) => {
@@ -62,8 +64,8 @@ export function FeedPage({ archive }: { archive: Archive }) {
                     <h2>{paper.cover.headline.text} <em>{paper.cover.headline.accent}</em></h2>
                     <p>{paper.summary}</p>
                     <div className="feed-actions">
-                      <a className="feed-btn feed-btn-main" href={`?paper=${paper.slug}`}>Read the issue →</a>
-                      <ShareButton title={paper.pageTitle} href={`?paper=${paper.slug}`} />
+                      <a className="feed-btn feed-btn-main" href={paperHref(paper.slug)}>Read the issue →</a>
+                      <ShareButton title={paper.pageTitle} href={paperHref(paper.slug)} />
                     </div>
                     {i === 0 && <p className="feed-hint" aria-hidden="true">Swipe up ↑</p>}
                   </article>
@@ -84,8 +86,8 @@ export function FeedPage({ archive }: { archive: Archive }) {
                   {moment.kind !== 'fact' && <h2>{moment.title}</h2>}
                   <p>{moment.text}</p>
                   <div className="feed-actions">
-                    <a className="feed-btn feed-btn-main" href={moment.href}>{moment.kind === 'fact' ? 'See the source →' : 'Read it in the issue →'}</a>
-                    <ShareButton title={`${moment.title} · ${site.name}`} href={moment.href} />
+                    <a className="feed-btn feed-btn-main" href={appHref(moment.href)}>{moment.kind === 'fact' ? 'See the source →' : 'Read it in the issue →'}</a>
+                    <ShareButton title={`${moment.title} · ${site.name}`} href={appHref(moment.href)} />
                   </div>
                 </article>
               );
@@ -94,8 +96,8 @@ export function FeedPage({ archive }: { archive: Archive }) {
               <h2>You’re all caught up</h2>
               <p>New issues are on the way. Until then, dig into the archive.</p>
               <div className="feed-actions">
-                <a className="feed-btn feed-btn-main" href="./">Front page</a>
-                <a className="feed-btn" href="?search">Search</a>
+                <a className="feed-btn feed-btn-main" href={homeHref()}>Front page</a>
+                <a className="feed-btn" href={searchHref()}>Search</a>
               </div>
             </article>
           </div>

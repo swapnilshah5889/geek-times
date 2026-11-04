@@ -28,6 +28,8 @@ export interface PaperDoc {
   summary: string;
   /** How the paper appears on the home page. Optional: without it, the lead block is used. */
   cover?: Cover;
+  /** Scroll-stopper for the front-page tile; merged into the cover. */
+  hook?: CoverHook;
   issue: { volume: string; number: string; desk: string };
   paper: { title: string; authors: string; year: number; url: string };
   tags: PaperTag[];
@@ -105,11 +107,32 @@ export interface Cover {
   headline: { text: string; accent?: string };
   dek: string;
   media: Media;
+  hook?: CoverHook;
+}
+
+/**
+ * The scroll-stopper on a paper's front-page tile. Written by the converter, and every line must stay
+ * true: a curiosity gap is fine, a false promise is not (see skills/explain-source, "Cover hook").
+ */
+export interface CoverHook {
+  /** Loud two-or-three-word sticker, e.g. "Wait, what?". */
+  sticker: string;
+  /** One question or surprising claim in kid words that the paper answers. */
+  teaser: string;
+  /** Button text, a promise of the payoff, e.g. "Crack the bat puzzle". */
+  cta: string;
+  /** Minutes to read the whole issue. */
+  readMinutes: number;
+  /** One real number from the paper's facts, shown as a badge. */
+  stat?: { figure: string; text: string };
+  /** The cover art flips between these (the first should match `cover.media`); `tag` is the shout on each. */
+  frames?: { media: Media; tag: string }[];
 }
 
 /**
  * A bite-size piece of a paper (one comic strip, story chapter or fact) for home page cards and the
- * swipe feed. Derived from the paper's blocks by scripts/build-index.ts; `href` deep-links into the issue.
+ * swipe feed. Derived from the paper's blocks by scripts/build-index.ts; `href` deep-links into the issue
+ * (a path relative to the site base, e.g. "papers/<slug>#<anchor>"; resolve it with appHref).
  */
 export interface Moment {
   id: string;

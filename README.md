@@ -3,6 +3,8 @@
 Research papers explained in pictures, for anyone, kids included. Issue 001 covers
 "Attention Is All You Need" (Vaswani et al., 2017).
 
+**Picking this project up (person or AI agent)?** Start with [AGENTS.md](AGENTS.md), then `docs/` and `skills/`.
+
 Built with **React + TypeScript + Vite**. The UI only renders data. Words live in JSON (a database later),
 drawings live in media files (a CDN or S3 later), and layout lives in React components.
 
