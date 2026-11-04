@@ -2,7 +2,7 @@
 
 Two parts: what exists **today** (JSON files, schema v1), and the **target** (content model v2 plus the database).
 The TypeScript types in `src/types.ts` are the contract for today's files. Reasons are in `decisions.md`, entries 4, 8,
-15, 16, 18 and 22–23.
+15, 16, 18, 22–23 and 30.
 
 ## Today (JSON files, schema v1)
 
@@ -31,6 +31,17 @@ Blocks are a discriminated union: `lead`, `story`, `comic`, `facts`. Each media 
 
    The UI renders these as fixed labels: "Illustration · numbers invented", "From the paper · model design",
    "Measured result · peer-reviewed".
+4. **Keys and references** (decision 30):
+   - Every table has `id bigint generated always as identity`, the Postgres auto-increment key. It is the only thing
+     other tables use to point at a row, always as a `<thing>_id bigint` column (`story_id`, `source_id`, `tag_id` …).
+   - **No foreign key constraints.** The `_id` columns are indexed but declared without `REFERENCES`. Integrity is kept by
+     the import validator (`npm run data` today), the application code, and a scheduled orphan-check query. Rows are
+     retired with a `status`, not deleted, so references don't dangle.
+   - Our human-readable keys live under their own column names, never in `id`: `Story.slug` (unique, used in URLs as
+     `/papers/<slug>`), `Moment.key`, `Tag.key` (`facet/slug`), `Facet.key`, plus external ids such as
+     `Source.arxivId` and `Source.doi`.
+   - In the diagram below, an arrow means "this column holds the other row's `id`". It is a logical link, not a
+     database constraint.
 
 ### Schema (Postgres)
 
@@ -44,9 +55,9 @@ classDiagram
   class Issue { volume→Volume; number; title; theme; editorNote; cover→MediaAsset; publishedAt; status }
   class IssueStory { issue→Issue; story→Story; position; role: lead|feature|brief|vault|real_world; presentation: full|brief|snack }
 
-  class Story { slug; pageTitle; summary; readingLevel; status: draft|review|scheduled|published; publishedAt; cover→MediaAsset }
+  class Story { slug (unique, public key); pageTitle; summary; readingLevel; status: draft|review|scheduled|published; publishedAt; cover→MediaAsset }
   class PublishedVersion { story→Story; version; schemaVersion; document: typed JSON; contentHash; publishedAt }
-  class Moment { id (stable); story→Story; version→PublishedVersion; blockPath; kind: strip|chapter|fact|slide; presentation: card|snack; position; claimKind; status; media→MediaAsset; fact→Fact }
+  class Moment { key (stable, unique per story); story→Story; version→PublishedVersion; blockPath; kind: strip|chapter|fact|slide; presentation: card|snack; position; claimKind; status; media→MediaAsset; fact→Fact }
 
   class Source { type: paper|blog|talk|rfc|patent; title; url; year; venue; trust: peer_reviewed|preprint|company_reported; doi; arxivId; openalexId; s2Id; organization→Organization }
   class SourceSnapshot { source→Source; versionLabel; retrievedAt; archivedUrl; contentHash; status: live|updated|removed }
@@ -66,8 +77,8 @@ classDiagram
   class Citation { source→Source; snapshot→SourceSnapshot; label; url; quote }
   class MediaAsset { storageKey; type: svg|image|video|lottie; mime; width; height; duration; alt; captions; poster→MediaAsset; reducedMotion→MediaAsset; rights: original|licensed|generated; credit; contentHash }
 
-  class Facet { id; label; description }
-  class Tag { id: facet/slug; facet→Facet; label; parent→Tag; aliases[] }
+  class Facet { key; label; description }
+  class Tag { key: facet/slug; facet→Facet; label; parent→Tag; aliases[] }
   class StoryTag { story→Story; tag→Tag; relevance 0–1; basis: paper|background|editorial; evidenceUrl; origin: ai|editor; status }
   class GlossaryTerm { tag→Tag; term; kidExplanation }
 
@@ -122,7 +133,8 @@ classDiagram
 
 ### Migrating from v1 to v2 (JSON first)
 
-- `papers/<slug>.json` becomes `stories/<slug>.json` (the typed document) plus `sources/<id>.json`.
+- `papers/<slug>.json` becomes `stories/<slug>.json` (the typed document) plus `sources/<id>.json`. The file name is the
+  future `Story.slug`; the numeric `id` doesn't exist in files and is assigned by Postgres when the story is imported.
 - Add `claimKind` to strips, chapters and facts. Today's `provenance: illustration | evidence` maps to
   `illustration` / `measured_result`, then each item is reviewed (e.g. "8 heads" becomes `model_design`).
 - `issue` moves into `issues/<volume>-<number>.json` with `stories[{slug, role, presentation}]`.

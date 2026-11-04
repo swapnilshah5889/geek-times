@@ -185,3 +185,13 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - New routes: `/issues[/<id>]`, `/companies[/<id>]`, `/map` (with a list view), plus a family tree on story pages.
     - `npm run data` checks that every library reference points at something that exists.
     - The cover `hook` (decision 28) stays in the data but the front page does not use it yet.
+
+30. **Database keys: auto-increment `id`, our key under another name, no foreign key constraints.** (The owner's call.)
+    - Every table's `id` is the Postgres auto-increment (`bigint identity`) and is what other tables store, as
+      `<thing>_id` columns.
+    - Readable keys keep their own columns: `Story.slug` stays the public key and the URL (`/papers/<slug>`; the
+      title-based slugs were kept on purpose); `Tag.key`, `Moment.key`, `Facet.key`, `Source.arxivId`.
+    - `_id` columns are indexed but have no `REFERENCES`. Integrity comes from the import validator, the app and a
+      scheduled orphan check. Rows are retired by `status`, never deleted.
+    - Why: imports, re-publishing and moving content between environments never fight constraint order, and ids stay
+      meaningless and stable while slugs can be corrected.
