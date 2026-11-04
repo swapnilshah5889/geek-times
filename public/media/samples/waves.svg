@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250" role="img" aria-label="Sample art: Two black holes sending ripples across space toward Earth.">
+<style>.sa-tag{font:bold 11px 'Courier New',monospace;letter-spacing:1.5px;fill:#28261e}
+.sa-sfx{font:italic 900 26px Georgia,serif;fill:#a13324;stroke:#fff8e3;stroke-width:5px;paint-order:stroke}
+.sa-spin{transform-box:view-box;transform-origin:200px 125px;animation:sa-spin 14s linear infinite}
+.sa-pulse{transform-box:fill-box;transform-origin:center;animation:sa-pulse 2.4s ease-in-out infinite}
+@keyframes sa-spin{to{transform:rotate(360deg)}}@keyframes sa-pulse{50%{transform:scale(1.15);opacity:.6}}
+@media(prefers-reduced-motion:reduce){.sa-spin,.sa-pulse{animation:none}}</style>
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#3d4a5a"/>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"/>
+<g fill="none" stroke="#f6e3a1" stroke-width="3" stroke-dasharray="8 7">
+<circle cx="200" cy="125" r="52" opacity=".95"></circle><circle cx="200" cy="125" r="84" opacity=".7"></circle><circle cx="200" cy="125" r="116" opacity=".5"></circle><circle cx="200" cy="125" r="150" opacity=".3"></circle>
+</g>
+<g class="sa-spin"><circle cx="178" cy="125" r="17" fill="#1f1d17" stroke="#efae78" stroke-width="4"></circle><circle cx="222" cy="125" r="17" fill="#1f1d17" stroke="#efae78" stroke-width="4"></circle></g>
+<circle cx="356" cy="210" r="16" fill="#82acad" stroke="#322e24" stroke-width="3"></circle><path d="M346 204q8 -6 14 2q4 6 10 2" fill="none" stroke="#5b8584" stroke-width="3"></path>
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"/>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>

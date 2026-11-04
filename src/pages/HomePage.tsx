@@ -1,120 +1,323 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Masthead } from '../components/Masthead';
 import { MediaView } from '../components/MediaView';
 import { MotionButton, MotionGroup } from '../components/motion';
-import { useMotion } from '../lib/motion';
+import { SampleTag, StoryArt } from '../components/library';
 import { mediaBaseFor, type Archive } from '../data/load';
-import { frontPage } from '../lib/front';
+import { headlineOf, latestIssue, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
 import { MediaBaseContext } from '../lib/mediaBase';
-import { feedHref, paperHref } from '../lib/routes';
-import { searchHref, tagCounts, tagLookup } from '../lib/tags';
-import type { SearchEntry, TagVocabulary } from '../types';
+import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
+import { searchHref } from '../lib/tags';
+import type { LibraryStory, Moment } from '../types';
 
 const today = () => new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
-/** The cover art: flips between frames with a shout on each, so the tile moves before anyone reads it. */
-function CoverArt({ cover }: { cover: SearchEntry['cover'] }) {
-  const { held } = useMotion();
-  const frames = cover.hook?.frames;
-  if (!frames) return <div className="tile-media"><MediaView media={cover.media} /></div>;
+const CLAIM_LABEL = { model_design: 'model design', measured_result: 'measured result', illustration: 'illustration' } as const;
+const sectionOf = (m: Moment) => m.sourceLabel?.replace(/^Paper\s*/, '');
+
+function SectionHead({ id, title, hint, link }: { id: string; title: string; hint?: string; link?: { href: string; label: string } }) {
   return (
-    <div className={`tile-media cover-flip${held ? ' cover-held' : ''}`}>
-      {frames.map((f, i) => (
-        <div key={f.tag} className="cover-frame" style={{ animationDelay: `${i * 2.4}s` }} aria-hidden={i > 0}>
-          <MediaView media={f.media} />
-          <span className="cover-shout" style={{ animationDelay: `${i * 2.4}s` }}>{f.tag}</span>
-        </div>
-      ))}
+    <div className="f-sechead">
+      <h3 id={id}>{title}{hint && <span className="f-hint"> {hint}</span>}</h3>
+      {link && <a className="f-more" href={link.href}>{link.label}</a>}
     </div>
   );
 }
 
-function CoverTile({ paper, hero }: { paper: SearchEntry; hero: boolean }) {
-  const { cover } = paper;
-  const { hook } = cover;
+function Lead({ archive }: { archive: Archive }) {
+  const { library } = archive;
+  const lead = storyById(library, library.front.lead);
+  const paper = lead && realPaper(archive, lead);
+  const aside = storiesOf(library, library.front.aside);
+  if (!lead || !paper) return null;
   return (
-    <a className={`tile tile-cover ${hero ? 'tile-hero' : 'tile-wide'}${hook ? ' tile-hooked' : ''}`} href={paperHref(paper.slug)}>
-      <span className="label cover-kicker">
-        <span className="cover-new">{hero ? 'New today' : `Issue ${paper.issue}`}</span>
-        {hook && <span>{hook.readMinutes} min · {paper.moments.length} snacks</span>}
-      </span>
-      <div className="cover-stage">
-        <CoverArt cover={cover} />
-        {hook && <span className="cover-sticker" aria-hidden="true">{hook.sticker}</span>}
-        {hook?.stat && (
-          <span className="cover-stat">
-            <b>{hook.stat.figure}</b>
-            <small>{hook.stat.text}</small>
-          </span>
+    <section id="lead" className="f-lead" aria-label="Top stories">
+      <article className="f-lead-main">
+        <div className="label">Issue {lead.issue} · Lead story · {lead.desk}</div>
+        <a className="f-lead-art" href={paperHref(lead.id)} aria-label={`Open the story: ${paper.cover.headline.text} ${paper.cover.headline.accent ?? ''}`}>
+          <MediaView media={paper.cover.media} />
+        </a>
+        <h2><a href={paperHref(lead.id)}>{paper.cover.headline.text} <em>{paper.cover.headline.accent}</em></a></h2>
+        <p className="f-lead-dek">{paper.summary}</p>
+        <div className="f-lead-foot">
+          <p><b>{paper.title}</b> · <i>{paper.authors}, {paper.year}</i> · <span className="f-trust" title="Checked by other scientists before it was published">{trustLabel(lead.trust)}</span>{' '}
+            <small>(checked by other scientists)</small></p>
+          <a className="f-more" href={paperHref(lead.id)}>Read the illustrated story →</a>
+        </div>
+      </article>
+      <aside className="f-aside">
+        {aside.map((s, i) => (
+          <article key={s.id} className={i === 0 ? 'f-aside-first' : undefined}>
+            {i === 0 && <a href={paperHref(s.id)} className="f-aside-art"><StoryArt story={s} archive={archive} /></a>}
+            <div className="f-tags label"><span>{roleLabel[s.role]} · {s.desk}</span><SampleTag story={s} /></div>
+            <h3><a href={paperHref(s.id)}>{s.headline}</a></h3>
+            <p>{s.dek}</p>
+          </article>
+        ))}
+      </aside>
+    </section>
+  );
+}
+
+function StoryCard({ story, archive, kicker }: { story: LibraryStory; archive: Archive; kicker?: string }) {
+  return (
+    <a className="card f-card" href={paperHref(story.id)}>
+      <StoryArt story={story} archive={archive} />
+      <div className="f-card-body">
+        <span className="label">{kicker ?? `${roleLabel[story.role]} · ${story.desk}`}{story.sample && ' · Sample'}</span>
+        <h4>{headlineOf(story)}</h4>
+        <p>{story.dek}</p>
+      </div>
+    </a>
+  );
+}
+
+function MoreFromIssue({ archive }: { archive: Archive }) {
+  const { library } = archive;
+  const issue = latestIssue(library);
+  const stories = storiesOf(library, library.front.more);
+  return (
+    <section aria-labelledby="s-more" className="f-section">
+      <SectionHead id="s-more" title={`More from Issue ${issue.number}`} link={{ href: issueHref(issue.id), label: 'Whole issue →' }} />
+      <div className="f-grid f-grid-3">{stories.map(s => <StoryCard key={s.id} story={s} archive={archive} />)}</div>
+    </section>
+  );
+}
+
+function Snacks({ archive }: { archive: Archive }) {
+  const paper = archive.index.papers.find(p => p.slug === archive.library.front.lead);
+  const moments = paper?.moments ?? [];
+  const strips = moments.filter(m => m.kind === 'strip' && m.media).slice(0, 2);
+  const fact = moments.find(m => m.kind === 'fact' && m.claim === 'model_design');
+  const sample = storiesOf(archive.library, ['crispr'])[0];
+  const count = archive.index.papers.reduce((n, p) => n + p.moments.length, 0);
+  return (
+    <section id="snacks" aria-labelledby="s-snacks" className="f-snacks">
+      <div className="f-snacks-intro">
+        <span className="label">Snack mode · {count} snacks</span>
+        <h3 id="s-snacks">Swipe the snacks</h3>
+        <p>One picture, one idea, one swipe. Each card opens the full story.</p>
+        <a className="f-pill" href={feedHref()}>Start swiping ▶</a>
+      </div>
+      <div className="f-snack-row">
+        {strips.map(m => (
+          <a key={m.id} className="f-snack" href={appHref(m.href)}>
+            <MediaView media={m.media!} />
+            <span><span className="label">Illustration · numbers invented</span><b>{m.title}</b><br />{m.text}</span>
+          </a>
+        ))}
+        {fact && (
+          <a className="f-snack f-snack-fact" href={appHref(fact.href)}>
+            <span className="label">From the paper · {CLAIM_LABEL[fact.claim ?? 'model_design']}</span>
+            <b className="f-figure">{fact.figure}</b>
+            <span>{fact.text}</span>
+          </a>
+        )}
+        {sample && (
+          <a className="f-snack" href={paperHref(sample.id)}>
+            <StoryArt story={sample} archive={archive} />
+            <span><span className="label">Sample snack</span><b>{sample.headline}</b></span>
+          </a>
         )}
       </div>
-      <div className="tile-body">
-        <h2>{cover.headline.text} {cover.headline.accent && <em>{cover.headline.accent}</em>}</h2>
-        <p className="dek">{hook ? <mark>{hook.teaser}</mark> : hero ? paper.summary : cover.dek}</p>
-        <p className="tile-byline"><b>{paper.title}</b> · {paper.authors}, {paper.year}</p>
-        <span className="cover-cta">{hook?.cta ?? 'Read the issue'} <i aria-hidden="true">→</i></span>
+    </section>
+  );
+}
+
+function Topics({ archive }: { archive: Archive }) {
+  const { library } = archive;
+  return (
+    <section id="topics" aria-label="Topics" className="f-section">
+      {library.front.topics.map(row => {
+        const shown = storiesOf(library, row.stories);
+        const more = library.stories.filter(s => s.fields.includes(row.field) && !row.stories.includes(s.id)).length;
+        return (
+          <div key={row.field} className="f-topic-row">
+            <SectionHead id={`t-${row.field}`} title={row.label} link={{ href: searchHref(), label: 'See all →' }} />
+            <div className="f-grid f-grid-4">
+              {shown.map(s => (
+                <a key={s.id} className="card f-mini" href={paperHref(s.id)}>
+                  <StoryArt story={s} archive={archive} />
+                  <span>{headlineOf(s)}{s.sample && <small className="sample-tag">Sample</small>}</span>
+                </a>
+              ))}
+              <a className="f-mini f-mini-more" href={searchHref()}>
+                <b>{more > 0 ? `+${more}` : '→'}</b>
+                <span>{more > 0 ? 'more stories' : 'Browse this topic'}</span>
+                <span className="label">See all →</span>
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </section>
+  );
+}
+
+function RealWorld({ archive }: { archive: Archive }) {
+  const { library } = archive;
+  const posts = storiesOf(library, library.front.real);
+  return (
+    <section id="real" aria-labelledby="s-real" className="f-section">
+      <SectionHead id="s-real" title="In the real world" hint="from company engineering blogs · “company-reported” means the company measured it itself"
+        link={{ href: appHref('companies'), label: 'All companies →' }} />
+      <div className="f-grid f-grid-3">
+        {posts.map(s => {
+          const builtOn = s.builtOn ? storyById(library, s.builtOn) : undefined;
+          return (
+            <a key={s.id} className="card f-post" href={paperHref(s.id)}>
+              <span className="f-company">{s.title}</span>
+              <h4>{headlineOf(s)}</h4>
+              <p>{s.dek}</p>
+              <span className="f-chips">
+                <span className="chip chip-warm">{trustLabel(s.trust)}</span>
+                {builtOn && <span className="chip chip-green">Puts into practice: {builtOn.title}</span>}
+              </span>
+            </a>
+          );
+        })}
       </div>
-    </a>
+    </section>
   );
 }
 
-function FeedTile({ count }: { count: number }) {
+function Numbers({ archive }: { archive: Archive }) {
+  const paper = archive.index.papers.find(p => p.slug === archive.library.front.lead);
+  const facts = (paper?.moments ?? []).filter(m => m.kind === 'fact' && m.claim && m.figure && m.figure.length < 9).slice(0, 4);
+  if (!facts.length) return null;
+  const trust = trustLabel(storyById(archive.library, archive.library.front.lead)?.trust).split(' ')[0].toLowerCase();
   return (
-    <a className="tile tile-feed tile-tall" href={feedHref()}>
-      <span className="label">New &nbsp;/&nbsp; Snack mode</span>
-      <div className="feed-stack" aria-hidden="true"><span /><span /><span /></div>
-      <h3>Swipe the snacks</h3>
-      <p>{count} bite-size pictures from the research, one swipe at a time.</p>
-      <span className="cta">Start swiping ↓</span>
-    </a>
+    <section aria-labelledby="s-numbers" className="f-section">
+      <SectionHead id="s-numbers" title="Numbers from the papers" hint="Model design = how it was built. Measured result = what the tests found." />
+      <div className="f-grid f-grid-4">
+        {facts.map(m => (
+          <a key={m.id} className="f-number" href={appHref(m.href)}>
+            <span className="label">
+              {m.claim === 'measured_result' ? `Measured result · ${trust}` : `From the paper · ${CLAIM_LABEL[m.claim!]}`} · {sectionOf(m)}
+            </span>
+            <b>{m.figure}</b>
+            <span className="f-number-text">{m.text}</span>
+          </a>
+        ))}
+      </div>
+    </section>
   );
 }
 
-function TopicsTile({ archive }: { archive: { vocab: TagVocabulary; index: Archive['index'] } }) {
-  const topics = useMemo(() => {
-    const lookup = tagLookup(archive.vocab);
-    const counts = tagCounts(archive.index, lookup);
-    return archive.vocab.tags.filter(t => ['everyday', 'area', 'use'].includes(t.facet) && counts.has(t.id)).slice(0, 12);
-  }, [archive]);
+function Storylines({ archive }: { archive: Archive }) {
+  const { library } = archive;
+  const lines = library.front.storylines.map(id => library.storylines.find(s => s.id === id)).filter(Boolean) as typeof library.storylines;
   return (
-    <div className="tile tile-topics tile-wide">
-      <span className="label">Explore by topic</span>
-      <h3>What are you curious about?</h3>
-      <p className="topic-chips">
-        {topics.map(t => <a key={t.id} className="tag" href={searchHref({ tags: [t.id] })}>{t.label}</a>)}
-      </p>
-      <a className="cta" href={searchHref()}>Search everything →</a>
-    </div>
+    <section aria-labelledby="s-lines" className="f-section">
+      <SectionHead id="s-lines" title="Storylines" hint="guided paths showing how an idea grew, step by step" />
+      <div className="f-grid f-grid-2">
+        {lines.map(l => (
+          <a key={l.id} className="card f-line" href={appHref('map')}>
+            <span className="label">Storyline · {l.sample ? 'Sample' : `${l.steps.length} steps`}</span>
+            <h4>{l.title}</h4>
+            <ol className="f-steps" style={{ gridTemplateColumns: `repeat(${l.steps.length}, minmax(0, 1fr))` }}>
+              {l.steps.map(st => <li key={st.year + st.label} className={st.current ? 'is-now' : undefined}><b>{st.year}</b>{st.label}</li>)}
+            </ol>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Vault({ archive }: { archive: Archive }) {
+  const { library } = archive;
+  const vault = storyById(library, library.front.vault);
+  const day = library.front.onThisDay;
+  return (
+    <section aria-labelledby="s-vault" className="f-vault">
+      {vault && (
+        <a className="card f-vault-main" href={paperHref(vault.id)}>
+          <StoryArt story={vault} archive={archive} />
+          <div className="f-vault-body">
+            <span className="label">From the vault{vault.sample && ' · Sample'}</span>
+            <h3 id="s-vault">{vault.headline}</h3>
+            <p>{vault.vaultNote ?? vault.dek}</p>
+            <span className="f-more">Read the classic →</span>
+          </div>
+        </a>
+      )}
+      <div className="card f-day">
+        <span className="label">On this day · Sample</span>
+        <b>{day.year}</b>
+        <p>{day.text}</p>
+        <a className="f-more" href={paperHref(day.story)}>Open its family tree →</a>
+      </div>
+    </section>
+  );
+}
+
+function BackIssues({ archive }: { archive: Archive }) {
+  const { library } = archive;
+  const current = latestIssue(library);
+  return (
+    <section id="issues" aria-labelledby="s-issues" className="f-section">
+      <SectionHead id="s-issues" title="Back issues" link={{ href: appHref('issues'), label: 'All volumes →' }} />
+      <div className="f-grid f-grid-5">
+        {library.issues.map(i => (
+          <a key={i.id} className="f-cover" style={{ background: i.color }} href={issueHref(i.id)}>
+            <span className="label-ink">Vol. {i.volume} · {i.volume === 'I' ? `No. ${i.number}` : i.number}</span>
+            <b>{i.title}</b>
+            <span>{i.sample ? `Sample · ${i.classics} classics` : `${i.stories?.length} stories · this week`}</span>
+          </a>
+        ))}
+        <a className="f-cover f-cover-all" href={issueHref(current.id)}>
+          <b>Every issue</b><span className="label">Browse volumes →</span>
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function Newsletter() {
+  const [sent, setSent] = useState(false);
+  const submit = (e: FormEvent) => { e.preventDefault(); setSent(true); };
+  return (
+    <section aria-labelledby="s-news" className="f-news">
+      <div><span className="label">Every Friday</span><h3 id="s-news">Get each new issue</h3><p>Big science, in pictures, in your inbox once a week.</p></div>
+      <form onSubmit={submit}>
+        <label htmlFor="news-email" className="sr-only">Email address</label>
+        <input id="news-email" type="email" placeholder="you@example.com" required disabled={sent} />
+        <button type="submit" disabled={sent}>Notify me</button>
+        <p role="status" className="f-news-note">{sent ? 'The newsletter is not live yet, so nothing was saved. Thanks for the interest!' : 'Sign-ups open soon.'}</p>
+      </form>
+    </section>
   );
 }
 
 export function HomePage({ archive }: { archive: Archive }) {
-  const { site, index } = archive;
-  const tiles = useMemo(() => frontPage(index), [index]);
+  const { site, library } = archive;
+  const issue = latestIssue(library);
   useEffect(() => { document.title = `${site.name} — ${site.motto}`; }, [site]);
-  const featured = index.papers.find(p => p.slug === index.featured);
+  const mediaBase = useMemo(() => mediaBaseFor(site), [site]);
 
   return (
-    <MediaBaseContext.Provider value={mediaBaseFor(site)}>
+    <MediaBaseContext.Provider value={mediaBase}>
       <MotionGroup>
-        <main>
-          <Masthead site={site} meta={[today(), featured ? `Issue ${featured.issue}` : '']}
-            links={[{ href: feedHref(), label: 'Swipe the snacks ▶' }]} />
-          <div className="front-head">
-            <span className="label">The front page &nbsp;/&nbsp; Big science, in pictures anyone can read</span>
-            <MotionButton noun="animations" />
+        <main className="site-main">
+          <Masthead site={site} meta={[today(), issue ? `Vol. ${issue.volume} · No. ${issue.number}` : '']} active="front" />
+          <div className="f-motion"><MotionButton noun="animations" /></div>
+          <Lead archive={archive} />
+          <div className="f-explore-head">
+            <h2>Keep exploring</h2>
+            <span className="label">Sample stories are marked</span>
           </div>
-          <section className="bento" aria-label="Front page">
-            {tiles.map((tile, i) => {
-              switch (tile.kind) {
-                case 'cover': return <CoverTile key={`c-${tile.paper.slug}`} paper={tile.paper} hero={tile.size === 'hero'} />;
-                case 'feed': return <FeedTile key="feed" count={tile.count} />;
-                case 'topics': return <TopicsTile key={`t-${i}`} archive={archive} />;
-              }
-            })}
-          </section>
+          <MoreFromIssue archive={archive} />
+          <Snacks archive={archive} />
+          <Topics archive={archive} />
+          <RealWorld archive={archive} />
+          <Numbers archive={archive} />
+          <Storylines archive={archive} />
+          <Vault archive={archive} />
+          <BackIssues archive={archive} />
+          <Newsletter />
           <footer>
-            <span>{site.name} &nbsp; ✦ &nbsp; {site.motto}</span>
+            <span>{site.name} &nbsp; ✦ &nbsp; Vol. {issue?.volume} · Issue {issue?.number}</span>
             <a href={searchHref()}>The archive →</a>
           </footer>
         </main>

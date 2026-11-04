@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250" role="img" aria-label="Sample art: A glowing particle inside spinning orbits.">
+<style>.sa-tag{font:bold 11px 'Courier New',monospace;letter-spacing:1.5px;fill:#28261e}
+.sa-sfx{font:italic 900 26px Georgia,serif;fill:#a13324;stroke:#fff8e3;stroke-width:5px;paint-order:stroke}
+.sa-spin{transform-box:view-box;transform-origin:200px 125px;animation:sa-spin 14s linear infinite}
+.sa-pulse{transform-box:fill-box;transform-origin:center;animation:sa-pulse 2.4s ease-in-out infinite}
+@keyframes sa-spin{to{transform:rotate(360deg)}}@keyframes sa-pulse{50%{transform:scale(1.15);opacity:.6}}
+@media(prefers-reduced-motion:reduce){.sa-spin,.sa-pulse{animation:none}}</style>
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#ead9b6"/>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"/>
+<g class="sa-spin" fill="none" stroke="#322e24" stroke-width="2.5">
+<ellipse cx="200" cy="125" rx="150" ry="46"></ellipse><ellipse cx="200" cy="125" rx="150" ry="46" transform="rotate(60 200 125)"></ellipse><ellipse cx="200" cy="125" rx="150" ry="46" transform="rotate(-60 200 125)"></ellipse>
+</g>
+<circle cx="200" cy="125" r="34" fill="#efae78" stroke="#322e24" stroke-width="3"></circle><circle cx="200" cy="125" r="34" fill="url(#sa-dots)"></circle>
+<g class="sa-pulse"><circle cx="200" cy="125" r="48" fill="none" stroke="#a13324" stroke-width="3"></circle></g>
+<g stroke="#322e24" stroke-width="2"><circle cx="66" cy="96" r="8" fill="#a2c2a7"></circle><circle cx="338" cy="160" r="8" fill="#f7d79b"></circle><circle cx="262" cy="34" r="8" fill="#c3b2d8"></circle></g>
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"/>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>

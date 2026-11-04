@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250" role="img" aria-label="Sample art: A lab dish where a mold keeps bacteria away.">
+<style>.sa-tag{font:bold 11px 'Courier New',monospace;letter-spacing:1.5px;fill:#28261e}
+.sa-sfx{font:italic 900 26px Georgia,serif;fill:#a13324;stroke:#fff8e3;stroke-width:5px;paint-order:stroke}
+.sa-spin{transform-box:view-box;transform-origin:200px 125px;animation:sa-spin 14s linear infinite}
+.sa-pulse{transform-box:fill-box;transform-origin:center;animation:sa-pulse 2.4s ease-in-out infinite}
+@keyframes sa-spin{to{transform:rotate(360deg)}}@keyframes sa-pulse{50%{transform:scale(1.15);opacity:.6}}
+@media(prefers-reduced-motion:reduce){.sa-spin,.sa-pulse{animation:none}}</style>
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#e4ecdd"/>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"/>
+<ellipse cx="200" cy="132" rx="160" ry="96" fill="#fff8e3" stroke="#322e24" stroke-width="3"></ellipse>
+<ellipse cx="200" cy="132" rx="146" ry="84" fill="none" stroke="#b9a98b" stroke-width="2"></ellipse>
+<g fill="#c86f3f"><circle cx="90" cy="110" r="5"></circle><circle cx="110" cy="160" r="5"></circle><circle cx="300" cy="96" r="5"></circle><circle cx="318" cy="150" r="5"></circle><circle cx="270" cy="186" r="5"></circle><circle cx="128" cy="78" r="5"></circle><circle cx="96" cy="136" r="5"></circle><circle cx="290" cy="122" r="5"></circle></g>
+<circle cx="200" cy="130" r="64" fill="none" stroke="#a13324" stroke-width="2" stroke-dasharray="5 6"></circle>
+<g class="sa-pulse"><path d="M170 130q10 -34 32 -26q26 -14 30 16q18 20 -6 34q-14 22 -36 8q-30 4 -20 -32z" fill="#7c9f80" stroke="#322e24" stroke-width="3"></path></g>
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"/>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>

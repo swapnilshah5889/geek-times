@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250" role="img" aria-label="Sample art: A stack of blocks with shortcut arrows skipping over them.">
+<style>.sa-tag{font:bold 11px 'Courier New',monospace;letter-spacing:1.5px;fill:#28261e}
+.sa-sfx{font:italic 900 26px Georgia,serif;fill:#a13324;stroke:#fff8e3;stroke-width:5px;paint-order:stroke}
+.sa-spin{transform-box:view-box;transform-origin:200px 125px;animation:sa-spin 14s linear infinite}
+.sa-pulse{transform-box:fill-box;transform-origin:center;animation:sa-pulse 2.4s ease-in-out infinite}
+@keyframes sa-spin{to{transform:rotate(360deg)}}@keyframes sa-pulse{50%{transform:scale(1.15);opacity:.6}}
+@media(prefers-reduced-motion:reduce){.sa-spin,.sa-pulse{animation:none}}</style>
+<defs><pattern id="sa-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#26251f" opacity=".24"></circle></pattern></defs>
+<rect width="400" height="250" fill="#f0e3c6"/>
+<rect width="400" height="250" fill="url(#sa-dots)" opacity=".25"/>
+<g stroke="#322e24" stroke-width="2.5">
+<rect x="170" y="196" width="64" height="24" rx="4" fill="#f7d79b"></rect><rect x="170" y="164" width="64" height="24" rx="4" fill="#efae78"></rect><rect x="170" y="132" width="64" height="24" rx="4" fill="#a2c2a7"></rect><rect x="170" y="100" width="64" height="24" rx="4" fill="#f7d79b"></rect><rect x="170" y="68" width="64" height="24" rx="4" fill="#efae78"></rect><rect x="170" y="36" width="64" height="24" rx="4" fill="#a2c2a7"></rect>
+</g>
+<g fill="none" stroke="#a13324" stroke-width="4" stroke-linecap="round">
+<path d="M168 208C120 196 120 148 166 144"></path><path d="M236 176C284 164 284 116 238 112"></path><path d="M168 112C120 100 120 52 166 48"></path>
+</g>
+<g fill="#a13324"><path d="M166 144l-10 -6v12z"></path><path d="M238 112l10 -6v12z"></path><path d="M166 48l-10 -6v12z"></path></g>
+<g class="sa-pulse"><text x="320" y="70" class="sa-sfx" text-anchor="middle">SKIP!</text></g>
+<rect x="12" y="12" width="104" height="22" fill="#f6f0df" stroke="#322e24" stroke-width="1"/>
+<text x="22" y="27" class="sa-tag">SAMPLE ART</text>
+</svg>

@@ -4,7 +4,7 @@
 // for reviewing AI-generated issues before they are imported.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { Cover, Moment, PaperDoc, PaperTag, SearchIndex, SiteConfig, TagBasis, TagVocabulary } from '../src/types.ts';
+import type { Cover, Library, Moment, PaperDoc, PaperTag, SearchIndex, SiteConfig, TagBasis, TagVocabulary } from '../src/types.ts';
 
 const PUBLIC = join(import.meta.dirname, '..', 'public');
 const read = <T>(path: string): T => JSON.parse(readFileSync(join(PUBLIC, path), 'utf8')) as T;
@@ -105,7 +105,7 @@ function momentsOf(doc: PaperDoc): Moment[] {
     } else if (block.type === 'facts') {
       block.facts.forEach((f, i) => {
         out.push({ id: `${block.id}-${i + 1}`, paper: doc.slug, kind: 'fact', kicker: 'From the paper', title: f.figure,
-          figure: f.figure, text: plain(f.text), media: f.media, provenance: 'evidence', href: link(block.id) });
+          figure: f.figure, text: plain(f.text), media: f.media, provenance: 'evidence', claim: f.claim, sourceLabel: f.source?.label, href: link(block.id) });
       });
     }
   }
@@ -136,6 +136,29 @@ for (const entry of site.papers) {
     tags: tags.map(t => ({ id: t.tag, relevance: t.relevance })).sort((a, b) => b.relevance - a.relevance),
   });
 }
+
+// The library (front page, issues, companies, map) must only point at things that exist.
+const library = read<Library>('data/library.json');
+const storyIds = new Set(library.stories.map(s => s.id));
+const nodeIds = new Set(library.nodes.map(n => n.id));
+const need = (ok: boolean, msg: string) => { if (!ok) errors.push(`library.json: ${msg}`); };
+for (const s of library.stories) {
+  if (s.real) need(index.papers.some(p => p.slug === s.id), `story "${s.id}" is real but has no paper in site.json`);
+  else need(s.kind === 'blog' || !!s.art, `sample story "${s.id}" needs an "art" kind`);
+  need(s.fields.every(f => library.fields.some(x => x.id === f)), `story "${s.id}" has an unknown field`);
+}
+const refs: [string, string[]][] = [
+  ['front.aside', library.front.aside], ['front.more', library.front.more], ['front.real', library.front.real],
+  ['front.lead', [library.front.lead]], ['front.vault', [library.front.vault]],
+  ...library.front.topics.map((t): [string, string[]] => [`front.topics.${t.field}`, t.stories]),
+  ...library.issues.map((i): [string, string[]] => [`issue ${i.id}`, i.stories ?? []]),
+  ...library.companies.map((c): [string, string[]] => [`company ${c.id} posts`, c.posts]),
+];
+for (const [where, ids] of refs) for (const id of ids) need(storyIds.has(id), `${where} points at unknown story "${id}"`);
+for (const c of library.companies) for (const id of c.builtOn) need(nodeIds.has(id), `company ${c.id} builds on unknown node "${id}"`);
+for (const n of library.nodes) if (n.story) need(storyIds.has(n.story), `node "${n.id}" points at unknown story "${n.story}"`);
+for (const r of library.relations) need(nodeIds.has(r.from) && nodeIds.has(r.to), `relation ${r.from} → ${r.to} points at an unknown node`);
+for (const sl of library.front.storylines) need(library.storylines.some(x => x.id === sl), `front.storylines has unknown "${sl}"`);
 
 warnings.forEach(w => console.warn(`warning: ${w}`));
 if (errors.length) {

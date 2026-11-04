@@ -59,15 +59,15 @@ docs/
 skills/                   step-by-step playbooks any agent can follow (open SKILL.md format)
 design/                   exported mockups (PNG + standalone HTML) and the review brief: design/README.md
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
-public/data/              content: site.json, tags.json, papers/<slug>.json (search-index.json is generated)
+public/data/              content: site.json, tags.json, library.json (editorial layer, samples), papers/<slug>.json (search-index.json is generated)
 public/media/<slug>/      standalone animated SVGs (moving to a CDN later)
 src/
   types.ts                the content model: the contract between data and UI
-  App.tsx                 routes: / (front page), /papers/<slug>, ?feed, ?search
+  App.tsx                 routes: / (front page D), /papers/<slug>, /issues, /companies, /map, ?feed, ?search
   pages/                  HomePage (bento), PaperPage, FeedPage (swipe), SearchPage
   blocks/                 one component per content block type (lead, story, comic, facts)
   components/             MediaView (svg/image/video), Rich (safe captions), TagShelf, Masthead, motion
-  lib/                    front.ts (front page layout), tags.ts (search), motion.ts, mediaBase.ts
+  lib/                    library.ts (stories, issues, graph helpers), routes.ts (all links), front.ts (feed order), tags.ts (search), motion.ts, mediaBase.ts
   styles/edition.css      the newspaper look
 scripts/build-index.ts    content validator + search index builder
 tools/                    media_kit.py (drawing kit) + draw_attention.py (per-paper drawings)

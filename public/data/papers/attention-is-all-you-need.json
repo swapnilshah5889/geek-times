@@ -262,30 +262,35 @@
       "facts": [
         {
           "figure": "6 + 6",
+          "claim": "model_design",
           "text": "The reader has 6 floors and the writer has 6 floors. The paper calls them encoder and decoder layers.",
           "source": { "label": "Paper §3.1", "url": "https://arxiv.org/html/1706.03762#S3.SS1" },
           "media": { "type": "svg", "src": "attention-is-all-you-need/facts/layers.svg", "width": 160, "height": 100, "alt": "" }
         },
         {
           "figure": "8",
+          "claim": "model_design",
           "text": "lookers work side by side in every attention step. The paper calls them attention heads.",
           "source": { "label": "Paper §3.2.2", "url": "https://arxiv.org/html/1706.03762#S3.SS2.SSS2" },
           "media": { "type": "svg", "src": "attention-is-all-you-need/facts/heads.svg", "width": 160, "height": 100, "alt": "" }
         },
         {
           "figure": "512",
+          "claim": "model_design",
           "text": "numbers make up one word’s code in the base model. The grid above has exactly 512 squares. Paper name: d<sub>model</sub>.",
           "source": { "label": "Paper §3.1", "url": "https://arxiv.org/html/1706.03762#S3.SS1" },
           "media": { "type": "svg", "src": "attention-is-all-you-need/facts/d-model.svg", "width": 160, "height": 100, "alt": "" }
         },
         {
           "figure": "sin + cos",
+          "claim": "model_design",
           "text": "Seat numbers are made from smooth sine and cosine waves, then added to each word’s code.",
           "source": { "label": "Paper §3.5", "url": "https://arxiv.org/html/1706.03762#S3.SS5" },
           "media": { "type": "svg", "src": "attention-is-all-you-need/facts/waves.svg", "width": 160, "height": 100, "alt": "" }
         },
         {
           "figure": "12 hours",
+          "claim": "measured_result",
           "text": "to train the base model on one computer with 8 NVIDIA P100 graphics chips (100,000 steps). The big model took 3.5 days.",
           "source": { "label": "Paper §5.2", "url": "https://arxiv.org/html/1706.03762#S5.SS2" },
           "media": { "type": "svg", "src": "attention-is-all-you-need/facts/training.svg", "width": 160, "height": 100, "alt": "" }
