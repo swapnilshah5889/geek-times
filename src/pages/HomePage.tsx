@@ -4,7 +4,7 @@ import { MediaView } from '../components/MediaView';
 import { MotionButton, MotionGroup } from '../components/motion';
 import { SampleTag, StoryArt } from '../components/library';
 import { mediaBaseFor, type Archive } from '../data/load';
-import { headlineOf, latestIssue, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
+import { headlineOf, issueById, latestIssue, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
 import { MediaBaseContext } from '../lib/mediaBase';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
@@ -44,7 +44,7 @@ function Lead({ archive }: { archive: Archive }) {
         <p className="f-lead-dek">{paper.summary}</p>
         <div className="f-lead-foot">
           <p><b>{paper.title}</b> · <i>{paper.authors}, {paper.year}</i> · <span className="f-trust" title={lead.trust === 'peer_reviewed' ? 'Checked by other scientists before it was published' : undefined}>{trustLabel(lead.trust)}</span>{' '}
-            {lead.trust === 'peer_reviewed' && <small>(checked by other scientists)</small>}</p>
+            {lead.trust === 'peer_reviewed' && <small>(checked by other scientists)</small>}{lead.trust === 'preprint' && <small>(shared publicly, not yet checked by other scientists)</small>}</p>
           <a className="f-more" href={paperHref(lead.id)}>Read the illustrated story →</a>
         </div>
       </article>
@@ -77,7 +77,7 @@ function StoryCard({ story, archive, kicker }: { story: LibraryStory; archive: A
 
 function MoreFromIssue({ archive }: { archive: Archive }) {
   const { library } = archive;
-  const issue = latestIssue(library);
+  const issue = issueById(library, library.front.moreIssue ?? latestIssue(library).id) ?? latestIssue(library);
   const stories = storiesOf(library, library.front.more);
   return (
     <section aria-labelledby="s-more" className="f-section">
@@ -107,7 +107,7 @@ function Snacks({ archive }: { archive: Archive }) {
         {strips.map(m => (
           <a key={m.id} className="f-snack" href={appHref(m.href)}>
             <MediaView media={m.media!} />
-            <span><span className="label">Illustration · numbers invented</span><b>{m.title}</b><br />{m.text}</span>
+            <span><span className="label">{m.provenance === 'model_design' ? 'From the paper · model design' : 'Illustration · numbers invented'}</span><b>{m.title}</b><br />{m.text}</span>
           </a>
         ))}
         {fact && (

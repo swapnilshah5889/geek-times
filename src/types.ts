@@ -188,7 +188,7 @@ export interface Media {
 }
 
 /** Keeps made-up teaching numbers visibly apart from real results. */
-export type Provenance = 'illustration' | 'evidence';
+export type Provenance = 'illustration' | 'evidence' | 'model_design';
 
 /** Inline markup allowed in captions: <b> <strong> <i> <em> <a href> <sub> <sup> <br>. */
 export type RichText = string;
@@ -372,6 +372,8 @@ export interface Library {
   stories: LibraryStory[];
   front: {
     lead: string; aside: string[]; more: string[];
+    /** The issue the "More from" row belongs to; defaults to the latest issue. */
+    moreIssue?: string;
     topics: { field: string; label: string; stories: string[] }[];
     real: string[]; storylines: string[]; vault: string;
     onThisDay: { year: string; text: string; story: string };

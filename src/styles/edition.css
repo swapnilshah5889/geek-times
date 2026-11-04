@@ -31,6 +31,7 @@ button{font:inherit;color:var(--ink);background:transparent;border:1px solid var
 .media img,.media video{display:block;width:100%;height:100%;object-fit:cover}
 .stamp{border:1px solid var(--red);padding:2px 7px;white-space:nowrap}
 .stamp-evidence{background:var(--red);color:#fbf3dc}
+.stamp-model_design{background:#f3e3b5}
 
 /* Picture story */
 .section{border-top:4px double;padding-top:13px}.section h2{font-size:32px;letter-spacing:-.04em;margin:0}

@@ -33,14 +33,14 @@ export function FamilyTree({ archive, nodeId }: { archive: Archive; nodeId: stri
   return (
     <section id="tree" className="ft" aria-labelledby="tree-title">
       <div className="ft-head">
-        <div><span className="label">Family tree · Papers before and after this one</span><h2 id="tree-title">Before and after {here.title}</h2></div>
+        <div><span className="label">Family tree · Papers before and after this one</span><h2 id="tree-title">Before and after {here.short ?? here.title}</h2></div>
         <span className="chip chip-warm">Sample links · to be fact-checked</span>
       </div>
       <div className="ft-board">
         <ol className="ft-chain" aria-label="Ideas that led here, oldest first">
           {chain.map((n, i) => (
             <Fragment key={n.id}>
-              {i > 0 && <li className="ft-arrow" aria-hidden="true"><span>{relationForward[link(chain[i - 1].id, n.id)?.kind ?? 'builds_on']}</span>→</li>}
+              {i > 0 && <li className="ft-arrow" aria-hidden="true"><span>{link(chain[i - 1].id, n.id) ? relationForward[link(chain[i - 1].id, n.id)!.kind] : ''}</span>→</li>}
               <li>{box(n, n.id === nodeId)}</li>
             </Fragment>
           ))}

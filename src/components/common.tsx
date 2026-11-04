@@ -8,6 +8,7 @@ export function Kicker({ text }: { text: string }) {
 const PROVENANCE: Record<Provenance, string> = {
   illustration: 'Illustration · numbers invented',
   evidence: 'Evidence · real results',
+  model_design: 'From the paper · model design',
 };
 
 export function Stamp({ kind }: { kind?: Provenance }) {
