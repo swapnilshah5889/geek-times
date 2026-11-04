@@ -1,0 +1,74 @@
+/* The Paper Lantern: newspaper layout for any paper's data. Graphics carry their own styles. */
+:root{--ink:#27251e;--paper:#f6f0df;--red:#a13324;--line:#948b77}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--paper);font-family:Georgia,'Times New Roman',serif;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='1' cy='1' r='.6' fill='%238f7960' opacity='.19'/%3E%3C/svg%3E")}
+main{max-width:1210px;margin:auto;padding:24px clamp(18px,4vw,60px) 44px}
+.meta,.label,nav,.controls,footer{font:700 11px/1.5 'Courier New',monospace;text-transform:uppercase;letter-spacing:.095em}
+.meta,nav,footer,.controls{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.meta{border-bottom:1px solid;padding-bottom:8px}
+.mast{font-size:clamp(46px,8.1vw,104px);letter-spacing:-.078em;font-weight:900;line-height:1.08;text-align:center;padding:12px 0 0}
+.motto{text-align:center;font-style:italic;padding:0 0 16px}
+nav{border-top:4px double;border-bottom:1px solid;padding:8px 0}nav .links{display:flex;gap:18px;flex-wrap:wrap}
+a{color:inherit;text-underline-offset:3px}
+.label,.num{color:var(--red)}
+.loading,.load-error{padding:80px 0;text-align:center;font-style:italic}
+
+/* Lead */
+.lead{display:grid;grid-template-columns:.84fr 1.5fr;gap:clamp(20px,3vw,45px);padding:32px 0 28px;align-items:center}
+h1{font-size:clamp(52px,6vw,85px);line-height:.94;letter-spacing:-.062em;margin:14px 0 18px}h1 em{color:var(--red)}
+.deck{font-size:clamp(19px,2vw,26px);line-height:1.33;margin:0 0 22px}
+.byline{border-top:1px solid var(--line);padding-top:12px;font-size:15px}.byline i{display:block;margin-top:5px}
+figure{margin:0}
+.plate{position:relative;border:1px solid var(--ink);background:#e3ddc8}
+.slides{display:grid}.slide{grid-area:1/1;opacity:0;transition:opacity .5s}.slide.show{opacity:1}
+.controls{padding:9px 0;border-bottom:1px solid var(--line)}
+button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:5px 10px;cursor:pointer}button:hover{background:#e4dcc7}
+.buttons{display:flex;gap:5px}
+.caption{margin:9px 0 0;font-size:16px;line-height:1.4}
+
+/* Media hosts: every graphic, whatever its type, sits in one of these */
+.media{display:block;width:100%;aspect-ratio:var(--ar,auto);background:#eee1bf;overflow:hidden}
+.media img,.media video{display:block;width:100%;height:100%;object-fit:cover}
+.stamp{border:1px solid var(--red);padding:2px 7px;white-space:nowrap}
+.stamp-evidence{background:var(--red);color:#fbf3dc}
+
+/* Picture story */
+.section{border-top:4px double;padding-top:13px}.section h2{font-size:32px;letter-spacing:-.04em;margin:0}
+.story-intro{display:flex;align-items:end;justify-content:space-between;gap:16px;padding:10px 0 16px}
+.story-intro h2{font-size:clamp(30px,4vw,50px);line-height:1.03}
+.chapters{display:grid;grid-template-columns:1fr 1fr;gap:30px 28px;margin-bottom:32px}
+.chapter{min-width:0;border-top:1px solid;padding-top:11px}.chapter header{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.chapter header .stamp{margin-left:auto}
+.chapnum{font:italic bold 29px Georgia;color:var(--red)}.chapter h3{font-size:clamp(25px,2.7vw,35px);letter-spacing:-.04em;margin:0 0 12px}
+.chapter .media{border:1px solid var(--ink)}.chapter p{font-size:17px;line-height:1.48;margin:12px 0 2px}
+
+/* Comic strips */
+.comic-deck{font-size:clamp(18px,1.8vw,22px);line-height:1.35;margin:0 0 10px;max-width:40em}
+.howto{font-size:16px;line-height:1.45;margin:0 0 22px;padding:10px 12px;border:1px dashed var(--line);max-width:46em}.howto .label{margin-right:8px}
+.strip{border-top:1px solid;padding-top:12px;margin-bottom:34px}
+.strip header{display:flex;align-items:center;gap:12px;margin-bottom:12px}.strip header>div{flex:1}
+.strip h3{font-size:clamp(25px,2.7vw,35px);letter-spacing:-.04em;margin:0}.kicker{font-style:italic;font-size:16px;color:#5e5748}
+.comic{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.panel{display:flex;flex-direction:column}
+.panel figcaption{position:relative;z-index:1;background:#f6e3a1;border:2px solid var(--ink);padding:8px 11px;font-size:17px;line-height:1.38;margin:0 14px -12px 0;align-self:flex-start;box-shadow:2px 2px 0 var(--ink)}
+.panel .media{border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);margin-top:auto;box-sizing:content-box;width:calc(100% - 6px)}
+.strip .gw{margin:16px 0 0;font:700 12px/1.5 'Courier New',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--red)}
+
+/* Evidence cards */
+.facts{border-top:4px double;padding-top:12px;margin-bottom:34px}
+.facts ul{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.facts li{border:2px solid var(--ink);background:#fbf3dc;padding:12px;display:flex;flex-direction:column;gap:6px;box-shadow:4px 4px 0 var(--ink)}
+.facts .media{max-width:200px;margin:0 auto 4px;background:none}
+.facts .fig{font-size:34px;letter-spacing:-.04em;color:var(--red);line-height:1}
+.facts p{margin:0;font-size:16px;line-height:1.45;flex:1}.facts a{font:700 12px 'Courier New',monospace;letter-spacing:.06em}
+
+footer{border-top:1px solid;padding-top:12px}
+
+@media(max-width:760px){
+  .lead{grid-template-columns:1fr;padding-top:22px}.meta span:nth-child(2){display:none}nav{flex-wrap:wrap}
+  .mast{letter-spacing:-.065em}.deck{max-width:34em}.controls{letter-spacing:.02em}
+  .chapters{grid-template-columns:1fr;gap:22px}.story-intro{align-items:start;flex-direction:column}
+  .strip header{flex-wrap:wrap}.strip .stamp{order:3}.comic{gap:22px}
+  .facts ul{grid-template-columns:1fr 1fr;gap:12px}.facts li{padding:9px}.facts p{font-size:15px}.facts .fig{font-size:27px}
+}
+@media(prefers-reduced-motion:reduce){.slide{transition:none}}

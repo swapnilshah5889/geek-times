@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "slug": "attention-is-all-you-need",
+  "pageTitle": "One word, two worlds",
+  "issue": { "volume": "I", "number": "001", "desk": "Machine learning" },
+  "paper": {
+    "title": "Attention Is All You Need",
+    "authors": "Vaswani and colleagues",
+    "year": 2017,
+    "url": "https://arxiv.org/html/1706.03762"
+  },
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "The language issue / Feature 01",
+      "headline": { "text": "One word,", "accent": "two worlds." },
+      "deck": "A bat can have wings. A bat can hit a ball. How does a translation machine tell which one you mean?",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "At dusk",
+            "caption": "<b>Fig. 1.</b> “Flew” gives us a clue: this bat has wings.",
+            "media": { "type": "svg", "src": "attention-is-all-you-need/lead/dusk.svg", "width": 600, "height": 340, "alt": "A bat with wings flies past the moon. Below it: The bat flew at dusk." }
+          },
+          {
+            "label": "At the ballpark",
+            "caption": "<b>Fig. 2.</b> “Hit the ball” changes the picture: this bat is made for swinging.",
+            "media": { "type": "svg", "src": "attention-is-all-you-need/lead/field.svg", "width": 600, "height": 340, "alt": "A baseball bat swings at a ball. Below it: The bat hit the ball." }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Science desk / A picture story in four parts",
+      "title": "How a machine reads a sentence",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Pass the note",
+          "provenance": "illustration",
+          "caption": "Imagine each word is a friend in a line. In older systems that read one word at a time, news from “bat” had to pass through every friend before it reached “flew.” More words meant more stops.",
+          "media": { "type": "svg", "src": "attention-is-all-you-need/story/01-pass-the-note.svg", "width": 440, "height": 215, "alt": "A clue travels through four word positions, stopping at each one." }
+        },
+        {
+          "part": "The idea",
+          "title": "Hear the clue directly",
+          "provenance": "illustration",
+          "caption": "Now each word can hear every other word. In this drawing, “bat” listens most closely to “flew.” That points to the animal with wings. The Transformer learns how much to listen to each word. This is called <b>self-attention</b>.",
+          "media": { "type": "svg", "src": "attention-is-all-you-need/story/02-hear-the-clue.svg", "width": 440, "height": 215, "alt": "Routes from by, us and flew lead straight to bat. Flew has the strongest route in this illustration." }
+        },
+        {
+          "part": "The solution",
+          "title": "Read together. Write in order.",
+          "provenance": "illustration",
+          "caption": "The Transformer has a reader and a writer. In each layer, the reader updates all the English words together, using clues from across the sentence. The writer looks back at those clues as it builds a translation one piece at a time. Here, <i>Fledermaus</i> is the German word for the animal.",
+          "media": { "type": "svg", "src": "attention-is-all-you-need/story/03-print-a-translation.svg", "width": 440, "height": 215, "alt": "An illustrated press reads The bat flew and prints Die Fledermaus flog, one word at a time." }
+        },
+        {
+          "part": "The evidence",
+          "title": "Put the translations to a test",
+          "provenance": "evidence",
+          "caption": "The researchers compared machine translations with human ones. The score, called <b>BLEU</b>, rewards matching words and groups of words. The large Transformer beat the previous best by just over two points on this test. That measures a collection of translations; even a high-scoring model can get a sentence wrong. <a href=\"https://arxiv.org/html/1706.03762#S6.SS1\">See the paper’s scorecard ↗</a>",
+          "media": { "type": "svg", "src": "attention-is-all-you-need/story/04-scorecard.svg", "width": 440, "height": 215, "alt": "Previous best 26.36 BLEU points. Large Transformer 28.4 points on the same English-to-German translation test." }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Science desk / Under the hood / A comic in six strips",
+      "title": "How the machine actually works",
+      "deck": "Read each strip from left to right. The pictures move, like little GIFs. Our sentence is “The bat flew,” and the machine will turn it into German.",
+      "howTo": "Drawings and numbers inside the strips are <b>made up</b> to explain the idea. Real numbers from the paper are in the box at the end.",
+      "strips": [
+        {
+          "title": "Every word gets a number code",
+          "kicker": "How words turn into numbers",
+          "provenance": "illustration",
+          "grownUpWords": "embeddings and positional encoding",
+          "panels": [
+            { "caption": "Computers can’t read letters. They only understand <b>numbers</b>.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/01a-letters.svg", "width": 320, "height": 220, "alt": "A confused computer looks at the word bat and shows question marks." } },
+            { "caption": "So every word goes through a code machine and comes out as a long list of numbers: its <b>code</b>. Words with similar meanings get similar codes.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/01b-code-machine.svg", "width": 320, "height": 220, "alt": "The word bat goes into a machine with spinning gears and comes out as a row of number squares." } },
+            { "caption": "All the words are read at the <b>same time</b>, so each one also gets a seat number. That keeps “The bat flew” from turning into “flew bat The.”",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/01c-seats.svg", "width": 320, "height": 220, "alt": "The, bat and flew hop onto chairs numbered 1, 2 and 3." } }
+          ]
+        },
+        {
+          "title": "“Bat” asks around",
+          "kicker": "How a word decides who to listen to",
+          "provenance": "illustration",
+          "grownUpWords": "queries, keys and attention weights (scaled dot-product attention)",
+          "panels": [
+            { "caption": "“Bat” has a puzzle: is it the <b>animal</b> or the <b>stick</b> you hit a ball with?",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/02a-puzzle.svg", "width": 320, "height": 220, "alt": "Bat wonders whether it is a flying animal or a baseball bat." } },
+            { "caption": "So “bat” holds up a <b>question</b>. Every word holds up a <b>name tag</b> that says what it is about.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/02b-question.svg", "width": 320, "height": 220, "alt": "Bat holds a question card. The holds a tag saying helper word; flew holds a tag saying about flying." } },
+            { "caption": "The machine checks how well each tag matches the question. “Flew” matches best, so “bat” will listen to it the most. The shares always add up to <b>100%</b>.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/02c-match-meter.svg", "width": 320, "height": 220, "alt": "A match meter: The 10 percent, bat 20 percent, flew 70 percent." } }
+          ]
+        },
+        {
+          "title": "Blend it in",
+          "kicker": "How a word picks up meaning from its neighbors",
+          "provenance": "illustration",
+          "grownUpWords": "a weighted sum of values",
+          "panels": [
+            { "caption": "Every word also carries a can of <b>paint</b>: its own meaning, ready to share.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/03a-paint.svg", "width": 320, "height": 220, "alt": "The, bat and flew each hold a paint can: yellow, orange and green." } },
+            { "caption": "“Bat” mixes paint from every word, using the match shares: <b>lots of “flew,”</b> some of itself, a little “The.”",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/03b-pour.svg", "width": 320, "height": 220, "alt": "Three paint cans pour into a bucket labelled bat: a thick green stream from flew, thinner ones from bat and The." } },
+            { "caption": "Now “bat” has a bit of “flew” mixed into its code. It knows it’s the <b>animal with wings</b>!",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/03c-wings.svg", "width": 320, "height": 220, "alt": "Bat, now tinted green, grows flapping wings and says it is the one with wings." } }
+          ]
+        },
+        {
+          "title": "Many lookers",
+          "kicker": "Why one look is not enough",
+          "provenance": "illustration",
+          "grownUpWords": "multi-head attention, with 8 heads",
+          "panels": [
+            { "caption": "One <b>looker</b> can only hunt for one kind of clue at a time.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/04a-one-looker.svg", "width": 320, "height": 220, "alt": "A single looker scans the sentence with a magnifying glass." } },
+            { "caption": "So the machine uses <b>8 lookers at once</b>. Each one hunts for a different clue, like “who did it?” or “what happened?”",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/04b-eight-lookers.svg", "width": 320, "height": 220, "alt": "Eight small lookers each draw a dotted line to a different word in The bat flew." } },
+            { "caption": "Then the 8 lookers <b>glue their notes together</b>, so no clue gets lost.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/04c-glue.svg", "width": 320, "height": 220, "alt": "Eight colored sticky notes fly into one big note labelled all the clues." } }
+          ]
+        },
+        {
+          "title": "Six floors",
+          "kicker": "Doing it again and again",
+          "provenance": "illustration",
+          "grownUpWords": "a stack of 6 layers, each with self-attention and a feed-forward network",
+          "panels": [
+            { "caption": "On each floor, the words first <b>listen</b> to each other. That’s strips 2 to 4.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/05a-listen.svg", "width": 320, "height": 220, "alt": "The, bat and flew are linked by dotted listening lines." } },
+            { "caption": "Then each word <b>thinks</b> quietly on its own for a moment, polishing its code.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/05b-think.svg", "width": 320, "height": 220, "alt": "Each word has its own thought bubble with a spinning gear." } },
+            { "caption": "The reader stacks <b>6 floors</b> of listen-and-think. Each floor makes the codes a little smarter. The writer has 6 floors too.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/05c-six-floors.svg", "width": 320, "height": 220, "alt": "The three words ride an elevator up a six-floor building." } }
+          ]
+        },
+        {
+          "title": "Write in order. No peeking.",
+          "kicker": "How the translation gets written",
+          "provenance": "illustration",
+          "grownUpWords": "masked self-attention in the decoder",
+          "panels": [
+            { "caption": "The <b>writer</b> makes the German sentence. It can read the whole English sentence whenever it likes.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/06a-read.svg", "width": 320, "height": 220, "alt": "The writer looks at a page that says The bat flew." } },
+            { "caption": "But it writes <b>one word at a time</b>, and a cover hides the words still to come. It has to guess the next word, like on a spelling test.",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/06b-no-peeking.svg", "width": 320, "height": 220, "alt": "The writer has written Die; a cover marked no peeking hides the rest." } },
+            { "caption": "Word by word: “Die Fledermaus flog.” That’s German for “The bat flew.” <i>Fledermaus</i> means “flutter-mouse”!",
+              "media": { "type": "svg", "src": "attention-is-all-you-need/comic/06c-ta-da.svg", "width": 320, "height": 220, "alt": "The cover slides away one word at a time, revealing Die Fledermaus flog." } }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "6 + 6",
+          "text": "The reader has 6 floors and the writer has 6 floors. The paper calls them encoder and decoder layers.",
+          "source": { "label": "Paper §3.1", "url": "https://arxiv.org/html/1706.03762#S3.SS1" },
+          "media": { "type": "svg", "src": "attention-is-all-you-need/facts/layers.svg", "width": 160, "height": 100, "alt": "" }
+        },
+        {
+          "figure": "8",
+          "text": "lookers work side by side in every attention step. The paper calls them attention heads.",
+          "source": { "label": "Paper §3.2.2", "url": "https://arxiv.org/html/1706.03762#S3.SS2.SSS2" },
+          "media": { "type": "svg", "src": "attention-is-all-you-need/facts/heads.svg", "width": 160, "height": 100, "alt": "" }
+        },
+        {
+          "figure": "512",
+          "text": "numbers make up one word’s code in the base model. The grid above has exactly 512 squares. Paper name: d<sub>model</sub>.",
+          "source": { "label": "Paper §3.1", "url": "https://arxiv.org/html/1706.03762#S3.SS1" },
+          "media": { "type": "svg", "src": "attention-is-all-you-need/facts/d-model.svg", "width": 160, "height": 100, "alt": "" }
+        },
+        {
+          "figure": "sin + cos",
+          "text": "Seat numbers are made from smooth sine and cosine waves, then added to each word’s code.",
+          "source": { "label": "Paper §3.5", "url": "https://arxiv.org/html/1706.03762#S3.SS5" },
+          "media": { "type": "svg", "src": "attention-is-all-you-need/facts/waves.svg", "width": 160, "height": 100, "alt": "" }
+        },
+        {
+          "figure": "12 hours",
+          "text": "to train the base model on one computer with 8 NVIDIA P100 graphics chips (100,000 steps). The big model took 3.5 days.",
+          "source": { "label": "Paper §5.2", "url": "https://arxiv.org/html/1706.03762#S5.SS2" },
+          "media": { "type": "svg", "src": "attention-is-all-you-need/facts/training.svg", "width": 160, "height": 100, "alt": "" }
+        }
+      ]
+    }
+  ]
+}
