@@ -5,7 +5,10 @@ description: Add finished stories to The Geeky Times and assemble them into an i
 
 # Publish stories and assemble an issue
 
-## Concepts (see `docs/product-plan.md`)
+## Concepts (see `docs/product-plan.md`, decision 31)
+
+- An issue is a curated collection of stories that are **already published**. Stories never name their issue, and
+  story pages never show our dates. Issue membership and publish dates live only on the issue (and its volume).
 
 - Stories publish **as soon as they're approved**. Issues are a weekly curated package of what went live, plus
   1–2 "From the vault" classics.

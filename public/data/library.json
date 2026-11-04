@@ -74,7 +74,6 @@
       "trust": "peer_reviewed",
       "minutes": 12,
       "note": "comic + facts",
-      "issue": "001",
       "sample": false
     },
     {
@@ -96,7 +95,6 @@
       "trust": "preprint",
       "minutes": 10,
       "note": "comic + facts",
-      "issue": "002",
       "sample": false
     },
     {
@@ -114,7 +112,6 @@
       "year": 2015,
       "art": "stairs",
       "minutes": 8,
-      "issue": "001",
       "sample": true
     },
     {
@@ -133,7 +130,6 @@
       "year": 2021,
       "art": "protein",
       "minutes": 9,
-      "issue": "001",
       "sample": true
     },
     {
@@ -169,7 +165,6 @@
       "art": "waves",
       "minutes": 3,
       "note": "snack only",
-      "issue": "001",
       "sample": true
     },
     {
@@ -204,7 +199,6 @@
       "year": 1929,
       "art": "mold",
       "minutes": 7,
-      "issue": "001",
       "vaultNote": "A classic paper from 1929, explained for the first time. Old ideas, new pictures.",
       "sample": true
     },
@@ -280,7 +274,6 @@
       "trust": "company_reported",
       "company": "social",
       "minutes": 6,
-      "issue": "001",
       "sample": true
     },
     {

@@ -77,6 +77,8 @@ tools/                    media_kit.py (drawing kit) + draw_attention.py (per-pa
 
 - Database plan (decision 30): `id` is Postgres auto-increment and the only reference between tables, with no foreign key
   constraints; our readable key is `slug` (stories) or `key` (tags, moments). URLs use the slug: `/papers/<slug>`.
+- Stories carry no issue, volume or date of ours (decision 31). Issues and volumes are collections of published stories
+  and the only place our dates appear.
 - `public/data/site.json` lists papers. `papers/<slug>.json` = metadata + `summary` + `tags` + ordered `blocks`.
 - Block types: `lead`, `story`, `comic`, `facts` (see `src/types.ts`). Adding one means: a type, a component in
   `src/blocks/`, and a registry entry.

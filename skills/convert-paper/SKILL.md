@@ -31,7 +31,9 @@ Rules that apply the whole way through (full text in `AGENTS.md`):
 
 Create `public/data/papers/<slug>.json`. Use `attention-is-all-you-need.json` as the shape reference.
 - Blocks, in order: `lead`, `story` (4 chapters), `comic` (4–6 strips × 3 panels), `facts` (4–6 numbers).
-- Top level: `summary`, `hook` (sticker, teaser, cta, readMinutes, optional stat and frames), `issue`, `paper`, `tags`.
+- Top level: `summary`, `desk`, `hook` (sticker, teaser, cta, readMinutes, optional stat and frames), `paper`, `tags`.
+- **No issue, volume or date of ours in the story** (decision 31). Kickers name the desk ("Biology & physics / Picture
+  story"), never "The size issue". The only date on a story is the source's own year.
 - **Every fact gets `claim`:** `model_design` (how it was built or argued) or `measured_result` (what a test found).
   Never both. Each fact also needs a `source` label and a section link.
 - Language: a school kid can follow it; real terms go under "Grown-up words".
@@ -65,11 +67,12 @@ story panels 440×215, fact icons 160×100. Resting state must be meaningful; ho
 The front page, issues, companies and map read the library, not the paper file.
 1. `public/data/site.json`: add `{slug, title, dataUrl}` to `papers`.
 2. `library.json` → `stories`: add the story with `real: true`, `sample: false`, `role`, `kind`, `fields`, `trust`,
-   `minutes`, `issue`, and its `headline`, `accent`, `dek`, `desk`, `title`, `authors`, `year`. **Replace a sample story
+   `minutes`, and its `headline`, `accent`, `dek`, `desk`, `title`, `authors`, `year`. **Replace a sample story
    in its slot** (same id if it was the placeholder for this paper; otherwise remove the sample) rather than adding a
    duplicate.
 3. `library.json` → `front`: place it (`lead`, `aside`, `more`, topic rows, vault) only if the owner wants it there.
-4. `library.json` → `issues`: add it to the right issue's `stories`.
+4. `library.json` → `issues`: when the owner assembles an issue, list the story in that issue's `stories`. Issues collect
+   already-published stories; a story may sit in several and never names one itself.
 5. **Graph:** add a `nodes` entry (`story` = the id, `field`, map `x`/`y` inside its field's cluster) and `relations`
    to earlier work. Relations point from the earlier idea to the later one and need a `kind`
    (`builds_on` | `improves_on` | `uses_method`) and a one-line `note`. Mark links verified only with a cited source;

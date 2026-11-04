@@ -225,11 +225,7 @@
       "status": "approved"
     }
   ],
-  "issue": {
-    "volume": "I",
-    "number": "002",
-    "desk": "Biology & physics"
-  },
+  "desk": "Biology & physics",
   "paper": {
     "title": "Integrating Evolutionary Biology into Physics Classroom: Scaling, Dimension, Form and Function",
     "authors": "Das, Gonick and Al Mosleh",
@@ -240,7 +236,7 @@
     {
       "type": "lead",
       "id": "lead",
-      "kicker": "The size issue / Feature 01",
+      "kicker": "Biology & physics / Picture story",
       "headline": {
         "text": "Why a bigger deer",
         "accent": "breaks."

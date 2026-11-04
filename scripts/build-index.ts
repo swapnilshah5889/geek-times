@@ -130,7 +130,7 @@ for (const entry of site.papers) {
     summary: doc.summary,
     authors: doc.paper.authors,
     year: doc.paper.year,
-    issue: doc.issue.number,
+    desk: doc.desk,
     cover,
     moments: momentsOf(doc),
     tags: tags.map(t => ({ id: t.tag, relevance: t.relevance })).sort((a, b) => b.relevance - a.relevance),

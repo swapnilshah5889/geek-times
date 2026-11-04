@@ -59,12 +59,12 @@ export function FeedPage({ archive }: { archive: Archive }) {
               if (item.kind === 'cover') {
                 return (
                   <article className="feed-card feed-cover" key={`c-${paper.slug}`} data-index={i}>
-                    <span className="label">Issue {paper.issue} &nbsp;/&nbsp; {paper.title}</span>
+                    <span className="label">{paper.desk} &nbsp;/&nbsp; {paper.title}</span>
                     <div className="feed-media"><MediaView media={paper.cover.media} /></div>
                     <h2>{paper.cover.headline.text} <em>{paper.cover.headline.accent}</em></h2>
                     <p>{paper.summary}</p>
                     <div className="feed-actions">
-                      <a className="feed-btn feed-btn-main" href={paperHref(paper.slug)}>Read the issue →</a>
+                      <a className="feed-btn feed-btn-main" href={paperHref(paper.slug)}>Read the story →</a>
                       <ShareButton title={paper.pageTitle} href={paperHref(paper.slug)} />
                     </div>
                     {i === 0 && <p className="feed-hint" aria-hidden="true">Swipe up ↑</p>}
@@ -86,7 +86,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
                   {moment.kind !== 'fact' && <h2>{moment.title}</h2>}
                   <p>{moment.text}</p>
                   <div className="feed-actions">
-                    <a className="feed-btn feed-btn-main" href={appHref(moment.href)}>{moment.kind === 'fact' ? 'See the source →' : 'Read it in the issue →'}</a>
+                    <a className="feed-btn feed-btn-main" href={appHref(moment.href)}>{moment.kind === 'fact' ? 'See the source →' : 'Read it in the story →'}</a>
                     <ShareButton title={`${moment.title} · ${site.name}`} href={appHref(moment.href)} />
                   </div>
                 </article>
@@ -94,7 +94,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
             })}
             <article className="feed-card feed-end" data-index={items.length}>
               <h2>You’re all caught up</h2>
-              <p>New issues are on the way. Until then, dig into the archive.</p>
+              <p>New stories are on the way. Until then, dig into the archive.</p>
               <div className="feed-actions">
                 <a className="feed-btn feed-btn-main" href={homeHref()}>Front page</a>
                 <a className="feed-btn" href={searchHref()}>Search</a>

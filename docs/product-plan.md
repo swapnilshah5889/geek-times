@@ -35,7 +35,7 @@ Search**. Field names (AI, Biology…) appear inside Explore and Topics, not in 
 | Route | Page |
 |---|---|
 | `/` | Front page: the current issue (layout D) plus "Keep exploring" |
-| `/papers/:slug` | A story (decision 26). Breadcrumb to its issue; family tree; "more in this topic"; next in storyline |
+| `/papers/:slug` | A story (decision 26). Breadcrumb to its field (never to an issue, decision 31); family tree; "more in this topic"; next in storyline |
 | `/issues/:volume/:number` | Issue: cover, theme, editor's note, table of contents, its stories, previous/next issue |
 | `/volumes/:volume` | Wall of issue covers (Volume 0 shows special editions) |
 | `/topics/:tag` | All stories for a tag (facet-aware, includes child tags) |

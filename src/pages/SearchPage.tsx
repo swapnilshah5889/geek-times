@@ -59,7 +59,7 @@ export function SearchPage({ archive }: { archive: Archive }) {
             <ol className="results">
               {results.map(({ entry, matched }) => (
                 <li key={entry.slug}>
-                  <span className="label">Issue {entry.issue} · {entry.year}</span>
+                  <span className="label">{entry.desk} · {entry.year}</span>
                   <h3><a href={paperHref(entry.slug)}>{entry.pageTitle}</a></h3>
                   <p className="result-paper"><b>{entry.title}</b> · {entry.authors}</p>
                   <p>{entry.summary}</p>

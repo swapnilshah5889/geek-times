@@ -195,3 +195,11 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       scheduled orphan check. Rows are retired by `status`, never deleted.
     - Why: imports, re-publishing and moving content between environments never fight constraint order, and ids stay
       meaningless and stable while slugs can be corrected.
+
+31. **Issues and volumes are collections; stories carry none of our dates.** (The owner's call.)
+    - A story is published on its own. An issue (and a volume, a year of issues) is a curated collection of stories
+      that are already published, and the same story can appear in more than one.
+    - So a story's data has no `issue` field, and story pages, snacks, search results and the feed never show an
+      issue number, a volume or a date of ours. They show the desk and the source's own year ("Paper from 2017").
+    - Issue membership lives only in `library.json` → `issues[].stories`. Our dates (`published`) live only on issues
+      and volumes. The front page and issue pages may name the issue, because they *are* the issue.

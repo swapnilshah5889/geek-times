@@ -4,7 +4,7 @@ import { MediaView } from '../components/MediaView';
 import { MotionButton, MotionGroup } from '../components/motion';
 import { SampleTag, StoryArt } from '../components/library';
 import { mediaBaseFor, type Archive } from '../data/load';
-import { headlineOf, issueById, latestIssue, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
+import { headlineOf, issueById, issuesWith, latestIssue, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
 import { MediaBaseContext } from '../lib/mediaBase';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
@@ -32,11 +32,13 @@ function Lead({ archive }: { archive: Archive }) {
   const lead = storyById(library, library.front.lead);
   const paper = lead && realPaper(archive, lead);
   const aside = storiesOf(library, library.front.aside);
+  // The front page is the current issue, so it may say which issue the lead belongs to. Story pages never do.
+  const leadIssue = lead && issuesWith(library, lead.id)[0];
   if (!lead || !paper) return null;
   return (
     <section id="lead" className="f-lead" aria-label="Top stories">
       <article className="f-lead-main">
-        <div className="label">Issue {lead.issue} · Lead story · {lead.desk}</div>
+        <div className="label">{leadIssue ? `Issue ${leadIssue.number} · ` : ''}Lead story · {lead.desk}</div>
         <a className="f-lead-art" href={paperHref(lead.id)} aria-label={`Open the story: ${paper.cover.headline.text} ${paper.cover.headline.accent ?? ''}`}>
           <MediaView media={paper.cover.media} />
         </a>

@@ -20,6 +20,8 @@ export const storiesOf = (lib: Library, ids: string[]): LibraryStory[] =>
 export const fieldOf = (lib: Library, id: string): LibraryField | undefined => lib.fields.find(f => f.id === id);
 export const issueById = (lib: Library, id: string): LibraryIssue | undefined => lib.issues.find(i => i.id === id);
 export const companyById = (lib: Library, id: string): LibraryCompany | undefined => lib.companies.find(c => c.id === id);
+/** Issues are collections of already-published stories; a story can appear in more than one. */
+export const issuesWith = (lib: Library, storyId: string): LibraryIssue[] => lib.issues.filter(i => i.stories?.includes(storyId));
 export const latestIssue = (lib: Library): LibraryIssue => lib.issues.find(i => !i.sample) ?? lib.issues[0];
 export const realPaper = (archive: Archive, story: LibraryStory): SearchEntry | undefined =>
   story.real ? archive.index.papers.find(p => p.slug === story.id) : undefined;
