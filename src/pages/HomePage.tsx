@@ -18,8 +18,11 @@ const sectionOf = (m: Moment) => m.sourceLabel?.replace(/^Paper\s*/, '');
 function SectionHead({ id, title, hint, link }: { id: string; title: string; hint?: string; link?: { href: string; label: string } }) {
   return (
     <div className="f-sechead">
-      <h3 id={id}>{title}{hint && <span className="f-hint"> {hint}</span>}</h3>
-      {link && <a className="f-more" href={link.href}>{link.label}</a>}
+      <div className="f-sechead-row">
+        <h3 id={id}>{title}</h3>
+        {link && <a className="f-more" href={link.href}>{link.label}</a>}
+      </div>
+      {hint && <p className="f-hint">{hint}</p>}
     </div>
   );
 }
@@ -160,7 +163,7 @@ function RealWorld({ archive }: { archive: Archive }) {
   const posts = storiesOf(library, library.front.real);
   return (
     <section id="real" aria-labelledby="s-real" className="f-section">
-      <SectionHead id="s-real" title="In the real world" hint="from company engineering blogs · “company-reported” means the company measured it itself"
+      <SectionHead id="s-real" title="In the real world" hint="From company engineering blogs. “Company-reported” means the company measured it itself."
         link={{ href: appHref('companies'), label: 'All companies →' }} />
       <div className="f-grid f-grid-3">
         {posts.map(s => {
@@ -217,7 +220,7 @@ function Storylines({ archive }: { archive: Archive }) {
   const lines = library.front.storylines.map(id => library.storylines.find(s => s.id === id)).filter(Boolean) as typeof library.storylines;
   return (
     <section aria-labelledby="s-lines" className="f-section">
-      <SectionHead id="s-lines" title="Storylines" hint="guided paths showing how an idea grew, step by step" />
+      <SectionHead id="s-lines" title="Storylines" hint="Guided paths showing how an idea grew, step by step." />
       <div className="f-grid f-grid-2">
         {lines.map(l => (
           <a key={l.id} className="card f-line" href={appHref('map')}>
