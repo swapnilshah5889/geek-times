@@ -76,7 +76,7 @@ function coverOf(doc: PaperDoc): Cover | undefined {
 /** Bite-size cards for the home page and feed: every comic strip, story chapter and fact. */
 function momentsOf(doc: PaperDoc): Moment[] {
   const where = `${doc.slug}.json`;
-  const link = (anchor?: string) => `?paper=${doc.slug}${anchor ? `#${anchor}` : ''}`;
+  const link = (anchor?: string) => `papers/${doc.slug}${anchor ? `#${anchor}` : ''}`;
   const out: Moment[] = [];
   for (const block of doc.blocks) {
     if (block.type === 'comic') {

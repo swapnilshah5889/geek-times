@@ -1,4 +1,5 @@
 import type { FacetDef, SearchEntry, SearchIndex, TagDef, TagVocabulary } from '../types';
+import { appHref } from './routes';
 
 // Tag lookups and paper search. This runs in the browser over the prebuilt index for now;
 // with a database the same rules become a query (tag ids + ancestors, full-text on title and summary).
@@ -28,7 +29,7 @@ export function searchHref({ q, tags = [] }: { q?: string; tags?: string[] } = {
   const params = new URLSearchParams({ search: '' });
   if (q) params.set('q', q);
   tags.forEach(t => params.append('tag', t));
-  return `?${params.toString().replace('search=', 'search')}`;
+  return appHref(`?${params.toString().replace('search=', 'search')}`);
 }
 
 const STOPWORDS = new Set('a an and are about do does for how in is it of on or the to what why with'.split(' '));

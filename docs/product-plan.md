@@ -35,7 +35,7 @@ Search**. Field names (AI, Biology…) appear inside Explore and Topics, not in 
 | Route | Page |
 |---|---|
 | `/` | Front page: the current issue (layout D) plus "Keep exploring" |
-| `/stories/:slug` | A story. Breadcrumb to its issue; family tree; "more in this topic"; next in storyline |
+| `/papers/:slug` | A story (decision 26). Breadcrumb to its issue; family tree; "more in this topic"; next in storyline |
 | `/issues/:volume/:number` | Issue: cover, theme, editor's note, table of contents, its stories, previous/next issue |
 | `/volumes/:volume` | Wall of issue covers (Volume 0 shows special editions) |
 | `/topics/:tag` | All stories for a tag (facet-aware, includes child tags) |
@@ -45,8 +45,8 @@ Search**. Field names (AI, Biology…) appear inside Explore and Topics, not in 
 | `/feed` | Snack mode: swipe through moments |
 | `/archive` and `/search` | Everything, with filters |
 
-The current build uses query parameters (`?paper=`, `?feed`, `?search`). Moving to real routes (React Router) is on
-the roadmap.
+The current build serves stories at `/papers/<slug>` (old `?paper=` links redirect there) and still uses query
+parameters for `?feed` and `?search`. Moving the rest to real routes (React Router) is on the roadmap.
 
 ## Front page (layout D)
 

@@ -63,7 +63,7 @@ public/data/              content: site.json, tags.json, papers/<slug>.json (sea
 public/media/<slug>/      standalone animated SVGs (moving to a CDN later)
 src/
   types.ts                the content model: the contract between data and UI
-  App.tsx                 routes: / (front page), ?paper=, ?feed, ?search
+  App.tsx                 routes: / (front page), /papers/<slug>, ?feed, ?search
   pages/                  HomePage (bento), PaperPage, FeedPage (swipe), SearchPage
   blocks/                 one component per content block type (lead, story, comic, facts)
   components/             MediaView (svg/image/video), Rich (safe captions), TagShelf, Masthead, motion

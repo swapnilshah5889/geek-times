@@ -5,6 +5,7 @@ import { MotionButton, MotionGroup } from '../components/motion';
 import { mediaBaseFor, type Archive } from '../data/load';
 import { frontPage, type Tile } from '../lib/front';
 import { MediaBaseContext } from '../lib/mediaBase';
+import { appHref, feedHref, paperHref } from '../lib/routes';
 import { searchHref, tagCounts, tagLookup } from '../lib/tags';
 import type { Moment, SearchEntry, TagVocabulary } from '../types';
 
@@ -13,7 +14,7 @@ const today = () => new Date().toLocaleDateString('en-US', { weekday: 'long', mo
 function CoverTile({ paper, hero }: { paper: SearchEntry; hero: boolean }) {
   const { cover } = paper;
   return (
-    <a className={`tile tile-cover ${hero ? 'tile-hero' : 'tile-wide'}`} href={`?paper=${paper.slug}`}>
+    <a className={`tile tile-cover ${hero ? 'tile-hero' : 'tile-wide'}`} href={paperHref(paper.slug)}>
       <div className="tile-media"><MediaView media={cover.media} /></div>
       <div className="tile-body">
         <span className="label">{hero ? `Today’s issue · No. ${paper.issue}` : `Issue ${paper.issue}`} &nbsp;/&nbsp; {cover.kicker.split(' / ')[0]}</span>
@@ -29,7 +30,7 @@ function CoverTile({ paper, hero }: { paper: SearchEntry; hero: boolean }) {
 function MomentTile({ moment, size }: { moment: Moment; size: Tile['size'] }) {
   const isFact = moment.kind === 'fact';
   return (
-    <a className={`tile tile-moment tile-${size} moment-${moment.kind}`} href={moment.href}>
+    <a className={`tile tile-moment tile-${size} moment-${moment.kind}`} href={appHref(moment.href)}>
       <span className="tile-kicker label">
         {moment.kicker}
         {moment.provenance === 'evidence' && <span className="stamp stamp-evidence">Real result</span>}
@@ -53,7 +54,7 @@ function MomentTile({ moment, size }: { moment: Moment; size: Tile['size'] }) {
 
 function FeedTile({ count }: { count: number }) {
   return (
-    <a className="tile tile-feed tile-tall" href="?feed">
+    <a className="tile tile-feed tile-tall" href={feedHref()}>
       <span className="label">New &nbsp;/&nbsp; Snack mode</span>
       <div className="feed-stack" aria-hidden="true"><span /><span /><span /></div>
       <h3>Swipe the snacks</h3>
@@ -92,7 +93,7 @@ export function HomePage({ archive }: { archive: Archive }) {
       <MotionGroup>
         <main>
           <Masthead site={site} meta={[today(), featured ? `Issue ${featured.issue}` : '']}
-            links={[{ href: '?feed', label: 'Swipe the snacks ▶' }]} />
+            links={[{ href: feedHref(), label: 'Swipe the snacks ▶' }]} />
           <div className="front-head">
             <span className="label">The front page &nbsp;/&nbsp; Big science, in pictures anyone can read</span>
             <MotionButton noun="animations" />

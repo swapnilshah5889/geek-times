@@ -156,3 +156,9 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
 
 25. **Prove generality early.** One real paper from another field and one real company engineering post become fixtures
     *before* building more pages, so the model isn't shaped only around the Transformer story.
+
+26. **A paper's page lives at `/papers/<slug>`** (chosen by the owner, replacing the planned `/stories/:slug`).
+    - Links are built only through `src/lib/routes.ts`, so they work at any page depth and under any deploy base.
+    - `Moment.href` in the data is base-relative (`papers/<slug>#<anchor>`).
+    - Old `?paper=<slug>` links redirect to the new path.
+    - The host must serve `index.html` for unknown paths (SPA fallback); Vite's dev server already does.

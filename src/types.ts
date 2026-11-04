@@ -109,7 +109,8 @@ export interface Cover {
 
 /**
  * A bite-size piece of a paper (one comic strip, story chapter or fact) for home page cards and the
- * swipe feed. Derived from the paper's blocks by scripts/build-index.ts; `href` deep-links into the issue.
+ * swipe feed. Derived from the paper's blocks by scripts/build-index.ts; `href` deep-links into the issue
+ * (a path relative to the site base, e.g. "papers/<slug>#<anchor>"; resolve it with appHref).
  */
 export interface Moment {
   id: string;
