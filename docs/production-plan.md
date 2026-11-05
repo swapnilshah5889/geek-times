@@ -132,17 +132,22 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
       - **Landed on size-shapes-life:** strip 1 ("Chop the cube") and chapter 2 ("Chop a cube") reclassified
         `model_design → illustration` because the 5× figure is our arithmetic on an invented scale (fact-check record
         already said "changed"). Fact card "5×" `claim` moves `model_design → illustration` for the same reason.
-      - **Blocked on `attention-is-all-you-need`:** strips 4 and 5 carry the paper's own numbers (8 heads, 6 layers)
-        but cannot honestly reclassify without a fact-check record on file. See the new item below.
+      - **Landed on Transformer (`attention-is-all-you-need`):** a 47-row fact-check ledger landed
+        (`docs/fact-checks/attention-is-all-you-need.md`: 39 pass / 7 weakened / 1 rejected). Strips 2–6 reclassified to
+        `model_design` after small caption rewrites that dropped the ledger's weakened / rejected phrases ("so no clue
+        gets lost", "a little smarter", "it knows it's the animal with wings") and named the paper and section for the
+        sourced claims (query / key §3.2.1, weighted sum of values §3.2.1, multi-head attention with 8 heads §3.2.2,
+        6-layer encoder/decoder stack §3.1, feed-forward §3.3, masked self-attention §3.2.3). The Fledermaus etymology
+        is marked as a language note, not from the paper. Strip 1 stays `illustration` because two framing panels
+        ("computers only understand numbers", "words with similar meanings get similar codes") are background, not
+        paper claims.
       - **Rejected: per-panel provenance** (decision 47): after the rewrites above no strip needs it.
-
-- [ ] **Create a fact-check record for `attention-is-all-you-need`** (new, 2026-11-05). The three real stories today
-      are 2 with records + 1 without. Transformer facts cite arXiv section anchors inline but there is no
-      `docs/fact-checks/attention-is-all-you-need.md` ledger file. Decision 47 holds strips 4 and 5 at `illustration`
-      until the ledger lists each lifted claim (8 heads §3.2.2, 6 layers §3.1, feed-forward §3.3, masked self-attention
-      §3.2.3, encoder-decoder §3.1, positional encoding §3.5) with the exact source phrase. Once the ledger lands,
-      reclassify those strips (and any others the ledger clears) to `model_design` with caption-attribution per
-      decision 47.
+      - **Also landed in this pass:** H3 strip 3 kept `illustration` after a two-option fork (the post does not
+        describe ring-by-ring car search or state "six neighbors"); captions dropped the attribution. H3 strips 1 and 2
+        now name the post's H3 section inline so a reader can find the source without a URL fragment. The
+        H3 "about seven" is re-presented as arithmetic on the post's one-seventh area (the post never says "splits
+        into seven"). Size-shapes "5×" fact card stripped of its paper source link to match its new `illustration`
+        claim kind.
 
 ### Phase 3: Platform
 

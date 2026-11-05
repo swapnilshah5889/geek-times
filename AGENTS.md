@@ -120,16 +120,19 @@ single source of truth for status.
 
 ## Status detail (kept for background)
 
-- Everything is merged into `main` (latest: PR #9, the Supabase plan through decision 38). No feature branch is open.
+This section is a long-form backgrounder. For current status use `docs/STATE.md` — it supersedes anything below that
+contradicts it.
+
+- All day-to-day work is on the `v1` branch (decision 40); `main` is never written to directly.
 - Built: data-driven React site; front page **D**; story pages (five tabs, picture story, comic strips, evidence
   cards, family tree, tag shelf); issue, company and map pages (with list view); swipe feed; search with tag filters;
-  path URLs (`/papers/<slug>`).
+  path URLs (`/papers/<slug>`); SSG prerender of 27 routes with a `check:prerender` metadata gate (decision 41).
 - Real stories: "One word, two worlds" (Attention Is All You Need, peer-reviewed); "Why a bigger deer breaks"
   (`size-shapes-life`, arXiv 2408.04070, a preprint, the front-page lead); and "A world covered in honeycomb"
   (`h3-hexagons`, Uber Engineering, the first real company post, company-reported). Fact-check records under
-  `docs/fact-checks/`. Everything else in `library.json` is `sample: true`.
+  `docs/fact-checks/` for all three. Everything else in `library.json` is `sample: true`.
 - Database plan decided, not built: Supabase (34), files in git as the full seed and backup (35, 37), static pages
-  for readers (36), no foreign keys with required integrity checks (30, 38).
+  for readers (36), no foreign keys with required integrity checks (30, 38), atomic publish per story version (42).
 - Design source: the claude.ai canvas (copied into `design/canvas-source/`), exports in `design/exports/`. The
   data-model board is still stale (production plan, Phase 0).
 - Next: `docs/production-plan.md` is the only maintained launch sequence. Start with "Fix now", then Phase 1

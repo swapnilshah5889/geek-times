@@ -44,12 +44,20 @@ Edges in `relations[]` that touch it: **1 in total, and it is unverified.**
 |---|---|---|---|---|
 | resnet → transformer | uses_method | "Shortcut connections keep deep stacks trainable." | no `cited`, no `crossField` | **unverified** |
 
-**Direction looks inverted.** In this file, `from` is the later work and `to` is the thing it uses: `transformer → bert`,
-`transformer → gpt3`, `transformer → vit` and `transformer → alphafold` all read "X uses the Transformer". Under that
-convention, `resnet → transformer` reads "ResNet uses the Transformer's method", which the note does not say. The note
-describes ResNet's own contribution. The likely real link runs the other way (the Transformer's blocks use residual
-shortcuts), but that has to be checked in the paper. The kind (`uses_method` or something else) also needs an editor's
-decision. Both go through `RelationEvidence` review.
+**Direction is correct as stored; the earlier "inverted" flag was wrong.** In `relations[]`, `from` is the earlier idea and
+`to` is the later work that builds on it, improves on it or uses its method. The file's own examples agree: `lstm → seq2seq`
+(`uses_method`: seq2seq uses the method of LSTM), `bahdanau → transformer` (`builds_on`: the Transformer builds on Bahdanau's
+idea) and `transformer → bert` (`uses_method`: BERT uses the method of the Transformer).
+
+The renderer reads it the same way. `familyOf()` in `src/lib/library.ts` treats `from` as the "before" node and `to` as the
+"after" node, and `FamilyTree.tsx` draws arrows forward in time. Calling `familyOf()` on `library.json` (2026-11-05) gives this
+edge the detail line "Attention Is All You Need uses the method of ResNet". So `resnet → transformer, uses_method` means "the
+Transformer uses ResNet's method", which is the link we want.
+
+Still unverified: that the Transformer uses residual shortcuts (recalled, not yet checked: the paper's Section 3.1 puts a
+residual connection around each sub-layer, so confirm it in the paper itself), and that `uses_method` is the right kind rather
+than another kind. Adding a ResNet story does not verify this edge. It needs a `RelationEvidence` citation (quote and location in
+the Transformer paper) and an editor's review.
 
 Status: this edge has no `RelationEvidence` and no review. A real ResNet story does not verify it. Verifying relations is the
 separate Phase 2 item in `docs/production-plan.md` ("Verify family-tree and map relations with citations").
@@ -76,7 +84,7 @@ so it is left alone.
 
 - It fills the `ai` field's second real story. Today `ai` has one real story (Attention); `size-shapes-life` is biology and
   physics, and H3 is software.
-- It exercises the Transformer family-tree edge honestly once relations are verified (see the direction problem in section 4).
+- It exercises the Transformer family-tree edge honestly once relations are verified (the stored direction is correct; see section 4).
 - It tests `paper` trust `peer_reviewed` on a second story. Today the three real stories are Attention (peer-reviewed),
   `size-shapes-life` (preprint) and H3 (company-reported). A second peer-reviewed story strengthens the trust-label sample
   from decision 44.
@@ -84,7 +92,7 @@ so it is left alone.
 ## 7. Before any conversion (not started)
 
 - Create `docs/fact-checks/resnet.md` for the title, authors, venue, year and result claims in section 1.
-- Owner or lead to confirm: the 2016 year rule (section 2), the relation direction and kind (section 4), and the issue
-  placement (section 5).
+- Owner or lead to confirm: the 2016 year rule (section 2), the relation kind (section 4; the stored direction is already
+  confirmed against the renderer), and the issue placement (section 5).
 - Licence check on the CVPR open-access paper. Our own words and drawings only (Phase 5 per-source copyright check).
 - Conversion goes through `skills/convert-paper`, after this intake is accepted.

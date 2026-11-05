@@ -243,7 +243,7 @@
               }
             },
             {
-              "caption": "A <b>corner</b> neighbor is further away than a <b>side</b> neighbor. The post says squares have <b>two distances</b>, which makes comparing neighbors messy.",
+              "caption": "A <b>corner</b> neighbor is further away than a <b>side</b> neighbor. The post's H3 section says squares have <b>two distances</b>, which makes comparing neighbors messy.",
               "media": {
                 "type": "svg",
                 "src": "h3-hexagons/comic/01b-hexagons.svg",
@@ -253,7 +253,7 @@
               }
             },
             {
-              "caption": "A hexagon has six neighbors, and the post says each one is the <b>same distance</b> away. One distance, so it is easy to compare.",
+              "caption": "A hexagon has six neighbors, and the post's H3 section says each one is the <b>same distance</b> away. One distance, so it is easy to compare.",
               "media": {
                 "type": "svg",
                 "src": "h3-hexagons/comic/01c-one-distance.svg",
@@ -281,7 +281,7 @@
               }
             },
             {
-              "caption": "Zoom in, and the post says it splits into <b>about seven</b> smaller hexagons. Each one covers about <b>one-seventh</b> of the big one, but only approximately — the cells do not fit perfectly.",
+              "caption": "Zoom in, and the post's H3 section says each small one covers about <b>one-seventh</b> of the big one, so about <b>seven</b> fit in its place. It is only approximate: the cells do not fit perfectly.",
               "media": {
                 "type": "svg",
                 "src": "h3-hexagons/comic/02b-split-seven.svg",
@@ -320,7 +320,7 @@
               }
             },
             {
-              "caption": "No car in the same hexagon? Check the <b>six neighbors</b> next. Try each one in turn.",
+              "caption": "No car in the same hexagon? The app looks in the hexagons touching it next. Try each one in turn.",
               "media": {
                 "type": "svg",
                 "src": "h3-hexagons/comic/03b-ring-search.svg",
@@ -330,7 +330,7 @@
               }
             },
             {
-              "caption": "<b>Found one!</b> Still nothing? The search keeps growing, ring by ring, outward.",
+              "caption": "<b>Found one!</b> Still nothing? The app keeps searching farther out, step by step.",
               "media": {
                 "type": "svg",
                 "src": "h3-hexagons/comic/03c-found.svg",

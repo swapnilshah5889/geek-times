@@ -294,7 +294,7 @@
           "part": "The idea",
           "title": "Chop a cube",
           "provenance": "illustration",
-          "caption": "Cut one big cube into 125 little cubes. You still have the same amount of stuff, but now there are lots of new faces. The outside grows 5 times bigger while the inside stays the same. So the smaller something is, the more outside it has for its inside.",
+          "caption": "Cut one big cube into 125 little cubes. You still have the same amount of stuff, but now there are lots of new faces. In this made-up cube, the outside grows 5 times bigger while the inside stays the same. So the smaller something is, the more outside it has for its inside.",
           "media": {
             "type": "svg",
             "src": "size-shapes-life/story/02-the-chop.svg",
@@ -361,7 +361,7 @@
               }
             },
             {
-              "caption": "Now <b>chop</b> it five times each way. That makes 125 little cubes.",
+              "caption": "Now <b>slice</b> it into five pieces each way. That makes 125 little cubes.",
               "media": {
                 "type": "svg",
                 "src": "size-shapes-life/comic/01b-chop.svg",
@@ -508,10 +508,6 @@
           "figure": "5×",
           "claim": "illustration",
           "text": "Chop a cube into 125 little cubes and the outside gets 5 times bigger. (Our arithmetic: the paper’s Fig. 2 caption says 125 times, which looks like a slip.)",
-          "source": {
-            "label": "Paper §II, Figs. 2 and 13",
-            "url": "https://arxiv.org/html/2408.04070#S2.F2"
-          },
           "media": {
             "type": "svg",
             "src": "size-shapes-life/facts/chop.svg",

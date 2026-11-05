@@ -15,6 +15,7 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 - `attention-is-all-you-need` (peer-reviewed paper): first story, reference for tone and style.
 - `size-shapes-life` (arXiv 2408.04070, preprint): front-page lead; fact-check in `docs/fact-checks/size-shapes-life.md`.
 - `h3-hexagons` (Uber Engineering blog, company-reported): first real engineering post; company page at `/companies/uber`; fact-check in `docs/fact-checks/h3-hexagons.md`.
+- Fact-check records for all three real stories now exist under `docs/fact-checks/` (attention-is-all-you-need.md added 2026-11-05: 47 rows, 39 pass).
 - Everything else in `public/data/library.json` is `sample: true` (three placeholder companies now explicitly flagged).
 
 ## Built
