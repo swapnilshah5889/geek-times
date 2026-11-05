@@ -44,7 +44,8 @@ Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 
 ## Rules that bite most often
 
-- Never commit or push to `main`. Ask before creating a branch. (Full list in `AGENTS.md`.)
+- Work on the long-lived **`v1`** branch (decision 40). Commit often, push often, no PR per change. The owner
+  merges `v1` into `main` when they want to release. Never commit or push to `main`.
 - Canvas before code for any new visual or layout.
 - Illustration (invented numbers, stamped) vs evidence (real, cited, trust-labelled) are always visibly separate.
 - Accessibility is an acceptance criterion per component, not a later pass.

@@ -11,7 +11,7 @@ One page, in order. Each step names the skill or file that holds the detail. Do 
 its canvas step is approved.
 
 Rules that apply the whole way through (full text in `AGENTS.md`):
-- **Ask the owner before creating any branch.** Never push to `main`. By default stay on the current feature branch.
+- **Commit to the `v1` branch and push** (decision 40). Never commit or push to `main`. No new branches unless the owner says so.
 - **Canvas before code.** Any new visual or layout (cover, hero art, a new section) is shown on the design canvas first,
   with 1–2 options. Build only after the owner picks one. Content that fits the existing layout needs no canvas step.
 - **Illustration ≠ evidence.** Invented teaching numbers are labelled; real numbers carry a claim kind and a source.
@@ -90,7 +90,6 @@ The front page, issues, companies and map read the library, not the paper file.
 
 ## 8. Ship (`publish-issue`)
 
-1. Commit on the branch the owner approved. Include the fact-check list in the PR description.
-2. The owner merges. Never push to `main`. Open the PR yourself only if the GitHub CLI is signed in; otherwise give the
-   compare link.
+1. Commit on `v1` with the fact-check list in the commit message. Push `v1`.
+2. The owner merges `v1` into `main` when ready to release (decision 40). Don't open a PR per story.
 3. Update `AGENTS.md` ("Current status") and `docs/roadmap.md` if anything on the roadmap moved.

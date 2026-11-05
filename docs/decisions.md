@@ -297,3 +297,12 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       unit tests, smoke tests, axe, CI blocking merges, and RLS policy tests if RLS has landed.
     - **Rendering decision and preview deploys stay in Phase 1,** because the rendering choice shapes everything downstream
       (OG cards, hosting, Phase 3 import job) and preview deploys speed up — rather than slow down — review.
+
+40. **One long-lived `v1` branch, no PR per change.** (The owner's call.)
+    - All day-to-day work commits to `v1` and is pushed there. No per-topic feature branches, no PR per change: the review and
+      merge overhead was slowing the pre-v1 iteration more than it was catching mistakes. `main` stays protected: never commit
+      or push to it. The owner merges `v1` into `main` when they want to release.
+    - Agents stop running `git switch -c feature/...` and stop asking for a branch name, unless the owner explicitly asks for
+      another branch for an experiment or a risky change.
+    - This is a pre-v1 choice. When v1 is reached (DB-backed, no `sample` content, hosted), the pre-launch gate (Phase 4.5)
+      lands, and from the first production release onward we go back to per-feature branches and PRs with CI as that gate.

@@ -73,4 +73,4 @@ what the panel shows.
 1. `fact-check` every evidence number and `paper`-basis tag.
 2. Add the story to `public/data/site.json` and `public/data/library.json` (see `convert-paper` step 6), then run `npm run data` and fix every error.
 3. `npm run dev`, then look at the story, the front page tiles and the feed at 1280px and 375px.
-4. Commit on the branch the owner approved (ask before creating one) and open a PR. Never push to `main`.
+4. Commit on `v1` and push (decision 40). Never commit or push to `main`.
