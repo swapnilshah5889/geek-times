@@ -53,6 +53,19 @@
         "labelX": 520,
         "labelY": 368
       }
+    },
+    {
+      "id": "sw",
+      "label": "Software & systems",
+      "color": "#c3b2d8",
+      "cluster": {
+        "cx": 620,
+        "cy": 460,
+        "rx": 120,
+        "ry": 80,
+        "labelX": 620,
+        "labelY": 390
+      }
     }
   ],
   "volumes": [
@@ -305,6 +318,25 @@
       "company": "ride",
       "minutes": 6,
       "sample": true
+    },
+    {
+      "id": "h3-hexagons",
+      "real": true,
+      "sample": false,
+      "headline": "A world covered in",
+      "accent": "honeycomb.",
+      "dek": "A ride app has to find a nearby car fast. Uber’s H3 grid covers the world with nesting hexagons.",
+      "desk": "Real world  /  Maps & rides",
+      "fields": [
+        "sw"
+      ],
+      "role": "real_world",
+      "kind": "blog",
+      "title": "H3: Uber’s Hexagonal Hierarchical Spatial Index",
+      "authors": "Uber Engineering",
+      "year": 2018,
+      "trust": "company_reported",
+      "minutes": 4
     }
   ],
   "front": {
@@ -342,7 +374,7 @@
     "real": [
       "blog-streaming",
       "blog-social",
-      "blog-ride"
+      "h3-hexagons"
     ],
     "storylines": [
       "machines-read",
@@ -436,7 +468,8 @@
         "[Post title] · [year]",
         "[Post title] · [year]",
         "[Post title] · [year]"
-      ]
+      ],
+      "sample": true
     },
     {
       "id": "social",
@@ -453,7 +486,8 @@
       "coming": [
         "[Post title] · [year]",
         "[Post title] · [year]"
-      ]
+      ],
+      "sample": true
     },
     {
       "id": "ride",
@@ -470,7 +504,20 @@
       "coming": [
         "[Post title] · [year]",
         "[Post title] · [year]"
-      ]
+      ],
+      "sample": true
+    },
+    {
+      "id": "uber",
+      "name": "Uber Engineering",
+      "sector": "Maps & rides",
+      "blurb": "Our kid-friendly explainers of Uber’s engineering posts. All numbers are company-reported.",
+      "postsFollowed": 1,
+      "posts": [
+        "h3-hexagons"
+      ],
+      "builtOn": [],
+      "coming": []
     }
   ],
   "storylines": [

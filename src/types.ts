@@ -20,7 +20,36 @@ export interface PaperEntry {
   dataUrl: string;
 }
 
-export interface PaperDoc {
+/**
+ * Where a story's facts come from. `paper` is the default (a missing `kind` means paper, so existing files are unchanged).
+ * `blog` is a company engineering post: its numbers are company-reported, not independently checked.
+ */
+export type SourceKind = 'paper' | 'blog';
+
+/** The research paper a story explains. */
+export interface PaperSource {
+  title: string;
+  authors: string;
+  year: number;
+  url: string;
+}
+
+/** A company engineering post. Replaces `authors` with `organization` and `year` with `published`. */
+export interface BlogSource {
+  title: string;
+  /** The company or team that wrote the post, e.g. "Netflix Technology Blog". */
+  organization: string;
+  /** Publication date as YYYY-MM-DD. */
+  published: string;
+  /** The live post. */
+  url: string;
+  /** An archived copy (e.g. Wayback) of the version we checked, so evidence links survive later edits. */
+  archivedUrl?: string;
+  /** Always company_reported (decision 18): the company's own numbers, never independently verified. */
+  trust: 'company_reported';
+}
+
+interface StoryDocBase {
   schemaVersion: 1;
   slug: string;
   pageTitle: string;
@@ -32,10 +61,28 @@ export interface PaperDoc {
   hook?: CoverHook;
   /** The science desk the story belongs to, e.g. "Machine learning". Stories never name an issue or a date of ours. */
   desk: string;
-  paper: { title: string; authors: string; year: number; url: string };
   tags: PaperTag[];
   blocks: Block[];
 }
+
+/** A story about a research paper. `kind` may be left out: that means paper. */
+export interface PaperStoryDoc extends StoryDocBase {
+  kind?: 'paper';
+  paper: PaperSource;
+  blog?: undefined;
+}
+
+/** A story about a company engineering post. The `paper` block must not be present. */
+export interface BlogStoryDoc extends StoryDocBase {
+  kind: 'blog';
+  blog: BlogSource;
+  paper?: undefined;
+}
+
+export type StoryDoc = PaperStoryDoc | BlogStoryDoc;
+
+/** The name existing imports use (src/data/load.ts). It covers blog stories too: read it as "a story document". */
+export type PaperDoc = StoryDoc;
 
 // ---------- Tags ----------
 // Tags come from a shared vocabulary (public/data/tags.json, a `tags` table later) so the same idea has

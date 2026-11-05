@@ -1,0 +1,432 @@
+{
+  "schemaVersion": 1,
+  "slug": "h3-hexagons",
+  "kind": "blog",
+  "blog": {
+    "title": "H3: Uber’s Hexagonal Hierarchical Spatial Index",
+    "organization": "Uber Engineering",
+    "published": "2018-06-27",
+    "url": "https://www.uber.com/en-US/blog/h3/",
+    "trust": "company_reported"
+  },
+  "pageTitle": "A world covered in honeycomb",
+  "desk": "Maps & rides",
+  "summary": "A ride app has to find a nearby car fast. Uber’s H3 grid covers the world with hexagons that nest inside each other at 16 zoom levels, and Uber says it measures supply and demand per hexagon to calculate surge pricing.",
+  "hook": {
+    "sticker": "Wait, what?",
+    "teaser": "How does a ride app find a nearby car without checking every car in the city?",
+    "cta": "Map the honeycomb",
+    "readMinutes": 3,
+    "stat": {
+      "figure": "16",
+      "text": "zoom levels"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "h3-hexagons/lead/honeycomb-map.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A city map that flips from a square grid to a honeycomb. A rider and a car sit in one hexagon, tagged with the same cell."
+        },
+        "tag": "Hexagons!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "h3-hexagons/lead/zoom-in.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "One big hexagon zooms in and becomes seven smaller hexagons, like a magnifying glass on honeycomb."
+        },
+        "tag": "Zoom!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://www.uber.com/en-US/blog/h3/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "area/geospatial-analysis",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.uber.com/en-US/blog/h3/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/spatial-index",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.uber.com/en-US/blog/h3/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/hexagonal-grid",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.uber.com/en-US/blog/h3/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/discrete-global-grid",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.uber.com/en-US/blog/h3/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "use/ride-hailing",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.uber.com/en-US/blog/h3/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/uber",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://www.uber.com/en-US/blog/h3/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "author/isaac-brodsky",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.uber.com/en-US/blog/h3/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/maps-and-cities",
+      "relevance": 0.9,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Real world / Maps & rides / Picture story",
+      "headline": {
+        "text": "A world covered in",
+        "accent": "honeycomb."
+      },
+      "deck": "How does a ride app find a nearby car in a split second, without checking every car in the city?",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "The honeycomb map",
+            "caption": "<b>Fig. 1.</b> The map flips between squares and hexagons. A rider and a car in the same hexagon share one cell ID.",
+            "media": {
+              "type": "svg",
+              "src": "h3-hexagons/lead/honeycomb-map.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A city map that flips from a square grid to a honeycomb. A rider and a car sit in one hexagon, tagged with the same cell."
+            }
+          },
+          {
+            "label": "Zoom in",
+            "caption": "<b>Fig. 2.</b> Zoom in and one cell becomes about seven smaller ones, like a magnifying glass on honeycomb.",
+            "media": {
+              "type": "svg",
+              "src": "h3-hexagons/lead/zoom-in.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "One big hexagon zooms in and becomes seven smaller hexagons, like a magnifying glass on honeycomb."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the grid ↓",
+      "kicker": "Real world / A picture story in four parts",
+      "title": "Honeycomb over the map",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Who is closest?",
+          "provenance": "illustration",
+          "caption": "A rider opens the app, and the app must find the nearest car. If it checks every car one by one, the job gets slower as the city grows. In a small town there are 3 cars to check. In a big city there are 12.",
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/story/01-nearest-driver.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A rider checks three cars in a small town, then twelve cars in a big city. Checking each car takes longer as the city grows."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Tile the world",
+          "provenance": "illustration",
+          "caption": "Lay a honeycomb over the whole map. Every spot lands in one hexagon, and each hexagon gets an ID. Uber says hexagons suit this job: a hexagon has one distance to all six neighbors, while a square has two.",
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/story/02-tile-the-world.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A city map with a honeycomb laid over it. Every spot falls into one hexagon, and a rider sits in one of them."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Zoom in, it splits",
+          "provenance": "illustration",
+          "caption": "The grid has levels, like zoom on a map. Zoom in one level and each hexagon splits into about seven smaller ones. Each finer level covers about <b>one-seventh</b> of the area above it. The fit is only approximate: finer cells only approximately fit inside their parent.",
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/story/03-zoom-splits.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "One big hexagon, zoomed in: it splits into seven smaller hexagons. One of those splits again into seven tiny ones."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Counting the cells",
+          "provenance": "model_design",
+          "caption": "The post gives design numbers, not speed tests. In its worked example, a map of California at resolution 6 needs 901 hexagons in the compact list, where the full list has 10,633. That is one example, not a benchmark. <a href=\"https://www.uber.com/en-US/blog/h3/\">See the example in the post ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/story/04-evidence.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two lists of hexagons for the same map: a full list of many small cells, and a compact list with fewer, bigger cells."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Real world / Under the hood / A comic in three strips",
+      "title": "How the honeycomb works",
+      "deck": "Read each strip from left to right. The pictures move. Our story is one rider looking for one car.",
+      "howTo": "Drawings and numbers in the strips are <b>made up</b> to explain the idea. The real numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "Why hexagons, not squares?",
+          "kicker": "Why the shape matters",
+          "provenance": "illustration",
+          "grownUpWords": "hexagonal grid, neighbor distance (squares have two)",
+          "panels": [
+            {
+              "caption": "A square has four sides and four corners. Its neighbors touch it at a <b>side</b> or only at a <b>corner</b>.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/01a-squares.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Nine squares. The four sides are green and the four corners are yellow. A corner neighbor sits further away."
+              }
+            },
+            {
+              "caption": "A <b>corner</b> neighbor is further away than a <b>side</b> neighbor. Two distances make comparing neighbors messy.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/01b-hexagons.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One hexagon in the middle with six green neighbors, all the same distance away."
+              }
+            },
+            {
+              "caption": "A hexagon has six neighbors, and the post says each one is the <b>same distance</b> away. One distance, so it is easy to compare.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/01c-one-distance.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A small honeycomb with arrows of equal length to each neighbor. A looker says: same distance, every neighbor."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Zoom in, it splits in seven",
+          "kicker": "How the levels nest",
+          "provenance": "illustration",
+          "grownUpWords": "resolutions, hierarchy, one-seventh area",
+          "panels": [
+            {
+              "caption": "One big hexagon covers a whole neighborhood. Its ID names that cell.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/02a-one-cell.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One big hexagon cell. A looker asks what is inside it."
+              }
+            },
+            {
+              "caption": "Zoom in, and it splits into <b>about seven</b> smaller hexagons. Each one covers about <b>one-seventh</b> of the big one.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/02b-split-seven.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A faded big hexagon becomes seven smaller hexagons after an arrow."
+              }
+            },
+            {
+              "caption": "Zoom again, and every small one splits too. Tiny cells, same honeycomb rule.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/02c-zoom-again.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A magnifying glass shows seven tiny hexagons inside one small cell. A looker says: zoom in again."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Finding a ride",
+          "kicker": "How the search grows",
+          "provenance": "illustration",
+          "grownUpWords": "neighbor cells, grid distance",
+          "panels": [
+            {
+              "caption": "A rider taps “Find a car.” The rider sits in one hexagon. A car in the <b>same hexagon</b> carries the same cell ID.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/03a-same-cell.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A rider and a car stand in the same hexagon, which is tagged with one cell ID."
+              }
+            },
+            {
+              "caption": "No car in the same hexagon? Check the <b>six neighbors</b> next. They are all the same distance away.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/03b-ring-search.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A rider stands in an empty hexagon. Its six neighbors pulse one by one, and a car is in one of them."
+              }
+            },
+            {
+              "caption": "<b>Found one!</b> Still nothing? The search keeps growing, ring by ring, outward.",
+              "media": {
+                "type": "svg",
+                "src": "h3-hexagons/comic/03c-found.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A rider waves at a car in a neighboring hexagon. A bubble says: found one, and the car goes VROOM."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / Design numbers, not speed tests",
+      "facts": [
+        {
+          "figure": "16",
+          "claim": "model_design",
+          "text": "zoom levels in H3, numbered from 0 (biggest cells) to 15 (smallest). The post calls them resolutions.",
+          "source": {
+            "label": "Post · H3 section",
+            "url": "https://www.uber.com/en-US/blog/h3/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/facts/resolutions.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "One big hexagon next to seven small ones: levels of detail."
+          }
+        },
+        {
+          "figure": "about 1/7",
+          "claim": "model_design",
+          "text": "The area of each finer cell, compared with the cell above it. The fit is only approximate: finer cells are only approximately contained in their parent.",
+          "source": {
+            "label": "Post · H3 section",
+            "url": "https://www.uber.com/en-US/blog/h3/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/facts/one-seventh.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A big hexagon and seven smaller hexagons that together take up about the same space."
+          }
+        },
+        {
+          "figure": "122",
+          "claim": "model_design",
+          "text": "base cells laid over the whole Earth, ten per face of an icosahedron (a 20-sided solid). Some cells belong to more than one face.",
+          "source": {
+            "label": "Post · H3 section",
+            "url": "https://www.uber.com/en-US/blog/h3/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/facts/base-cells.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A globe covered in a honeycomb of hexagons."
+          }
+        },
+        {
+          "figure": "12",
+          "claim": "model_design",
+          "text": "pentagons, one at each corner of the icosahedron. The post says its authors chose to add them.",
+          "source": {
+            "label": "Post · H3 section",
+            "url": "https://www.uber.com/en-US/blog/h3/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/facts/pentagons.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A grid of twelve pentagons among the hexagons."
+          }
+        },
+        {
+          "figure": "64-bit",
+          "claim": "model_design",
+          "text": "The size of one cell’s ID. Each cell is named by a single 64-bit integer, one whole number.",
+          "source": {
+            "label": "Post · Getting started with H3",
+            "url": "https://www.uber.com/en-US/blog/h3/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "h3-hexagons/facts/index-bits.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A square of 64 small boxes, some filled in. Each box is one bit of a cell ID."
+          }
+        }
+      ]
+    }
+  ]
+}

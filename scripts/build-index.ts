@@ -1,10 +1,11 @@
-// Checks every paper's data against the tag vocabulary, then writes public/data/search-index.json.
-// Runs before `dev` and `build`; exits with an error if anything is wrong, so bad data never ships.
-// Later the database enforces the same rules and search runs as a query, but the checks stay useful
-// for reviewing AI-generated issues before they are imported.
+// Checks every story's data (a paper or a company blog post) against the tag vocabulary, then writes
+// public/data/search-index.json. Runs before `dev` and `build`; exits with an error if anything is wrong,
+// so bad data never ships. These checks are structure and link checks only: they do not verify that a
+// claim is true. That is the fact-check step (skills/fact-check). Later the database enforces the same
+// rules and search runs as a query, but the checks stay useful for reviewing AI-generated issues before import.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { Cover, Library, Moment, PaperDoc, PaperTag, SearchIndex, SiteConfig, TagBasis, TagVocabulary } from '../src/types.ts';
+import type { Cover, Library, Moment, PaperTag, SearchIndex, SiteConfig, SourceKind, StoryDoc, TagBasis, TagVocabulary } from '../src/types.ts';
 
 const PUBLIC = join(import.meta.dirname, '..', 'public');
 const read = <T>(path: string): T => JSON.parse(readFileSync(join(PUBLIC, path), 'utf8')) as T;
@@ -12,6 +13,76 @@ const read = <T>(path: string): T => JSON.parse(readFileSync(join(PUBLIC, path),
 const errors: string[] = [];
 const warnings: string[] = [];
 const BASES: TagBasis[] = ['paper', 'background', 'editorial'];
+
+const isUrl = (s: unknown) => typeof s === 'string' && /^https?:\/\/\S+$/.test(s);
+/** A real calendar date written as YYYY-MM-DD (rejects 2026-02-30). */
+function isIsoDate(s: unknown): boolean {
+  const m = typeof s === 'string' ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(s) : null;
+  if (!m) return false;
+  const [y, mo, d] = [+m[1], +m[2] - 1, +m[3]];
+  const t = new Date(Date.UTC(y, mo, d));
+  return t.getUTCFullYear() === y && t.getUTCMonth() === mo && t.getUTCDate() === d;
+}
+
+/** What a story is based on, in the shape the search index uses. */
+interface Source { kind: SourceKind; title: string; authors: string; year: number; urls: string[] }
+
+/**
+ * Checks the story's source block: `paper` (the default when `kind` is missing) or `blog`, never both.
+ * Returns undefined when the block is unusable; the errors say why.
+ */
+function checkSource(doc: StoryDoc): Source | undefined {
+  const where = `${doc.slug}.json`;
+  const kind = (doc.kind ?? 'paper') as SourceKind;
+  if (kind !== 'paper' && kind !== 'blog') {
+    errors.push(`${where}: kind must be "paper" or "blog", not "${String(doc.kind)}"`);
+    return undefined;
+  }
+
+  if (kind === 'paper') {
+    if (doc.blog) errors.push(`${where}: a paper story must not have a "blog" block (set "kind": "blog" or remove the block)`);
+    const p = doc.paper;
+    if (!p) { errors.push(`${where}: a paper story needs a "paper" block (title, authors, year, url)`); return undefined; }
+    if (!p.title?.trim() || !p.authors?.trim()) errors.push(`${where}: paper.title and paper.authors are required`);
+    if (!Number.isInteger(p.year)) errors.push(`${where}: paper.year must be a whole number`);
+    if (!isUrl(p.url)) errors.push(`${where}: paper.url must be an http(s) link to the paper`);
+    return { kind, title: p.title, authors: p.authors, year: p.year, urls: [p.url] };
+  }
+
+  if (doc.paper) errors.push(`${where}: a blog story must not have a "paper" block (use "blog")`);
+  const b = doc.blog;
+  if (!b) { errors.push(`${where}: kind "blog" needs a "blog" block (title, organization, published, url, trust)`); return undefined; }
+  if (!b.title?.trim()) errors.push(`${where}: blog.title is required`);
+  if (!b.organization?.trim()) errors.push(`${where}: blog.organization is required (the company or team that wrote the post)`);
+  if (!isIsoDate(b.published)) errors.push(`${where}: blog.published is required as a real date, YYYY-MM-DD`);
+  if (!isUrl(b.url)) errors.push(`${where}: blog.url is required (the live post, as an http(s) link)`);
+  if (b.archivedUrl !== undefined && !isUrl(b.archivedUrl)) errors.push(`${where}: blog.archivedUrl must be an http(s) link when given`);
+  if (b.trust !== 'company_reported') {
+    errors.push(`${where}: blog.trust must be "company_reported": a company's own post is never independently verified`);
+  }
+  return {
+    kind, title: b.title, authors: b.organization, year: Number(String(b.published).slice(0, 4)),
+    urls: [b.url, b.archivedUrl].filter((u): u is string => !!u),
+  };
+}
+
+/**
+ * A measured result needs a link to where it was measured. For a blog, the result is the company's own
+ * measurement: the reminder is a warning, because the check cannot tell whether the number is right.
+ */
+function checkMeasuredResults(doc: StoryDoc, source?: Source) {
+  const where = `${doc.slug}.json`;
+  for (const block of doc.blocks) {
+    if (block.type !== 'facts') continue;
+    for (const f of block.facts) {
+      if (f.claim !== 'measured_result') continue;
+      if (!f.source?.url) errors.push(`${where}: measured result "${f.figure}" needs a source.url (the section or post where it was measured)`);
+      if (source?.kind === 'blog') {
+        warnings.push(`${where}: measured result "${f.figure}" is company-reported (the company's own measurement, not independently verified)`);
+      }
+    }
+  }
+}
 
 function checkVocabulary(vocab: TagVocabulary) {
   const facets = new Set(vocab.facets.map(f => f.id));
@@ -37,7 +108,7 @@ function checkVocabulary(vocab: TagVocabulary) {
   return byId;
 }
 
-function checkPaperTags(doc: PaperDoc, known: Set<string>): PaperTag[] {
+function checkPaperTags(doc: StoryDoc, known: Set<string>, sourceUrls: string[]): PaperTag[] {
   const where = `${doc.slug}.json`;
   if (!doc.summary?.trim()) errors.push(`${where}: missing summary`);
   if (!Array.isArray(doc.tags) || doc.tags.length === 0) errors.push(`${where}: no tags`);
@@ -48,8 +119,9 @@ function checkPaperTags(doc: PaperDoc, known: Set<string>): PaperTag[] {
     seen.add(t.tag);
     if (!(t.relevance >= 0 && t.relevance <= 1)) errors.push(`${label}: relevance must be between 0 and 1`);
     if (!BASES.includes(t.basis)) errors.push(`${label}: basis must be one of ${BASES.join(', ')}`);
-    if (t.basis === 'paper' && !t.evidence?.startsWith(doc.paper.url)) {
-      errors.push(`${label}: basis "paper" needs an evidence link into ${doc.paper.url}`);
+    // The evidence must link into the story's own source (the paper, or the blog post or its archive copy).
+    if (t.basis === 'paper' && sourceUrls.length && !sourceUrls.some(u => t.evidence?.startsWith(u))) {
+      errors.push(`${label}: basis "paper" needs an evidence link into ${sourceUrls.join(' or ')}`);
     }
     if (!known.has(t.tag)) {
       if (!t.proposed) errors.push(`${label} is not in tags.json (add it, or describe it under "proposed")`);
@@ -66,7 +138,7 @@ function checkPaperTags(doc: PaperDoc, known: Set<string>): PaperTag[] {
 const plain = (rich: string) => rich.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
 
 /** The paper's home page cover: its own `cover`, or else built from the lead block. */
-function coverOf(doc: PaperDoc): Cover | undefined {
+function coverOf(doc: StoryDoc): Cover | undefined {
   const lead = doc.blocks.find(b => b.type === 'lead');
   const base = doc.cover ?? (lead && { kicker: lead.kicker, headline: lead.headline, dek: lead.deck, media: lead.slideshow.slides[0].media });
   if (!base) return undefined;
@@ -82,7 +154,7 @@ function coverOf(doc: PaperDoc): Cover | undefined {
 }
 
 /** Bite-size cards for the home page and feed: every comic strip, story chapter and fact. */
-function momentsOf(doc: PaperDoc): Moment[] {
+function momentsOf(doc: StoryDoc): Moment[] {
   const where = `${doc.slug}.json`;
   const link = (anchor?: string) => `papers/${doc.slug}${anchor ? `#${anchor}` : ''}`;
   const out: Moment[] = [];
@@ -117,19 +189,24 @@ const vocab = read<TagVocabulary>('data/tags.json');
 const known = new Set(checkVocabulary(vocab).keys());
 
 const index: SearchIndex = { schemaVersion: 1, featured: site.defaultPaper, papers: [] };
+const storyKind = new Map<string, SourceKind>();
 for (const entry of site.papers) {
-  const doc = read<PaperDoc>(entry.dataUrl);
+  const doc = read<StoryDoc>(entry.dataUrl);
   if (doc.slug !== entry.slug) errors.push(`${entry.dataUrl}: slug "${doc.slug}" does not match site.json "${entry.slug}"`);
-  const tags = checkPaperTags(doc, known);
+  const source = checkSource(doc);
+  storyKind.set(doc.slug, (doc.kind ?? 'paper') as SourceKind);
+  checkMeasuredResults(doc, source);
+  const tags = checkPaperTags(doc, known, source?.urls ?? []);
   const cover = coverOf(doc);
   if (!cover) { errors.push(`${entry.dataUrl}: needs a "cover" or a lead block`); continue; }
+  if (!source) continue;
   index.papers.push({
     slug: doc.slug,
-    title: doc.paper.title,
+    title: source.title,
     pageTitle: doc.pageTitle,
     summary: doc.summary,
-    authors: doc.paper.authors,
-    year: doc.paper.year,
+    authors: source.authors,
+    year: source.year,
     desk: doc.desk,
     cover,
     moments: momentsOf(doc),
@@ -143,8 +220,12 @@ const storyIds = new Set(library.stories.map(s => s.id));
 const nodeIds = new Set(library.nodes.map(n => n.id));
 const need = (ok: boolean, msg: string) => { if (!ok) errors.push(`library.json: ${msg}`); };
 for (const s of library.stories) {
-  if (s.real) need(index.papers.some(p => p.slug === s.id), `story "${s.id}" is real but has no paper in site.json`);
-  else need(s.kind === 'blog' || !!s.art, `sample story "${s.id}" needs an "art" kind`);
+  if (s.real) {
+    const kind = storyKind.get(s.id);
+    need(kind !== undefined, `story "${s.id}" is real but has no story file in site.json`);
+    // A real library entry must say the same kind of source as its file, so a blog is never listed as a paper.
+    if (kind) need(s.kind === kind, `story "${s.id}" is "${s.kind}" in the library but its file is a ${kind} story`);
+  } else need(s.kind === 'blog' || !!s.art, `sample story "${s.id}" needs an "art" kind`);
   need(s.fields.every(f => library.fields.some(x => x.id === f)), `story "${s.id}" has an unknown field`);
 }
 const refs: [string, string[]][] = [

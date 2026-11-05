@@ -16,6 +16,11 @@
       "slug": "size-shapes-life",
       "title": "Integrating Evolutionary Biology into Physics Classroom",
       "dataUrl": "data/papers/size-shapes-life.json"
+    },
+    {
+      "slug": "h3-hexagons",
+      "title": "H3: honeycomb for the map",
+      "dataUrl": "data/papers/h3-hexagons.json"
     }
   ]
 }

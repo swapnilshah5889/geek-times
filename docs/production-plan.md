@@ -112,7 +112,7 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 
 ### Phase 2: Real content to replace samples
 
-- [ ] One real company engineering post (tests company-reported labels and the company page).
+- [x] One real company engineering post: Uber Engineering, "H3: Uber's Hexagonal Hierarchical Spatial Index" (Isaac Brodsky, 2018-06-27). Slug `h3-hexagons`; real company `uber`; 5 facts all `model_design` (the post has no measured results); fact-check in `docs/fact-checks/h3-hexagons.md`. Added the blog data contract (additive: `kind: 'paper' | 'blog'` + `blog` block); made `CompanyPage` sample wording conditional on `sample: true`; three placeholder companies now carry `sample: true`.
 - [ ] Three to five more papers across fields, through `skills/convert-paper`, so every front-page section has real
       stories.
 - [ ] Verify family-tree and map relations with citations (`RelationEvidence`); hide unverified links from readers.

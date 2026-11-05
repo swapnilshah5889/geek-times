@@ -16,13 +16,15 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
   const posts = storiesOf(library, company.posts);
   const base = library.nodes.filter(n => company.builtOn.includes(n.id));
   const words = company.name.split(' ');
+  // Only placeholder companies (sample: true) show sample wording and [year] placeholders.
+  const sample = company.sample === true;
 
   return (
     <SitePage archive={archive} title={`${company.name}: ${company.sector}`} active="real">
       <Crumbs items={[{ href: appHref('companies'), label: 'In the real world' }, { href: appHref('companies'), label: 'Companies' }, company.name]} />
       <section className="co-hero">
         <div>
-          <span className="label">Company · {company.sector} · Sample page</span>
+          <span className="label">Company · {company.sector}{sample && ' · Sample page'}</span>
           <h1>{words[0]} {words.slice(1).join(' ')}</h1>
           <p className="f-lead-dek">{company.blurb}</p>
         </div>
@@ -35,13 +37,13 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
       <p className="co-howto"><b className="label">How to read this page</b> &nbsp; Numbers in these stories are <b>company-reported</b>: the company’s own measurements, not independently checked. We link every original post and use plain names, never logos.</p>
 
       <section aria-labelledby="explained" className="f-section">
-        <div className="f-sechead"><h2 id="explained">Explained posts</h2><span className="label">Newest first · Sample</span></div>
+        <div className="f-sechead"><h2 id="explained">Explained posts</h2><span className="label">Newest first{sample && ' · Sample'}</span></div>
         <div className="f-grid f-grid-3">
           {posts.map(s => {
             const on = s.builtOn ? storyById(library, s.builtOn) : undefined;
             return (
               <a key={s.id} className="card f-post" href={paperHref(s.id)}>
-                <span className="label">Blog · [year] · Sample</span>
+                <span className="label">{sample ? 'Blog · [year] · Sample' : `Engineering blog · ${s.year}`}</span>
                 <h4>{s.headline}</h4>
                 <p>{s.dek}</p>
                 <span className="f-chips">
