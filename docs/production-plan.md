@@ -13,7 +13,6 @@ decision). Checked by reading the code and by running the site at 1440px and 375
 
 | # | Where | Problem | Fix |
 |---|---|---|---|
-| B4 | Story pages vs tiles | Tiles lost their shadows (canvas option A), but comic panels and fact cards on story pages still use the hard ink shadow. | Decide on the canvas whether story panels follow option A, then apply it. |
 
 ### Gaps against our own rules
 
@@ -36,7 +35,7 @@ decision). Checked by reading the code and by running the site at 1440px and 375
 - **Every page loads the whole archive** (site, tags, search index, library). Fine at 2 papers, slow at hundreds.
 - **Media from another host.** SVGs are fetched and inlined; a CDN must send CORS headers or the art falls back to
   `<img>` and stops being pausable.
-- **Dead code.** Old bento `.tile` styles in `edition.css` and the `front.ts` file name no longer match what they do.
+- **Dead code.** The `front.ts` file name no longer matches what it holds (the feed order). The old bento CSS is gone.
 - **Accessibility unverified.** Built to the rules (labels, focus rings, list view for the map), but never run through
   a screen reader or an automated checker. Focus outlines on SVG map nodes may not show in every browser.
 
@@ -80,10 +79,10 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 
 ### Phase 0: Clean up what exists (small, do next)
 
-- [x] Fix B1–B3 (B1 disappeared with the edition redesign; B2 and B3 fixed in the next commit). B4 is on the canvas for a decision.
+- [x] Fix B1–B4 (B1 disappeared with the edition redesign; B4 approved on the canvas).
 - [ ] Add parents for the new tags inside their own facets (for example `area/biophysics` under a new `area/physics`).
 - [ ] Redraw the data-model board for decision 30.
-- [ ] Remove dead CSS and rename `front.ts` to what it holds (feed order).
+- [~] Dead CSS removed (old bento tiles, hooked cover). Still to do: rename `front.ts` to what it holds (feed order).
 - [ ] Update `docs/roadmap.md` to match this plan.
 
 ### Phase 1: Quality gates
@@ -138,4 +137,5 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 
 - B1 "this week" on every back issue: the back-issues row was replaced by one "This week's edition" band (decision 32).
 - B2 wrong "Next" link on edition pages: it now links to the real next edition, and only the newest edition says "Out next Friday".
+- B4 hard ink shadows on story pages, the search box and snack art: replaced by the same hairline outlines as the tiles (canvas option A, approved). Dead bento and hooked-cover CSS removed at the same time.
 - B3 latest, previous and next depended on file order: they now come from volume and issue number (`issuesInOrder` in `src/lib/library.ts`).
