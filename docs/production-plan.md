@@ -11,8 +11,7 @@ decision). Checked by reading the code and by running the site at 1440px and 375
 
 ### Bugs to fix first
 
-| # | Where | Problem | Fix |
-|---|---|---|---|
+None open. B1–B4 are resolved (see "Fixed" at the end); the Codex review's small fixes are under "Fix now" in section 3.
 
 ### Gaps against our own rules
 

@@ -113,15 +113,19 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 
 ## Current status (keep updated)
 
-- Done: data-driven React site, Attention story with comic strips, tags + search, bento front page + swipe feed
-  (branches `feature/paper-tags` → `feature/home-bento` → `feature/project-knowledge`, stacked and not yet merged).
-- Designing: front page **D**, issue page, story family tree, company page, explore map, data model. The
-  exported images are in `design/exports/`, with a review brief in `design/README.md`; the editable source is a
-  claude.ai design canvas (copied into `design/canvas-source/`).
-- Design review by Codex (2026-11-04) accepted. Changes are recorded as decisions 18–25.
-- Second real story added: "Why a bigger deer breaks" (`size-shapes-life`, arXiv 2408.04070, a preprint), now the front-page lead.
-  Fact-check record: `docs/fact-checks/size-shapes-life.md`.
-- Next: see `docs/production-plan.md` (review findings, achieved, remaining phases) and `docs/roadmap.md`. Fixtures from a second field and a real company blog come before more pages.
+- Everything is merged into `main` (latest: PR #9, the Supabase plan through decision 38). No feature branch is open.
+- Built: data-driven React site; front page **D**; story pages (five tabs, picture story, comic strips, evidence
+  cards, family tree, tag shelf); issue, company and map pages (with list view); swipe feed; search with tag filters;
+  path URLs (`/papers/<slug>`).
+- Real stories: "One word, two worlds" (Attention Is All You Need, peer-reviewed) and "Why a bigger deer breaks"
+  (`size-shapes-life`, arXiv 2408.04070, a preprint, the front-page lead; fact-check record in
+  `docs/fact-checks/size-shapes-life.md`). Everything else in `library.json` is `sample: true`.
+- Database plan decided, not built: Supabase (34), files in git as the full seed and backup (35, 37), static pages
+  for readers (36), no foreign keys with required integrity checks (30, 38).
+- Design source: the claude.ai canvas (copied into `design/canvas-source/`), exports in `design/exports/`. The
+  data-model board is still stale (production plan, Phase 0).
+- Next: `docs/production-plan.md` is the only maintained launch sequence. Start with "Fix now", then Phase 1
+  (tests, CI, preview deploys, rendering decision) and Phase 2 (a real company post and more papers to replace samples).
 
 ## Keeping this file true
 
