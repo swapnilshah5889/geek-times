@@ -83,7 +83,7 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 
 - [ ] One shared claim label on story fact cards, the feed and evidence chapters, with source trust carried into the data.
 - [ ] Unique React keys (front-page snacks across papers; map filter buttons).
-- [ ] Family tree: draw only real relations, never an arrow between chronological neighbours.
+- [~] Family tree: kept as demo content by the owner's decision. The current nodes and links are placeholders for layout review; don't invent or reshuffle them. The real build lands with Phase 2 (verified relations). See `src/components/FamilyTree.tsx` banner and `docs/STATE.md` "Known gaps kept on purpose".
 - [ ] "Swipe this issue": filter the feed to the edition, or reword it.
 
 ### Phase 0: Clean up what exists (small, do next)
