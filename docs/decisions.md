@@ -248,3 +248,27 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       change. The export is committed to git; until it has run, the database may hold newer review decisions than the files.
     - Besides GitHub, keep a dated off-repo copy on the laptop (`npm run backup`: data, media and a database dump,
       with no keys inside). A restore drill (seed an empty local Supabase and compare row counts) must pass before launch.
+
+36. **The launch data path is: editor / import → Supabase → build-time render → static host.** (From the Codex review.)
+    - Readers get prerendered static pages and never query the database. So the public-reader row-level security policies and
+      a paged runtime API are **not** on the launch path. They become work only when a runtime feature needs them (for
+      example live search or accounts), and then they are listed as their own item.
+    - Supabase is the back office: the import job, the review queue and editing. Search at launch is a static index.
+    - The rendering choice (static generation, edge prerendering or server rendering) is made in Phase 1 with one
+      representative story preview, before any platform API work. Phase 4 builds metadata, cards and the sitemap on it.
+
+37. **Backup guarantees, and what counts as a restore.** (From the Codex review; refines 35.)
+    - **Export is a required, checked release step.** Before every release the export runs and is compared with the tracked
+      files. If it would lose a database-side change, or if the same record changed differently in the database and in
+      the files, the release **fails**. Divergence is never overwritten silently; a person resolves it.
+    - **A restore drill compares content, not only counts:** after seeding an empty local Supabase, export again and diff
+      against the files, and check key relationships (a story's tags, a relation's two ends, an edition's stories).
+    - **Numeric ids:** they must not be used as external identifiers or relied on across re-seeds. Database-native dumps,
+      migration records and audit logs may hold them as internal references. The seed and the portable export resolve
+      records by slug or key and remap references on import.
+    - **When to pay for Supabase Pro:** when the project becomes operationally critical, meaning the first time anything
+      the owner cares about exists only there (review decisions not yet exported, or editorial work that depends on it
+      being awake), not only when user data arrives. Before that point there must be a tested backup path and a written
+      recovery procedure for a paused project.
+    - **Authoritative state:** until the export has run, the database is authoritative for review decisions; after it, the
+      committed files are. The owner decides which project is production editorial state.

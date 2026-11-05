@@ -118,9 +118,12 @@ classDiagram
 
 ### Notes
 
-- **Hosting (decision 34):** Supabase. Migrations are SQL files in `supabase/migrations/`. Row-level security shows readers
-  only published stories, approved tags and verified relations. The auto-generated REST API infers relationships from
-  foreign key constraints, so without them, nested reads use views or functions.
+- **Hosting (decision 34):** Supabase. Migrations are SQL files in `supabase/migrations/`. The auto-generated REST API infers
+  relationships from foreign key constraints, so without them, nested reads use views or functions.
+- **Row-level security** (only needed once something reads at run time, decision 36) will show readers only published stories,
+  approved tags and verified relations. It depends on schema that doesn't exist yet: a relation `status`
+  (proposed, verified, rejected) with evidence, and immutable published versions that own their derived rows. Those
+  columns are prerequisites for the policy migration, and the policies need tests.
 
 - **Stub sources:** a `Source` with no `StorySource` row is a greyed "not explained yet" node in the graph.
 - **Two dates:** `Source.year` (original publication) vs `Story.publishedAt` and `Issue.publishedAt` (ours). Only
@@ -141,10 +144,12 @@ classDiagram
 
 - The files in git are the complete seed: `public/data/**` and `public/media/**`. `npm run seed` loads them into an empty
   Supabase project, upserting by `slug` / `key`. Storage keys mirror the media paths.
-- Numeric ids are assigned by Postgres and change on every re-seed. Only the database uses them; everything outside uses
-  slugs and keys.
-- `npm run export` brings database-side changes (approved tags, verified relations, new issues) back into the files, so
-  the repo never falls behind for long.
+- Numeric ids are assigned by Postgres and change on every re-seed. Don't use them as external identifiers or rely on
+  them across re-seeds: URLs, files, analytics and the portable seed or export use slugs and keys, and references are
+  remapped on import. Database-native dumps, migration records and audit logs may keep them as internal references (decision 37).
+- `npm run export` brings database-side changes (approved tags, verified relations, new issues) back into the files. It is a
+  required, checked release step: it fails if it would lose a database-side change or if a record diverged in both
+  places (decision 37).
 
 ### Migrating from v1 to v2 (JSON first)
 

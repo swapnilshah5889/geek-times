@@ -39,10 +39,12 @@ decision). Checked by reading the code and by running the site at 1440px and 375
 - **Accessibility unverified.** Built to the rules (labels, focus rings, list view for the map), but never run through
   a screen reader or an automated checker. Focus outlines on SVG map nodes may not show in every browser.
 
-### What is solid
+### What is solid, and what is only intended
 
-- Content is data: stories, library, tags and media paths are JSON, validated on every build.
-- Trust labelling is consistent (illustration / model design / measured result, plus source trust).
+- Content is data: stories, library, tags and media paths are JSON. The build checks tags, hooks and library references.
+  It does **not** yet check the trust rules (fact claim kind, sources, anchors, alt text, duplicate ids).
+- Trust labels are right on the front page and comic strips. **Not yet** on story fact cards, the feed or evidence chapters,
+  which are the first thing to fix (section 3, "Fix now").
 - Two real stories from different fields prove the model isn't AI-only.
 - Tool-neutral knowledge (`AGENTS.md`, `docs/`, `skills/`) lets any model resume the work.
 - No horizontal overflow at 375px on every page checked.
@@ -78,13 +80,21 @@ decision). Checked by reading the code and by running the site at 1440px and 375
 
 Each phase ends in something the owner can see and approve. Phases 1–2 can overlap; 3 needs 2; 5 needs everything.
 
+### Fix now (from the Codex review; small, before Phase 1)
+
+- [ ] One shared claim label on story fact cards, the feed and evidence chapters, with source trust carried into the data.
+- [ ] Unique React keys (front-page snacks across papers; map filter buttons).
+- [ ] Family tree: draw only real relations, never an arrow between chronological neighbours.
+- [ ] "Swipe this issue": filter the feed to the edition, or reword it.
+
 ### Phase 0: Clean up what exists (small, do next)
 
 - [x] Fix B1–B4 (B1 disappeared with the edition redesign; B4 approved on the canvas).
 - [ ] Add parents for the new tags inside their own facets (for example `area/biophysics` under a new `area/physics`).
 - [ ] Redraw the data-model board for decision 30.
 - [~] Dead CSS removed (old bento tiles, hooked cover). Still to do: rename `front.ts` to what it holds (feed order).
-- [ ] Update `docs/roadmap.md` to match this plan.
+- [x] `docs/roadmap.md` now points here: this file is the only maintained launch sequence.
+- [ ] Redraw the data-model board again for decisions 34–37.
 
 ### Phase 1: Quality gates
 
@@ -94,6 +104,9 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 - [ ] Automated accessibility checks (axe) on every page, plus one manual screen-reader pass.
 - [ ] CI on every pull request: data check, typecheck, lint, tests, build. Block merging on failure.
 - [ ] Preview deploy per pull request so the owner can review on a real URL.
+- [ ] **Rendering decision and spike (decision 36):** choose static generation, edge prerendering or server rendering, and ship one
+      prerendered story with its share preview, before any platform API work.
+- [ ] When the policy migration exists: row-level security policy tests (only if a runtime feature needs RLS).
 
 ### Phase 2: Real content to replace samples
 
@@ -107,28 +120,35 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 ### Phase 3: Platform
 
 - [ ] Content model v2 and migration (`docs/data-model.md`).
-- [ ] **Supabase** project(s): local, staging and production (decision 34). Schema per decision 30 as SQL migrations in
-      `supabase/migrations/`, applied with the Supabase CLI.
-- [ ] Row-level security: public readers see only published stories, approved tags and verified relations; the
-      service-role key stays in the import job and server code only.
-- [ ] **Seed and restore (decision 35):** `npm run seed` rebuilds an empty Supabase project from the files in git (idempotent,
-      upserts by slug or key, uploads the media); `npm run export` writes review decisions back to the files; `npm run
-      backup` keeps a dated copy on the laptop. Pass a restore drill on an empty local Supabase before launch.
-- [ ] Import job from JSON into Supabase, plus the integrity checks (orphan check before publish, unique and not-null
-      constraints, alerting). Settle the foreign key question first: the auto-generated REST API relies on them for
-      nested queries.
-- [ ] An API that serves `PublishedVersion` documents and paged lists (front page, issues, search), so pages stop
-      loading the whole archive.
+- [ ] **Supabase** projects: local, staging and production (decision 34). Schema per decision 30 as SQL migrations in
+      `supabase/migrations/`, applied with the Supabase CLI. Keys only in environment variables.
+- [ ] Settle the foreign key question first (owner's call); the auto-generated REST API relies on them for nested reads.
+- [ ] Prerequisite schema before any row-level security: relation `status` with evidence, and immutable published versions
+      that own their derived rows (`published_version_id`).
+- [ ] Row-level security and a paged runtime API: **only when a runtime feature needs them** (decision 36). Not on the launch
+      path, which is static pages.
+- [ ] Import job from JSON into Supabase with the integrity checks: transactional publish, unique, check and not-null
+      constraints, an orphan check before publish, alerting, and tests that every import and export reference remaps.
 - [ ] Media on a CDN with CORS (Supabase Storage or S3: decide); set `mediaBaseUrl` per environment.
-- [ ] Secrets and environments: keys in environment variables only; separate projects for local, staging and production;
-      backups and a restore test.
+
+**Backup deliverables (decisions 35 and 37)**, each with an owner and cadence:
+
+| Deliverable | What it is | Owner | When |
+|---|---|---|---|
+| Seed | `npm run seed`: files in git → empty Supabase, idempotent, upserts by slug or key | Claude / owner | on demand |
+| Export and reconciliation | `npm run export`: database changes → files; fails on lost or divergent changes | Claude, committed by owner | before every release and weekly |
+| Database dump | A native dump (may contain numeric ids) | owner | weekly |
+| Off-repo laptop copy | `npm run backup`: data, media and the dump in a dated folder, no keys | owner | weekly |
+| Restore drill | Seed an empty local Supabase, export again, diff against the files, check key relationships | Claude | before launch and each quarter |
+| Environments and secrets | Separate local, staging and production projects; keys in environment variables; recovery procedure for a paused project | owner | before staging goes live |
+
 - [ ] Converter and editorial review queue (papers and blogs, `FeedEntry` states, tag and relation review).
 - [ ] Router library and route-level code splitting.
 
 ### Phase 4: Reach and virality
 
-- [ ] Per-page titles, descriptions and Open Graph / Twitter cards with the story's lead art (needs prerendering or
-      server rendering of the head).
+- [ ] Per-page titles, descriptions and Open Graph / Twitter cards with the story's lead art, built on the rendering choice
+      made in Phase 1.
 - [ ] Share buttons on stories and snacks that produce those previews.
 - [ ] Sitemap, `robots.txt`, canonical URLs, structured data for articles.
 - [ ] Mobile design pass on the canvas, then build it.
@@ -144,6 +164,19 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
       per-source copyright check (we use our own words and drawings; record each paper's licence).
 - [ ] Editorial: a corrections policy, a contact address, and an "About how we label claims" page.
 - [ ] Final review on the canvas and a launch checklist sign-off by the owner.
+
+## 4. Known gaps kept on purpose until launch
+
+These are visual-prototype scaffolding, not defects: unverified relations visible on the family tree and map, hard-coded
+sample wording on company pages ("Sample page", `[year]`), "Out next Friday" with no schedule data, and all sample
+stories, issues and companies. Each becomes a launch gate in Phase 2.
+
+## 5. Decisions waiting on the owner
+
+- Foreign key constraints (decision 30): Codex recommends them on internal references; Supabase's auto-generated API needs them
+  for nested reads. If the owner keeps no-FK, the replacement controls in Phase 3 are required.
+- Media host: Supabase Storage or S3 behind a CDN (CORS needed either way).
+- Which Supabase project is production editorial state, and when the project counts as operationally critical (decision 37).
 
 ## Fixed
 
