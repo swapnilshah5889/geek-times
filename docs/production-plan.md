@@ -13,9 +13,6 @@ decision). Checked by reading the code and by running the site at 1440px and 375
 
 | # | Where | Problem | Fix |
 |---|---|---|---|
-| B1 | `src/pages/HomePage.tsx` (Back issues) | Every non-sample issue is labelled "this week", so Issue 001 says "this week" next to Issue 002. | Only the latest issue says "this week"; older ones show their publish date. |
-| B2 | `src/pages/IssuePage.tsx` (Next) | "Next" always shows latest number + 1 and "Out next Friday". On Issue 001 it says "Issue 003" instead of linking to Issue 002. | Link to the real next issue when it exists; show "Out next Friday" only on the latest issue. |
-| B3 | `src/lib/library.ts` `latestIssue` | "Latest" is the first non-sample issue in the array, so it depends on file order. Previous/next in `IssuePage` also use array order. | Sort issues by volume and number (or `publishedAt`) and derive latest, previous and next from that. |
 | B4 | Story pages vs tiles | Tiles lost their shadows (canvas option A), but comic panels and fact cards on story pages still use the hard ink shadow. | Decide on the canvas whether story panels follow option A, then apply it. |
 
 ### Gaps against our own rules
@@ -83,7 +80,7 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 
 ### Phase 0: Clean up what exists (small, do next)
 
-- [ ] Fix B1–B3. Bring B4 to the canvas.
+- [x] Fix B1–B3 (B1 disappeared with the edition redesign; B2 and B3 fixed in the next commit). B4 is on the canvas for a decision.
 - [ ] Add parents for the new tags inside their own facets (for example `area/biophysics` under a new `area/physics`).
 - [ ] Redraw the data-model board for decision 30.
 - [ ] Remove dead CSS and rename `front.ts` to what it holds (feed order).
@@ -139,4 +136,6 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 
 ## Fixed
 
-Move items here with the commit that fixed them.
+- B1 "this week" on every back issue: the back-issues row was replaced by one "This week's edition" band (decision 32).
+- B2 wrong "Next" link on edition pages: it now links to the real next edition, and only the newest edition says "Out next Friday".
+- B3 latest, previous and next depended on file order: they now come from volume and issue number (`issuesInOrder` in `src/lib/library.ts`).

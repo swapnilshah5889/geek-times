@@ -1,8 +1,8 @@
-import { SampleTag, StoryArt } from '../components/library';
+import { StoryArt } from '../components/library';
 import { MediaView } from '../components/MediaView';
 import { Crumbs, SitePage } from '../components/SitePage';
 import type { Archive } from '../data/load';
-import { byline, issueById, latestIssue, volumeOf, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
+import { byline, issueById, latestIssue, neighbours, volumeOf, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import type { LibraryStory } from '../types';
 
@@ -32,8 +32,7 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
   const issue = issueById(library, id ?? latestIssue(library).id);
   if (!issue) throw new Error(`There is no issue called “${id}”.`);
   const vol = volumeOf(library, issue);
-  const idx = library.issues.indexOf(issue);
-  const prev = library.issues[idx + 1];
+  const { prev, next } = neighbours(library, issue);
   const stories = storiesOf(library, issue.stories ?? []);
   const cover = issue.covers ? storyById(library, issue.covers) : undefined;
   const coverPaper = cover && realPaper(archive, cover);
@@ -92,7 +91,9 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
 
       <nav className="is-pn" aria-label="Other issues">
         {prev ? <a className="card" href={issueHref(prev.id)}><span className="label">← Previous · Vol. {prev.volume} · {numberLabel(prev.number)}</span><b>{prev.title}{prev.sample && ' (sample)'}</b></a> : <span />}
-        <div className="card is-next"><span className="label">Next · Issue {String(Number(latestIssue(library).number) + 1).padStart(3, '0')}</span><b>Out next Friday</b><SampleTag story={{ sample: true } as LibraryStory} /></div>
+        {next
+          ? <a className="card is-next" href={issueHref(next.id)}><span className="label">Next → Vol. {next.volume} · {numberLabel(next.number)}</span><b>{next.title}{next.sample && ' (sample)'}</b></a>
+          : <div className="card is-next"><span className="label">Next edition</span><b>Out next Friday</b></div>}
       </nav>
     </SitePage>
   );
