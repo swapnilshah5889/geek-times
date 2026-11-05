@@ -3,6 +3,8 @@ name: explain-source
 description: Turn a research paper or a company engineering blog post into a Geeky Times story (plain-language summary, picture story, comic strips, evidence cards) that a school kid can follow. Use when adding any new story.
 ---
 
+> **Default model:** **large** (Opus 5.5 / Sonnet 5.5 / top-tier equivalent) — writing kid-level prose is the hard part. Drop to a smaller model once the hard part is drafted.
+
 # Explain a source as a Geeky Times story
 
 The reference example is `public/data/papers/attention-is-all-you-need.json`. Match its tone, structure and honesty.

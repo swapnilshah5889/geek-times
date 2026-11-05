@@ -3,6 +3,8 @@ name: publish-issue
 description: Add finished stories to The Geeky Times and assemble them into an issue (lead, features, briefs, vault), today with JSON files and later through the review pipeline.
 ---
 
+> **Default model:** **small** (Haiku 5.5, Sonnet 4.x, Gemini Flash, GPT-4.1 mini) — JSON edits, data check, git. Fall back to larger only when the task genuinely needs it.
+
 # Publish stories and assemble an issue
 
 ## Concepts (see `docs/product-plan.md`, decision 31)

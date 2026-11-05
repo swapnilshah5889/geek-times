@@ -111,7 +111,13 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
   targets, keyboard rails, reduced motion respected.
 - **Ask before** anything public or irreversible (publishing, pushing to main, contacting companies, buying domains).
 
-## Current status (keep updated)
+## Current status
+
+**Read [docs/STATE.md](docs/STATE.md) first** — a one-page snapshot of where we are, the real content,
+what's next, and the model-routing default. The paragraphs below are kept for context; `STATE.md` is the
+single source of truth for status.
+
+## Status detail (kept for background)
 
 - Everything is merged into `main` (latest: PR #9, the Supabase plan through decision 38). No feature branch is open.
 - Built: data-driven React site; front page **D**; story pages (five tabs, picture story, comic strips, evidence
