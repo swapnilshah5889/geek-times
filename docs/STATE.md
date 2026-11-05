@@ -31,6 +31,16 @@ Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 3. **Phase 2:** one real company engineering post and 3–5 more papers to replace samples.
 4. **Phase 3:** Supabase migrations, import job with orphan checks, media on a CDN with CORS.
 
+## Known gaps kept on purpose (do not "fix")
+
+- **Family tree / explore map** are demo content. The current nodes and links are placeholders
+  so the layout can be reviewed. Don't invent, reshuffle or "verify" links to fill the tree.
+  The pages carry a "Mockup · links to be fact-checked" badge and `src/components/FamilyTree.tsx`
+  carries a DEMO CONTENT banner at the top. We will properly build the screen once there are
+  enough verified relations (see decisions 15, 24; production plan section 4).
+- Sample stories, companies and placeholders (`[Company name]`, `[Year]`) render on the live
+  pages. That is deliberate for design review. Replacing them is Phase 2 work, not a bug.
+
 ## Rules that bite most often
 
 - Never commit or push to `main`. Ask before creating a branch. (Full list in `AGENTS.md`.)

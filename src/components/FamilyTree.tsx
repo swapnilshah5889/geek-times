@@ -4,6 +4,18 @@ import { familyOf, relationForward, relationLabel } from '../lib/library';
 import { mapHref, paperHref } from '../lib/routes';
 import type { GraphNode } from '../types';
 
+// ============================================================================
+// DEMO CONTENT — DO NOT "fix" the stub links or sample nodes here or in
+// library.json. The owner knows the current graph is placeholder data; we are
+// keeping the look of the screen for layout and design review until we have a
+// real corpus to draw from. The real build happens once there are enough
+// verified relations (see docs/STATE.md "Known gaps kept on purpose", and
+// decisions 15 and 24). Until then:
+//   - don't invent or reshuffle links to "fix" the tree
+//   - leave the "Mockup · links to be fact-checked" badge in place
+//   - skip this page in Codex-review / Fix-now rounds
+// ============================================================================
+//
 // "Papers before and after this one": the oldest idea on the left, arrows forward in time, what grew
 // from it on the right. Every link is a reviewed relation; until reviewed they are marked as samples.
 export function FamilyTree({ archive, nodeId }: { archive: Archive; nodeId: string }) {
