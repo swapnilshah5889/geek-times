@@ -220,3 +220,31 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - Volumes are records in `library.json` → `volumes` (`id`, `title`, `kind`); each issue names its volume by id, and
       `npm run data` rejects an issue with an unknown volume.
     - Volume numbers are plain digits, not Roman numerals.
+
+34. **The database is Supabase (managed Postgres).** (The owner's call.)
+    - Postgres stays the data model of record (decision 30 and `docs/data-model.md`). Supabase adds hosting, backups,
+      row-level security, auto-generated REST access and optional file storage.
+    - Rules that follow from it:
+      - Schema changes are SQL migrations kept in the repo (`supabase/migrations/`), applied by the Supabase CLI to a
+        local, a staging and a production project. Nothing is edited by hand in the dashboard.
+      - Readers use only the public (anon) key, and row-level security lets them see only published stories, approved
+        tags and verified relations. The service-role key lives only in the import job and server code, never in the
+        browser or the repo.
+      - JSON files stay the source of truth until the import job exists; the import job writes to Supabase.
+    - To decide before building: whether media lives in Supabase Storage or S3 behind a CDN (it needs CORS either way),
+      and whether pages read from Supabase at build time (prerendering) or at run time.
+    - Flag for decision 30: Supabase's auto-generated REST API finds relationships through foreign key constraints.
+      Without them, nested queries ("a story with its tags") need views or database functions instead.
+
+35. **The files in git are the full backup and the seed for the database.** (The owner's call.)
+    - Everything needed to rebuild the database lives in the repo and on the owner's laptop: stories, the library, tags,
+      site settings and all media. If the Supabase project is lost, paused for good or corrupted, an empty project is
+      brought back by running the seed job (`npm run seed`, to be built in the platform phase).
+    - The seed job is idempotent: it validates the files, then upserts by `slug` / `key`, never by numeric id, so it can be
+      re-run safely. Postgres assigns fresh auto-increment ids each time, so **nothing outside the database may store a
+      numeric id** (URLs, the newsletter list, analytics and exports use the slug or key).
+    - Once editors approve tags or verify relations inside the database, the files fall behind. So the reverse job
+      (`npm run export`) writes those changes back to the files, and it runs on a schedule and before any risky
+      change. The export is committed to git; until it has run, the database may hold newer review decisions than the files.
+    - Besides GitHub, keep a dated off-repo copy on the laptop (`npm run backup`: data, media and a database dump,
+      with no keys inside). A restore drill (seed an empty local Supabase and compare row counts) must pass before launch.

@@ -72,6 +72,7 @@ decision). Checked by reading the code and by running the site at 1440px and 375
 **Process**
 - [x] `skills/convert-paper` runbook plus explain, fact-check, tag, draw and publish skills.
 - [x] Database plan: content model v2, Postgres auto-increment ids, slugs as public keys, no foreign key constraints.
+      Hosting decided: Supabase (decision 34).
 
 ## 3. Remaining steps to production
 
@@ -106,10 +107,21 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 ### Phase 3: Platform
 
 - [ ] Content model v2 and migration (`docs/data-model.md`).
-- [ ] Postgres schema per decision 30; an import job from JSON; the orphan-check query on a schedule.
+- [ ] **Supabase** project(s): local, staging and production (decision 34). Schema per decision 30 as SQL migrations in
+      `supabase/migrations/`, applied with the Supabase CLI.
+- [ ] Row-level security: public readers see only published stories, approved tags and verified relations; the
+      service-role key stays in the import job and server code only.
+- [ ] **Seed and restore (decision 35):** `npm run seed` rebuilds an empty Supabase project from the files in git (idempotent,
+      upserts by slug or key, uploads the media); `npm run export` writes review decisions back to the files; `npm run
+      backup` keeps a dated copy on the laptop. Pass a restore drill on an empty local Supabase before launch.
+- [ ] Import job from JSON into Supabase, plus the integrity checks (orphan check before publish, unique and not-null
+      constraints, alerting). Settle the foreign key question first: the auto-generated REST API relies on them for
+      nested queries.
 - [ ] An API that serves `PublishedVersion` documents and paged lists (front page, issues, search), so pages stop
       loading the whole archive.
-- [ ] Media on S3 behind a CDN with CORS; set `mediaBaseUrl` per environment.
+- [ ] Media on a CDN with CORS (Supabase Storage or S3: decide); set `mediaBaseUrl` per environment.
+- [ ] Secrets and environments: keys in environment variables only; separate projects for local, staging and production;
+      backups and a restore test.
 - [ ] Converter and editorial review queue (papers and blogs, `FeedEntry` states, tag and relation review).
 - [ ] Router library and route-level code splitting.
 

@@ -43,7 +43,7 @@ Blocks are a discriminated union: `lead`, `story`, `comic`, `facts`. Each media 
    - In the diagram below, an arrow means "this column holds the other row's `id`". It is a logical link, not a
      database constraint.
 
-### Schema (Postgres)
+### Schema (Postgres on Supabase)
 
 In the diagram, an arrow points from a record to the record it refers to.
 
@@ -118,6 +118,10 @@ classDiagram
 
 ### Notes
 
+- **Hosting (decision 34):** Supabase. Migrations are SQL files in `supabase/migrations/`. Row-level security shows readers
+  only published stories, approved tags and verified relations. The auto-generated REST API infers relationships from
+  foreign key constraints, so without them, nested reads use views or functions.
+
 - **Stub sources:** a `Source` with no `StorySource` row is a greyed "not explained yet" node in the graph.
 - **Two dates:** `Source.year` (original publication) vs `Story.publishedAt` and `Issue.publishedAt` (ours). Only
   `Source.year` is shown on a story. `Story.publishedAt` is internal (ordering, "new" badges in feeds); our dates are
@@ -132,6 +136,15 @@ classDiagram
   doesn't care whether it reads files or the database.
 - **Graph queries:** recursive CTEs over `Relation` give ancestors and descendants. A graph database isn't needed until
   much larger scale.
+
+### Seeding and backup (decision 35)
+
+- The files in git are the complete seed: `public/data/**` and `public/media/**`. `npm run seed` loads them into an empty
+  Supabase project, upserting by `slug` / `key`. Storage keys mirror the media paths.
+- Numeric ids are assigned by Postgres and change on every re-seed. Only the database uses them; everything outside uses
+  slugs and keys.
+- `npm run export` brings database-side changes (approved tags, verified relations, new issues) back into the files, so
+  the repo never falls behind for long.
 
 ### Migrating from v1 to v2 (JSON first)
 
