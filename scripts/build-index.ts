@@ -81,25 +81,23 @@ function checkMeasuredResults(doc: StoryDoc, source?: Source) {
       if (f.claim !== 'measured_result') continue;
       if (!f.source?.url) errors.push(`${where}: measured result "${f.figure}" needs a source.url (the section or post where it was measured)`);
       if (source?.kind === 'blog') {
-        warnings.push(`${where}: measured result "${f.figure}" is company-reported (the company's own measurement, not independently verified)`);
+        warnings.push(`${where}: measured result "${f.figure}" is company-reported (from the company's own post, not independently checked)`);
       }
     }
   }
 }
 
 /**
- * Every fact needs a claim kind (decision 18). A sourced fact with no claim is read as a model design; one with
- * neither a claim nor a source has no honest label, so it fails the check.
+ * Every fact needs an explicit claim kind (decision 18). A sourced fact is never assumed to be a model design:
+ * the label must say what the number is, so a missing claim fails the check.
  */
 function checkFactClaims(doc: StoryDoc) {
   const where = `${doc.slug}.json`;
   for (const block of doc.blocks) {
     if (block.type !== 'facts') continue;
     for (const f of block.facts) {
-      if (f.claim !== undefined && !CLAIMS.includes(f.claim)) {
-        errors.push(`${where}: fact "${f.figure}" has claim "${String(f.claim)}"; it must be ${CLAIMS.join(', ')}`);
-      }
-      if (f.claim === undefined && !f.source) errors.push(`${where}: fact "${f.figure}" needs a claim (${CLAIMS.join(', ')}) or a source`);
+      if (!f.claim) errors.push(`${where}: fact "${f.figure}" has no claim; it must be ${CLAIMS.join(', ')}`);
+      else if (!CLAIMS.includes(f.claim)) errors.push(`${where}: fact "${f.figure}" has claim "${String(f.claim)}"; it must be ${CLAIMS.join(', ')}`);
     }
   }
 }
@@ -201,11 +199,11 @@ function momentsOf(doc: StoryDoc, trust: Moment['trust']): Moment[] {
       });
     } else if (block.type === 'facts') {
       block.facts.forEach((f, i) => {
-        // A fact keeps its own claim. Without one, a sourced fact is a model design (checkFactClaims rejects the rest).
-        const claim: ClaimKind | undefined = f.claim ?? (f.source ? 'model_design' : undefined);
+        // A fact keeps its own claim (checkFactClaims has already required one on every fact).
+        const claim = f.claim;
         out.push({ id: `${block.id}-${i + 1}`, paper: doc.slug, kind: 'fact', kicker: doc.kind === 'blog' ? 'From the post' : 'From the paper',
           title: f.figure, figure: f.figure, text: plain(f.text), media: f.media, claim,
-          provenance: claim ? PROVENANCE_OF[claim] : undefined, trust, sourceLabel: f.source?.label, href: link(block.id) });
+          provenance: PROVENANCE_OF[claim], trust, sourceLabel: f.source?.label, href: link(block.id) });
       });
     }
   }

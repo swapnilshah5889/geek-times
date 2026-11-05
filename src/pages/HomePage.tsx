@@ -212,7 +212,7 @@ function RealWorld({ archive }: { archive: Archive }) {
   const posts = storiesOf(library, library.front.real);
   return (
     <section id="real" aria-labelledby="s-real" className="f-section">
-      <SectionHead id="s-real" title="In the real world" hint="From company engineering blogs. “Company-reported” means the company measured it itself."
+      <SectionHead id="s-real" title="In the real world" hint="From company engineering blogs. Claims come from the company’s own post, each labelled with what kind of claim it is. “Company-reported” means no outside group checked them."
         link={{ href: appHref('companies'), label: 'All companies →' }} />
       <div className="f-grid f-grid-3">
         {posts.map(s => {
@@ -245,7 +245,7 @@ function Numbers({ archive }: { archive: Archive }) {
   if (!picks.length) return null;
   return (
     <section aria-labelledby="s-numbers" className="f-section">
-      <SectionHead id="s-numbers" title="Numbers from the papers" />
+      <SectionHead id="s-numbers" title="Numbers from the stories" />
       <div className="f-grid f-grid-4">
         {picks.map(({ paper, m }) => (
           <a key={paper.slug + m.id} className="f-number" href={appHref(m.href)}>

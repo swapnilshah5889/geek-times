@@ -309,10 +309,11 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
 
 40 added above; continuing on 2026-11-05.
 
-41. **Rendering: static generation (SSG) by prerender postbuild; Next.js migration later.** (The owner's call.)
-    - Pre-v1 spike: a postbuild script that visits every known route with a headless browser and writes the rendered
-      HTML into `dist/<route>/index.html`. The React SPA hydrates on top. Vercel serves the prerendered files. Smallest
-      change to the current Vite + React 19 stack; validates the SSG path (decision 36) end to end.
+41. **Rendering: static generation (SSG) by a prerender step after `vite build`; Next.js migration later.** (The owner's call.)
+    - Pre-v1: a prerender script (`npm run prerender`) run after `npm run build` visits every known route with a
+      headless browser and writes the rendered HTML into `dist/<route>/index.html`. It is NOT chained into `npm run
+      build` yet; the Vercel build wiring is a separate deferred item. The React SPA hydrates on top. Smallest change
+      to the current Vite + React 19 stack; validates the SSG path (decision 36) end to end.
     - Pages must carry per-page `<title>`, meta description and Open Graph / Twitter tags so the SEO and share-preview
       goals (Phase 4) are met on the prerendered HTML.
     - Long term: migrate to Next.js once the spike validates traffic and we want file-based routing, ISR and the
@@ -347,3 +348,16 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       lookups that had crept into `HomePage.tsx`; feed, front-page snacks, front-page number cards and story facts
       all now read the same rules. "Company-reported" describes the SOURCE, never a model design turned into a
       measurement.
+
+44. **Every sourced claim carries source trust; illustrations stay bare.** (From the 2026-11-05 Codex label closeout; tightens decision 43.)
+    - Trust describes the source's publication status; claim kind describes the assertion. They are independent, and
+      both appear on every sourced claim. The shared `claimLabel` now renders:
+      - `illustration` → `Illustration · numbers invented` (no source, no trust).
+      - `model_design` + paper + trust → `From the paper · model design · peer-reviewed` (or · preprint).
+      - `model_design` + blog + trust → `From the post · model design · company-reported`.
+      - `measured_result` + trust → `Measured result · <trust>`.
+    - Every fact now requires an explicit `claim` on its JSON row; `scripts/build-index.ts` rejects a missing claim
+      with a per-fact error. The old silent fallback ("sourced with no claim = model_design") is gone; it had let
+      the feed label a fact "From the paper · model design" while the story-page `FactsBlock` rendered no stamp.
+    - "Company-reported" names the source. It does NOT mean the company measured something itself; a company-reported
+      claim may still be design, a worked example, or a measurement, depending on the fact's `claim` kind.

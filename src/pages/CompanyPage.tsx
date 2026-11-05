@@ -34,7 +34,7 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
           <div><b>{base.length}</b><span>papers it builds on</span></div>
         </div>
       </section>
-      <p className="co-howto"><b className="label">How to read this page</b> &nbsp; Numbers in these stories are <b>company-reported</b>: the company’s own measurements, not independently checked. We link every original post and use plain names, never logos.</p>
+      <p className="co-howto"><b className="label">How to read this page</b> &nbsp; Claims here come from {company.name}’s own writeup; each one is labelled with what kind of claim it is. We link every original post and use plain names, never logos.</p>
 
       <section aria-labelledby="explained" className="f-section">
         <div className="f-sechead"><h2 id="explained">Explained posts</h2><span className="label">Newest first{sample && ' · Sample'}</span></div>

@@ -166,7 +166,7 @@
       "kicker": "Science desk / Under the hood / A comic in six strips",
       "title": "How the machine actually works",
       "deck": "Read each strip from left to right. The pictures move, like little GIFs. Our sentence is “The bat flew,” and the machine will turn it into German.",
-      "howTo": "Drawings and numbers inside the strips are <b>made up</b> to explain the idea. Real numbers from the paper are in the box at the end.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The paper's own numbers are in the evidence box at the end.",
       "strips": [
         {
           "title": "Every word gets a number code",

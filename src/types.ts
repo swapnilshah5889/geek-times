@@ -22,7 +22,7 @@ export interface PaperEntry {
 
 /**
  * Where a story's facts come from. `paper` is the default (a missing `kind` means paper, so existing files are unchanged).
- * `blog` is a company engineering post: its numbers are company-reported, not independently checked.
+ * `blog` is a company engineering post: its claims come from the company's own post, not independently checked.
  */
 export type SourceKind = 'paper' | 'blog';
 
@@ -45,7 +45,7 @@ export interface BlogSource {
   url: string;
   /** An archived copy (e.g. Wayback) of the version we checked, so evidence links survive later edits. */
   archivedUrl?: string;
-  /** Always company_reported (decision 18): the company's own numbers, never independently verified. */
+  /** Always company_reported (decision 18): the claim comes from the company's own post, not independently checked. */
   trust: 'company_reported';
 }
 
@@ -323,7 +323,8 @@ export type ClaimKind = 'illustration' | 'model_design' | 'measured_result';
 
 export interface Fact {
   figure: string;
-  claim?: ClaimKind;
+  /** Required on every fact (scripts/build-index.ts rejects a fact without one): the real claim kind (decision 18). */
+  claim: ClaimKind;
   text: RichText;
   source?: { label: string; url: string };
   media?: Media;

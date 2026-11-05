@@ -27,16 +27,15 @@ export const stampClass = (claim: ClaimKind): string =>
   ({ illustration: 'stamp-illustration', model_design: 'stamp-model_design', measured_result: 'stamp-evidence' })[claim];
 
 /**
- * The wording for a claim. "Company-reported" describes the source: a blog's design label carries it, but it
- * never turns a model design into a measured result.
+ * The wording for a claim. Every sourced claim carries its source's trust when it is known (a model design too).
+ * Illustrations have no source, so they never take a trust. "Company-reported" describes the source: it never
+ * turns a model design into a measured result.
  */
 export function claimLabel(claim: ClaimKind, trust?: Trust, source: SourceKind = 'paper'): string {
   if (claim === 'illustration') return 'Illustration · numbers invented';
-  if (claim === 'model_design') {
-    if (source === 'blog') return trust ? `From the post · model design · ${TRUST[trust]}` : 'From the post · model design';
-    return 'From the paper · model design';
-  }
-  return trust ? `Measured result · ${TRUST[trust]}` : 'Measured result';
+  const suffix = trust ? ` · ${TRUST[trust]}` : '';
+  if (claim === 'model_design') return `${source === 'blog' ? 'From the post' : 'From the paper'} · model design${suffix}`;
+  return `Measured result${suffix}`;
 }
 
 /** A paper or a company post, read from the library entry (a story's id is its slug). */

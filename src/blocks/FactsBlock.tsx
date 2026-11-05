@@ -17,7 +17,7 @@ export function FactsBlock({ block }: { block: FactsData }) {
             <li key={f.figure}>
               {f.media && <MediaView media={f.media} />}
               <b className="fig">{f.figure}</b>
-              {f.claim && <ClaimStamp claim={f.claim} />}
+              <ClaimStamp claim={f.claim} />
               <p><Rich text={f.text} /></p>
               {f.source && <a href={f.source.url}>{f.source.label} ↗</a>}
             </li>

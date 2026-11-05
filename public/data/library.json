@@ -511,7 +511,7 @@
       "id": "uber",
       "name": "Uber Engineering",
       "sector": "Maps & rides",
-      "blurb": "Our picture-first explainers of Uber's engineering posts. All numbers are company-reported.",
+      "blurb": "Our picture-first explainers of Uber's engineering posts. Claims come from Uber’s own writeups, each labelled with what kind of claim it is.",
       "postsFollowed": 1,
       "posts": [
         "h3-hexagons"

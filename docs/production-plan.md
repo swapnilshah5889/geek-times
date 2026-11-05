@@ -98,7 +98,7 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 
 ### Phase 1: Rendering + preview path
 
-- [x] **Rendering decision and spike (decisions 36 and 41):** SSG by prerender postbuild. 25 routes prerender locally from one
+- [x] **Rendering decision and spike (decisions 36 and 41):** SSG by prerender postbuild. 27 routes prerender locally from one
       source of truth (`scripts/prerender-routes.ts`); `npm run check:prerender` fails if any route is missing a page-specific
       title, description, `og:title`, `og:description` or `og:type`. Every page type (`Home`, `Paper`, `Issue`, `Company`, `Map`,
       `Sample`) uses `useHead`. `/?feed`, `/?search` and the legacy `/?paper=<slug>` are explicitly deferred (query views share
@@ -123,6 +123,14 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 - [ ] Canonical route pass for the archive-style pages. Today `/issues` and `/companies` render the latest / first item,
       duplicating `/issues/<id>` and `/companies/<id>`. Either make them genuine archive lists (grid of covers / companies) or
       301 them to the canonical detail URL. The duplicate-title warnings from `npm run check:prerender` surface this.
+- [ ] Per-panel provenance in `comic` strips — open content-model question (noted 2026-11-05).
+      Today each strip carries a single `provenance`. For stories where one strip's drawing is a schematic
+      (illustration) but its numbers come from the source (e.g. H3 comic strip 2: "about seven", "one-seventh"), a
+      single label is wrong either way. Two options, lead picks later with the owner:
+      (a) add `provenance` to each panel inside a strip (content-model change, affects every comic across every story);
+      (b) split such strips so the schematic panels and the sourced-claim panels become separate strips (layout change,
+      canvas-before-code). Until then the strip-level stamp follows the drawing, and the comic's "How to read it"
+      sentence carries the honest framing.
 
 ### Phase 3: Platform
 

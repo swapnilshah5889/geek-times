@@ -28,7 +28,7 @@ criteria in `decisions.md` #24.
    - plain-language labels and renamed story tabs
    - an accessible map
 2. [ ] **Content model v2 + validators + migration from v1** (`docs/data-model.md` → Migrating).
-3. [~] **Two real fixtures that test generality** (paper from another field done: `size-shapes-life`; company post still to do): one paper from another field, and one real company engineering post.
+3. [x] **Two real fixtures that test generality**: a paper from another field (`size-shapes-life`) and a real company engineering post (`h3-hexagons`, Uber Engineering).
 4. [ ] **Real routes and loaders** (React Router) reading the v2 fixtures.
 5. [x] **Front page D and the issue page.**
 6. [~] **Topic and company pages.** (Company page built with sample data; topic pages still use search.)

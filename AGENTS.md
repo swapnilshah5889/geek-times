@@ -40,6 +40,8 @@ npm run dev        # runs `npm run data` first, then Vite on :5173
 npm run data       # validate all content + tags, build public/data/search-index.json
 npm run build      # data check + typecheck + production build to dist/
 npm run lint       # oxlint
+npm run prerender  # render every route to dist/<route>/index.html (needs a prior `npm run build`)
+npm run check:prerender  # fail if any route lacks its own title / description / og:title / og:description / og:type
 npm run draw       # regenerate the Attention paper's comic SVGs (tools/draw_attention.py)
 ```
 
@@ -122,9 +124,10 @@ single source of truth for status.
 - Built: data-driven React site; front page **D**; story pages (five tabs, picture story, comic strips, evidence
   cards, family tree, tag shelf); issue, company and map pages (with list view); swipe feed; search with tag filters;
   path URLs (`/papers/<slug>`).
-- Real stories: "One word, two worlds" (Attention Is All You Need, peer-reviewed) and "Why a bigger deer breaks"
-  (`size-shapes-life`, arXiv 2408.04070, a preprint, the front-page lead; fact-check record in
-  `docs/fact-checks/size-shapes-life.md`). Everything else in `library.json` is `sample: true`.
+- Real stories: "One word, two worlds" (Attention Is All You Need, peer-reviewed); "Why a bigger deer breaks"
+  (`size-shapes-life`, arXiv 2408.04070, a preprint, the front-page lead); and "A world covered in honeycomb"
+  (`h3-hexagons`, Uber Engineering, the first real company post, company-reported). Fact-check records under
+  `docs/fact-checks/`. Everything else in `library.json` is `sample: true`.
 - Database plan decided, not built: Supabase (34), files in git as the full seed and backup (35, 37), static pages
   for readers (36), no foreign keys with required integrity checks (30, 38).
 - Design source: the claude.ai canvas (copied into `design/canvas-source/`), exports in `design/exports/`. The
