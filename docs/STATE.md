@@ -7,8 +7,8 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 ## Where we are
 
 - Everything through PR #9 (the Supabase plan) is merged into `main`. No feature branch open.
-- `main` is at `fba4323`. Work continues on `v1` (decision 40), 7 commits ahead, latest `4150c1e`.
-- Last decisions: 34 Supabase · 35 files-as-seed · 36 static pages for readers · 37 export as a release gate · 38 no foreign keys · 39 tests deferred to pre-launch · 40 one `v1` branch · 41 SSG prerender.
+- `main` is at `fba4323`. Work continues on `v1` (decision 40), 8 commits ahead, latest `15afc13`.
+- Last decisions: 38 no foreign keys · 39 tests deferred to pre-launch · 40 one `v1` branch · 41 SSG prerender · 42 publish is atomic per story version (refines 38).
 
 ## Real content
 

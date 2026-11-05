@@ -90,7 +90,7 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 ### Phase 0: Clean up what exists (small, do next)
 
 - [x] Fix B1–B4 (B1 disappeared with the edition redesign; B4 approved on the canvas).
-- [~] Add parents for the new tags inside their own facets. Done for the area facet (`area/physics`, `area/biology` and their children, `fd67461`). Still open: several new concept, technique and use tags have no parent (for example `concept/heat-loss`, `concept/diffusion`).
+- [x] Area facet parents added (`area/physics`, `area/biology`, `fd67461`). Remaining tag-parent work moves to Phase 2: a parent is useful only when it expresses a real "is a kind of" link, so the ~60 new concept / technique / use / dataset / metric tags get parents as the papers that use them land, not in one checklist pass. Some should stay top-level in their facet.
 - [ ] Redraw the data-model board for decision 30.
 - [x] Dead CSS removed (old bento tiles, hooked cover); `front.ts` renamed to `feed.ts`.
 - [x] `docs/roadmap.md` now points here: this file is the only maintained launch sequence.
@@ -98,9 +98,12 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 
 ### Phase 1: Rendering + preview path
 
-- [~] **Rendering decision and spike (decisions 36 and 41):** decided as static generation (SSG) by prerender postbuild. One story
-      is prerendered and checked (`e4996af`). **In progress:** extending `ROUTES` in `scripts/prerender.ts` to every page.
-      **Deferred:** client hydration (`hydrateRoot` with embedded data, so readers don't see a loading flash) and Vercel build wiring.
+- [x] **Rendering decision and spike (decisions 36 and 41):** SSG by prerender postbuild. 25 routes prerender locally from one
+      source of truth (`scripts/prerender-routes.ts`); `npm run check:prerender` fails if any route is missing a page-specific
+      title, description, `og:title`, `og:description` or `og:type`. Every page type (`Home`, `Paper`, `Issue`, `Company`, `Map`,
+      `Sample`) uses `useHead`. `/?feed`, `/?search` and the legacy `/?paper=<slug>` are explicitly deferred (query views share
+      `/`; need distinct paths first). **Deferred to a later batch:** client hydration (`hydrateRoot` with embedded data, so
+      readers don't see a loading flash), the Vercel build wiring, and the raster OG card.
 - [x] Preview deploy per push so the owner can review on a real URL. Vercel at https://the-geeky-times.vercel.app/ (tracks `main`); `vercel.json` adds the SPA rewrite so `/papers/<slug>` and other deep links don't 404 on direct load once `v1` merges. Still unticked at Phase 5: HTTPS / custom domain / CSP.
 
 > **Automated tests, CI and axe checks are deferred to the pre-launch gate (decision 39).** They aren't in Phase 1 while
@@ -115,6 +118,11 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 - [ ] Verify family-tree and map relations with citations (`RelationEvidence`); hide unverified links from readers.
 - [ ] Real edition metadata: publish dates and at least two real past editions (no editor's note).
 - [ ] A switch that hides everything marked `sample` in production builds; remove all `[placeholder]` text.
+- [ ] Add parents for remaining new tags (concept / technique / use / dataset / metric) as paper conversions use them. Only
+      where there is a real "is a kind of" relationship; some tags stay top-level in their facet. Moved here from Phase 0.
+- [ ] Canonical route pass for the archive-style pages. Today `/issues` and `/companies` render the latest / first item,
+      duplicating `/issues/<id>` and `/companies/<id>`. Either make them genuine archive lists (grid of covers / companies) or
+      301 them to the canonical detail URL. The duplicate-title warnings from `npm run check:prerender` surface this.
 
 ### Phase 3: Platform
 

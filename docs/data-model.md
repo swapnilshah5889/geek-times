@@ -198,8 +198,10 @@ Round-trip tests prove that every reference remaps (decision 38).
 
 **On failure.**
 
-- A failed check, or any error inside the transaction, rolls back. The staging rows are discarded. They are deleted, not
-  retired, because they were never live.
+- Staging, every check, and the promotion `UPDATE`s run inside one uncommitted transaction. A failed check, or any error inside
+  it, rolls the transaction back; the staging rows were never committed, so nothing needs to be cleaned up. (If a future
+  migration ever commits staging first — for example, to allow a human review step between staging and promotion — the failure
+  path needs an explicit `DELETE WHERE published_version_id = …` and this section is updated.)
 - The previous `PublishedVersion` stays `live`, and `Story.liveVersion` does not move. Readers and the static pages keep
   the old version.
 - The promotion `UPDATE` is conditional: it moves the story only if `liveVersion` is still the version the import started
