@@ -306,3 +306,14 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       another branch for an experiment or a risky change.
     - This is a pre-v1 choice. When v1 is reached (DB-backed, no `sample` content, hosted), the pre-launch gate (Phase 4.5)
       lands, and from the first production release onward we go back to per-feature branches and PRs with CI as that gate.
+
+40 added above; continuing on 2026-11-05.
+
+41. **Rendering: static generation (SSG) by prerender postbuild; Next.js migration later.** (The owner's call.)
+    - Pre-v1 spike: a postbuild script that visits every known route with a headless browser and writes the rendered
+      HTML into `dist/<route>/index.html`. The React SPA hydrates on top. Vercel serves the prerendered files. Smallest
+      change to the current Vite + React 19 stack; validates the SSG path (decision 36) end to end.
+    - Pages must carry per-page `<title>`, meta description and Open Graph / Twitter tags so the SEO and share-preview
+      goals (Phase 4) are met on the prerendered HTML.
+    - Long term: migrate to Next.js once the spike validates traffic and we want file-based routing, ISR and the
+      framework's built-in SEO tooling. The spike's route-list script carries over as the migration's smoke test.
