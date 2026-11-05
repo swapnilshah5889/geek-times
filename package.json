@@ -13,7 +13,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "draw": "python3 tools/draw_attention.py",
-    "prerender": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/prerender.ts"
+    "prerender": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/prerender.ts",
+    "check:prerender": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/check-prerender.ts"
   },
   "dependencies": {
     "react": "^19.3.1",

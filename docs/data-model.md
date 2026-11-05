@@ -56,8 +56,8 @@ classDiagram
   class Issue { volume→Volume; number; title; theme; cover→MediaAsset; publishedAt; status }
   class IssueStory { issue→Issue; story→Story; position; role: lead|feature|brief|vault|real_world; presentation: full|brief|snack }
 
-  class Story { slug (unique, public key); pageTitle; summary; readingLevel; status: draft|review|scheduled|published; publishedAt; cover→MediaAsset }
-  class PublishedVersion { story→Story; version; schemaVersion; document: typed JSON; contentHash; publishedAt }
+  class Story { slug (unique, public key); pageTitle; summary; readingLevel; status: draft|review|scheduled|published; publishedAt; cover→MediaAsset; liveVersion→PublishedVersion }
+  class PublishedVersion { story→Story; version; schemaVersion; document: typed JSON; contentHash; publishedAt; status: staging|live|retired }
   class Moment { key (stable, unique per story); story→Story; version→PublishedVersion; blockPath; kind: strip|chapter|fact|slide; presentation: card|snack; position; claimKind; status; media→MediaAsset; fact→Fact }
 
   class Source { type: paper|blog|talk|rfc|patent; title; url; year; venue; trust: peer_reviewed|preprint|company_reported; doi; arxivId; openalexId; s2Id; organization→Organization }
@@ -137,7 +137,7 @@ classDiagram
 - **Sources change.** Papers get new arXiv versions and blogs get edited. Citations point at the `SourceSnapshot` they
   were checked against.
 - **What the site reads:** an API returns `PublishedVersion.document` in the same shape as today's JSON, so the frontend
-  doesn't care whether it reads files or the database.
+  doesn't care whether it reads files or the database. Only the `live` version is ever read (see "Publish and import atomicity").
 - **Graph queries:** recursive CTEs over `Relation` give ancestors and descendants. A graph database isn't needed until
   much larger scale.
 
@@ -151,6 +151,62 @@ classDiagram
 - `npm run export` brings database-side changes (approved tags, verified relations, new issues) back into the files. It is a
   required, checked release step: it fails if it would lose a database-side change or if a record diverged in both
   places (decision 37).
+
+### Publish and import atomicity
+
+This is the detail behind the transactional publish that decision 38 requires. The seed (`npm run seed`) and the import
+job use the same path, so a bad file cannot half-load a story.
+
+**The unit of publish.** One `PublishedVersion` of one `Story`, plus the derived rows that belong to that version, each
+carrying its `published_version_id`:
+
+- `Moment`, `Fact`, `StoryTag` and `Citation` rows built from the version's document.
+- `Relation` and `RelationEvidence` rows that the version introduces. Relations are shared graph edges, so a publish
+  never rewrites a relation that is already verified or rejected.
+- References to `SourceSnapshot` rows (through `Citation.snapshot_id`). A publish creates snapshots only in staging and
+  never changes an existing one; snapshots are immutable once written.
+
+Not part of the unit: `Story` (its slug and status), `Source`, `Tag`, `MediaAsset` and `Organization`. The version points
+at these by key. An import may add a missing shared row inside the same transaction, but it never edits a row that is
+already live.
+
+**Staging and promotion.**
+
+1. Write the version's derived rows with `published_version_id`, and set `PublishedVersion.status = staging`. Staging rows
+   are invisible to readers and to the static build.
+2. Run every check below against the staging rows. The orphan check covers the staging rows and the live rows they point to.
+3. If every check passes, promote in one transaction with one `UPDATE` that sets the new version to `live` and the previous
+   one to `retired`, and one `UPDATE` that moves `Story.liveVersion` to the new version. Readers read only `live` rows, so
+   they see the old set or the new set, never a mix.
+
+**Checks before promotion.** All must pass. Any failure stops the publish. Nothing is skipped or dropped silently.
+
+- Every `_id` column in the staging rows resolves to an existing row that is not retired (`story_id`, `source_id`,
+  `tag_id`, `media_id`, `fact_id`, `citation_id`, `snapshot_id`, `relation_id`).
+- No duplicate `Moment.key` within the version.
+- Every media reference (`media_id`, `poster_id`, `reduced_motion_id`) resolves to a `MediaAsset`, and its file exists at
+  `storageKey`.
+- Every `StoryTag` points to an existing tag and has status `approved`.
+- The version's `document` validates against the block union (principle 1), and every fact and source carries its
+  `claimKind` and `trust` (decision 18).
+
+**Remapping by key, never by numeric id.** Files carry keys, not numeric ids (decisions 35 and 37). The importer resolves
+each reference by its key inside the same transaction: a story by `slug`, a moment by `key` within the version, a tag by
+`key` (`facet/slug`), a source by its key in `sources/`, and media by `storageKey`. It then writes the matching `<thing>_id`.
+A key that does not resolve fails the import, and nothing is partly written. The export reverses the mapping (`id` to key).
+Round-trip tests prove that every reference remaps (decision 38).
+
+**On failure.**
+
+- A failed check, or any error inside the transaction, rolls back. The staging rows are discarded. They are deleted, not
+  retired, because they were never live.
+- The previous `PublishedVersion` stays `live`, and `Story.liveVersion` does not move. Readers and the static pages keep
+  the old version.
+- The promotion `UPDATE` is conditional: it moves the story only if `liveVersion` is still the version the import started
+  from. If another publish got there first, this one fails and must be re-run against the new live version.
+- The owner gets a reconciliation diff, written to the import report and never applied on its own. For each derived type it
+  lists the rows added, removed and changed (by key) between the live version and the proposed one, plus each failed check
+  with the keys involved. A person decides what to do with it (decision 37).
 
 ### Migrating from v1 to v2 (JSON first)
 

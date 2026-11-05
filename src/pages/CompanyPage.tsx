@@ -1,3 +1,4 @@
+import { useHead } from '../components/head';
 import { Crumbs, SitePage } from '../components/SitePage';
 import type { Archive } from '../data/load';
 import { companyById, storiesOf, storyById, trustLabel } from '../lib/library';
@@ -6,6 +7,11 @@ import { appHref, companyHref, mapHref, paperHref } from '../lib/routes';
 export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) {
   const { library } = archive;
   const company = companyById(library, id ?? library.companies[0]?.id);
+  useHead({
+    title: company ? `${company.name}: ${company.sector} — ${archive.site.name}` : archive.site.name,
+    description: company?.blurb ?? '',
+    type: 'website',
+  });
   if (!company) throw new Error(`There is no company called “${id}”.`);
   const posts = storiesOf(library, company.posts);
   const base = library.nodes.filter(n => company.builtOn.includes(n.id));

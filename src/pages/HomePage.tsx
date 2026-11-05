@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useMemo, useState, type FormEvent } from 'react';
+import { useHead } from '../components/head';
 import { Masthead } from '../components/Masthead';
 import { MediaView } from '../components/MediaView';
 import { Stamp } from '../components/common';
@@ -329,7 +330,12 @@ function Newsletter() {
 
 export function HomePage({ archive }: { archive: Archive }) {
   const { site } = archive;
-  useEffect(() => { document.title = `${site.name} — ${site.motto}`; }, [site]);
+  // The home page keeps the site's own title (it is the generic one by design); the description says what the site is.
+  useHead({
+    title: `${site.name} — ${site.motto}`,
+    description: `${site.tagline}. Research papers and engineering posts, explained for anyone.`,
+    type: 'website',
+  });
   const mediaBase = useMemo(() => mediaBaseFor(site), [site]);
 
   return (

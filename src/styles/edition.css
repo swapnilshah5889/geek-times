@@ -12,6 +12,10 @@ nav{border-top:4px double;border-bottom:1px solid;padding:8px 0}nav .links{displ
 a{color:inherit;text-underline-offset:3px}
 .label,.num{color:var(--red)}
 .loading,.load-error{padding:80px 0;text-align:center;font-style:italic}
+/* The loading line waits 250ms and then fades in, so fast loads never flash it. */
+.loading{opacity:0;animation:loading-in .3s ease .25s forwards}
+@keyframes loading-in{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.loading{animation:none;opacity:1}}
 
 /* Lead */
 .lead{display:grid;grid-template-columns:.84fr 1.5fr;gap:clamp(20px,3vw,45px);padding:32px 0 28px;align-items:center}

@@ -1,5 +1,6 @@
 import { FamilyTree } from '../components/FamilyTree';
 import { SampleTag, StoryArt } from '../components/library';
+import { useHead } from '../components/head';
 import { Crumbs, SitePage } from '../components/SitePage';
 import type { Archive } from '../data/load';
 import { byline, fieldOf, headlineOf, roleLabel, storyById, trustLabel } from '../lib/library';
@@ -8,8 +9,14 @@ import { appHref } from '../lib/routes';
 
 // A story the library lists but nobody has written yet. It stays a labelled placeholder: no invented findings.
 export function SamplePage({ archive, slug }: { archive: Archive; slug: string }) {
-  const { library } = archive;
+  const { library, site } = archive;
   const story = storyById(library, slug);
+  // The story's own headline and dek. A sample dek says it is a sample, so the preview does not claim findings.
+  useHead({
+    title: story ? `${headlineOf(story)} — ${site.name}` : site.name,
+    description: story?.dek ?? '',
+    type: 'article',
+  });
   if (!story) return null;
   const field = fieldOf(library, story.fields[0]);
   const node = library.nodes.find(n => n.story === story.id);

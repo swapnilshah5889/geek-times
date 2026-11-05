@@ -7,8 +7,8 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 ## Where we are
 
 - Everything through PR #9 (the Supabase plan) is merged into `main`. No feature branch open.
-- Latest commit: `73df84b` on `main`.
-- Last decisions: 34 Supabase · 35 files-as-seed · 36 static pages for readers · 37 export as a release gate · 38 no foreign keys.
+- `main` is at `fba4323`. Work continues on `v1` (decision 40), 7 commits ahead, latest `4150c1e`.
+- Last decisions: 34 Supabase · 35 files-as-seed · 36 static pages for readers · 37 export as a release gate · 38 no foreign keys · 39 tests deferred to pre-launch · 40 one `v1` branch · 41 SSG prerender.
 
 ## Real content
 
@@ -26,13 +26,18 @@ Path URLs (`/papers/<slug>`). Reduced motion respected; pause switch per section
 
 Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 
-1. **Fix now** (small, from the Codex review): shared claim label on fact cards / feed / evidence; unique React keys; reword "Swipe this issue". (Family tree stays as demo — see below.)
-2. **Phase 1 (slimmed):** rendering decision + one prerendered story. Preview deploy done (Vercel at https://the-geeky-times.vercel.app/, SPA rewrite in `vercel.json`). Tests, CI and axe are **deferred to pre-launch** (decision 39).
+1. **Fix now and Phase 0:** mostly landed on `v1` (see "Fixed" in the production plan). Still open: parents for the other new tags.
+2. **Phase 1, rendering:** the SSG spike (decision 41) works for one story: `npm run build && npm run prerender` writes `dist/papers/attention-is-all-you-need/index.html`. **In progress:** extending `ROUTES` in `scripts/prerender.ts` to every page. **Deferred:** client hydration (so readers don't see a loading flash) and Vercel build wiring (the prerender still runs by hand). Preview deploy: https://the-geeky-times.vercel.app/ (tracks `main`; the `vercel.json` SPA rewrite goes live when `v1` merges). Tests, CI and axe stay **deferred to pre-launch** (decision 39).
 3. **Phase 2:** one real company engineering post and 3–5 more papers to replace samples.
-4. **Phase 3:** Supabase migrations, import job with orphan checks, media on a CDN with CORS.
+4. **Phase 3:** Supabase migrations, import job with orphan checks and transactional publish, media on a CDN with CORS.
 5. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, no samples, hosted).
 
-SSG prerender spike (decision 41) landed for one route: `npm run build && npm run prerender` writes `dist/papers/attention-is-all-you-need/index.html`. The follow-up extends `ROUTES` in `scripts/prerender.ts` to every page.
+## Pre-launch gates (not started)
+
+- **Seed and export reconciliation (decisions 35, 37):** `npm run seed` and `npm run export` must exist, and every release runs the export
+  against the files. It fails on lost or divergent changes. A restore drill (seed an empty Supabase, export, diff against the files) must pass
+  before launch. Details: production plan, Phase 3 backup table.
+- **Publish atomicity (decision 38):** a story version goes live in one transaction or not at all. See `docs/data-model.md`.
 
 ## Known gaps kept on purpose (do not "fix")
 

@@ -67,7 +67,7 @@ src/
   pages/                  HomePage (bento), PaperPage, FeedPage (swipe), SearchPage
   blocks/                 one component per content block type (lead, story, comic, facts)
   components/             MediaView (svg/image/video), Rich (safe captions), TagShelf, Masthead, motion
-  lib/                    library.ts (stories, issues, graph helpers), routes.ts (all links), front.ts (feed order), tags.ts (search), motion.ts, mediaBase.ts
+  lib/                    library.ts (stories, issues, graph helpers), routes.ts (all links), feed.ts (feed order), tags.ts (search), motion.ts, mediaBase.ts
   styles/edition.css      the newspaper look
 scripts/build-index.ts    content validator + search index builder
 tools/                    media_kit.py (drawing kit) + draw_attention.py (per-paper drawings)

@@ -1,4 +1,5 @@
 import { useMemo, useState, type KeyboardEvent } from 'react';
+import { useHead } from '../components/head';
 import { Crumbs, SitePage } from '../components/SitePage';
 import type { Archive } from '../data/load';
 import { familyOf } from '../lib/library';
@@ -8,7 +9,13 @@ import type { GraphNode } from '../types';
 // The map of ideas: every paper and blog post we know of, grouped by field, with lines between related
 // ones. It always has a list view too, so it works with a keyboard or screen reader (decision 24).
 export function MapPage({ archive }: { archive: Archive }) {
-  const { library } = archive;
+  const { library, site } = archive;
+  // The description states the counts from the data. The links are unverified, and the page says so, so the preview does too.
+  useHead({
+    title: `The map of ideas — ${site.name}`,
+    description: `${library.nodes.length} papers and engineering posts in ${library.fields.length} fields, with lines between related ideas. The links are still being fact-checked.`,
+    type: 'website',
+  });
   const first = new URLSearchParams(window.location.search).get('focus');
   const [view, setView] = useState<'map' | 'list'>('map');
   const [query, setQuery] = useState('');

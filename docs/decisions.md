@@ -317,3 +317,19 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       goals (Phase 4) are met on the prerendered HTML.
     - Long term: migrate to Next.js once the spike validates traffic and we want file-based routing, ISR and the
       framework's built-in SEO tooling. The spike's route-list script carries over as the migration's smoke test.
+
+42. **Publish is atomic per story version.** (From the 2026-11-05 Codex review; refines decision 38.)
+    - **The unit:** one `PublishedVersion` together with every derived row it owns — the extracted `Moment`, `Fact`,
+      `StoryTag` rows, and any `Relation` / `RelationEvidence` rows added or changed by this version. Media and
+      source records are referenced, not re-owned.
+    - **Staging and promote:** import writes the version document and its derived rows to staging keyed by
+      `published_version_id`. The orphan check runs across the staging rows (every `_id` resolves to a non-retired
+      row, no duplicate `Moment.key` within the version, every media and source reference resolves, every tag is
+      approved). Promotion then flips `PublishedVersion.status` to `live` and updates `Story.liveVersion` inside one
+      transaction.
+    - **Failure:** staging rows are discarded; the previous live `PublishedVersion` stays authoritative; the owner
+      sees a reconciliation diff.
+    - **Reference remap on import:** references come across as `slug` or `key`, never numeric id (decisions 35 and 37).
+      The import step resolves them to the new ids on this database. Remap is tested as part of decision 38's required
+      controls.
+    - Full shape in `docs/data-model.md` → "Publish and import atomicity".

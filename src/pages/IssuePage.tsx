@@ -1,13 +1,25 @@
+import { useHead } from '../components/head';
 import { StoryArt } from '../components/library';
 import { MediaView } from '../components/MediaView';
 import { Crumbs, SitePage } from '../components/SitePage';
 import type { Archive } from '../data/load';
 import { byline, issueById, latestIssue, neighbours, volumeOf, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
-import type { LibraryStory } from '../types';
+import type { LibraryIssue, LibraryStory } from '../types';
 
 const numberLabel = (n: string) => (n.startsWith('Special') ? n : `No. ${n}`);
 const kindLabel = { paper: 'Paper', blog: 'Blog', classic: 'Classic' } as const;
+
+/** Page title and description, from the issue's own data (no invented copy). */
+function issueHead(archive: Archive, issue: LibraryIssue) {
+  const label = issue.number.startsWith('Special') ? issue.number : `Issue ${issue.number}`;
+  const stories = storiesOf(archive.library, issue.stories ?? []);
+  const minutes = Math.round(stories.reduce((n, s) => n + s.minutes, 0) / 5) * 5;
+  const description = stories.length
+    ? `${issue.title}: ${stories.length} ${stories.length === 1 ? 'story' : 'stories'}, about ${minutes} minutes, explained in plain language.`
+    : `${issue.title}: a sample special issue of ${issue.classics ?? 'several'} classic papers on one theme, explained for the first time.`;
+  return { title: `${label}: ${issue.title} — ${archive.site.name}`, description };
+}
 
 function Toc({ stories }: { stories: LibraryStory[] }) {
   return (
@@ -30,6 +42,8 @@ function Toc({ stories }: { stories: LibraryStory[] }) {
 export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
   const { library } = archive;
   const issue = issueById(library, id ?? latestIssue(library).id);
+  const head = issue ? issueHead(archive, issue) : undefined;
+  useHead({ title: head?.title ?? archive.site.name, description: head?.description ?? '', type: 'website' });
   if (!issue) throw new Error(`There is no issue called “${id}”.`);
   const vol = volumeOf(library, issue);
   const { prev, next } = neighbours(library, issue);

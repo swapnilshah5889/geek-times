@@ -1,7 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { loadArchive, loadEdition, type Archive, type Edition } from './data/load';
+import { loadArchive, loadEdition, loadSite, type Archive, type Edition } from './data/load';
+import { Masthead } from './components/Masthead';
 import { storyById } from './lib/library';
+import { todayLabel } from './lib/format';
 import { currentPath, paperHref } from './lib/routes';
+import type { SiteConfig } from './types';
 import { CompanyPage } from './pages/CompanyPage';
 import { FeedPage } from './pages/FeedPage';
 import { HomePage } from './pages/HomePage';
@@ -62,6 +65,7 @@ async function load(route: Route): Promise<View> {
 export function App() {
   const [view, setView] = useState<View | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [site, setSite] = useState<SiteConfig | null>(null);
 
   useEffect(() => {
     Promise.resolve().then(() => load(currentRoute())).then(setView).catch((err: Error) => {
@@ -70,9 +74,20 @@ export function App() {
     });
   }, []);
 
+  // site.json is the same cached request loadArchive uses, so the masthead can appear before the rest of the archive.
+  // A failure here is reported by load() above, so it is ignored.
+  useEffect(() => {
+    loadSite().then(setSite, () => undefined);
+  }, []);
+
   let content: ReactNode;
   if (error) content = <main><p className="load-error">Sorry, this page could not be loaded. {error}</p></main>;
-  else if (!view) content = <main aria-busy="true"><p className="loading">Setting the type…</p></main>;
+  else if (!view) content = (
+    <main className="site-main" aria-busy="true">
+      {site && <Masthead site={site} meta={[todayLabel(), '']} edition />}
+      <p className="loading">Setting the type…</p>
+    </main>
+  );
   else switch (view.page) {
     case 'paper': content = <PaperPage edition={view.edition} archive={view.archive} />; break;
     case 'sample': content = <SamplePage archive={view.archive} slug={view.slug} />; break;

@@ -1,19 +1,31 @@
-// Prerender (decision 41 spike): renders each route in headless Chromium against `vite preview` and writes the
-// HTML to dist/<route>/index.html, so crawlers and link previews see the page without running JavaScript.
-// Run after `vite build`: `npm run build && npm run prerender`. Choice: full `puppeteer` (downloads its own Chrome,
-// ~170 MB, at install); on Vercel set PUPPETEER_SKIP_DOWNLOAD=1 until the Vercel strategy is decided (Vercel does not run this yet).
-// Optional SITE_ORIGIN=https://... replaces the local preview origin in the output (og:image URLs).
+// Prerender (decision 41): renders each route in headless Chromium against `vite preview` and writes the HTML to
+// dist/<route>/index.html, so crawlers and link previews see the page without running JavaScript.
+// Run after `vite build`: `npm run build && npm run prerender`, then `npm run check:prerender`.
+//
+// Routes come from scripts/prerender-routes.ts (generated from public/data). Query-string views (?feed, ?search)
+// are not prerendered; they are listed as deferred there and printed below.
+//
+// Inspect the generated pages through `npx vite preview`, not by opening the files directly (file:// does not
+// resolve /assets paths reliably). Use URLs with a trailing slash, e.g. http://localhost:4173/papers/resnet/: vite
+// preview returns the prerendered file only for those (and /index.html). An extensionless URL gets the SPA shell.
+//
+// Absolute URLs: none are emitted yet, but a future og:image or canonical would be affected:
+//   - SITE_ORIGIN unset: the local preview origin (http://localhost:<port>) stays in the output. That makes it obvious
+//     these are local files, not production share URLs.
+//   - SITE_ORIGIN=https://... set: the local origin is replaced by it. Use this for a real release build only.
+// Set VITE_HIDE_SAMPLES=1 here too when the build used it, so sample routes are skipped.
+//
+// Browser: full `puppeteer` (downloads its own Chrome, ~170 MB, at install). On Vercel set PUPPETEER_SKIP_DOWNLOAD=1
+// until the Vercel strategy is decided (Vercel does not run this yet).
 import { spawn, type ChildProcess } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:net';
 import { dirname, join } from 'node:path';
 import puppeteer, { type Browser } from 'puppeteer';
+import { DEFERRED, DIST, htmlPathFor, prerenderRoutes } from './prerender-routes.ts';
 
 const ROOT = join(import.meta.dirname, '..');
-const DIST = join(ROOT, 'dist');
-// Spike: one route. The follow-up extends this to every page.
-const ROUTES = ['/papers/attention-is-all-you-need'];
 const READY_TIMEOUT_MS = 30_000;
 
 function freePort(): Promise<number> {
@@ -77,7 +89,9 @@ function stopPreview(child: ChildProcess): Promise<void> {
 }
 
 // Browser-side snippets are strings: this file is typechecked without the DOM lib.
-const READY_CHECK = `document.title.length > 0 && !!document.querySelector('main') && !document.querySelector('main[aria-busy="true"]')`;
+// Ready = the app replaced its loading state, set the title, and has run useHead (description and og:type exist).
+const READY_CHECK = `document.title.length > 0 && !!document.querySelector('main') && !document.querySelector('main[aria-busy="true"]')
+  && !!document.querySelector('meta[name="description"]') && !!document.querySelector('meta[property="og:type"]')`;
 const SNAPSHOT = `(() => {
   const error = document.querySelector('.load-error');
   return error ? { error: error.textContent || 'load error' } : { html: document.documentElement.outerHTML };
@@ -90,7 +104,6 @@ async function renderRoute(browser: Browser, origin: string, route: string): Pro
     const pageErrors: string[] = [];
     page.on('pageerror', err => pageErrors.push(err instanceof Error ? err.message : String(err)));
     await page.goto(new URL(route, origin).href, { waitUntil: 'networkidle0', timeout: READY_TIMEOUT_MS });
-    // Ready when the app has replaced its loading state (<main aria-busy>) and the title is set.
     await page.waitForFunction(READY_CHECK, { timeout: READY_TIMEOUT_MS });
     const result = (await page.evaluate(SNAPSHOT)) as { error: string } | { html: string };
     if ('error' in result) throw new Error(`page reported: ${result.error}`);
@@ -101,30 +114,29 @@ async function renderRoute(browser: Browser, origin: string, route: string): Pro
   }
 }
 
-function outputPath(route: string): string {
-  const clean = route.replace(/^\/+|\/+$/g, '');
-  return clean ? join(DIST, clean, 'index.html') : join(DIST, 'index.html');
-}
-
 async function main() {
   if (!existsSync(join(DIST, 'index.html'))) throw new Error('dist/index.html not found: run `npm run build` first');
+  const routes = prerenderRoutes().map(r => r.route);
+  console.log(`Routes: ${routes.length} (generated from public/data${process.env.VITE_HIDE_SAMPLES === '1' ? ', samples hidden' : ''}).`);
+  for (const d of DEFERRED) console.log(`Deferred (not prerendered): ${d.route}: ${d.reason}.`);
+
   const started = performance.now();
   const port = await freePort();
   const preview = await startPreview(port);
   // Last-resort cleanup if the process exits for any reason (including Ctrl-C) while the server is running.
   process.once('exit', () => preview.child.kill('SIGKILL'));
-  if (!process.env.SITE_ORIGIN) console.warn(`SITE_ORIGIN not set: absolute URLs in the output use ${preview.origin}`);
+  if (!process.env.SITE_ORIGIN) console.warn(`SITE_ORIGIN not set: absolute URLs in the output use ${preview.origin} (local only).`);
   let browser: Browser | undefined;
   const failures: string[] = [];
   let written = 0;
   try {
     browser = await puppeteer.launch({ headless: true });
-    for (const route of ROUTES) {
+    for (const route of routes) {
       const t0 = performance.now();
       try {
         let html = await renderRoute(browser, preview.origin, route);
         if (process.env.SITE_ORIGIN) html = html.split(preview.origin).join(process.env.SITE_ORIGIN.replace(/\/$/, ''));
-        const file = outputPath(route);
+        const file = htmlPathFor(route);
         await mkdir(dirname(file), { recursive: true });
         await writeFile(file, html, 'utf8');
         written++;
@@ -140,7 +152,7 @@ async function main() {
     await stopPreview(preview.child);
   }
   const seconds = ((performance.now() - started) / 1000).toFixed(1);
-  console.log(`Prerendered ${written}/${ROUTES.length} routes in ${seconds} s.`);
+  console.log(`Prerendered ${written}/${routes.length} routes in ${seconds} s.`);
   if (failures.length) {
     console.error(`Failed: ${failures.join(', ')}`);
     process.exitCode = 1;
