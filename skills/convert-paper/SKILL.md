@@ -3,6 +3,8 @@ name: convert-paper
 description: The start-to-finish runbook for turning one research paper or company blog post into a published Geeky Times story. Start here; it calls the other skills in order and covers the library, graph, claim labels, canvas and branch rules.
 ---
 
+> **Default model:** **medium** (Sonnet 5.5 or equivalent) — orchestrates smaller mechanical steps. Fall back to larger only when the task genuinely needs it.
+
 # Convert a source into a Geeky Times story
 
 One page, in order. Each step names the skill or file that holds the detail. Do not skip a step; do not build UI before

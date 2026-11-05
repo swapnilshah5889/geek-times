@@ -3,6 +3,8 @@ name: fact-check
 description: Verify every real number, quote, section anchor and paper-basis tag in a Geeky Times story against the original source before it is published.
 ---
 
+> **Default model:** **small** (Haiku 5.5, Sonnet 4.x, Gemini Flash, GPT-4.1 mini) — find a phrase, match a number. Fall back to larger only when the task genuinely needs it.
+
 # Fact-check a story
 
 Nothing marked as evidence ships unchecked. Invented teaching numbers (illustration blocks) aren't fact-checked, but

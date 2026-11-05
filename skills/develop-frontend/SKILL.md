@@ -3,6 +3,8 @@ name: develop-frontend
 description: Make changes to The Geeky Times React + TypeScript + Vite frontend while keeping it data-driven, accessible and on-brand. Use for any UI, routing or styling work.
 ---
 
+> **Default model:** **large** (Opus 5.5 / Sonnet 5.5 / top-tier equivalent) — design + typed React changes. Drop to a smaller model once the hard part is drafted.
+
 # Develop the frontend
 
 ## Rules

@@ -3,6 +3,8 @@ name: draw-illustrations
 description: Create Geeky Times illustrations (lead plates, comic panels, fact icons) as self-contained animated SVG files in the house cartoon-newspaper style.
 ---
 
+> **Default model:** **large** (Opus 5.5 / Sonnet 5.5 / top-tier equivalent) — style and composition decisions. Drop to a smaller model once the hard part is drafted.
+
 # Draw illustrations
 
 ## Style

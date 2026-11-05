@@ -3,6 +3,8 @@ name: tag-story
 description: Infer and review the many tags each Geeky Times story needs for search, topics and the graph, using the shared tag vocabulary.
 ---
 
+> **Default model:** **small** (Haiku 5.5, Sonnet 4.x, Gemini Flash, GPT-4.1 mini) — prompts/tag-paper.md is deterministic. Fall back to larger only when the task genuinely needs it.
+
 # Tag a story
 
 Full rules: `docs/tagging.md`. Prompt template for automated tagging: `prompts/tag-paper.md`.
