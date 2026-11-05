@@ -34,7 +34,8 @@ Blocks are a discriminated union: `lead`, `story`, `comic`, `facts`. Each media 
 4. **Keys and references** (decision 30):
    - Every table has `id bigint generated always as identity`, the Postgres auto-increment key. It is the only thing
      other tables use to point at a row, always as a `<thing>_id bigint` column (`story_id`, `source_id`, `tag_id` …).
-   - **No foreign key constraints.** The `_id` columns are indexed but declared without `REFERENCES`. Integrity is kept by
+   - **No foreign key constraints (decisions 30 and 38).** Rows are related by joining on the `_id` columns. They are indexed
+     but declared without `REFERENCES`. Integrity is kept by
      the import validator (`npm run data` today), the application code, and a scheduled orphan-check query. Rows are
      retired with a `status`, not deleted, so references don't dangle.
    - Our human-readable keys live under their own column names, never in `id`: `Story.slug` (unique, used in URLs as
@@ -43,7 +44,7 @@ Blocks are a discriminated union: `lead`, `story`, `comic`, `facts`. Each media 
    - In the diagram below, an arrow means "this column holds the other row's `id`". It is a logical link, not a
      database constraint.
 
-### Schema (Postgres)
+### Schema (Postgres on Supabase)
 
 In the diagram, an arrow points from a record to the record it refers to.
 
@@ -118,6 +119,13 @@ classDiagram
 
 ### Notes
 
+- **Hosting (decision 34):** Supabase. Migrations are SQL files in `supabase/migrations/`. The auto-generated REST API infers
+  relationships from foreign key constraints, so without them (decision 38), nested reads use SQL views, database functions or server code.
+- **Row-level security** (only needed once something reads at run time, decision 36) will show readers only published stories,
+  approved tags and verified relations. It depends on schema that doesn't exist yet: a relation `status`
+  (proposed, verified, rejected) with evidence, and immutable published versions that own their derived rows. Those
+  columns are prerequisites for the policy migration, and the policies need tests.
+
 - **Stub sources:** a `Source` with no `StorySource` row is a greyed "not explained yet" node in the graph.
 - **Two dates:** `Source.year` (original publication) vs `Story.publishedAt` and `Issue.publishedAt` (ours). Only
   `Source.year` is shown on a story. `Story.publishedAt` is internal (ordering, "new" badges in feeds); our dates are
@@ -132,6 +140,17 @@ classDiagram
   doesn't care whether it reads files or the database.
 - **Graph queries:** recursive CTEs over `Relation` give ancestors and descendants. A graph database isn't needed until
   much larger scale.
+
+### Seeding and backup (decision 35)
+
+- The files in git are the complete seed: `public/data/**` and `public/media/**`. `npm run seed` loads them into an empty
+  Supabase project, upserting by `slug` / `key`. Storage keys mirror the media paths.
+- Numeric ids are assigned by Postgres and change on every re-seed. Don't use them as external identifiers or rely on
+  them across re-seeds: URLs, files, analytics and the portable seed or export use slugs and keys, and references are
+  remapped on import. Database-native dumps, migration records and audit logs may keep them as internal references (decision 37).
+- `npm run export` brings database-side changes (approved tags, verified relations, new issues) back into the files. It is a
+  required, checked release step: it fails if it would lose a database-side change or if a record diverged in both
+  places (decision 37).
 
 ### Migrating from v1 to v2 (JSON first)
 

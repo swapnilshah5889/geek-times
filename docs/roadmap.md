@@ -1,7 +1,7 @@
 # Roadmap
 
-Tick items as they land. Keep the order unless the owner changes priorities. The full path to a public launch, with
-the latest review, is in `docs/production-plan.md`.
+**The only maintained launch sequence is `docs/production-plan.md`** (phases, fixes, Supabase and backup work). This file keeps
+the history of what has landed and the original ordering for reference; don't plan from it.
 
 ## Done
 
@@ -16,7 +16,7 @@ the latest review, is in `docs/production-plan.md`.
 - [x] Front page layout exploration (A/B/C), with D chosen and softened
 - [x] Tool-neutral project knowledge: `AGENTS.md`, `docs/`, `skills/`
 
-## Next (order revised after the Codex design review)
+## Original next steps (historical; superseded by the production plan)
 
 Every item keeps two rules from day one: responsive stacking with no horizontal overflow, and the accessibility
 criteria in `decisions.md` #24.
