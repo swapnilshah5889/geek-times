@@ -1,4 +1,4 @@
-import type { Provenance } from '../types';
+import type { LibraryStory, Provenance } from '../types';
 
 /** Section label; " / " in the data becomes the spaced newspaper separator. */
 export function Kicker({ text }: { text: string }) {
@@ -11,7 +11,14 @@ const PROVENANCE: Record<Provenance, string> = {
   model_design: 'From the paper · model design',
 };
 
-export function Stamp({ kind }: { kind?: Provenance }) {
+const TRUST: Record<NonNullable<LibraryStory['trust']>, string> = {
+  peer_reviewed: 'Peer-reviewed paper',
+  preprint: 'Preprint',
+  company_reported: 'Company-reported',
+};
+
+export function Stamp({ kind, trust }: { kind?: Provenance; trust?: LibraryStory['trust'] }) {
   if (!kind) return null;
-  return <span className={`label stamp stamp-${kind}`}>{PROVENANCE[kind]}</span>;
+  const source = kind === 'evidence' && trust ? ` · ${TRUST[trust]}` : '';
+  return <span className={`label stamp stamp-${kind}`}>{PROVENANCE[kind]}{source}</span>;
 }

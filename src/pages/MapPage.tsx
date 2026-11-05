@@ -33,8 +33,8 @@ export function MapPage({ archive }: { archive: Archive }) {
   const toggleField = (id: string) => setFields(f => (f.includes(id) ? f.filter(x => x !== id) : [...f, id]));
   const onKey = (n: GraphNode) => (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPicked(n.id); } };
   const toggle = (k: keyof typeof show) => setShow(s => ({ ...s, [k]: !s[k] }));
-  const pressed = (on: boolean, label: string, onClick: () => void) => (
-    <button type="button" className="mp-chip" aria-pressed={on} onClick={onClick}>{on ? '✓ ' : ''}{label}</button>
+  const pressed = (key: string, on: boolean, label: string, onClick: () => void) => (
+    <button key={key} type="button" className="mp-chip" aria-pressed={on} onClick={onClick}>{on ? '✓ ' : ''}{label}</button>
   );
 
   return (
@@ -54,11 +54,11 @@ export function MapPage({ archive }: { archive: Archive }) {
       <div className="mp-body">
         <aside aria-label="Filters" className="mp-filters">
           <label>Find a paper or idea<input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Title or author" /></label>
-          <div><span className="label">Fields</span>{library.fields.map(f => pressed(fields.includes(f.id), f.label, () => toggleField(f.id)))}</div>
+          <div><span className="label">Fields</span>{library.fields.map(f => pressed(f.id, fields.includes(f.id), f.label, () => toggleField(f.id)))}</div>
           <div><span className="label">Show</span>
-            {pressed(show.paper, 'Papers', () => toggle('paper'))}
-            {pressed(show.blog, 'Engineering blogs', () => toggle('blog'))}
-            {pressed(show.open, 'Not explained yet', () => toggle('open'))}
+            {pressed('show-paper', show.paper, 'Papers', () => toggle('paper'))}
+            {pressed('show-blog', show.blog, 'Engineering blogs', () => toggle('blog'))}
+            {pressed('show-open', show.open, 'Not explained yet', () => toggle('open'))}
           </div>
           <div><span className="label">Years</span>
             <label>From year<input type="range" min={1900} max={2026} step={1} value={from} onChange={e => setFrom(Number(e.target.value))} aria-valuetext={`${from}`} /></label>

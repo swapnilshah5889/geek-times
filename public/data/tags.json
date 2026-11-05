@@ -91,9 +91,11 @@
     { "id": "field/physics", "facet": "field", "label": "Physics" },
     { "id": "field/biology", "facet": "field", "label": "Biology" },
 
-    { "id": "area/biophysics", "facet": "area", "label": "Biophysics", "aliases": ["biological physics"] },
-    { "id": "area/physics-education", "facet": "area", "label": "Physics education", "aliases": ["teaching physics"] },
-    { "id": "area/evolutionary-biology", "facet": "area", "label": "Evolutionary biology" },
+    { "id": "area/physics", "facet": "area", "label": "Physics" },
+    { "id": "area/biology", "facet": "area", "label": "Biology" },
+    { "id": "area/biophysics", "facet": "area", "label": "Biophysics", "parent": "area/physics", "aliases": ["biological physics"] },
+    { "id": "area/physics-education", "facet": "area", "label": "Physics education", "parent": "area/physics", "aliases": ["teaching physics"] },
+    { "id": "area/evolutionary-biology", "facet": "area", "label": "Evolutionary biology", "parent": "area/biology" },
 
     { "id": "concept/surface-area-to-volume-ratio", "facet": "concept", "label": "Surface area to volume ratio", "aliases": ["A/V ratio", "surface to volume", "surface area to volume"] },
     { "id": "concept/scaling-laws", "facet": "concept", "label": "Scaling laws", "aliases": ["scaling", "square-cube law", "size and shape"] },

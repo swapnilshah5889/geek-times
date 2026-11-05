@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Masthead } from '../components/Masthead';
 import { MediaView } from '../components/MediaView';
+import { Stamp } from '../components/common';
 import { MotionButton, MotionGroup } from '../components/motion';
 import { SampleTag, StoryArt } from '../components/library';
 import { mediaBaseFor, type Archive } from '../data/load';
@@ -152,9 +153,9 @@ function Snacks({ archive }: { archive: Archive }) {
       </div>
       <div className="f-snack-row">
         {strips.map(m => (
-          <a key={m.id} className="f-snack" href={appHref(m.href)}>
+          <a key={m.href} className="f-snack" href={appHref(m.href)}>
             <MediaView media={m.media!} />
-            <span><span className="label">{m.provenance === 'model_design' ? 'From the paper · model design' : 'Illustration · numbers invented'}</span><b>{m.title}</b><br />{m.text}</span>
+            <span><Stamp kind={m.provenance} /><b>{m.title}</b><br />{m.text}</span>
           </a>
         ))}
         {fact && (

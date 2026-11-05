@@ -59,7 +59,7 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
               <div className="is-stats"><span>{stories.length} stories</span><span>{mix}</span><span>About {Math.round(total / 5) * 5} minutes</span></div>
               <div className="is-actions">
                 <a className="btn-solid" href="#toc">Start with the lead →</a>
-                <a className="btn-line" href={feedHref()}>Swipe this issue ▶</a>
+                <a className="btn-line" href={feedHref()}>Swipe all snacks ▶</a>
               </div>
             </>
           ) : <p className="is-note">This special issue is a sample: it will collect {issue.classics} classic papers on one theme, explained for the first time.</p>}
