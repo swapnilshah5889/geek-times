@@ -57,6 +57,13 @@ Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
   dropped id (front page slots, topics, issue lists, company posts, node story links). Unset (the default), dev and
   the sample-heavy design review look exactly as before. Components are not changed by the flag.
 
+## Copy rule
+
+Don't literally say "kid-friendly" or "for kids" in user-facing copy (page text, blurbs, tag
+descriptions, hooks). The USP is that anyone can follow it — show it with the plain language and
+the illustrations; don't state it. Internal docs (`AGENTS.md`, `skills/`, decision log, commit
+messages) may still describe the audience that way.
+
 ## Rules that bite most often
 
 - Work on the long-lived **`v1`** branch (decision 40). Commit often, push often, no PR per change. The owner

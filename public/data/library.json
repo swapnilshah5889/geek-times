@@ -452,7 +452,7 @@
       "id": "streaming",
       "name": "[Company name] Engineering",
       "sector": "Streaming & entertainment",
-      "blurb": "Our kid-friendly explainers of this company’s engineering blog, plus the research their systems are built on.",
+      "blurb": "Our picture-first explainers of this company’s engineering blog, plus the research their systems are built on.",
       "postsFollowed": 12,
       "posts": [
         "blog-streaming",
@@ -475,7 +475,7 @@
       "id": "social",
       "name": "[Company name] Engineering",
       "sector": "Social networks",
-      "blurb": "Our kid-friendly explainers of this company’s engineering blog, plus the research their systems are built on.",
+      "blurb": "Our picture-first explainers of this company’s engineering blog, plus the research their systems are built on.",
       "postsFollowed": 8,
       "posts": [
         "blog-social"
@@ -493,7 +493,7 @@
       "id": "ride",
       "name": "[Company name] Engineering",
       "sector": "Maps & rides",
-      "blurb": "Our kid-friendly explainers of this company’s engineering blog, plus the research their systems are built on.",
+      "blurb": "Our picture-first explainers of this company’s engineering blog, plus the research their systems are built on.",
       "postsFollowed": 5,
       "posts": [
         "blog-ride"
@@ -511,7 +511,7 @@
       "id": "uber",
       "name": "Uber Engineering",
       "sector": "Maps & rides",
-      "blurb": "Our kid-friendly explainers of Uber’s engineering posts. All numbers are company-reported.",
+      "blurb": "Our picture-first explainers of Uber's engineering posts. All numbers are company-reported.",
       "postsFollowed": 1,
       "posts": [
         "h3-hexagons"
