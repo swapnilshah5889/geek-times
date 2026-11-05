@@ -1,4 +1,4 @@
-import type { Library, PaperDoc, SearchIndex, SiteConfig, TagVocabulary } from '../types';
+import { STORY_SCHEMA_VERSION, storyVersionMessage, type Library, type PaperDoc, type SearchIndex, type SiteConfig, type TagVocabulary } from '../types';
 
 const BASE = new URL(import.meta.env.BASE_URL, window.location.origin);
 
@@ -9,13 +9,22 @@ export function appUrl(path: string): string {
 
 const cache = new Map<string, Promise<unknown>>();
 
-/** Fetches a versioned JSON document once per page load. */
-function getJson<T extends { schemaVersion?: number }>(url: string): Promise<T> {
+/**
+ * Fetches a versioned JSON document once per page load. A document at any other schemaVersion is rejected, never
+ * upgraded. `mismatch` builds the message for a document that needs a migration (defaults to a plain version error).
+ */
+function getJson<T extends { schemaVersion?: number }>(
+  url: string,
+  required = 1,
+  mismatch?: (found: unknown) => string,
+): Promise<T> {
   if (!cache.has(url)) {
     cache.set(url, fetch(appUrl(url)).then(async res => {
       if (!res.ok) throw new Error(`Could not load ${url} (${res.status})`);
       const doc = (await res.json()) as T;
-      if (doc.schemaVersion !== 1) throw new Error(`${url} uses schema version ${doc.schemaVersion}; this page reads version 1.`);
+      if (doc.schemaVersion !== required) {
+        throw new Error(mismatch?.(doc.schemaVersion) ?? `${url} uses schema version ${doc.schemaVersion}; this page reads version ${required}.`);
+      }
       return doc;
     }));
   }
@@ -97,7 +106,7 @@ export async function loadEdition(slug: string | null): Promise<Edition> {
   const wanted = slug ?? site.defaultPaper;
   const entry = site.papers.find(p => p.slug === wanted);
   if (!entry) throw new Error(`No paper called “${wanted}”.`);
-  const doc = await getJson<PaperDoc>(entry.dataUrl);
+  const doc = await getJson<PaperDoc>(entry.dataUrl, STORY_SCHEMA_VERSION, found => storyVersionMessage(entry.slug, found));
   return { site, doc, vocab, mediaBaseUrl: mediaBaseFor(site) };
 }
 

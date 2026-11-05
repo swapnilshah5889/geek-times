@@ -361,3 +361,28 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       the feed label a fact "From the paper · model design" while the story-page `FactsBlock` rendered no stamp.
     - "Company-reported" names the source. It does NOT mean the company measured something itself; a company-reported
       claim may still be design, a worked example, or a measurement, depending on the fact's `claim` kind.
+
+45. **Correction to 41: the SPA replaces the prerendered DOM; it does not hydrate.** (Supersedes one sentence of 41 only.)
+    - Entry 41 says "The React SPA hydrates on top" of the prerendered HTML. That is wrong. `src/main.tsx` calls
+      `createRoot(...).render(...)`, not `hydrateRoot`, so on mount React clears the prerendered markup and renders the
+      page again. The rest of 41 stands as written.
+    - Consequences: crawlers index the prerendered HTML. Readers see that HTML until the script runs, then React replaces
+      it, which can show a flash. The production plan already lists this under deferred client hydration.
+    - Proper hydration (`hydrateRoot`, with the data embedded so the existing markup can be reused) stays deferred to a
+      later batch (`docs/production-plan.md`, Phase 1).
+    - *Why a new entry and not a note inside 41:* the log is append-only, so the original wording stays on record and this
+      entry says what changed.
+
+46. **Story documents bump to `schemaVersion: 2`.** (Required by decision 44 making `Fact.claim` mandatory.)
+    - `src/types.ts` exports `STORY_SCHEMA_VERSION = 2`; `StoryDocBase.schemaVersion: typeof STORY_SCHEMA_VERSION`.
+    - `src/data/load.ts` rejects any story document at another version with a clear error:
+      `"story <slug> is at schemaVersion 1; required version is 2. Migrate the file to schemaVersion 2 (every fact needs a claim) or re-export it from the editor."`
+    - The three real stories (`attention-is-all-you-need`, `size-shapes-life`, `h3-hexagons`) were migrated one-line (every fact already carried an explicit `claim`).
+    - Site, tags, library and search-index versions stay at 1 — their contracts did not break.
+
+47. **Comic claim stamps: single-stamp model with reclassify + rewrite.** (From the 2026-11-05 Codex comic audit; closes the open content-model question raised in Phase 2.)
+    - A comic strip carries one `provenance` stamp. When a strip's drawing is schematic (illustration) but one or more of its panels state a claim lifted from the source, the strip's provenance moves to `model_design` and the panel captions explicitly name the source ("the post says …", "the paper's name for this is …"). The drawing stays schematic; the caption carries the honesty.
+    - A strip reclassifies to `model_design` only once a fact-check row records every claim it names. Without the row, the strip stays `illustration` AND the attributing wording is removed from the caption, so the comic never attributes an unrecorded claim to the source.
+    - **Rejected: per-panel provenance.** It would give exact labels but requires a content-model change (types + validator + `ComicBlock` renderer + every story file + search-index moments). After rewriting every strip across the three real stories, no strip needs it.
+    - Applied in this batch: H3 strips 1 and 2 reclassified to `model_design` with the caption-attribution rewrite; strip 3 stays `illustration` with the attribution dropped; `coverPanel: 1` on strip 2 so the feed moment shows the "about seven" panel. Size-shapes-life strip 1 ("Chop the cube") and chapter 2 ("Chop a cube") reclassified `model_design → illustration` because the 5× figure is our arithmetic on an invented scale (fact-check record already said so).
+    - **Deferred, blocked on a new fact-check record for `attention-is-all-you-need`:** Transformer strips 4 and 5 carry the paper's own numbers (8 heads, 6 layers) but cannot reclassify yet. New Phase 2 item records this.

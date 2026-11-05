@@ -123,14 +123,26 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 - [ ] Canonical route pass for the archive-style pages. Today `/issues` and `/companies` render the latest / first item,
       duplicating `/issues/<id>` and `/companies/<id>`. Either make them genuine archive lists (grid of covers / companies) or
       301 them to the canonical detail URL. The duplicate-title warnings from `npm run check:prerender` surface this.
-- [ ] Per-panel provenance in `comic` strips — open content-model question (noted 2026-11-05).
-      Today each strip carries a single `provenance`. For stories where one strip's drawing is a schematic
-      (illustration) but its numbers come from the source (e.g. H3 comic strip 2: "about seven", "one-seventh"), a
-      single label is wrong either way. Two options, lead picks later with the owner:
-      (a) add `provenance` to each panel inside a strip (content-model change, affects every comic across every story);
-      (b) split such strips so the schematic panels and the sourced-claim panels become separate strips (layout change,
-      canvas-before-code). Until then the strip-level stamp follows the drawing, and the comic's "How to read it"
-      sentence carries the honest framing.
+      Options and a recommendation (Option A, pending canvas sign-off): `docs/handoffs/canonical-routes.md`.
+- [~] Comic-strip provenance (decision 47): single-stamp model with reclassify + rewrite.
+      - **Landed on H3 (`h3-hexagons`):** strips 1 and 2 reclassified to `model_design`; captions name the post for the
+        sourced claims ("the post says squares have two distances", "the post says it splits into about seven smaller
+        hexagons"); strip 3 stays `illustration` with the attribution dropped from p2; `coverPanel: 1` on strip 2 so the
+        feed moment shows the "about seven" panel.
+      - **Landed on size-shapes-life:** strip 1 ("Chop the cube") and chapter 2 ("Chop a cube") reclassified
+        `model_design → illustration` because the 5× figure is our arithmetic on an invented scale (fact-check record
+        already said "changed"). Fact card "5×" `claim` moves `model_design → illustration` for the same reason.
+      - **Blocked on `attention-is-all-you-need`:** strips 4 and 5 carry the paper's own numbers (8 heads, 6 layers)
+        but cannot honestly reclassify without a fact-check record on file. See the new item below.
+      - **Rejected: per-panel provenance** (decision 47): after the rewrites above no strip needs it.
+
+- [ ] **Create a fact-check record for `attention-is-all-you-need`** (new, 2026-11-05). The three real stories today
+      are 2 with records + 1 without. Transformer facts cite arXiv section anchors inline but there is no
+      `docs/fact-checks/attention-is-all-you-need.md` ledger file. Decision 47 holds strips 4 and 5 at `illustration`
+      until the ledger lists each lifted claim (8 heads §3.2.2, 6 layers §3.1, feed-forward §3.3, masked self-attention
+      §3.2.3, encoder-decoder §3.1, positional encoding §3.5) with the exact source phrase. Once the ledger lands,
+      reclassify those strips (and any others the ledger clears) to `model_design` with caption-attribution per
+      decision 47.
 
 ### Phase 3: Platform
 

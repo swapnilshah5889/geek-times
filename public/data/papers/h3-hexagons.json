@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "slug": "h3-hexagons",
   "kind": "blog",
   "blog": {
@@ -224,12 +224,12 @@
       "kicker": "Real world / Under the hood / A comic in three strips",
       "title": "How the honeycomb works",
       "deck": "Read each strip from left to right. The pictures move. Our story is one rider looking for one car.",
-      "howTo": "The drawings are <b>made up</b> to explain the idea. The post’s own numbers are in the evidence box at the end.",
+      "howTo": "Where a strip shows the post's claim, its stamp says so. The post's key numbers are in the evidence box at the end. The drawings are <b>made up</b> to explain the idea.",
       "strips": [
         {
           "title": "Why hexagons, not squares?",
           "kicker": "Why the shape matters",
-          "provenance": "illustration",
+          "provenance": "model_design",
           "grownUpWords": "hexagonal grid, neighbor distance (squares have two)",
           "panels": [
             {
@@ -243,7 +243,7 @@
               }
             },
             {
-              "caption": "A <b>corner</b> neighbor is further away than a <b>side</b> neighbor. Two distances make comparing neighbors messy.",
+              "caption": "A <b>corner</b> neighbor is further away than a <b>side</b> neighbor. The post says squares have <b>two distances</b>, which makes comparing neighbors messy.",
               "media": {
                 "type": "svg",
                 "src": "h3-hexagons/comic/01b-hexagons.svg",
@@ -267,7 +267,7 @@
         {
           "title": "Zoom in, it splits in seven",
           "kicker": "How the levels nest",
-          "provenance": "illustration",
+          "provenance": "model_design",
           "grownUpWords": "resolutions, hierarchy, one-seventh area",
           "panels": [
             {
@@ -281,7 +281,7 @@
               }
             },
             {
-              "caption": "Zoom in, and it splits into <b>about seven</b> smaller hexagons. Each one covers about <b>one-seventh</b> of the big one.",
+              "caption": "Zoom in, and the post says it splits into <b>about seven</b> smaller hexagons. Each one covers about <b>one-seventh</b> of the big one, but only approximately — the cells do not fit perfectly.",
               "media": {
                 "type": "svg",
                 "src": "h3-hexagons/comic/02b-split-seven.svg",
@@ -300,7 +300,8 @@
                 "alt": "A magnifying glass shows seven tiny hexagons inside one small cell. A looker says: zoom in again."
               }
             }
-          ]
+          ],
+          "coverPanel": 1
         },
         {
           "title": "Finding a ride",
@@ -319,7 +320,7 @@
               }
             },
             {
-              "caption": "No car in the same hexagon? Check the <b>six neighbors</b> next. They are all the same distance away.",
+              "caption": "No car in the same hexagon? Check the <b>six neighbors</b> next. Try each one in turn.",
               "media": {
                 "type": "svg",
                 "src": "h3-hexagons/comic/03b-ring-search.svg",

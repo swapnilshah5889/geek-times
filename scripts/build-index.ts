@@ -5,6 +5,7 @@
 // rules and search runs as a query, but the checks stay useful for reviewing AI-generated issues before import.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { STORY_SCHEMA_VERSION, storyVersionMessage } from '../src/types.ts';
 import type { ClaimKind, Cover, Library, Moment, PaperTag, Provenance, SearchIndex, SiteConfig, SourceKind, StoryDoc, TagBasis, TagVocabulary } from '../src/types.ts';
 
 const PUBLIC = join(import.meta.dirname, '..', 'public');
@@ -219,6 +220,7 @@ const index: SearchIndex = { schemaVersion: 1, featured: site.defaultPaper, pape
 const storyKind = new Map<string, SourceKind>();
 for (const entry of site.papers) {
   const doc = read<StoryDoc>(entry.dataUrl);
+  if (doc.schemaVersion !== STORY_SCHEMA_VERSION) errors.push(storyVersionMessage(entry.slug, doc.schemaVersion));
   if (doc.slug !== entry.slug) errors.push(`${entry.dataUrl}: slug "${doc.slug}" does not match site.json "${entry.slug}"`);
   const source = checkSource(doc);
   storyKind.set(doc.slug, (doc.kind ?? 'paper') as SourceKind);

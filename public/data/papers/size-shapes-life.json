@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "slug": "size-shapes-life",
   "pageTitle": "Why a bigger deer breaks",
   "summary": "If a deer grew five times bigger in every direction, it would weigh 125 times more but its leg bones would get only 25 times thicker. This paper shows how that one rule of size shapes lungs, guts, legs, eating habits and even bird flight.",
@@ -293,7 +293,7 @@
         {
           "part": "The idea",
           "title": "Chop a cube",
-          "provenance": "model_design",
+          "provenance": "illustration",
           "caption": "Cut one big cube into 125 little cubes. You still have the same amount of stuff, but now there are lots of new faces. The outside grows 5 times bigger while the inside stays the same. So the smaller something is, the more outside it has for its inside.",
           "media": {
             "type": "svg",
@@ -347,7 +347,7 @@
         {
           "title": "Chop the cube",
           "kicker": "Why small things have lots of outside",
-          "provenance": "model_design",
+          "provenance": "illustration",
           "grownUpWords": "surface area to volume ratio",
           "panels": [
             {
@@ -506,7 +506,7 @@
       "facts": [
         {
           "figure": "5×",
-          "claim": "model_design",
+          "claim": "illustration",
           "text": "Chop a cube into 125 little cubes and the outside gets 5 times bigger. (Our arithmetic: the paper’s Fig. 2 caption says 125 times, which looks like a slip.)",
           "source": {
             "label": "Paper §II, Figs. 2 and 13",

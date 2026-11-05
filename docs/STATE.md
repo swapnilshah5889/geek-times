@@ -8,7 +8,7 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 
 - Everything through PR #9 (the Supabase plan) is merged into `main`. No feature branch open.
 - `main` is at `fba4323`. Work continues on `v1` (decision 40), many commits ahead.
-- Last decisions: 40 one `v1` branch · 41 SSG prerender · 42 publish atomicity (refines 38) · 43 claim + trust travel with moments; one shared renderer for every claim label.
+- Last decisions: 41 SSG prerender · 42 publish atomicity (refines 38) · 43 claim + trust on moments · 44 trust on every sourced claim · 45 createRoot not hydrateRoot (clarifies 41) · 46 story `schemaVersion: 2` · 47 single-stamp comic model (reclassify + rewrite; per-panel rejected).
 
 ## Real content
 

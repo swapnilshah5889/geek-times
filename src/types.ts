@@ -1,6 +1,18 @@
 // The content model. These shapes are the contract between the data (JSON files today, a database
 // later) and the UI. Bump schemaVersion when a change is not backwards compatible.
 
+/**
+ * The story document's schemaVersion (StoryDoc). Version 2 requires an explicit `claim` on every fact (decision 44);
+ * version 1 documents are rejected, never upgraded silently. Site, tags, library and search-index keep their own versions.
+ */
+export const STORY_SCHEMA_VERSION = 2 as const;
+
+/** The error for a story file at another schemaVersion. The validator (scripts/build-index.ts) and the page loader (src/data/load.ts) both use it. */
+export function storyVersionMessage(slug: string, found: unknown): string {
+  return `story ${slug} is at schemaVersion ${String(found)}; required version is ${STORY_SCHEMA_VERSION}. ` +
+    `Migrate the file to schemaVersion ${STORY_SCHEMA_VERSION} (every fact needs a claim) or re-export it from the editor.`;
+}
+
 export interface SiteConfig {
   schemaVersion: 1;
   name: string;
@@ -50,7 +62,7 @@ export interface BlogSource {
 }
 
 interface StoryDocBase {
-  schemaVersion: 1;
+  schemaVersion: typeof STORY_SCHEMA_VERSION;
   slug: string;
   pageTitle: string;
   /** One or two plain-language sentences; shown on the home page and in search results. */

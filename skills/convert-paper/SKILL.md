@@ -32,7 +32,7 @@ Rules that apply the whole way through (full text in `AGENTS.md`):
 
 ## 1. Write the story JSON (`explain-source`)
 
-Create `public/data/papers/<slug>.json`. Use `attention-is-all-you-need.json` as the shape reference.
+Create `public/data/papers/<slug>.json`. Use `attention-is-all-you-need.json` as the shape reference. Set `"schemaVersion": 2` (decision 46); the loader rejects any other version. Every fact must carry an explicit `claim` (decision 44).
 - Blocks, in order: `lead`, `story` (4 chapters), `comic` (4–6 strips × 3 panels), `facts` (4–6 numbers).
 - Top level: `summary`, `desk`, `hook` (sticker, teaser, cta, readMinutes, optional stat and frames), `paper`, `tags`.
   A paper story leaves out `kind` (it defaults to `paper`). A blog story sets `"kind": "blog"` and has a `blog` block
