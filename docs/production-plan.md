@@ -95,17 +95,15 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 - [x] `docs/roadmap.md` now points here: this file is the only maintained launch sequence.
 - [ ] Redraw the data-model board again for decisions 34–37.
 
-### Phase 1: Quality gates
+### Phase 1: Rendering + preview path
 
-- [ ] Unit tests (Vitest) for the library helpers, search, routes and the data validator.
-- [ ] End-to-end smoke tests (Playwright): every route loads at 1440px and 375px with no console errors and no
-      horizontal scroll; old links redirect.
-- [ ] Automated accessibility checks (axe) on every page, plus one manual screen-reader pass.
-- [ ] CI on every pull request: data check, typecheck, lint, tests, build. Block merging on failure.
-- [ ] Preview deploy per pull request so the owner can review on a real URL.
 - [ ] **Rendering decision and spike (decision 36):** choose static generation, edge prerendering or server rendering, and ship one
       prerendered story with its share preview, before any platform API work.
-- [ ] When the policy migration exists: row-level security policy tests (only if a runtime feature needs RLS).
+- [ ] Preview deploy per pull request so the owner can review on a real URL.
+
+> **Automated tests, CI and axe checks are deferred to the pre-launch gate (decision 39).** They aren't in Phase 1 while
+> the app is pre-v1 (still showing demo tiles and reading JSON files) because they slow iteration. See the
+> "Pre-launch hardening" section below, which runs right before Phase 5.
 
 ### Phase 2: Real content to replace samples
 
@@ -155,6 +153,18 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 - [ ] Mobile design pass on the canvas, then build it.
 - [ ] Use the cover `hook` somewhere approved on the canvas, or remove it.
 - [ ] Newsletter with a real provider, double opt-in and unsubscribe.
+
+### Phase 4.5: Pre-launch hardening (gate before Phase 5)
+
+Runs once v1 is reached: every page reads from Supabase through the static-build path, no `sample` content ships, and the app is
+ready to host. These were originally in Phase 1 and were moved here by decision 39 so they don't slow pre-v1 iteration.
+
+- [ ] Unit tests (Vitest) for the library helpers, search, routes and the data validator.
+- [ ] End-to-end smoke tests (Playwright): every route loads at 1440px and 375px with no console errors and no
+      horizontal scroll; old links redirect.
+- [ ] Automated accessibility checks (axe) on every page, plus one manual screen-reader pass.
+- [ ] CI on every pull request: data check, typecheck, lint, tests, build. Block merging on failure.
+- [ ] When the policy migration exists: row-level security policy tests (only if a runtime feature needs RLS).
 
 ### Phase 5: Launch readiness
 

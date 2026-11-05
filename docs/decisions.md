@@ -283,3 +283,17 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - Because Supabase's auto-generated REST API can't infer relationships without foreign keys, nested reads (a story with
       its tags) use SQL views or database functions, or are assembled in server code. Indexes on every `_id` column are
       mandatory so the joins stay fast.
+
+## 2026-11-05
+
+39. **Defer tests, CI and axe to the pre-launch gate.** (The owner's call.)
+    - Until v1 — every page reads from Supabase through the static-build path, no `sample` content ships, and the app is ready
+      to host — we don't invest in Vitest, Playwright, axe or a CI pipeline. Daily checks remain the manual ones: `npm run data`,
+      `npm run build`, `npm run lint` and a look at 1280px and 375px.
+    - Why: the app is still changing shape fast, with demo tiles and a JSON data layer that will be rewritten against the
+      database. Tests written now would be rewritten with the rendering choice and the data path; they would slow iteration
+      without catching the kind of regressions that matter at this stage.
+    - Pre-launch, once v1 is reached, run everything in Phase 4.5 of `docs/production-plan.md` as a single hardening gate:
+      unit tests, smoke tests, axe, CI blocking merges, and RLS policy tests if RLS has landed.
+    - **Rendering decision and preview deploys stay in Phase 1,** because the rendering choice shapes everything downstream
+      (OG cards, hosting, Phase 3 import job) and preview deploys speed up — rather than slow down — review.
