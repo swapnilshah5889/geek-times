@@ -55,6 +55,18 @@
       }
     }
   ],
+  "volumes": [
+    {
+      "id": "1",
+      "title": "November 2026",
+      "kind": "regular"
+    },
+    {
+      "id": "0",
+      "title": "Launch specials",
+      "kind": "special"
+    }
+  ],
   "stories": [
     {
       "id": "attention-is-all-you-need",
@@ -346,7 +358,7 @@
   "issues": [
     {
       "id": "002",
-      "volume": "I",
+      "volume": "1",
       "number": "002",
       "title": "Why size matters",
       "color": "#a2c2a7",
@@ -359,7 +371,7 @@
     },
     {
       "id": "001",
-      "volume": "I",
+      "volume": "1",
       "number": "001",
       "title": "How machines learned to read",
       "color": "#82acad",

@@ -51,7 +51,7 @@ In the diagram, an arrow points from a record to the record it refers to.
 classDiagram
   direction LR
 
-  class Volume { number; title; kind: regular|special; year }
+  class Volume { number; title; kind: regular|special; month }
   class Issue { volume→Volume; number; title; theme; cover→MediaAsset; publishedAt; status }
   class IssueStory { issue→Issue; story→Story; position; role: lead|feature|brief|vault|real_world; presentation: full|brief|snack }
 

@@ -2,10 +2,11 @@ import { SampleTag, StoryArt } from '../components/library';
 import { MediaView } from '../components/MediaView';
 import { Crumbs, SitePage } from '../components/SitePage';
 import type { Archive } from '../data/load';
-import { byline, issueById, latestIssue, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
+import { byline, issueById, latestIssue, volumeOf, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import type { LibraryStory } from '../types';
 
+const numberLabel = (n: string) => (n.startsWith('Special') ? n : `No. ${n}`);
 const kindLabel = { paper: 'Paper', blog: 'Blog', classic: 'Classic' } as const;
 
 function Toc({ stories }: { stories: LibraryStory[] }) {
@@ -30,6 +31,7 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
   const { library } = archive;
   const issue = issueById(library, id ?? latestIssue(library).id);
   if (!issue) throw new Error(`There is no issue called “${id}”.`);
+  const vol = volumeOf(library, issue);
   const idx = library.issues.indexOf(issue);
   const prev = library.issues[idx + 1];
   const stories = storiesOf(library, issue.stories ?? []);
@@ -43,15 +45,15 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
 
   return (
     <SitePage archive={archive} title={`Issue ${issue.number}: ${issue.title}`} active="issues">
-      <Crumbs items={[{ href: appHref('issues'), label: 'Editions' }, `Volume ${issue.volume}`, `Issue ${issue.number}`]} />
+      <Crumbs items={[{ href: appHref('issues'), label: 'Editions' }, vol ? `Volume ${vol.id} · ${vol.title}` : `Volume ${issue.volume}`, issue.number.startsWith('Special') ? issue.number : `Issue ${issue.number}`]} />
       <section className="is-hero">
         <div className="is-cover" style={{ background: issue.color }}>
-          <div className="label-ink is-cover-top"><span>The Geeky Times</span><span>Vol. {issue.volume} · {issue.volume === 'I' ? `No. ${issue.number}` : issue.number}</span></div>
+          <div className="label-ink is-cover-top"><span>The Geeky Times</span><span>Vol. {issue.volume} · {numberLabel(issue.number)}</span></div>
           {coverPaper && <div className="is-cover-art"><MediaView media={coverPaper.cover.media} /></div>}
           <div className="is-cover-foot"><b>{issue.title}</b>{cover && <span>Cover: “{cover.headline} {cover.accent}”</span>}</div>
         </div>
         <div className="is-intro">
-          <span className="label">Volume {issue.volume} · Issue {issue.number}{issue.published ? ` · Published ${issue.published}` : ''}{issue.sample && ' · Sample'}</span>
+          <span className="label">Volume {issue.volume}{vol ? ` (${vol.title})` : ''} · {issue.number.startsWith('Special') ? issue.number : `Issue ${issue.number}`}{issue.published ? ` · Published ${issue.published}` : ''}{issue.sample && ' · Sample'}</span>
           <h1>{words.join(' ')} <em>{last}</em></h1>
           {stories.length > 0 ? (
             <>
@@ -89,7 +91,7 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
       )}
 
       <nav className="is-pn" aria-label="Other issues">
-        {prev ? <a className="card" href={issueHref(prev.id)}><span className="label">← Previous · Vol. {prev.volume} · {prev.number}</span><b>{prev.title}{prev.sample && ' (sample)'}</b></a> : <span />}
+        {prev ? <a className="card" href={issueHref(prev.id)}><span className="label">← Previous · Vol. {prev.volume} · {numberLabel(prev.number)}</span><b>{prev.title}{prev.sample && ' (sample)'}</b></a> : <span />}
         <div className="card is-next"><span className="label">Next · Issue {String(Number(latestIssue(library).number) + 1).padStart(3, '0')}</span><b>Out next Friday</b><SampleTag story={{ sample: true } as LibraryStory} /></div>
       </nav>
     </SitePage>

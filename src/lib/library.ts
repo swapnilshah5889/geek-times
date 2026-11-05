@@ -1,5 +1,5 @@
 import type { Archive } from '../data/load';
-import type { GraphNode, Media, GraphRelation, Library, LibraryCompany, LibraryField, LibraryIssue, LibraryStory, SearchEntry, StoryRole } from '../types';
+import type { GraphNode, LibraryVolume, Media, GraphRelation, Library, LibraryCompany, LibraryField, LibraryIssue, LibraryStory, SearchEntry, StoryRole } from '../types';
 
 // Helpers over the library (the editorial layer: stories, issues, companies and the idea graph).
 
@@ -22,6 +22,7 @@ export const issueById = (lib: Library, id: string): LibraryIssue | undefined =>
 export const companyById = (lib: Library, id: string): LibraryCompany | undefined => lib.companies.find(c => c.id === id);
 /** Issues are collections of already-published stories; a story can appear in more than one. */
 export const issuesWith = (lib: Library, storyId: string): LibraryIssue[] => lib.issues.filter(i => i.stories?.includes(storyId));
+export const volumeOf = (lib: Library, issue: LibraryIssue): LibraryVolume | undefined => lib.volumes.find(v => v.id === issue.volume);
 export const latestIssue = (lib: Library): LibraryIssue => lib.issues.find(i => !i.sample) ?? lib.issues[0];
 export const realPaper = (archive: Archive, story: LibraryStory): SearchEntry | undefined =>
   story.real ? archive.index.papers.find(p => p.slug === story.id) : undefined;

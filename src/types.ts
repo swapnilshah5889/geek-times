@@ -309,6 +309,9 @@ export interface LibraryStory {
   vaultNote?: string;
 }
 
+/** A volume is a month of weekly issues (decision 33). Volume 0 holds the launch special editions. */
+export interface LibraryVolume { id: string; title: string; kind: 'regular' | 'special' }
+
 export interface LibraryIssue {
   id: string;
   volume: string;
@@ -368,6 +371,7 @@ export interface GraphRelation {
 export interface Library {
   schemaVersion: 1;
   fields: LibraryField[];
+  volumes: LibraryVolume[];
   stories: LibraryStory[];
   front: {
     lead: string; aside: string[]; more: string[];

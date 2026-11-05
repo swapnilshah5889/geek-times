@@ -10,7 +10,7 @@ The target product, as agreed with the owner on 2026-11-04. The reasons behind e
 | **Story** | Our illustrated explainer of one main source (plus supporting sources). Has its own permanent URL. |
 | **Moment** | A bite-size piece of a story (one comic strip, chapter or fact) for front page tiles and the swipe feed. |
 | **Issue (edition)** | A hand-assembled weekly package of already-published stories. Roles: lead, feature, brief, vault. A quiet extra, not the focus. |
-| **Volume** | A year of issues. Volume 0 = launch special editions of classic papers. |
+| **Volume** | A month of weekly issues (decision 33). Volume 0 = launch special editions of classic papers. |
 | **Storyline** | A guided path through the graph ("How machines learned to read"). |
 | **Graph** | Sources linked by typed relations; the explained ones open as stories. |
 
@@ -37,7 +37,7 @@ Search**. Field names (AI, Biology…) appear inside Explore and Topics, not in 
 | `/` | Front page: the current issue (layout D) plus "Keep exploring" |
 | `/papers/:slug` | A story (decision 26). Breadcrumb to its field (never to an issue, decision 31); family tree; "more in this topic"; next in storyline |
 | `/issues/:volume/:number` | Edition: cover, theme, table of contents, its stories, previous/next edition |
-| `/volumes/:volume` | Wall of issue covers (Volume 0 shows special editions) |
+| `/volumes/:volume` | Wall of that month's issue covers (Volume 0 shows special editions) |
 | `/topics/:tag` | All stories for a tag (facet-aware, includes child tags) |
 | `/storylines/:slug` | A guided path through related sources, oldest to newest |
 | `/companies/:slug` | Index of our explainers of one company's engineering posts (plain names, no logos), plus posts in the review queue |

@@ -17,7 +17,8 @@ description: Add finished stories to The Geeky Times and assemble them into an i
   - `feature`: 2–5
   - `brief`: optional, a snack-only explainer
   - `vault`: a classic
-- A volume is a year. Volume 0 holds launch special editions of classic papers.
+- A volume is a month of weekly issues (decision 33). Volume 0 holds launch special editions of classic papers. Issue numbers
+  keep counting up across volumes.
 - Keep two dates apart: the source's original year, and our publish date.
 
 ## Today (JSON files; the library drives the site)
