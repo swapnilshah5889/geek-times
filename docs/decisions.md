@@ -272,3 +272,14 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       recovery procedure for a paused project.
     - **Authoritative state:** until the export has run, the database is authoritative for review decisions; after it, the
       committed files are. The owner decides which project is production editorial state.
+
+38. **Final: no foreign key constraints; relate rows by joining on the primary keys.** (The owner's call, after the Codex
+    review argued for foreign keys. Confirms decision 30.)
+    - Tables relate through plain `<thing>_id bigint` columns that hold the other row's `id`. Queries join on those columns.
+      There is no `REFERENCES` or other database-level foreign key.
+    - The replacement controls are now **required**, not optional: transactional import and publish, unique, check and
+      not-null constraints, an orphan check before every publish, orphan monitoring with alerts, and tests proving that
+      every import and export reference remaps correctly.
+    - Because Supabase's auto-generated REST API can't infer relationships without foreign keys, nested reads (a story with
+      its tags) use SQL views or database functions, or are assembled in server code. Indexes on every `_id` column are
+      mandatory so the joins stay fast.

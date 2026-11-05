@@ -122,13 +122,15 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 - [ ] Content model v2 and migration (`docs/data-model.md`).
 - [ ] **Supabase** projects: local, staging and production (decision 34). Schema per decision 30 as SQL migrations in
       `supabase/migrations/`, applied with the Supabase CLI. Keys only in environment variables.
-- [ ] Settle the foreign key question first (owner's call); the auto-generated REST API relies on them for nested reads.
+- [x] Foreign keys: decided, none (decision 38). Tables join on `<thing>_id` primary-key columns; every `_id` column is indexed;
+      nested reads use SQL views, database functions or server code, not the auto-generated REST embedding.
 - [ ] Prerequisite schema before any row-level security: relation `status` with evidence, and immutable published versions
       that own their derived rows (`published_version_id`).
 - [ ] Row-level security and a paged runtime API: **only when a runtime feature needs them** (decision 36). Not on the launch
       path, which is static pages.
-- [ ] Import job from JSON into Supabase with the integrity checks: transactional publish, unique, check and not-null
-      constraints, an orphan check before publish, alerting, and tests that every import and export reference remaps.
+- [ ] Import job from JSON into Supabase with the integrity checks, **required** because there are no foreign keys (decision 38):
+      transactional publish, unique, check and not-null constraints, an orphan check before every publish, orphan monitoring
+      with alerts, and tests that every import and export reference remaps.
 - [ ] Media on a CDN with CORS (Supabase Storage or S3: decide); set `mediaBaseUrl` per environment.
 
 **Backup deliverables (decisions 35 and 37)**, each with an owner and cadence:
@@ -173,8 +175,6 @@ stories, issues and companies. Each becomes a launch gate in Phase 2.
 
 ## 5. Decisions waiting on the owner
 
-- Foreign key constraints (decision 30): Codex recommends them on internal references; Supabase's auto-generated API needs them
-  for nested reads. If the owner keeps no-FK, the replacement controls in Phase 3 are required.
 - Media host: Supabase Storage or S3 behind a CDN (CORS needed either way).
 - Which Supabase project is production editorial state, and when the project counts as operationally critical (decision 37).
 

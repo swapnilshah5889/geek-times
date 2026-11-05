@@ -34,7 +34,8 @@ Blocks are a discriminated union: `lead`, `story`, `comic`, `facts`. Each media 
 4. **Keys and references** (decision 30):
    - Every table has `id bigint generated always as identity`, the Postgres auto-increment key. It is the only thing
      other tables use to point at a row, always as a `<thing>_id bigint` column (`story_id`, `source_id`, `tag_id` …).
-   - **No foreign key constraints.** The `_id` columns are indexed but declared without `REFERENCES`. Integrity is kept by
+   - **No foreign key constraints (decisions 30 and 38).** Rows are related by joining on the `_id` columns. They are indexed
+     but declared without `REFERENCES`. Integrity is kept by
      the import validator (`npm run data` today), the application code, and a scheduled orphan-check query. Rows are
      retired with a `status`, not deleted, so references don't dangle.
    - Our human-readable keys live under their own column names, never in `id`: `Story.slug` (unique, used in URLs as
@@ -119,7 +120,7 @@ classDiagram
 ### Notes
 
 - **Hosting (decision 34):** Supabase. Migrations are SQL files in `supabase/migrations/`. The auto-generated REST API infers
-  relationships from foreign key constraints, so without them, nested reads use views or functions.
+  relationships from foreign key constraints, so without them (decision 38), nested reads use SQL views, database functions or server code.
 - **Row-level security** (only needed once something reads at run time, decision 36) will show readers only published stories,
   approved tags and verified relations. It depends on schema that doesn't exist yet: a relation `status`
   (proposed, verified, rejected) with evidence, and immutable published versions that own their derived rows. Those

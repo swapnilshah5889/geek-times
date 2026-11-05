@@ -77,7 +77,7 @@ tools/                    media_kit.py (drawing kit) + draw_attention.py (per-pa
 
 - Backup: the files in git are the full seed for the database (decision 35); numeric ids are not external identifiers (URLs, files, analytics use slug/key); export must pass reconciliation before a release (decision 37).
 - Database: Supabase (managed Postgres, decision 34), schema as SQL migrations in the repo, secrets never in git.
-- Database plan (decision 30): `id` is Postgres auto-increment and the only reference between tables, with no foreign key
+- Database plan (decisions 30 and 38, final): `id` is Postgres auto-increment and the only reference between tables, with no foreign key
   constraints; our readable key is `slug` (stories) or `key` (tags, moments). URLs use the slug: `/papers/<slug>`.
 - Stories carry no issue, volume or date of ours (decision 31). Issues and volumes are collections of published stories
   and the only place our dates appear.
