@@ -333,3 +333,17 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       The import step resolves them to the new ids on this database. Remap is tested as part of decision 38's required
       controls.
     - Full shape in `docs/data-model.md` → "Publish and import atomicity".
+
+43. **Claim and trust travel with moments; one shared renderer for every claim label.** (From the 2026-11-05 Codex label-correctness review; builds on decision 18 and decision 42.)
+    - `scripts/build-index.ts` no longer hard-codes `provenance: 'evidence'` on fact moments. Each `Moment` now carries
+      `claim: ClaimKind` (illustration | model_design | measured_result) and `trust?: 'peer_reviewed' | 'preprint' |
+      'company_reported'`, both read from the story's data. Old clients ignore the new optional fields, so
+      `schemaVersion` stays at 1.
+    - `src/lib/claimLabel.ts` is the single source of wording: `claimLabel(claim, trust, sourceKind)` returns
+      "Illustration · numbers invented", "From the paper · model design" / "From the post · model design · company-reported",
+      or "Measured result · <trust>". `ClaimStamp` in `src/components/common.tsx` renders it, reading the source's kind
+      from `SourceKindContext` (provided by the story page).
+    - This replaces the inlined `CLAIM_LABEL` constants and the `trustLabel(...).split(' ')[0].toLowerCase()`
+      lookups that had crept into `HomePage.tsx`; feed, front-page snacks, front-page number cards and story facts
+      all now read the same rules. "Company-reported" describes the SOURCE, never a model design turned into a
+      measurement.

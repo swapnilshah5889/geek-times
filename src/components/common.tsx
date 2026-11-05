@@ -1,31 +1,27 @@
 import { useContext } from 'react';
-import type { LibraryStory, Provenance, StoryDoc } from '../types';
+import type { ClaimKind, Provenance, SourceKind, StoryDoc } from '../types';
 import { SourceTrustContext, sourceOf } from '../lib/source';
+import { SourceKindContext, claimLabel, claimOf, stampClass, type Trust } from '../lib/claimLabel';
 
 /** Section label; " / " in the data becomes the spaced newspaper separator. */
 export function Kicker({ text }: { text: string }) {
-  return <div className="label">{text.replaceAll(' / ', '  /  ')}</div>;
+  return <div className="label">{text.replaceAll(' / ', '  /  ')}</div>;
 }
 
-const PROVENANCE: Record<Provenance, string> = {
-  illustration: 'Illustration · numbers invented',
-  evidence: 'Measured result',
-  model_design: 'From the paper · model design',
-};
+/**
+ * The claim label for a number, strip or chapter. `trust` and `source` default to the story page's context
+ * (SourceTrustContext, SourceKindContext); pass them explicitly anywhere outside a story page.
+ */
+export function ClaimStamp({ claim, trust, source }: { claim?: ClaimKind; trust?: Trust; source?: SourceKind }) {
+  const contextTrust = useContext(SourceTrustContext);
+  const contextKind = useContext(SourceKindContext);
+  if (!claim) return null;
+  return <span className={`label stamp ${stampClass(claim)}`}>{claimLabel(claim, trust ?? contextTrust, source ?? contextKind)}</span>;
+}
 
-const TRUST: Record<NonNullable<LibraryStory['trust']>, string> = {
-  peer_reviewed: 'peer-reviewed',
-  preprint: 'preprint',
-  company_reported: 'company-reported',
-};
-
-/** The claim label. Measured results show their source's trust: an explicit `trust`, else the story's (SourceTrustContext). */
-export function Stamp({ kind, trust }: { kind?: Provenance; trust?: LibraryStory['trust'] }) {
-  const storyTrust = useContext(SourceTrustContext);
-  if (!kind) return null;
-  const level = trust ?? storyTrust;
-  const source = kind === 'evidence' && level ? ` · ${TRUST[level]}` : '';
-  return <span className={`label stamp stamp-${kind}`}>{PROVENANCE[kind]}{source}</span>;
+/** A stamp from a strip's or chapter's `provenance` (its intent). Same props as before, plus an optional source kind. */
+export function Stamp({ kind, trust, source }: { kind?: Provenance; trust?: Trust; source?: SourceKind }) {
+  return <ClaimStamp claim={claimOf(kind)} trust={trust} source={source} />;
 }
 
 /** The story's "The paper" / "The engineering post" line under the headline. */

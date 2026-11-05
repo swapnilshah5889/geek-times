@@ -193,10 +193,20 @@ export interface Moment {
   media?: Media;
   /** Big number for fact cards, e.g. "512". */
   figure?: string;
+  /** Facts only: the real claim kind of the number (decision 18). Never derived from `provenance`. */
   claim?: ClaimKind;
   /** Where in the paper a fact comes from, e.g. "Paper §3.1". */
   sourceLabel?: string;
+  /**
+   * Strips and chapters: their intent. Facts mirror their claim here (measured_result is `evidence`) so older
+   * renders that read only `provenance` still show the right kind.
+   */
   provenance?: Provenance;
+  /**
+   * Trust of the parent story's source (peer_reviewed, preprint, company_reported). It describes the source and
+   * never changes a claim's kind. Additive in schemaVersion 1: older renders ignore it.
+   */
+  trust?: LibraryStory['trust'];
   href: string;
 }
 

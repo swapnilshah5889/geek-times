@@ -5,7 +5,7 @@
 // rules and search runs as a query, but the checks stay useful for reviewing AI-generated issues before import.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { Cover, Library, Moment, PaperTag, SearchIndex, SiteConfig, SourceKind, StoryDoc, TagBasis, TagVocabulary } from '../src/types.ts';
+import type { ClaimKind, Cover, Library, Moment, PaperTag, Provenance, SearchIndex, SiteConfig, SourceKind, StoryDoc, TagBasis, TagVocabulary } from '../src/types.ts';
 
 const PUBLIC = join(import.meta.dirname, '..', 'public');
 const read = <T>(path: string): T => JSON.parse(readFileSync(join(PUBLIC, path), 'utf8')) as T;
@@ -13,6 +13,9 @@ const read = <T>(path: string): T => JSON.parse(readFileSync(join(PUBLIC, path),
 const errors: string[] = [];
 const warnings: string[] = [];
 const BASES: TagBasis[] = ['paper', 'background', 'editorial'];
+const CLAIMS: ClaimKind[] = ['illustration', 'model_design', 'measured_result'];
+/** A fact's claim in the older `provenance` field (a measured result was 'evidence'). */
+const PROVENANCE_OF: Record<ClaimKind, Provenance> = { illustration: 'illustration', model_design: 'model_design', measured_result: 'evidence' };
 
 const isUrl = (s: unknown) => typeof s === 'string' && /^https?:\/\/\S+$/.test(s);
 /** A real calendar date written as YYYY-MM-DD (rejects 2026-02-30). */
@@ -80,6 +83,23 @@ function checkMeasuredResults(doc: StoryDoc, source?: Source) {
       if (source?.kind === 'blog') {
         warnings.push(`${where}: measured result "${f.figure}" is company-reported (the company's own measurement, not independently verified)`);
       }
+    }
+  }
+}
+
+/**
+ * Every fact needs a claim kind (decision 18). A sourced fact with no claim is read as a model design; one with
+ * neither a claim nor a source has no honest label, so it fails the check.
+ */
+function checkFactClaims(doc: StoryDoc) {
+  const where = `${doc.slug}.json`;
+  for (const block of doc.blocks) {
+    if (block.type !== 'facts') continue;
+    for (const f of block.facts) {
+      if (f.claim !== undefined && !CLAIMS.includes(f.claim)) {
+        errors.push(`${where}: fact "${f.figure}" has claim "${String(f.claim)}"; it must be ${CLAIMS.join(', ')}`);
+      }
+      if (f.claim === undefined && !f.source) errors.push(`${where}: fact "${f.figure}" needs a claim (${CLAIMS.join(', ')}) or a source`);
     }
   }
 }
@@ -153,8 +173,13 @@ function coverOf(doc: StoryDoc): Cover | undefined {
   return { ...base, hook };
 }
 
+/** The source's trust: a blog's own block says company_reported; a paper's comes from its library entry. */
+function trustOf(doc: StoryDoc, library: Library): Moment['trust'] {
+  return doc.kind === 'blog' ? doc.blog.trust : library.stories.find(s => s.id === doc.slug)?.trust;
+}
+
 /** Bite-size cards for the home page and feed: every comic strip, story chapter and fact. */
-function momentsOf(doc: StoryDoc): Moment[] {
+function momentsOf(doc: StoryDoc, trust: Moment['trust']): Moment[] {
   const where = `${doc.slug}.json`;
   const link = (anchor?: string) => `papers/${doc.slug}${anchor ? `#${anchor}` : ''}`;
   const out: Moment[] = [];
@@ -166,18 +191,21 @@ function momentsOf(doc: StoryDoc): Moment[] {
         if (!panel) { errors.push(`${where}: strip "${strip.title}" coverPanel ${pick} does not exist`); return; }
         const id = strip.id ?? `${block.id}-${i + 1}`;
         out.push({ id, paper: doc.slug, kind: 'strip', kicker: `How it works · ${String(i + 1).padStart(2, '0')}`,
-          title: strip.title, text: plain(panel.caption), media: panel.media, provenance: strip.provenance, href: link(id) });
+          title: strip.title, text: plain(panel.caption), media: panel.media, provenance: strip.provenance, trust, href: link(id) });
       });
     } else if (block.type === 'story') {
       block.chapters.forEach((ch, i) => {
         const id = `${block.id}-${i + 1}`;
         out.push({ id, paper: doc.slug, kind: 'chapter', kicker: ch.part, title: ch.title, text: plain(ch.caption),
-          media: ch.media, provenance: ch.provenance, href: link(id) });
+          media: ch.media, provenance: ch.provenance, trust, href: link(id) });
       });
     } else if (block.type === 'facts') {
       block.facts.forEach((f, i) => {
-        out.push({ id: `${block.id}-${i + 1}`, paper: doc.slug, kind: 'fact', kicker: 'From the paper', title: f.figure,
-          figure: f.figure, text: plain(f.text), media: f.media, provenance: 'evidence', claim: f.claim, sourceLabel: f.source?.label, href: link(block.id) });
+        // A fact keeps its own claim. Without one, a sourced fact is a model design (checkFactClaims rejects the rest).
+        const claim: ClaimKind | undefined = f.claim ?? (f.source ? 'model_design' : undefined);
+        out.push({ id: `${block.id}-${i + 1}`, paper: doc.slug, kind: 'fact', kicker: doc.kind === 'blog' ? 'From the post' : 'From the paper',
+          title: f.figure, figure: f.figure, text: plain(f.text), media: f.media, claim,
+          provenance: claim ? PROVENANCE_OF[claim] : undefined, trust, sourceLabel: f.source?.label, href: link(block.id) });
       });
     }
   }
@@ -186,6 +214,7 @@ function momentsOf(doc: StoryDoc): Moment[] {
 
 const site = read<SiteConfig>('data/site.json');
 const vocab = read<TagVocabulary>('data/tags.json');
+const library = read<Library>('data/library.json');
 const known = new Set(checkVocabulary(vocab).keys());
 
 const index: SearchIndex = { schemaVersion: 1, featured: site.defaultPaper, papers: [] };
@@ -196,6 +225,7 @@ for (const entry of site.papers) {
   const source = checkSource(doc);
   storyKind.set(doc.slug, (doc.kind ?? 'paper') as SourceKind);
   checkMeasuredResults(doc, source);
+  checkFactClaims(doc);
   const tags = checkPaperTags(doc, known, source?.urls ?? []);
   const cover = coverOf(doc);
   if (!cover) { errors.push(`${entry.dataUrl}: needs a "cover" or a lead block`); continue; }
@@ -209,13 +239,12 @@ for (const entry of site.papers) {
     year: source.year,
     desk: doc.desk,
     cover,
-    moments: momentsOf(doc),
+    moments: momentsOf(doc, trustOf(doc, library)),
     tags: tags.map(t => ({ id: t.tag, relevance: t.relevance })).sort((a, b) => b.relevance - a.relevance),
   });
 }
 
 // The library (front page, issues, companies, map) must only point at things that exist.
-const library = read<Library>('data/library.json');
 const storyIds = new Set(library.stories.map(s => s.id));
 const nodeIds = new Set(library.nodes.map(n => n.id));
 const need = (ok: boolean, msg: string) => { if (!ok) errors.push(`library.json: ${msg}`); };

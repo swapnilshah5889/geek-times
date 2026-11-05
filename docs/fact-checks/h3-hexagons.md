@@ -3,7 +3,7 @@
 Source: Uber Engineering blog, "H3: Uber's Hexagonal Hierarchical Spatial Index", by Isaac Brodsky, published June 27, 2018.
 Canonical URL used: https://www.uber.com/en-US/blog/h3/ (the page's own path is `/us/en/blog/h3/`).
 Fetched and checked on 2026-11-05. Quotes were matched against the archived copy below (grep of the full article text).
-Archive: https://web.archive.org/web/20261017041120/https://www.uber.com/en-US/blog/h3 (capture 2026-10-17 04:11:20 UTC; the text matches the live page).
+Archive: https://web.archive.org/web/20261104162659/https://www.uber.com/us/en/blog/h3/ (capture 2026-10-17 04:11:20 UTC; the text matches the live page).
 A direct download of the canonical URL from our sandbox returned a "Not Acceptable" body, so the live page was read through the fetch tool instead.
 Corroboration only (not a quote source): https://h3geo.org/docs/core-library/overview (resolution 0 has 122 cells; 15 finer resolutions; each hexagon has 1/7 the area of the next coarser hexagon).
 

@@ -2,7 +2,8 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { useHead } from '../components/head';
 import { Masthead } from '../components/Masthead';
 import { MediaView } from '../components/MediaView';
-import { Stamp } from '../components/common';
+import { ClaimStamp, Stamp } from '../components/common';
+import { sourceKindOf } from '../lib/claimLabel';
 import { MotionButton, MotionGroup } from '../components/motion';
 import { SampleTag, StoryArt } from '../components/library';
 import { mediaBaseFor, type Archive } from '../data/load';
@@ -13,7 +14,6 @@ import { searchHref } from '../lib/tags';
 import { todayLabel } from '../lib/format';
 import type { LibraryIssue, LibraryStory, Moment, SearchEntry } from '../types';
 
-const CLAIM_LABEL = { model_design: 'model design', measured_result: 'measured result', illustration: 'illustration' } as const;
 const sectionOf = (m: Moment) => m.sourceLabel?.replace(/^Paper\s*/, '');
 
 function SectionHead({ id, title, hint, link }: { id: string; title: string; hint?: string; link?: { href: string; label: string } }) {
@@ -156,12 +156,12 @@ function Snacks({ archive }: { archive: Archive }) {
         {strips.map(m => (
           <a key={m.href} className="f-snack" href={appHref(m.href)}>
             <MediaView media={m.media!} />
-            <span><Stamp kind={m.provenance} /><b>{m.title}</b><br />{m.text}</span>
+            <span><Stamp kind={m.provenance} trust={m.trust} source={sourceKindOf(archive.library, m.paper)} /><b>{m.title}</b><br />{m.text}</span>
           </a>
         ))}
         {fact && (
           <a className="f-snack f-snack-fact" href={appHref(fact.href)}>
-            <span className="label">From the paper · {CLAIM_LABEL[fact.claim ?? 'model_design']}</span>
+            <ClaimStamp claim={fact.claim} trust={fact.trust} source={sourceKindOf(archive.library, fact.paper)} />
             <b className="f-figure">{fact.figure}</b>
             <span>{fact.text}</span>
           </a>
@@ -247,18 +247,15 @@ function Numbers({ archive }: { archive: Archive }) {
     <section aria-labelledby="s-numbers" className="f-section">
       <SectionHead id="s-numbers" title="Numbers from the papers" />
       <div className="f-grid f-grid-4">
-        {picks.map(({ paper, m }) => {
-          const trust = trustLabel(storyById(library, paper.slug)?.trust).split(' ')[0].toLowerCase();
-          return (
-            <a key={paper.slug + m.id} className="f-number" href={appHref(m.href)}>
-              <span className="label">
-                {paper.title} · {m.claim === 'measured_result' ? `measured result${trust ? ` · ${trust}` : ''}` : CLAIM_LABEL[m.claim!]} · {sectionOf(m)}
-              </span>
-              <b>{m.figure}</b>
-              <span className="f-number-text">{m.text}</span>
-            </a>
-          );
-        })}
+        {picks.map(({ paper, m }) => (
+          <a key={paper.slug + m.id} className="f-number" href={appHref(m.href)}>
+            <span className="label">
+              {paper.title} · <ClaimStamp claim={m.claim} trust={m.trust} source={sourceKindOf(library, paper.slug)} /> · {sectionOf(m)}
+            </span>
+            <b>{m.figure}</b>
+            <span className="f-number-text">{m.text}</span>
+          </a>
+        ))}
       </div>
     </section>
   );

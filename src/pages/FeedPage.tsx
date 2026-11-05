@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { MediaView } from '../components/MediaView';
 import { MotionGroup } from '../components/motion';
-import { Stamp } from '../components/common';
+import { ClaimStamp } from '../components/common';
 import { appUrl, mediaBaseFor, type Archive } from '../data/load';
 import { feedItems } from '../lib/feed';
-import { storyById } from '../lib/library';
+import { claimOf, sourceKindOf } from '../lib/claimLabel';
 import { MediaBaseContext } from '../lib/mediaBase';
 import { appHref, homeHref, paperHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
@@ -78,7 +78,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
                 <article className={`feed-card moment-${moment.kind}`} key={moment.id + paper.slug} data-index={i}>
                   <span className="label">
                     {moment.kicker} &nbsp;/&nbsp; {paper.cover.headline.text} {paper.cover.headline.accent}
-                    {moment.provenance && <Stamp kind={moment.provenance} trust={storyById(library, paper.slug)?.trust} />}
+                    <ClaimStamp claim={moment.claim ?? claimOf(moment.provenance)} trust={moment.trust} source={sourceKindOf(library, paper.slug)} />
                   </span>
                   {moment.kind === 'fact' ? (
                     <div className="feed-fact"><b>{moment.figure}</b>{moment.media && <MediaView media={moment.media} />}</div>

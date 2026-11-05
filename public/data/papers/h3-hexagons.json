@@ -7,7 +7,8 @@
     "organization": "Uber Engineering",
     "published": "2018-06-27",
     "url": "https://www.uber.com/en-US/blog/h3/",
-    "trust": "company_reported"
+    "trust": "company_reported",
+    "archivedUrl": "https://web.archive.org/web/20261104162659/https://www.uber.com/us/en/blog/h3/"
   },
   "pageTitle": "A world covered in honeycomb",
   "desk": "Maps & rides",
@@ -178,7 +179,7 @@
         {
           "part": "The idea",
           "title": "Tile the world",
-          "provenance": "illustration",
+          "provenance": "model_design",
           "caption": "Lay a honeycomb over the whole map. Every spot lands in one hexagon, and each hexagon gets an ID. Uber says hexagons suit this job: a hexagon has one distance to all six neighbors, while a square has two.",
           "media": {
             "type": "svg",
@@ -191,21 +192,21 @@
         {
           "part": "The solution",
           "title": "Zoom in, it splits",
-          "provenance": "illustration",
+          "provenance": "model_design",
           "caption": "The grid has levels, like zoom on a map. Zoom in one level and each hexagon splits into about seven smaller ones. Each finer level covers about <b>one-seventh</b> of the area above it. The fit is only approximate: finer cells only approximately fit inside their parent.",
           "media": {
             "type": "svg",
             "src": "h3-hexagons/story/03-zoom-splits.svg",
             "width": 440,
             "height": 215,
-            "alt": "One big hexagon, zoomed in: it splits into seven smaller hexagons. One of those splits again into seven tiny ones."
+            "alt": "One big hexagon splits into seven smaller ones; the middle cluster is zoomed in once more to show it splitting again."
           }
         },
         {
           "part": "The evidence",
           "title": "Counting the cells",
           "provenance": "model_design",
-          "caption": "The post gives design numbers, not speed tests. In its worked example, a map of California at resolution 6 needs 901 hexagons in the compact list, where the full list has 10,633. That is one example, not a benchmark. <a href=\"https://www.uber.com/en-US/blog/h3/\">See the example in the post ↗</a>",
+          "caption": "The post gives design numbers, not speed tests. In its worked example, a map of California at resolution 6 needs 901 hexagons in the compact list, where the full list has 10,633. That is one example, not a benchmark. The picture is a schematic, not to scale. <a href=\"https://www.uber.com/en-US/blog/h3/\">See the example in the post ↗</a>",
           "media": {
             "type": "svg",
             "src": "h3-hexagons/story/04-evidence.svg",

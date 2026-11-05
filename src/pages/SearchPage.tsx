@@ -33,17 +33,17 @@ export function SearchPage({ archive }: { archive: Archive }) {
 
   return (
     <main>
-      <Masthead site={site} meta={['The archive', `${index.papers.length} paper${index.papers.length === 1 ? '' : 's'}`]} />
+      <Masthead site={site} meta={['The archive', `${index.papers.length} stor${index.papers.length === 1 ? 'y' : 'ies'}`]} />
       <section className="search">
         <div className="label">The archive &nbsp; / &nbsp; Search every issue</div>
-        <h2>Find a paper</h2>
+        <h2>Find a story</h2>
         <form className="search-box" role="search" onSubmit={e => e.preventDefault()}>
           <input type="search" value={q} onChange={e => setQuery(e.target.value)}
-            placeholder="Search by topic, title or author" aria-label="Search papers" autoFocus />
+            placeholder="Search by topic, title, author or company" aria-label="Search stories" autoFocus />
         </form>
         {tags.length > 0 && (
           <p className="active-tags">
-            <span className="label">Showing papers tagged</span>
+            <span className="label">Showing stories tagged</span>
             {tags.map(id => (
               <button type="button" key={id} className="tag tag-active" onClick={() => toggleTag(id)} aria-label={`Remove ${lookup.get(id)?.label ?? id}`}>
                 {lookup.get(id)?.label ?? id} ✕
@@ -55,7 +55,7 @@ export function SearchPage({ archive }: { archive: Archive }) {
         <div className="search-grid">
           <div aria-live="polite">
             <p className="label">{results.length} result{results.length === 1 ? '' : 's'}</p>
-            {results.length === 0 && <p className="empty">No papers match yet. Try a broader word, or remove a tag.</p>}
+            {results.length === 0 && <p className="empty">No stories match yet. Try a broader word, or remove a tag.</p>}
             <ol className="results">
               {results.map(({ entry, matched }) => (
                 <li key={entry.slug}>

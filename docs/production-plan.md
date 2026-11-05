@@ -112,7 +112,7 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 
 ### Phase 2: Real content to replace samples
 
-- [x] One real company engineering post: Uber Engineering, "H3: Uber's Hexagonal Hierarchical Spatial Index" (Isaac Brodsky, 2018-06-27). Slug `h3-hexagons`; real company `uber`; 5 facts all `model_design` (the post has no measured results); fact-check in `docs/fact-checks/h3-hexagons.md`. Added the blog data contract (additive: `kind: 'paper' | 'blog'` + `blog` block); made `CompanyPage` sample wording conditional on `sample: true`; three placeholder companies now carry `sample: true`.
+- [x] One real company engineering post: Uber Engineering, "H3: Uber's Hexagonal Hierarchical Spatial Index" (Isaac Brodsky, 2018-06-27). Slug `h3-hexagons`; real company `uber`; 5 facts all `model_design` (the post has no measured results); fact-check in `docs/fact-checks/h3-hexagons.md` (archive URL at `web/20261104162659`). Added the blog data contract (additive: `kind: 'paper' | 'blog'` + `blog` block); made `CompanyPage` sample wording conditional on `sample: true`; three placeholder companies now carry `sample: true`. Follow-up label-correctness pass (decision 43) carries `claim` + `trust` on every `Moment` and renders them through one shared `ClaimStamp` on the feed, front page, and story facts — so an H3 design fact says "From the post · model design · company-reported" and a Transformer measured result says "Measured result · peer-reviewed".
 - [ ] Three to five more papers across fields, through `skills/convert-paper`, so every front-page section has real
       stories.
 - [ ] Verify family-tree and map relations with citations (`RelationEvidence`); hide unverified links from readers.

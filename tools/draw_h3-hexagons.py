@@ -207,7 +207,7 @@ add('story/03-zoom-splits.svg',
     '0 0 440 215', _split)
 
 # Chapter 4: evidence. Two lists of cells for the same map: many small cells, and a compact list of fewer, bigger cells.
-# Drawn without numbers. Bar lengths are a visual idea until the evidence is verified (see TODO in the JSON).
+# Drawn as a schematic (not to scale). The compact list shows fewer, larger cells than the full list.
 _full = honeycomb(120, 36, 7, 12, 2, .6, 1.2)
 _compact = hexagon(150, 140, 20, HEX[2], 2.2, .9) + hexagon(200, 140, 20, HEX[2], 2.2, .9)
 _evidence = (
