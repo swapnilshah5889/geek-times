@@ -7,14 +7,14 @@ export function Kicker({ text }: { text: string }) {
 
 const PROVENANCE: Record<Provenance, string> = {
   illustration: 'Illustration · numbers invented',
-  evidence: 'Evidence · real results',
+  evidence: 'Measured result',
   model_design: 'From the paper · model design',
 };
 
 const TRUST: Record<NonNullable<LibraryStory['trust']>, string> = {
-  peer_reviewed: 'Peer-reviewed paper',
-  preprint: 'Preprint',
-  company_reported: 'Company-reported',
+  peer_reviewed: 'peer-reviewed',
+  preprint: 'preprint',
+  company_reported: 'company-reported',
 };
 
 export function Stamp({ kind, trust }: { kind?: Provenance; trust?: LibraryStory['trust'] }) {

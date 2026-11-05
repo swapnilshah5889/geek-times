@@ -29,7 +29,59 @@ export function mediaBaseFor(site: SiteConfig): string {
 
 export const loadSite = () => getJson<SiteConfig>('data/site.json');
 export const loadVocabulary = () => getJson<TagVocabulary>('data/tags.json');
-export const loadLibrary = () => getJson<Library>('data/library.json');
+/**
+ * Build flag VITE_HIDE_SAMPLES=1: removes every sample:true item and every reference to a removed id.
+ * Returns new objects; the cached document is never mutated.
+ */
+function hideSamples(lib: Library): Library {
+  const stories = lib.stories.filter(s => !s.sample);
+  const storyIds = new Set(stories.map(s => s.id));
+  const firstStory = stories[0]?.id ?? '';
+  const keepStories = (ids: string[]) => ids.filter(id => storyIds.has(id));
+  const storylines = lib.storylines.filter(s => !s.sample);
+  const storylineIds = new Set(storylines.map(s => s.id));
+  const nodes = lib.nodes
+    .filter(n => !n.sample)
+    .map(n => ({ ...n, story: n.story && storyIds.has(n.story) ? n.story : undefined }));
+  const nodeIds = new Set(nodes.map(n => n.id));
+  const { front } = lib;
+
+  return {
+    ...lib,
+    stories,
+    front: {
+      ...front,
+      lead: storyIds.has(front.lead) ? front.lead : firstStory,
+      aside: keepStories(front.aside),
+      more: keepStories(front.more),
+      topics: front.topics.map(t => ({ ...t, stories: keepStories(t.stories) })),
+      real: keepStories(front.real),
+      storylines: front.storylines.filter(id => storylineIds.has(id)),
+      vault: storyIds.has(front.vault) ? front.vault : '',
+      onThisDay: { ...front.onThisDay, story: storyIds.has(front.onThisDay.story) ? front.onThisDay.story : firstStory },
+    },
+    issues: lib.issues
+      .filter(i => !i.sample)
+      .map(i => ({
+        ...i,
+        stories: i.stories && keepStories(i.stories),
+        covers: i.covers && storyIds.has(i.covers) ? i.covers : undefined,
+      })),
+    companies: lib.companies
+      .filter(c => !c.sample)
+      .map(c => ({
+        ...c,
+        posts: keepStories(c.posts),
+        builtOn: c.builtOn.filter(id => nodeIds.has(id)),
+      })),
+    storylines,
+    nodes,
+    relations: lib.relations.filter(r => !r.sample && nodeIds.has(r.from) && nodeIds.has(r.to)),
+  };
+}
+
+export const loadLibrary = () =>
+  getJson<Library>('data/library.json').then(lib => (import.meta.env.VITE_HIDE_SAMPLES === '1' ? hideSamples(lib) : lib));
 export const loadSearchIndex = () => getJson<SearchIndex>('data/search-index.json');
 
 export interface Edition {

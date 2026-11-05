@@ -327,6 +327,8 @@ export interface LibraryIssue {
 
 export interface LibraryCompany {
   id: string;
+  /** True for layout-only placeholders; dropped when VITE_HIDE_SAMPLES=1. */
+  sample?: boolean;
   name: string;
   sector: string;
   blurb: string;
@@ -345,6 +347,8 @@ export interface Storyline {
 
 export interface GraphNode {
   id: string;
+  /** True for layout-only placeholders; dropped when VITE_HIDE_SAMPLES=1. */
+  sample?: boolean;
   title: string;
   authors: string;
   year: number;
@@ -362,6 +366,8 @@ export interface GraphNode {
 export interface GraphRelation {
   from: string;
   to: string;
+  /** True for layout-only placeholders; dropped when VITE_HIDE_SAMPLES=1. */
+  sample?: boolean;
   kind: 'builds_on' | 'improves_on' | 'uses_method';
   note: string;
   cited?: boolean;

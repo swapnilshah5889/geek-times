@@ -42,6 +42,13 @@ Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 - Sample stories, companies and placeholders (`[Company name]`, `[Year]`) render on the live
   pages. That is deliberate for design review. Replacing them is Phase 2 work, not a bug.
 
+## Build flags
+
+- `VITE_HIDE_SAMPLES=1 npm run build` hides all sample content for production. `src/data/load.ts` drops every
+  `sample: true` story, issue, storyline, company, node and relation at load time, and removes any reference to a
+  dropped id (front page slots, topics, issue lists, company posts, node story links). Unset (the default), dev and
+  the sample-heavy design review look exactly as before. Components are not changed by the flag.
+
 ## Rules that bite most often
 
 - Work on the long-lived **`v1`** branch (decision 40). Commit often, push often, no PR per change. The owner
