@@ -1,6 +1,7 @@
 # Roadmap
 
-Tick items as they land. Keep the order unless the owner changes priorities.
+Tick items as they land. Keep the order unless the owner changes priorities. The full path to a public launch, with
+the latest review, is in `docs/production-plan.md`.
 
 ## Done
 
@@ -27,12 +28,12 @@ criteria in `decisions.md` #24.
    - plain-language labels and renamed story tabs
    - an accessible map
 2. [ ] **Content model v2 + validators + migration from v1** (`docs/data-model.md` → Migrating).
-3. [ ] **Two real fixtures that test generality:** one paper from another field, and one real company engineering post.
+3. [~] **Two real fixtures that test generality** (paper from another field done: `size-shapes-life`; company post still to do): one paper from another field, and one real company engineering post.
 4. [ ] **Real routes and loaders** (React Router) reading the v2 fixtures.
-5. [ ] **Front page D and the issue page.**
-6. [ ] **Topic and company pages.**
-7. [ ] **Story family tree** using *verified* relations only.
-8. [ ] **Explore map**, once enough verified nodes and relations exist. Include the list view.
+5. [x] **Front page D and the issue page.**
+6. [~] **Topic and company pages.** (Company page built with sample data; topic pages still use search.)
+7. [~] **Story family tree** using *verified* relations only. (Built; every link is still marked "to be fact-checked".)
+8. [~] **Explore map**, once enough verified nodes and relations exist. Include the list view. (Built with sample nodes.)
 9. [ ] **Converter + editorial review queue:** papers and blogs, `FeedEntry` states, `RelationEvidence` review.
 10. [ ] **Backend and storage:** Postgres, an API serving `PublishedVersion`, S3/CDN media with CORS.
 11. [ ] **Mobile polish**, with responsive behaviour tested throughout.

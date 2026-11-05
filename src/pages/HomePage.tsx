@@ -8,9 +8,8 @@ import { headlineOf, latestIssue, realPaper, roleLabel, storiesOf, storyById, tr
 import { MediaBaseContext } from '../lib/mediaBase';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
-import type { LibraryStory, Moment, SearchEntry } from '../types';
-
-const today = () => new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+import { todayLabel } from '../lib/format';
+import type { LibraryIssue, LibraryStory, Moment, SearchEntry } from '../types';
 
 const CLAIM_LABEL = { model_design: 'model design', measured_result: 'measured result', illustration: 'illustration' } as const;
 const sectionOf = (m: Moment) => m.sourceLabel?.replace(/^Paper\s*/, '');
@@ -27,6 +26,54 @@ function SectionHead({ id, title, hint, link }: { id: string; title: string; hin
   );
 }
 
+/** The weekly edition: a small hand-assembled extra, never the focus (decision 32). */
+function useEdition(archive: Archive) {
+  const issue = latestIssue(archive.library);
+  const stories = storiesOf(archive.library, issue.stories ?? []);
+  const minutes = Math.round(stories.reduce((n, s) => n + s.minutes, 0) / 5) * 5;
+  return { issue, count: stories.length, minutes };
+}
+
+function EditionCover({ issue }: { issue: LibraryIssue }) {
+  return (
+    <span className="ed-cover" style={{ background: issue.color }} aria-hidden="true">
+      <span>No. {issue.number}</span><b>{issue.title}</b>
+    </span>
+  );
+}
+
+function EditionCard({ archive }: { archive: Archive }) {
+  const { issue } = useEdition(archive);
+  return (
+    <a className="card ed-card" href={issueHref(issue.id)}>
+      <EditionCover issue={issue} />
+      <span className="ed-text">
+        <span className="label">This week’s edition</span>
+        <span>Our hand-picked stories for the week.</span>
+        <span className="label">Read the edition →</span>
+      </span>
+    </a>
+  );
+}
+
+function EditionBand({ archive }: { archive: Archive }) {
+  const { issue, count, minutes } = useEdition(archive);
+  return (
+    <section aria-label="This week’s edition" className="card ed-band">
+      <EditionCover issue={issue} />
+      <div className="ed-text">
+        <span className="label">This week’s edition · hand-picked</span>
+        <b>{issue.title}</b>
+        <span>{count} {count === 1 ? 'story' : 'stories'} · about {minutes} minutes</span>
+      </div>
+      <div className="ed-links">
+        <a className="f-more" href={issueHref(issue.id)}>Read the edition →</a>
+        <a className="label" href={appHref('issues')}>Past editions</a>
+      </div>
+    </section>
+  );
+}
+
 function Lead({ archive }: { archive: Archive }) {
   const { library } = archive;
   const lead = storyById(library, library.front.lead);
@@ -36,7 +83,7 @@ function Lead({ archive }: { archive: Archive }) {
   return (
     <section id="lead" className="f-lead" aria-label="Top stories">
       <article className="f-lead-main">
-        <div className="label">Issue {lead.issue} · Lead story · {lead.desk}</div>
+        <div className="label">Lead story · {lead.desk}</div>
         <a className="f-lead-art" href={paperHref(lead.id)} aria-label={`Open the story: ${paper.cover.headline.text} ${paper.cover.headline.accent ?? ''}`}>
           <MediaView media={paper.cover.media} />
         </a>
@@ -44,7 +91,7 @@ function Lead({ archive }: { archive: Archive }) {
         <p className="f-lead-dek">{paper.summary}</p>
         <div className="f-lead-foot">
           <p><b>{paper.title}</b> · <i>{paper.authors}, {paper.year}</i> · <span className="f-trust" title={lead.trust === 'peer_reviewed' ? 'Checked by other scientists before it was published' : undefined}>{trustLabel(lead.trust)}</span>{' '}
-            {lead.trust === 'peer_reviewed' && <small>(checked by other scientists)</small>}</p>
+            {lead.trust === 'peer_reviewed' && <small>(checked by other scientists)</small>}{lead.trust === 'preprint' && <small>(shared publicly, not yet checked by other scientists)</small>}</p>
           <a className="f-more" href={paperHref(lead.id)}>Read the illustrated story →</a>
         </div>
       </article>
@@ -57,6 +104,7 @@ function Lead({ archive }: { archive: Archive }) {
             <p>{s.dek}</p>
           </article>
         ))}
+        <EditionCard archive={archive} />
       </aside>
     </section>
   );
@@ -75,13 +123,12 @@ function StoryCard({ story, archive, kicker }: { story: LibraryStory; archive: A
   );
 }
 
-function MoreFromIssue({ archive }: { archive: Archive }) {
+function MoreStories({ archive }: { archive: Archive }) {
   const { library } = archive;
-  const issue = latestIssue(library);
   const stories = storiesOf(library, library.front.more);
   return (
     <section aria-labelledby="s-more" className="f-section">
-      <SectionHead id="s-more" title={`More from Issue ${issue.number}`} link={{ href: issueHref(issue.id), label: 'Whole issue →' }} />
+      <SectionHead id="s-more" title="More top stories" />
       <div className="f-grid f-grid-3">{stories.map(s => <StoryCard key={s.id} story={s} archive={archive} />)}</div>
     </section>
   );
@@ -107,7 +154,7 @@ function Snacks({ archive }: { archive: Archive }) {
         {strips.map(m => (
           <a key={m.id} className="f-snack" href={appHref(m.href)}>
             <MediaView media={m.media!} />
-            <span><span className="label">Illustration · numbers invented</span><b>{m.title}</b><br />{m.text}</span>
+            <span><span className="label">{m.provenance === 'model_design' ? 'From the paper · model design' : 'Illustration · numbers invented'}</span><b>{m.title}</b><br />{m.text}</span>
           </a>
         ))}
         {fact && (
@@ -263,34 +310,12 @@ function Vault({ archive }: { archive: Archive }) {
   );
 }
 
-function BackIssues({ archive }: { archive: Archive }) {
-  const { library } = archive;
-  const current = latestIssue(library);
-  return (
-    <section id="issues" aria-labelledby="s-issues" className="f-section">
-      <SectionHead id="s-issues" title="Back issues" link={{ href: appHref('issues'), label: 'All volumes →' }} />
-      <div className="f-grid f-grid-5">
-        {library.issues.map(i => (
-          <a key={i.id} className="f-cover" style={{ background: i.color }} href={issueHref(i.id)}>
-            <span className="label-ink">Vol. {i.volume} · {i.volume === 'I' ? `No. ${i.number}` : i.number}</span>
-            <b>{i.title}</b>
-            <span>{i.sample ? `Sample · ${i.classics} classics` : `${i.stories?.length} stories · this week`}</span>
-          </a>
-        ))}
-        <a className="f-cover f-cover-all" href={issueHref(current.id)}>
-          <b>Every issue</b><span className="label">Browse volumes →</span>
-        </a>
-      </div>
-    </section>
-  );
-}
-
 function Newsletter() {
   const [sent, setSent] = useState(false);
   const submit = (e: FormEvent) => { e.preventDefault(); setSent(true); };
   return (
     <section aria-labelledby="s-news" className="f-news">
-      <div><span className="label">Every Friday</span><h3 id="s-news">Get each new issue</h3><p>Big science, in pictures, in your inbox once a week.</p></div>
+      <div><span className="label">Every Friday</span><h3 id="s-news">Get the weekly edition</h3><p>Big science, in pictures, in your inbox once a week.</p></div>
       <form onSubmit={submit}>
         <label htmlFor="news-email" className="sr-only">Email address</label>
         <input id="news-email" type="email" placeholder="you@example.com" required disabled={sent} />
@@ -302,8 +327,7 @@ function Newsletter() {
 }
 
 export function HomePage({ archive }: { archive: Archive }) {
-  const { site, library } = archive;
-  const issue = latestIssue(library);
+  const { site } = archive;
   useEffect(() => { document.title = `${site.name} — ${site.motto}`; }, [site]);
   const mediaBase = useMemo(() => mediaBaseFor(site), [site]);
 
@@ -311,25 +335,25 @@ export function HomePage({ archive }: { archive: Archive }) {
     <MediaBaseContext.Provider value={mediaBase}>
       <MotionGroup>
         <main className="site-main">
-          <Masthead site={site} meta={[today(), issue ? `Vol. ${issue.volume} · No. ${issue.number}` : '']} active="front" />
+          <Masthead site={site} meta={[todayLabel(), '']} edition active="front" />
           <div className="f-motion"><MotionButton noun="animations" /></div>
           <Lead archive={archive} />
           <div className="f-explore-head">
             <h2>Keep exploring</h2>
             <span className="label">Sample stories are marked</span>
           </div>
-          <MoreFromIssue archive={archive} />
+          <MoreStories archive={archive} />
           <Snacks archive={archive} />
           <Topics archive={archive} />
           <RealWorld archive={archive} />
           <Numbers archive={archive} />
           <Storylines archive={archive} />
           <Vault archive={archive} />
-          <BackIssues archive={archive} />
+          <EditionBand archive={archive} />
           <Newsletter />
           <footer>
-            <span>{site.name} &nbsp; ✦ &nbsp; Vol. {issue?.volume} · Issue {issue?.number}</span>
-            <a href={searchHref()}>The archive →</a>
+            <span>{site.name} &nbsp; ✦ &nbsp; {site.motto}</span>
+            <span className="foot-links"><a href={appHref('issues')}>Editions</a><a href={appHref('issues')}>Past editions</a><a href={searchHref()}>The archive →</a></span>
           </footer>
         </main>
       </MotionGroup>

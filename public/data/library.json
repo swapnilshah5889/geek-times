@@ -55,6 +55,18 @@
       }
     }
   ],
+  "volumes": [
+    {
+      "id": "1",
+      "title": "November 2026",
+      "kind": "regular"
+    },
+    {
+      "id": "0",
+      "title": "Launch specials",
+      "kind": "special"
+    }
+  ],
   "stories": [
     {
       "id": "attention-is-all-you-need",
@@ -74,7 +86,27 @@
       "trust": "peer_reviewed",
       "minutes": 12,
       "note": "comic + facts",
-      "issue": "001",
+      "sample": false
+    },
+    {
+      "id": "size-shapes-life",
+      "real": true,
+      "headline": "Why a bigger deer",
+      "accent": "breaks.",
+      "dek": "If a deer grew five times bigger in every direction, it would weigh 125 times more. Its leg bones would get only 25 times thicker. That is why big animals are built differently from small ones.",
+      "desk": "Biology & physics",
+      "fields": [
+        "bio",
+        "physics"
+      ],
+      "role": "lead",
+      "kind": "paper",
+      "title": "Integrating Evolutionary Biology into Physics Classroom",
+      "authors": "Das, Gonick and Al Mosleh",
+      "year": 2024,
+      "trust": "preprint",
+      "minutes": 10,
+      "note": "comic + facts",
       "sample": false
     },
     {
@@ -92,7 +124,6 @@
       "year": 2015,
       "art": "stairs",
       "minutes": 8,
-      "issue": "001",
       "sample": true
     },
     {
@@ -111,7 +142,6 @@
       "year": 2021,
       "art": "protein",
       "minutes": 9,
-      "issue": "001",
       "sample": true
     },
     {
@@ -147,7 +177,6 @@
       "art": "waves",
       "minutes": 3,
       "note": "snack only",
-      "issue": "001",
       "sample": true
     },
     {
@@ -182,7 +211,6 @@
       "year": 1929,
       "art": "mold",
       "minutes": 7,
-      "issue": "001",
       "vaultNote": "A classic paper from 1929, explained for the first time. Old ideas, new pictures.",
       "sample": true
     },
@@ -258,7 +286,6 @@
       "trust": "company_reported",
       "company": "social",
       "minutes": 6,
-      "issue": "001",
       "sample": true
     },
     {
@@ -281,16 +308,16 @@
     }
   ],
   "front": {
-    "lead": "attention-is-all-you-need",
+    "lead": "size-shapes-life",
     "aside": [
       "crispr",
       "alphafold",
       "penicillin"
     ],
     "more": [
+      "attention-is-all-you-need",
       "ligo",
-      "resnet",
-      "higgs"
+      "resnet"
     ],
     "topics": [
       {
@@ -306,9 +333,9 @@
         "field": "bio",
         "label": "Your body & medicine",
         "stories": [
+          "size-shapes-life",
           "crispr",
-          "penicillin",
-          "alphafold"
+          "penicillin"
         ]
       }
     ],
@@ -330,13 +357,25 @@
   },
   "issues": [
     {
+      "id": "002",
+      "volume": "1",
+      "number": "002",
+      "title": "Why size matters",
+      "color": "#a2c2a7",
+      "published": "Friday, [publish date]",
+      "stories": [
+        "size-shapes-life"
+      ],
+      "covers": "size-shapes-life",
+      "sample": false
+    },
+    {
       "id": "001",
-      "volume": "I",
+      "volume": "1",
       "number": "001",
       "title": "How machines learned to read",
       "color": "#82acad",
       "published": "Friday, [publish date]",
-      "editorNote": "[Two or three sentences from the editor: why these stories belong together this week, and where to start reading.]",
       "stories": [
         "attention-is-all-you-need",
         "resnet",
@@ -688,6 +727,38 @@
       "x": 620,
       "y": 430,
       "story": "higgs"
+    },
+    {
+      "id": "thompson",
+      "title": "On Growth and Form",
+      "authors": "D’Arcy Thompson",
+      "year": 1917,
+      "field": "bio",
+      "type": "paper",
+      "x": 470,
+      "y": 240
+    },
+    {
+      "id": "haldane",
+      "title": "On Being the Right Size",
+      "authors": "Haldane",
+      "year": 1926,
+      "field": "bio",
+      "type": "paper",
+      "x": 530,
+      "y": 295
+    },
+    {
+      "id": "scaling",
+      "title": "Integrating Evolutionary Biology into Physics Classroom",
+      "short": "Why size matters",
+      "authors": "Das, Gonick and Al Mosleh",
+      "year": 2024,
+      "field": "bio",
+      "type": "paper",
+      "x": 690,
+      "y": 275,
+      "story": "size-shapes-life"
     }
   ],
   "relations": [
@@ -752,6 +823,20 @@
       "to": "higgs",
       "kind": "builds_on",
       "note": "The Higgs particle is part of the Standard Model’s plan."
+    },
+    {
+      "from": "thompson",
+      "to": "scaling",
+      "kind": "builds_on",
+      "note": "The paper builds on Thompson’s idea that physics shapes how bodies grow.",
+      "cited": true
+    },
+    {
+      "from": "haldane",
+      "to": "scaling",
+      "kind": "builds_on",
+      "note": "The paper uses Haldane’s examples of how size limits bodies.",
+      "cited": true
     }
   ]
 }

@@ -29,12 +29,12 @@ export function PaperPage({ edition, archive }: { edition: Edition; archive: Arc
     <EditionContext.Provider value={edition}>
       <MediaBaseContext.Provider value={edition.mediaBaseUrl}>
         <main>
-          <Masthead site={site} meta={[`Vol. ${doc.issue.volume}  ·  No. ${doc.issue.number}`, doc.issue.desk]} links={links} />
+          <Masthead site={site} meta={[doc.desk, `Paper from ${doc.paper.year}`]} links={links} />
           {doc.blocks.map((block, i) => <BlockView block={block} key={block.id ?? i} />)}
           {node && <FamilyTree archive={archive} nodeId={node.id} />}
           <div id="related"><TagShelf tags={doc.tags} vocab={vocab} /></div>
           <footer>
-            <span>{site.name} &nbsp; ✦ &nbsp; Issue {doc.issue.number}</span>
+            <span>{site.name} &nbsp; ✦ &nbsp; {doc.desk}</span>
             <a href={doc.paper.url}>Read the original paper ↗</a>
           </footer>
         </main>

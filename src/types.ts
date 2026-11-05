@@ -30,7 +30,8 @@ export interface PaperDoc {
   cover?: Cover;
   /** Scroll-stopper for the front-page tile; merged into the cover. */
   hook?: CoverHook;
-  issue: { volume: string; number: string; desk: string };
+  /** The science desk the story belongs to, e.g. "Machine learning". Stories never name an issue or a date of ours. */
+  desk: string;
   paper: { title: string; authors: string; year: number; url: string };
   tags: PaperTag[];
   blocks: Block[];
@@ -121,7 +122,7 @@ export interface CoverHook {
   teaser: string;
   /** Button text, a promise of the payoff, e.g. "Crack the bat puzzle". */
   cta: string;
-  /** Minutes to read the whole issue. */
+  /** Minutes to read the whole story. */
   readMinutes: number;
   /** One real number from the paper's facts, shown as a badge. */
   stat?: { figure: string; text: string };
@@ -167,7 +168,7 @@ export interface SearchEntry {
   summary: string;
   authors: string;
   year: number;
-  issue: string;
+  desk: string;
   cover: Cover;
   moments: Moment[];
   tags: { id: string; relevance: number }[];
@@ -188,7 +189,7 @@ export interface Media {
 }
 
 /** Keeps made-up teaching numbers visibly apart from real results. */
-export type Provenance = 'illustration' | 'evidence';
+export type Provenance = 'illustration' | 'evidence' | 'model_design';
 
 /** Inline markup allowed in captions: <b> <strong> <i> <em> <a href> <sub> <sup> <br>. */
 export type RichText = string;
@@ -303,11 +304,13 @@ export interface LibraryStory {
   art?: SampleArtKind;
   minutes: number;
   note?: string;
-  issue?: string;
   company?: string;
   builtOn?: string;
   vaultNote?: string;
 }
+
+/** A volume is a month of weekly issues (decision 33). Volume 0 holds the launch special editions. */
+export interface LibraryVolume { id: string; title: string; kind: 'regular' | 'special' }
 
 export interface LibraryIssue {
   id: string;
@@ -317,7 +320,6 @@ export interface LibraryIssue {
   color: string;
   sample: boolean;
   published?: string;
-  editorNote?: string;
   stories?: string[];
   covers?: string;
   classics?: number;
@@ -369,6 +371,7 @@ export interface GraphRelation {
 export interface Library {
   schemaVersion: 1;
   fields: LibraryField[];
+  volumes: LibraryVolume[];
   stories: LibraryStory[];
   front: {
     lead: string; aside: string[]; more: string[];

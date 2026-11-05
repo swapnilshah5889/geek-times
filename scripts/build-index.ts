@@ -130,7 +130,7 @@ for (const entry of site.papers) {
     summary: doc.summary,
     authors: doc.paper.authors,
     year: doc.paper.year,
-    issue: doc.issue.number,
+    desk: doc.desk,
     cover,
     moments: momentsOf(doc),
     tags: tags.map(t => ({ id: t.tag, relevance: t.relevance })).sort((a, b) => b.relevance - a.relevance),
@@ -155,6 +155,7 @@ const refs: [string, string[]][] = [
   ...library.companies.map((c): [string, string[]] => [`company ${c.id} posts`, c.posts]),
 ];
 for (const [where, ids] of refs) for (const id of ids) need(storyIds.has(id), `${where} points at unknown story "${id}"`);
+for (const i of library.issues) need(library.volumes.some(v => v.id === i.volume), `issue ${i.id} is in unknown volume "${i.volume}"`);
 for (const c of library.companies) for (const id of c.builtOn) need(nodeIds.has(id), `company ${c.id} builds on unknown node "${id}"`);
 for (const n of library.nodes) if (n.story) need(storyIds.has(n.story), `node "${n.id}" points at unknown story "${n.story}"`);
 for (const r of library.relations) need(nodeIds.has(r.from) && nodeIds.has(r.to), `relation ${r.from} → ${r.to} points at an unknown node`);

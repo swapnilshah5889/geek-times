@@ -56,7 +56,7 @@ docs/
   data-model.md           current JSON model + target database schema (class diagram)
   roadmap.md              what's done, what's next, in order
   tagging.md              tag rules
-skills/                   step-by-step playbooks any agent can follow (open SKILL.md format)
+skills/                   playbooks any agent can follow (open SKILL.md format); start with skills/convert-paper
 design/                   exported mockups (PNG + standalone HTML) and the review brief: design/README.md
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
 public/data/              content: site.json, tags.json, library.json (editorial layer, samples), papers/<slug>.json (search-index.json is generated)
@@ -75,6 +75,10 @@ tools/                    media_kit.py (drawing kit) + draw_attention.py (per-pa
 
 ## How the content works (short version)
 
+- Database plan (decision 30): `id` is Postgres auto-increment and the only reference between tables, with no foreign key
+  constraints; our readable key is `slug` (stories) or `key` (tags, moments). URLs use the slug: `/papers/<slug>`.
+- Stories carry no issue, volume or date of ours (decision 31). Issues and volumes are collections of published stories
+  and the only place our dates appear.
 - `public/data/site.json` lists papers. `papers/<slug>.json` = metadata + `summary` + `tags` + ordered `blocks`.
 - Block types: `lead`, `story`, `comic`, `facts` (see `src/types.ts`). Adding one means: a type, a component in
   `src/blocks/`, and a registry entry.
@@ -99,8 +103,8 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 - **Design language:** cream newsprint (`#f6f0df`), ink (`#27251e`), red accent (`#a13324`), Georgia serif
   headlines, Courier labels, halftone dots, muted cartoon colours, word-buddy characters. Front page = layout **D**
   (broadsheet above the fold, soft bento below). Desktop first, mobile next.
-- **Navigation is the same on every page:** Front page · Explore (Topics, Storylines, Map) · Issues · Real world ·
-  Snacks · Search.
+- **Navigation is the same on every page:** Front page · Explore (Topics, Storylines, Map) · Real world · Snacks · Editions ·
+  Search (decision 32: editions are a quiet extra).
 - **Every component ships responsive and accessible:** no horizontal overflow at 375px, labels ≥12px, 44px tap
   targets, keyboard rails, reduced motion respected.
 - **Ask before** anything public or irreversible (publishing, pushing to main, contacting companies, buying domains).
@@ -113,7 +117,9 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
   exported images are in `design/exports/`, with a review brief in `design/README.md`; the editable source is a
   claude.ai design canvas (copied into `design/canvas-source/`).
 - Design review by Codex (2026-11-04) accepted. Changes are recorded as decisions 18–25.
-- Next: see `docs/roadmap.md`. Fixtures from a second field and a real company blog come before more pages.
+- Second real story added: "Why a bigger deer breaks" (`size-shapes-life`, arXiv 2408.04070, a preprint), now the front-page lead.
+  Fact-check record: `docs/fact-checks/size-shapes-life.md`.
+- Next: see `docs/production-plan.md` (review findings, achieved, remaining phases) and `docs/roadmap.md`. Fixtures from a second field and a real company blog come before more pages.
 
 ## Keeping this file true
 

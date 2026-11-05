@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "slug": "attention-is-all-you-need",
   "pageTitle": "One word, two worlds",
-  "issue": { "volume": "I", "number": "001", "desk": "Machine learning" },
+  "desk": "Machine learning",
   "paper": {
     "title": "Attention Is All You Need",
     "authors": "Vaswani and colleagues",
@@ -103,7 +103,7 @@
     {
       "type": "lead",
       "id": "lead",
-      "kicker": "The language issue / Feature 01",
+      "kicker": "Machine learning / Picture story",
       "headline": { "text": "One word,", "accent": "two worlds." },
       "deck": "A bat can have wings. A bat can hit a ball. How does a translation machine tell which one you mean?",
       "slideshow": {

@@ -60,9 +60,9 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     deep-linking into the story. *Why:* the "TikTok for intellectuals" goal.
 
 12. **Volumes and issues are the publishing rhythm, not the main navigation.**
-    - A volume is a year.
+    - A volume is a month of weekly issues (decision 33; originally a year).
     - An issue is a curated package of several stories (one lead, features, briefs, a "From the vault" classic), with
-      a theme and an editor's note.
+      a theme.
     - Discovery runs through topics, storylines, the graph and search.
 
     *Why:* issues create habit and shareable moments, but nobody searches by issue number.
@@ -185,3 +185,38 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - New routes: `/issues[/<id>]`, `/companies[/<id>]`, `/map` (with a list view), plus a family tree on story pages.
     - `npm run data` checks that every library reference points at something that exists.
     - The cover `hook` (decision 28) stays in the data but the front page does not use it yet.
+
+30. **Database keys: auto-increment `id`, our key under another name, no foreign key constraints.** (The owner's call.)
+    - Every table's `id` is the Postgres auto-increment (`bigint identity`) and is what other tables store, as
+      `<thing>_id` columns.
+    - Readable keys keep their own columns: `Story.slug` stays the public key and the URL (`/papers/<slug>`; the
+      title-based slugs were kept on purpose); `Tag.key`, `Moment.key`, `Facet.key`, `Source.arxivId`.
+    - `_id` columns are indexed but have no `REFERENCES`. Integrity comes from the import validator, the app and a
+      scheduled orphan check. Rows are retired by `status`, never deleted.
+    - Why: imports, re-publishing and moving content between environments never fight constraint order, and ids stay
+      meaningless and stable while slugs can be corrected.
+
+31. **Issues and volumes are collections; stories carry none of our dates.** (The owner's call.)
+    - A story is published on its own. An issue (and a volume, a month of issues) is a curated collection of stories
+      that are already published, and the same story can appear in more than one.
+    - So a story's data has no `issue` field, and story pages, snacks, search results and the feed never show an
+      issue number, a volume or a date of ours. They show the desk and the source's own year ("Paper from 2017").
+    - Issue membership lives only in `library.json` → `issues[].stories`. Our dates (`published`) live only on issues
+      and volumes. The front page and issue pages may name the issue, because they *are* the issue.
+
+32. **Editions are a quiet, hand-made extra, not the focus of the app.** (The owner's call; builds on 12 and 31.)
+    - The owner assembles an issue by hand every week and a volume every month, to give readers a newspaper feel.
+    - Stories are the product. The front page is not "the current issue": the lead says "Lead story", the masthead has
+      no issue number, and the main row is "More top stories".
+    - Where editions show: a small "Editions" link in the nav (after Snacks), a "Weekly edition →" link in the
+      masthead's top-right corner, a "This week's edition" card in the front-page sidebar, one slim band near the
+      bottom, and "Editions / Past editions" links in the footer. The old row of back-issue covers is gone.
+    - Issue pages don't promise an editor's note or any other text we haven't written. They show the cover, the
+      contents with roles, the story cards and previous/next.
+
+33. **A volume is a month.** (The owner's call, confirming 32.)
+    - Volumes are monthly groupings of the weekly issues: Volume 1 is November 2026, the launch month. Volume 0 stays the
+      launch special editions. Issue numbers keep counting up across volumes (001, 002 …).
+    - Volumes are records in `library.json` → `volumes` (`id`, `title`, `kind`); each issue names its volume by id, and
+      `npm run data` rejects an issue with an unknown volume.
+    - Volume numbers are plain digits, not Roman numerals.

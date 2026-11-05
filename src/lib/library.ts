@@ -1,5 +1,5 @@
 import type { Archive } from '../data/load';
-import type { GraphNode, Media, GraphRelation, Library, LibraryCompany, LibraryField, LibraryIssue, LibraryStory, SearchEntry, StoryRole } from '../types';
+import type { GraphNode, LibraryVolume, Media, GraphRelation, Library, LibraryCompany, LibraryField, LibraryIssue, LibraryStory, SearchEntry, StoryRole } from '../types';
 
 // Helpers over the library (the editorial layer: stories, issues, companies and the idea graph).
 
@@ -20,7 +20,26 @@ export const storiesOf = (lib: Library, ids: string[]): LibraryStory[] =>
 export const fieldOf = (lib: Library, id: string): LibraryField | undefined => lib.fields.find(f => f.id === id);
 export const issueById = (lib: Library, id: string): LibraryIssue | undefined => lib.issues.find(i => i.id === id);
 export const companyById = (lib: Library, id: string): LibraryCompany | undefined => lib.companies.find(c => c.id === id);
-export const latestIssue = (lib: Library): LibraryIssue => lib.issues.find(i => !i.sample) ?? lib.issues[0];
+/** Issues are collections of already-published stories; a story can appear in more than one. */
+export const issuesWith = (lib: Library, storyId: string): LibraryIssue[] => lib.issues.filter(i => i.stories?.includes(storyId));
+export const volumeOf = (lib: Library, issue: LibraryIssue): LibraryVolume | undefined => lib.volumes.find(v => v.id === issue.volume);
+const issueNo = (i: LibraryIssue) => parseInt(i.number.replace(/\D/g, ''), 10) || 0;
+
+/** Oldest first: by volume, then issue number ("Special 2" sorts as 2). Never depends on file order. */
+export const issuesInOrder = (lib: Library): LibraryIssue[] =>
+  [...lib.issues].sort((a, b) => Number(a.volume) - Number(b.volume) || issueNo(a) - issueNo(b));
+
+/** The newest real (non-sample) issue. */
+export const latestIssue = (lib: Library): LibraryIssue => {
+  const ordered = issuesInOrder(lib);
+  return [...ordered].reverse().find(i => !i.sample) ?? ordered[ordered.length - 1];
+};
+
+export const neighbours = (lib: Library, issue: LibraryIssue): { prev?: LibraryIssue; next?: LibraryIssue } => {
+  const ordered = issuesInOrder(lib);
+  const at = ordered.findIndex(i => i.id === issue.id);
+  return { prev: ordered[at - 1], next: ordered[at + 1] };
+};
 export const realPaper = (archive: Archive, story: LibraryStory): SearchEntry | undefined =>
   story.real ? archive.index.papers.find(p => p.slug === story.id) : undefined;
 

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, type ReactNode } from 'react';
 import { mediaBaseFor, type Archive } from '../data/load';
-import { latestIssue } from '../lib/library';
+import { todayLabel } from '../lib/format';
 import { MediaBaseContext } from '../lib/mediaBase';
+import { appHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
 import { Masthead, type NavSection } from './Masthead';
 import { MotionButton, MotionGroup } from './motion';
@@ -10,20 +11,19 @@ import { MotionButton, MotionGroup } from './motion';
 export function SitePage({ archive, title, active, meta, motion = true, children }: {
   archive: Archive; title: string; active?: NavSection; meta?: [string, string]; motion?: boolean; children: ReactNode;
 }) {
-  const { site, library } = archive;
-  const issue = latestIssue(library);
+  const { site } = archive;
   const base = useMemo(() => mediaBaseFor(site), [site]);
   useEffect(() => { document.title = `${site.name} — ${title}`; window.scrollTo(0, 0); }, [site, title]);
   return (
     <MediaBaseContext.Provider value={base}>
       <MotionGroup>
         <main className="site-main">
-          <Masthead site={site} active={active} meta={meta ?? [`Vol. ${issue.volume}`, `No. ${issue.number}`]} />
+          <Masthead site={site} active={active} meta={meta ?? [todayLabel(), '']} edition={!meta} />
           {motion && <div className="f-motion"><MotionButton noun="animations" /></div>}
           {children}
           <footer>
-            <span>{site.name} &nbsp; ✦ &nbsp; Vol. {issue.volume} · Issue {issue.number}</span>
-            <a href={searchHref()}>The archive →</a>
+            <span>{site.name} &nbsp; ✦ &nbsp; {site.motto}</span>
+            <span className="foot-links"><a href={appHref('issues')}>Editions</a><a href={searchHref()}>The archive →</a></span>
           </footer>
         </main>
       </MotionGroup>

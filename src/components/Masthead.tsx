@@ -9,15 +9,17 @@ interface Props {
   site: SiteConfig;
   /** Left and right of the top rule, e.g. issue number and desk. */
   meta?: [string, string];
+  /** Show the quiet "Weekly edition →" link in the top right instead of meta[1]. */
+  edition?: boolean;
   /** Page-local tabs (a story's sections), shown under the site navigation. */
   links?: { href: string; label: string }[];
   /** Which site section this page belongs to. */
   active?: NavSection;
 }
 
-// The site navigation is identical on every page (decision 19): Front page · Explore · Issues ·
-// Real world · Snacks · Search. Explore opens a small menu; it closes on outside click or Escape.
-export function Masthead({ site, meta = ['', ''], links = [], active }: Props) {
+// The site navigation is identical on every page (decisions 19 and 32): Front page · Explore · Real world ·
+// Snacks · Editions · Search. Explore opens a small menu; it closes on outside click or Escape.
+export function Masthead({ site, meta = ['', ''], links = [], active, edition }: Props) {
   const menu = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     const close = (e: Event) => {
@@ -36,7 +38,7 @@ export function Masthead({ site, meta = ['', ''], links = [], active }: Props) {
       <div className="meta">
         <span>{meta[0]}</span>
         <span>{site.tagline}</span>
-        <span>{meta[1]}</span>
+        <span>{edition ? <a href={appHref('issues')}>Weekly edition →</a> : meta[1]}</span>
       </div>
       <div className="mast"><a href={homeHref()} className="mast-link">{site.name}</a></div>
       <div className="motto">{site.motto}</div>
@@ -50,9 +52,9 @@ export function Masthead({ site, meta = ['', ''], links = [], active }: Props) {
               <a href={mapHref()}>Map of ideas</a>
             </span>
           </details>
-          <a href={appHref('issues')} aria-current={cur('issues')}>Issues</a>
           <a href={appHref('companies')} aria-current={cur('real')}>Real world</a>
           <a href={feedHref()} aria-current={cur('snacks')}>Snacks ▶</a>
+          <a href={appHref('issues')} aria-current={cur('issues')}>Editions</a>
         </span>
         <a href={searchHref()} aria-current={cur('search')}>Search ⌕</a>
       </nav>

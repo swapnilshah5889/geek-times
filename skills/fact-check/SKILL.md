@@ -16,6 +16,7 @@ they must be labelled as invented.
 | Section links | `source.url`, tag `evidence` | The anchor exists (e.g. `#S3.SS2.SSS2`) and that section supports the claim |
 | Paper-basis tags | `tags[]` with `basis: "paper"` | The linked section states it |
 | Names | authors, affiliations, venue, year | They match the source's title page / metadata |
+| Claim kind | `facts[].claim` | `measured_result` only for what a test or experiment found; `model_design` for how something was built or argued (a derivation, a design choice, a definition) |
 | Trust level | source and facts | Blog numbers are marked company-reported; preprints aren't called peer-reviewed |
 
 ## How
