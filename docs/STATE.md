@@ -27,7 +27,7 @@ Path URLs (`/papers/<slug>`). Reduced motion respected; pause switch per section
 Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 
 1. **Fix now** (small, from the Codex review): shared claim label on fact cards / feed / evidence; unique React keys; reword "Swipe this issue". (Family tree stays as demo — see below.)
-2. **Phase 1 (slimmed):** rendering decision + one prerendered story; preview deploys per PR. Tests, CI and axe are **deferred to pre-launch** (decision 39).
+2. **Phase 1 (slimmed):** rendering decision + one prerendered story. Preview deploy done (Vercel at https://the-geeky-times.vercel.app/, SPA rewrite in `vercel.json`). Tests, CI and axe are **deferred to pre-launch** (decision 39).
 3. **Phase 2:** one real company engineering post and 3–5 more papers to replace samples.
 4. **Phase 3:** Supabase migrations, import job with orphan checks, media on a CDN with CORS.
 5. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, no samples, hosted).

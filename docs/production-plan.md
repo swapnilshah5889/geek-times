@@ -99,7 +99,7 @@ Each phase ends in something the owner can see and approve. Phases 1–2 can ove
 
 - [ ] **Rendering decision and spike (decision 36):** choose static generation, edge prerendering or server rendering, and ship one
       prerendered story with its share preview, before any platform API work.
-- [ ] Preview deploy per pull request so the owner can review on a real URL.
+- [x] Preview deploy per push so the owner can review on a real URL. Vercel at https://the-geeky-times.vercel.app/; `vercel.json` adds the SPA rewrite so `/papers/<slug>` and other deep links don't 404 on direct load. Still unticked at Phase 5: HTTPS / custom domain / CSP.
 
 > **Automated tests, CI and axe checks are deferred to the pre-launch gate (decision 39).** They aren't in Phase 1 while
 > the app is pre-v1 (still showing demo tiles and reading JSON files) because they slow iteration. See the
