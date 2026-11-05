@@ -6,12 +6,23 @@ import { FamilyTree } from '../components/FamilyTree';
 import type { Archive, Edition } from '../data/load';
 import { EditionContext } from '../edition';
 import { MediaBaseContext } from '../lib/mediaBase';
+import type { LeadBlock } from '../types';
+import { useHead } from '../components/head';
 
 export function PaperPage({ edition, archive }: { edition: Edition; archive: Archive }) {
   const { site, doc, vocab } = edition;
 
+  // og:image is the first lead slide. It is an SVG today; most social platforms want a raster image (follow-up).
+  const lead = doc.blocks.find((b): b is LeadBlock => b.type === 'lead');
+  const leadImage = lead?.slideshow.slides[0]?.media;
+  useHead({
+    title: `${doc.pageTitle} — ${site.name}`,
+    description: doc.summary,
+    image: leadImage ? new URL(leadImage.src, edition.mediaBaseUrl).href : undefined,
+    type: 'article',
+  });
+
   useEffect(() => {
-    document.title = `${site.name} — ${doc.pageTitle}`;
     if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
   }, [site, doc]);
 

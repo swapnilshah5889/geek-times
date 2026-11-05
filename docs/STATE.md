@@ -32,6 +32,8 @@ Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 4. **Phase 3:** Supabase migrations, import job with orphan checks, media on a CDN with CORS.
 5. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, no samples, hosted).
 
+SSG prerender spike (decision 41) landed for one route: `npm run build && npm run prerender` writes `dist/papers/attention-is-all-you-need/index.html`. The follow-up extends `ROUTES` in `scripts/prerender.ts` to every page.
+
 ## Known gaps kept on purpose (do not "fix")
 
 - **Family tree / explore map** are demo content. The current nodes and links are placeholders
