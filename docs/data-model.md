@@ -2,7 +2,7 @@
 
 Two parts: what exists **today** (JSON files, file schema versions 1 and 2), and the **target** (content model v2 plus
 the database). The TypeScript types in `src/types.ts` are the contract for today's files. Reasons are in `decisions.md`,
-entries 4, 8, 15, 16, 18, 22–23, 30, 42, 43, 44, 46 and 47.
+entries 4, 8, 15, 16, 18, 22–23, 30, 42, 43, 44, 46, 47 and 48.
 
 "v2" names two different things, so keep them apart:
 
@@ -39,6 +39,25 @@ copies it onto each moment (decision 43), and `claimLabel()` in `src/lib/claimLa
 `transformer → bert` with `uses_method` reads "BERT uses the method of the Transformer", and `familyOf()` in
 `src/lib/library.ts` and `FamilyTree.tsx` read it the same way. `npm run data` checks only that both ends are known nodes. It
 does not check kind, direction or evidence.
+
+## Runtime read path (decision 48)
+
+The first runtime read is a slice of the target below: two Supabase tables, one publish function, and a public read
+contract. Everything else stays in files (see `docs/STATE.md`, "Runtime data").
+
+- `story`: `id`, `slug` (unique, the public key), `kind` (`paper` | `blog`), `live_version_id`. Anon may read it.
+- `published_version`: `id`, `story_id`, `story_slug` (denormalized so public reads need no join), `schema_version`,
+  `status` (`staging` | `live` | `retired`), `document` (jsonb, the `PaperDoc`), `library_entry` (jsonb, the `LibraryStory`),
+  `created_at`. Anon may read only rows where `status = 'live'`. A partial unique index allows one live row per story.
+- `publish_version(version_id)`: a security-definer SQL function that retires the live row, makes the new row live, and
+  moves `story.live_version_id`, all in one transaction. Granted to `service_role` only, so the publish CLI is its only caller.
+- Public read contract: readers use the publishable key only. One read returns the live `document` and `library_entry`
+  for a slug. A second returns every live `story_slug` and `library_entry` pair for the home-page overlay.
+- No foreign key constraints (decisions 30 and 38). `story_id` is indexed and joined in code.
+
+The content model is unchanged. `document` is the file-backed `PaperDoc` (`schemaVersion: 2`, `src/types.ts`) and remains
+the authoritative shape; the JSON files stay the source, and each published version stores a copy. The derived tables in
+the diagram below (Moment, Fact, Source and the rest) are not built by this slice.
 
 ## Target
 
@@ -146,10 +165,10 @@ classDiagram
 
 - **Hosting (decision 34):** Supabase. Migrations are SQL files in `supabase/migrations/`. The auto-generated REST API infers
   relationships from foreign key constraints, so without them (decision 38), nested reads use SQL views, database functions or server code.
-- **Row-level security** (only needed once something reads at run time, decision 36) will show readers only published stories,
-  approved tags and verified relations. It depends on schema that doesn't exist yet: a relation `status`
+- **Row-level security:** the story slice has it now (decision 48, see "Runtime read path" above). The wider policies,
+  which show readers only approved tags and verified relations, wait for schema that doesn't exist yet: a relation `status`
   (proposed, verified, rejected) with evidence, and immutable published versions that own their derived rows. Those
-  columns are prerequisites for the policy migration, and the policies need tests.
+  columns are prerequisites for those policies, and the policies need tests.
 
 - **Stub sources:** a `Source` with no `StorySource` row is a greyed "not explained yet" node in the graph.
 - **Two dates:** `Source.year` (original publication) vs `Story.publishedAt` and `Issue.publishedAt` (ours). Only

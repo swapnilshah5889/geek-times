@@ -8,7 +8,8 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 
 - Everything through PR #9 (the Supabase plan) is merged into `main`. No feature branch open.
 - `main` is at `fba4323`. Work continues on `v1` (decision 40), many commits ahead.
-- Last decisions: 41 SSG prerender · 42 publish atomicity (refines 38) · 43 claim + trust on moments · 44 trust on every sourced claim · 45 createRoot not hydrateRoot (clarifies 41) · 46 story `schemaVersion: 2` · 47 single-stamp comic model (reclassify + rewrite; per-panel rejected).
+- **Runtime Supabase path in flight on `v1` (decision 48):** story documents and live library entries for published slugs can come from Supabase when `VITE_DATA_SOURCE=supabase`. Everything else stays static (see "Runtime data" below). The default stays `file`. Owner's project is ready; values live in a local `.env` only.
+- Last decisions: 41 SSG prerender · 42 publish atomicity (refines 38) · 43 claim + trust on moments · 44 trust on every sourced claim · 45 createRoot not hydrateRoot (clarifies 41) · 46 story `schemaVersion: 2` · 47 single-stamp comic model (reclassify + rewrite; per-panel rejected) · 48 runtime Supabase reads, RLS required (refines 34).
 
 ## Real content
 
@@ -24,15 +25,32 @@ Data-driven React site: front page D, story pages (five tabs, comic strips, fami
 issue, company and map pages (with list view), swipe feed (`?feed`), search with tag filters.
 Path URLs (`/papers/<slug>`). Reduced motion respected; pause switch per section.
 
+## Runtime data: what's live, what's static
+
+Live (the one runtime read, Supabase, only when `VITE_DATA_SOURCE=supabase`; decision 48):
+- Story document (`PaperDoc`) for each published slug, from `published_version` where `status = 'live'`.
+- Live library entry (`LibraryStory`) for each published slug, overlaid on the `library.json` story list before render.
+
+Static (read from files or prerendered HTML, as today):
+- `public/data/tags.json`: tag vocabulary.
+- `public/data/library.json` shell: front-page slots, issues, companies, storylines, nodes, relations, map.
+- `public/data/search-index.json`: feed, search and home-page moments.
+- `public/data/site.json`: site name, papers list, `mediaBaseUrl`.
+- Prerendered HTML (`dist/<route>/index.html`): build-time content. Readers see live data once React mounts.
+- Media under `public/media/<slug>/` (moving to a CDN later).
+
+In file mode (the default), the story document and library entries come from `public/data/papers/<slug>.json` and `library.json`.
+
 ## Next
 
 Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 
 1. **Fix now and Phase 0:** mostly landed on `v1` (see "Fixed" in the production plan). Still open: parents for the other new tags.
 2. **Phase 1, rendering (landed, decision 41):** `npm run build && npm run prerender` writes all 27 routes in the default build (home, papers, samples, issues, companies, map) from one list, `scripts/prerender-routes.ts`. `npm run check:prerender` fails if any route lacks a page-specific title, description, `og:title`, `og:description` or `og:type`. Every page type uses `useHead`. `?feed`, `?search` and `?paper=` stay deferred (they share `/`). **Deferred:** client hydration (so readers don't see a loading flash) and Vercel build wiring (the prerender still runs by hand). Preview deploy: https://the-geeky-times.vercel.app/ (tracks `main`; the `vercel.json` SPA rewrite goes live when `v1` merges). Tests, CI and axe stay **deferred to pre-launch** (decision 39).
-3. **Phase 2:** the first company engineering post has landed (H3, `h3-hexagons`, with the blog data contract and decision 43's claim and trust labels). Still open: 3–5 more papers to replace samples, plus the rest of the Phase 2 list in the production plan.
-4. **Phase 3:** Supabase migrations, import job with orphan checks and transactional publish, media on a CDN with CORS.
-5. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, no samples, hosted).
+3. **Phase 3a, Supabase runtime slice (in flight, decision 48, goes first):** the story-slice migration (RLS on both tables, `publish_version`), the `src/data/source.ts` boundary, `scripts/publish-to-supabase.ts`, then the no-rebuild proof (publish a changed headline, reload, no build). Story production waits for that proof.
+4. **Phase 2 (resumes after step 3):** the first company engineering post has landed (H3, `h3-hexagons`, with the blog data contract and decision 43's claim and trust labels). Still open: 3–5 more papers to replace samples, plus the rest of the Phase 2 list in the production plan.
+5. **Phase 3, later batches:** seed and export reconciliation, media on a CDN with CORS, then the remaining static reads listed in the production plan. Import job with orphan checks and transactional publish.
+6. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, no samples, hosted).
 
 ## Pre-launch gates (not started)
 

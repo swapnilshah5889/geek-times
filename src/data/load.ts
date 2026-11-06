@@ -1,35 +1,8 @@
-import { STORY_SCHEMA_VERSION, storyVersionMessage, type Library, type PaperDoc, type SearchIndex, type SiteConfig, type TagVocabulary } from '../types';
+import { type Library, type LibraryStory, type PaperDoc, type SearchIndex, type SiteConfig, type TagVocabulary } from '../types';
+import { appUrl, getJson } from './fetch-json';
+import { pickSource } from './source';
 
-const BASE = new URL(import.meta.env.BASE_URL, window.location.origin);
-
-/** Resolves a path against the app's base URL (absolute URLs pass through). */
-export function appUrl(path: string): string {
-  return new URL(path, BASE).href;
-}
-
-const cache = new Map<string, Promise<unknown>>();
-
-/**
- * Fetches a versioned JSON document once per page load. A document at any other schemaVersion is rejected, never
- * upgraded. `mismatch` builds the message for a document that needs a migration (defaults to a plain version error).
- */
-function getJson<T extends { schemaVersion?: number }>(
-  url: string,
-  required = 1,
-  mismatch?: (found: unknown) => string,
-): Promise<T> {
-  if (!cache.has(url)) {
-    cache.set(url, fetch(appUrl(url)).then(async res => {
-      if (!res.ok) throw new Error(`Could not load ${url} (${res.status})`);
-      const doc = (await res.json()) as T;
-      if (doc.schemaVersion !== required) {
-        throw new Error(mismatch?.(doc.schemaVersion) ?? `${url} uses schema version ${doc.schemaVersion}; this page reads version ${required}.`);
-      }
-      return doc;
-    }));
-  }
-  return cache.get(url) as Promise<T>;
-}
+export { appUrl };
 
 /** A deployment can point media at a CDN without touching the data. */
 export function mediaBaseFor(site: SiteConfig): string {
@@ -89,8 +62,29 @@ function hideSamples(lib: Library): Library {
   };
 }
 
-export const loadLibrary = () =>
-  getJson<Library>('data/library.json').then(lib => (import.meta.env.VITE_HIDE_SAMPLES === '1' ? hideSamples(lib) : lib));
+/**
+ * Replaces each shell story whose id matches a live library entry (the file source has none, so this is a no-op there).
+ * A live entry with no matching shell story is appended to `stories`; the front-page layout slots still come from the shell.
+ */
+function overlayLive(lib: Library, live: Map<string, LibraryStory>): Library {
+  if (live.size === 0) return lib;
+  const placed = new Set<string>();
+  const stories = lib.stories.map(s => {
+    const entry = live.get(s.id);
+    if (!entry) return s;
+    placed.add(s.id);
+    return entry;
+  });
+  for (const [slug, entry] of live) if (!placed.has(slug)) stories.push(entry);
+  return { ...lib, stories };
+}
+
+export async function loadLibrary(): Promise<Library> {
+  const [lib, live] = await Promise.all([getJson<Library>('data/library.json'), pickSource().fetchLiveLibraryEntries()]);
+  const merged = overlayLive(lib, live);
+  return import.meta.env.VITE_HIDE_SAMPLES === '1' ? hideSamples(merged) : merged;
+}
+
 export const loadSearchIndex = () => getJson<SearchIndex>('data/search-index.json');
 
 export interface Edition {
@@ -106,7 +100,7 @@ export async function loadEdition(slug: string | null): Promise<Edition> {
   const wanted = slug ?? site.defaultPaper;
   const entry = site.papers.find(p => p.slug === wanted);
   if (!entry) throw new Error(`No paper called “${wanted}”.`);
-  const doc = await getJson<PaperDoc>(entry.dataUrl, STORY_SCHEMA_VERSION, found => storyVersionMessage(entry.slug, found));
+  const doc = await pickSource().fetchStoryDoc(entry.slug);
   return { site, doc, vocab, mediaBaseUrl: mediaBaseFor(site) };
 }
 

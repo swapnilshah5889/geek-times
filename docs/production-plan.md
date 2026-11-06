@@ -1,7 +1,7 @@
 # Production plan
 
 Where The Geeky Times stands, what a review of the code found, and every step left before a public launch.
-Written 2026-11-04 on `feature/convert-scaling-paper`; updated 2026-11-05 on `v1` (decision 40). Keep it current: tick items as they land and move findings into
+Written 2026-11-04 on `feature/convert-scaling-paper`; updated 2026-11-06 on `v1` (decisions 40 and 48). Keep it current: tick items as they land and move findings into
 "Fixed" when they are resolved. Background: `AGENTS.md`, `docs/decisions.md`, `docs/roadmap.md`.
 
 ## 1. Review (2026-11-04)
@@ -79,7 +79,7 @@ None open. B1–B4 are resolved (see "Fixed" at the end); the Codex review's sma
 
 ## 3. Remaining steps to production
 
-Each phase ends in something the owner can see and approve. Phases 1–2 can overlap; 3 needs 2; 5 needs everything.
+Each phase ends in something the owner can see and approve. Phases 1–2 can overlap. Phase 3a (the Supabase runtime slice, decision 48) runs before more Phase 2 story work. Phase 5 needs everything.
 
 ### Fix now (from the Codex review; small, before Phase 1)
 
@@ -109,6 +109,28 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
 > **Automated tests, CI and axe checks are deferred to the pre-launch gate (decision 39).** They aren't in Phase 1 while
 > the app is pre-v1 (still showing demo tiles and reading JSON files) because they slow iteration. See the
 > "Pre-launch hardening" section below, which runs right before Phase 5.
+
+### Phase 3a: Supabase runtime slice (in flight, decision 48; before more Phase 2 stories)
+
+Readers get the story document and the live library entry from Supabase for any published slug. Everything else stays
+static (list under Phase 3, "Remaining static reads"). Row-level security is **required** for this slice, not deferred.
+The slice ships with its RLS and its policy tests, not at the Phase 4.5 gate.
+
+- [ ] Migration `supabase/migrations/<timestamp>_init_story_slice.sql`: `story` and `published_version` tables with no
+      foreign key constraints (decisions 30 and 38), indexes, RLS on both tables (anon may `SELECT` `story`; anon may
+      `SELECT` `published_version` only where `status = 'live'`), and `publish_version(version_id)` (security definer,
+      granted to `service_role` only). `supabase/README.md` explains applying it with the Supabase CLI.
+- [ ] `src/data/source.ts` boundary: `file` (default) or `supabase` by `VITE_DATA_SOURCE`. A Supabase error throws; no
+      silent fallback to JSON. Adds `@supabase/supabase-js` as a dependency (check its current API before use).
+- [ ] `scripts/publish-to-supabase.ts` (service-role key, server-side only): validates `schemaVersion: 2` and every
+      reference, upserts `story` by slug, inserts a `staging` version, then calls `publish_version`. Prints the target
+      hostname, never a key.
+- [x] `.env.example` with names only; `.env` added to `.gitignore`.
+- [ ] Proof, no rebuild: dev server with `VITE_DATA_SOURCE=supabase`; note the headline on `/` and
+      `/papers/attention-is-all-you-need`; publish a changed headline; reload both. The new text shows with no
+      `npm run build` and no redeploy. Open-tab live updates and cache invalidation are out of scope.
+
+Phase 2 story production resumes after the proof passes.
 
 ### Phase 2: Real content to replace samples
 
@@ -156,14 +178,26 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
       `supabase/migrations/`, applied with the Supabase CLI. Keys only in environment variables.
 - [x] Foreign keys: decided, none (decision 38). Tables join on `<thing>_id` primary-key columns; every `_id` column is indexed;
       nested reads use SQL views, database functions or server code, not the auto-generated REST embedding.
-- [ ] Prerequisite schema before any row-level security: relation `status` with evidence, and immutable published versions
-      that own their derived rows (`published_version_id`).
-- [ ] Row-level security and a paged runtime API: **only when a runtime feature needs them** (decision 36). Not on the launch
-      path, which is static pages.
+- [ ] Prerequisite schema before row-level security on the rest of the tables: relation `status` with evidence, and immutable
+      published versions that own their derived rows (`published_version_id`). The Phase 3a slice needs neither (decision 48).
+- [ ] RLS for the remaining tables and a paged runtime API: **only when a runtime feature needs them** (decisions 36 and 48).
+      RLS for the story slice is required now (Phase 3a). The launch path is still static pages with a runtime story read.
 - [ ] Import job from JSON into Supabase with the integrity checks, **required** because there are no foreign keys (decision 38):
       transactional publish, unique, check and not-null constraints, an orphan check before every publish, orphan monitoring
       with alerts, and tests that every import and export reference remaps. Publish rules: `docs/data-model.md`, "Publish and import atomicity".
 - [ ] Media on a CDN with CORS (Supabase Storage or S3: decide); set `mediaBaseUrl` per environment.
+
+**Later batches (each lands with its own proof, after Phase 3a):**
+
+1. Seed and export reconciliation (`npm run seed`, `npm run export`) and the restore drill (see the backup table below).
+2. Media on a CDN with CORS, covering `public/media/<slug>/`.
+3. Migrate the remaining static reads, one batch each. Until a batch lands, the file stays the source:
+   - Feed, search and home-page moments: `public/data/search-index.json`.
+   - Issues, companies, map, front-page slots, storylines, nodes and relations: the `public/data/library.json` shell.
+   - Tag vocabulary: `public/data/tags.json`.
+   - Site name, papers list and `mediaBaseUrl`: `public/data/site.json`.
+   - Prerendered HTML: build-time content. Decision 48 defers wiring live data into prerender to a later batch.
+   - Media files under `public/media/`: covered by batch 2.
 
 **Backup deliverables (decisions 35 and 37)**, each with an owner and cadence:
 
@@ -199,7 +233,7 @@ ready to host. These were originally in Phase 1 and were moved here by decision 
       horizontal scroll; old links redirect.
 - [ ] Automated accessibility checks (axe) on every page, plus one manual screen-reader pass.
 - [ ] CI on every pull request: data check, typecheck, lint, tests, build. Block merging on failure.
-- [ ] When the policy migration exists: row-level security policy tests (only if a runtime feature needs RLS).
+- [ ] RLS policy tests for every table with a policy. The story slice's tests land with Phase 3a; this gate covers the rest.
 
 ### Phase 5: Launch readiness
 

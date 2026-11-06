@@ -386,3 +386,33 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - **Rejected: per-panel provenance.** It would give exact labels but requires a content-model change (types + validator + `ComicBlock` renderer + every story file + search-index moments). After rewriting every strip across the three real stories, no strip needs it.
     - Applied in this batch: H3 strips 1 and 2 reclassified to `model_design` with the caption-attribution rewrite; strip 3 stays `illustration` with the attribution dropped; `coverPanel: 1` on strip 2 so the feed moment shows the "about seven" panel. Size-shapes-life strip 1 ("Chop the cube") and chapter 2 ("Chop a cube") reclassified `model_design → illustration` because the 5× figure is our arithmetic on an invented scale (fact-check record already said so).
     - **Deferred, blocked on a new fact-check record for `attention-is-all-you-need`:** Transformer strips 4 and 5 carry the paper's own numbers (8 heads, 6 layers) but cannot reclassify yet. New Phase 2 item records this.
+
+48. **Runtime Supabase reads for story documents + live library entries; the rest stays static for now.** (From the 2026-11-05 Codex Supabase runtime brief.)
+    - **What moves to Supabase at runtime:** the story document (`PaperDoc`) and the live library entry fields
+      (`LibraryStory`) for any story that has been published. Readers see a change on the next full page reload,
+      without `npm run build` and without a redeploy. Open-tab live updates and cache invalidation are out of scope.
+    - **What stays static for this batch:** `tags.json`, the `library.json` shell (front-page layout slots, issues,
+      companies, storylines, nodes, relations, map), `search-index.json` (feed, search, home-page moments),
+      prerendered HTML, media files. Each one is called out in STATE.md so no one claims "the site is dynamic."
+    - **Public read contract:** readers hit Supabase with the URL + publishable key only. Two reads:
+      (1) `GET published_version WHERE story_slug = <slug> AND status = 'live'` returns `{document, library_entry}`;
+      (2) `GET published_version WHERE status = 'live'` returns every live `{story_slug, library_entry}` pair, which
+      the home page overlays on `library.json`'s shell before it renders cards.
+    - **RLS is required, not deferred.** Readers have the publishable key in the browser, so row-level security is the
+      only line between them and staging rows. `published_version` has RLS enabled with one SELECT policy
+      (`status = 'live'`). `story` has SELECT allowed to anon; all writes are blocked for anon. Service-role keys
+      stay server-side (seed/publish CLI only); nothing prefixed `VITE_` holds a secret key. This refines decision 34
+      and supersedes the "RLS deferred" line in the production plan.
+    - **Atomic publish (decision 42) in Supabase:** one SQL function `publish_version(version_id)` flips the current
+      live row to `retired`, flips the new row to `live`, and updates `story.live_version_id` in one transaction. The
+      seed/publish CLI (server-side, service-role key) stages a version, runs orphan checks on the staged document,
+      then calls `publish_version`.
+    - **Data-source boundary (`src/data/source.ts`):** a small typed layer in front of `loadEdition`/`loadLibrary` that
+      chooses `file` or `supabase` by `VITE_DATA_SOURCE`. On a Supabase failure the loader surfaces an error — it never
+      silently falls back to JSON. The explicit JSON mode stays for local comparison and the design-review flow.
+    - **Decisions 36 and 41 stand as written.** They described the static build-time path. This entry is the runtime
+      addition on top, not a rewrite. The prerendered HTML continues to carry build-time content until a later batch
+      wires live data into prerender; readers see the live data as soon as React mounts.
+    - **Env vars (names only, never values in git or chat):** `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`,
+      `VITE_DATA_SOURCE` in the browser; `SUPABASE_SERVICE_ROLE_KEY` on the server for the publish CLI. `.env.example`
+      lives in the repo with the names; `.env` is gitignored.

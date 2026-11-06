@@ -52,10 +52,11 @@ Before you finish any change: run `npm run build` and `npm run lint`. Look at th
 
 ```
 AGENTS.md                 you are here (CLAUDE.md / GEMINI.md just point here)
+.env.example              env variable names (no values); copy to .env (gitignored) and fill locally
 docs/
   decisions.md            every product/tech decision so far, with the reason (read this second)
   product-plan.md         navigation, front page, issues & volumes, graph, blogs, search: the target product
-  data-model.md           current JSON model + target database schema (class diagram)
+  data-model.md           current JSON model + target database schema (class diagram) + runtime read path
   roadmap.md              what's done, what's next, in order
   tagging.md              tag rules
 skills/                   playbooks any agent can follow (open SKILL.md format); start with skills/convert-paper
@@ -63,6 +64,7 @@ design/                   exported mockups (PNG + standalone HTML) and the revie
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
 public/data/              content: site.json, tags.json, library.json (editorial layer, samples), papers/<slug>.json (search-index.json is generated)
 public/media/<slug>/      standalone animated SVGs (moving to a CDN later)
+supabase/                 schema migrations (decisions 34, 48) and README; applied with the Supabase CLI
 src/
   types.ts                the content model: the contract between data and UI
   App.tsx                 routes: / (front page D), /papers/<slug>, /issues, /companies, /map, ?feed, ?search
@@ -70,8 +72,10 @@ src/
   blocks/                 one component per content block type (lead, story, comic, facts)
   components/             MediaView (svg/image/video), Rich (safe captions), TagShelf, Masthead, motion
   lib/                    library.ts (stories, issues, graph helpers), routes.ts (all links), feed.ts (feed order), tags.ts (search), motion.ts, mediaBase.ts
+  data/                   fetch-json.ts (cached JSON fetch), load.ts (archive/edition), source.ts + source-supabase.ts (file vs Supabase; decision 48)
   styles/edition.css      the newspaper look
 scripts/build-index.ts    content validator + search index builder
+scripts/publish-to-supabase.ts  seed + atomic publish for one story (service-role key; decisions 42, 48)
 tools/                    media_kit.py (drawing kit) + draw_attention.py (per-paper drawings)
 ```
 
@@ -118,6 +122,9 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 what's next, and the model-routing default. The paragraphs below are kept for context; `STATE.md` is the
 single source of truth for status.
 
+The loader can now read story documents and live library entries from Supabase (`VITE_DATA_SOURCE=supabase`,
+decision 48). Files remain the default, and everything else is still static.
+
 ## Status detail (kept for background)
 
 This section is a long-form backgrounder. For current status use `docs/STATE.md` — it supersedes anything below that
@@ -131,12 +138,14 @@ contradicts it.
   (`size-shapes-life`, arXiv 2408.04070, a preprint, the front-page lead); and "A world covered in honeycomb"
   (`h3-hexagons`, Uber Engineering, the first real company post, company-reported). Fact-check records under
   `docs/fact-checks/` for all three. Everything else in `library.json` is `sample: true`.
-- Database plan decided, not built: Supabase (34), files in git as the full seed and backup (35, 37), static pages
-  for readers (36), no foreign keys with required integrity checks (30, 38), atomic publish per story version (42).
+- Database: Supabase (34). The runtime story slice is in flight (decision 48): story documents and live library entries
+  for published slugs, with RLS required and atomic publish (42). Files in git stay the full seed and backup (35, 37),
+  with no foreign keys and integrity checks (30, 38). Env var names are in `.env.example`; copy it to `.env` (gitignored)
+  and never commit a value.
 - Design source: the claude.ai canvas (copied into `design/canvas-source/`), exports in `design/exports/`. The
   data-model board is still stale (production plan, Phase 0).
-- Next: `docs/production-plan.md` is the only maintained launch sequence. Start with "Fix now", then Phase 1
-  (tests, CI, preview deploys, rendering decision) and Phase 2 (a real company post and more papers to replace samples).
+- Next: `docs/production-plan.md` is the only maintained launch sequence. Phase 3a (the Supabase runtime slice,
+  decision 48) comes before more Phase 2 story work. `docs/STATE.md` has the order and the exact static reads.
 
 ## Keeping this file true
 
