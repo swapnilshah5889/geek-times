@@ -64,7 +64,7 @@ design/                   exported mockups (PNG + standalone HTML) and the revie
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
 public/data/              content: site.json, tags.json, library.json (editorial layer, samples), papers/<slug>.json (search-index.json is generated)
 public/media/<slug>/      standalone animated SVGs (moving to a CDN later)
-supabase/                 schema migrations (decisions 34, 48) and README; applied with the Supabase CLI
+supabase/                 schema migrations (decisions 34, 48, 49) and README; applied with `npm run apply:migration`
 src/
   types.ts                the content model: the contract between data and UI
   App.tsx                 routes: / (front page D), /papers/<slug>, /issues, /companies, /map, ?feed, ?search

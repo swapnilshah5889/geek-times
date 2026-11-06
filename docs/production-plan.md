@@ -1,7 +1,7 @@
 # Production plan
 
 Where The Geeky Times stands, what a review of the code found, and every step left before a public launch.
-Written 2026-11-04 on `feature/convert-scaling-paper`; updated 2026-11-06 on `v1` (decisions 40 and 48). Keep it current: tick items as they land and move findings into
+Written 2026-11-04 on `feature/convert-scaling-paper`; updated 2026-11-06 on `v1` (decisions 40, 48 and 49). Keep it current: tick items as they land and move findings into
 "Fixed" when they are resolved. Background: `AGENTS.md`, `docs/decisions.md`, `docs/roadmap.md`.
 
 ## 1. Review (2026-11-04)
@@ -119,7 +119,7 @@ The slice ships with its RLS and its policy tests, not at the Phase 4.5 gate.
 - [ ] Migration `supabase/migrations/<timestamp>_init_story_slice.sql`: `story` and `published_version` tables with no
       foreign key constraints (decisions 30 and 38), indexes, RLS on both tables (anon may `SELECT` `story`; anon may
       `SELECT` `published_version` only where `status = 'live'`), and `publish_version(version_id)` (security definer,
-      granted to `service_role` only). `supabase/README.md` explains applying it with the Supabase CLI.
+      granted to `service_role` only). `supabase/README.md` explains applying it; `npm run apply:migration` is the record of record (decision 49).
 - [ ] `src/data/source.ts` boundary: `file` (default) or `supabase` by `VITE_DATA_SOURCE`. A Supabase error throws; no
       silent fallback to JSON. Adds `@supabase/supabase-js` as a dependency (check its current API before use).
 - [ ] `scripts/publish-to-supabase.ts` (service-role key, server-side only): validates `schemaVersion: 2` and every
@@ -131,6 +131,32 @@ The slice ships with its RLS and its policy tests, not at the Phase 4.5 gate.
       `npm run build` and no redeploy. Open-tab live updates and cache invalidation are out of scope.
 
 Phase 2 story production resumes after the proof passes.
+
+### Phase 3b: Normalized V1 schema and public views (decision 49): landed in code
+
+The story document stays one immutable jsonb per version. Its queryable parts and the editorial layer move into
+normalized tables, and anon reads them only through `v_*` views. Contract: `docs/handoffs/v1-schema-contract.md`.
+
+- [x] Core content tables (`20261106100000_core_content_schema.sql`, Agent A): sources, snapshots, story sources, citations,
+      media assets, vocabulary (`facet`, `tag`), story tags, moments, facts. Extra metadata columns on `published_version`.
+- [x] Editorial tables (`20261106100001_editorial_schema.sql`, Agent B): volumes, issues, companies, storylines, fields, nodes,
+      relations and evidence, front placement, story fields. Every table has RLS on and no anon grant.
+- [x] Public views, grants and `v_live_story_by_slug` (`20261106100002_public_views_rls.sql`, Agent D). Live, non-sample,
+      approved or verified rows only. The init migration's policies on `story` and `published_version` are kept.
+- [x] Transactional importer (`scripts/publish-to-supabase.ts`, Agent C): one `pg` transaction per publish, a staging version,
+      extracted rows, the orphan audit, then `publish_version`. A failure rolls back and the old live version stays.
+- [x] One migration path: `npm run apply:migration` is the record of record. The Supabase CLI is optional (`supabase/README.md`).
+- [ ] Acceptance run by the lead: apply A, B and D to the owner's project; import the three real stories; orphan audits and
+      leak checks return zero rows; `/` and `/papers/<slug>` checked at 1280px and 375px. Tick this, and the phase, after it passes.
+- [ ] Browser loader moves from `published_version` to `v_live_story`. Not in this batch; the direct reads keep working meanwhile.
+
+**Moved to the database:** story documents and live library entries (decision 48), moments, facts, story tags, citations,
+media asset paths, story fields, the vocabulary (`facet`, `tag`), volumes, issues, companies, storylines, fields, graph nodes,
+verified relations with evidence, and the front-placement row.
+
+**Still file-backed:** the feed and search index (`search-index.json`), prerendered HTML, media files (`public/media/`, moving
+to a CDN in batch 2), the `library.json` shell for anything the views do not cover yet, `tags.json` as the editorial seed,
+and `site.json` (site name, papers list, `mediaBaseUrl`).
 
 ### Phase 2: Real content to replace samples
 
@@ -175,7 +201,7 @@ Phase 2 story production resumes after the proof passes.
 
 - [ ] Content model v2 and migration (`docs/data-model.md`).
 - [ ] **Supabase** projects: local, staging and production (decision 34). Schema per decision 30 as SQL migrations in
-      `supabase/migrations/`, applied with the Supabase CLI. Keys only in environment variables.
+      `supabase/migrations/`, applied with `npm run apply:migration` (the Supabase CLI is optional). Keys only in environment variables.
 - [x] Foreign keys: decided, none (decision 38). Tables join on `<thing>_id` primary-key columns; every `_id` column is indexed;
       nested reads use SQL views, database functions or server code, not the auto-generated REST embedding.
 - [ ] Prerequisite schema before row-level security on the rest of the tables: relation `status` with evidence, and immutable

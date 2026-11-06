@@ -267,3 +267,60 @@ Nothing below is built yet.
 - Issues live in `issues/<volume>-<number>.json` with `stories[{slug, role, presentation}]` (today: `library.json`).
 - Story documents already reject schema version 1 (decision 46), so the "check both versions" step is over for stories. When
   the split lands, the validator checks the new layout and the old `papers/` path is dropped.
+
+## V1 normalized schema (decision 49)
+
+The Phase 3b tables, with the frozen names from `docs/handoffs/v1-schema-contract.md`. They are built by migrations
+`20261106100000` (core, Agent A), `20261106100001` (editorial, Agent B) and `20261106100002` (public views, Agent D). Names
+here are the contract names, and they differ from the sketch in "Target" above, which stays as the design sketch.
+
+Rules that hold for every table (contract, "Shared conventions"): `bigint generated always as identity` keys; `slug` or `key`
+as the public key; `<thing>_id bigint` references with no `REFERENCES`, each indexed; `created_at` on every table;
+enumerations as `text` with a `CHECK`; RLS on and no public policy. Anon reads only through the `v_*` views.
+
+**Core (story content, decision 49):**
+
+- `published_version` (existing): adds the metadata columns `headline`, `accent`, `dek`, `summary`, `page_title`, `desk`,
+  `authors`, `year`, `trust`, `minutes`, `role`, `note`, `source_url`, `source_archived_url`. `document` and `library_entry`
+  stay; `library_entry` is transitional.
+- `source`: one row per paper or blog post, keyed by `url` within a `kind`. Not read by anon yet.
+- `source_snapshot`: archived (Wayback) captures of a source.
+- `story_source`: which sources a version cites, and whether each is primary or secondary.
+- `citation`: one row per source-link appearance in a version's document (`anchor`, `url`, `label`, `context`).
+- `media_asset`: SVG, image or video files a version uses (`path` unique per version).
+- `facet`, `tag`: the tag vocabulary (13 facets, about 93 tags, `aliases` as `text[]`).
+- `story_tag`: tags on a version with `basis` and `status`. Only `approved` rows are public.
+- `moment`: the snacks (lead, hook, chapter, strip panel, fact), each with `claim` and `trust`. Keyed by `key` per version.
+- `fact`: one row per fact card item in a version, with `claim`, `figure` and `text`.
+
+**Editorial and collections (decision 49):**
+
+- `volume`, `issue`, `issue_story`: volumes (months), issues inside them, and the stories in each issue, in order.
+- `company`, `company_post`, `company_built_on`: companies, the stories they published, and the graph nodes they claim to build on.
+- `storyline`, `storyline_step`: guided paths through the graph.
+- `field`: the map's fields, with their cluster coordinates.
+- `node`: a graph node (a paper or a blog post), with its field and its story if we have one.
+- `relation`, `relation_evidence`: typed edges between nodes, with `verified` and their evidence. Only verified, non-sample edges are public.
+- `front_placement`: one row, `key = 'current'`, whose `data` jsonb matches the `library.json` `front` block (slugs, not ids).
+- `story_field`: the fields a version belongs to (per version, not per story).
+
+**Public views (decision 49).** Anon reads only these. Each one keeps only rows that are live (`published_version.status = 'live'`),
+public (`sample = false`), and approved or verified where the table has that state:
+
+- `v_live_story`: one row per live, non-sample story, with its metadata, `document` and `library_entry`. `security_invoker`.
+- `v_live_library_entry`: `(story_slug, library_entry)` for each row of `v_live_story`. `security_invoker`.
+- `v_live_story_by_slug(text)`: the same row for one slug. A SQL function, granted to anon.
+- `v_live_moment`, `v_live_fact`, `v_live_citation`, `v_live_media_asset`, `v_live_story_tag` (approved only), `v_live_story_field`: the extracted rows
+  of live versions, keyed by `story_slug`, with media and tag references resolved to their path or key.
+- `v_facet`, `v_tag`: the whole vocabulary.
+- `v_volume`, `v_issue`, `v_issue_story`, `v_company`, `v_company_post`, `v_company_built_on`, `v_storyline`, `v_storyline_step`,
+  `v_field`, `v_node`: the editorial layer, with references resolved to slugs.
+- `v_relation`, `v_relation_evidence`: verified, non-sample edges only, with both endpoints public.
+- `v_front_placement`: the current front-placement row.
+
+The two story views are `security_invoker`. The rest run with owner rights, so the WHERE clause in each view is what keeps
+staging, retired and sample rows out. Anon has no grant on the raw tables.
+
+**Still file-backed (not in the schema yet):** `site.json`, `tags.json` as the editorial seed, `search-index.json`, prerendered
+HTML, media files, and the `library.json` shell for anything the views do not yet cover. The browser still reads
+`published_version` directly (decision 48); it moves to the views in a later batch.

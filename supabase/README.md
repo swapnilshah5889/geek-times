@@ -1,13 +1,65 @@
 # Supabase
 
-Schema for The Geeky Times lives here as SQL migrations (decision 34). Nothing is edited by hand in the Supabase dashboard.
+Schema for The Geeky Times lives here as SQL migrations (decisions 34 and 49). Nothing is edited by hand in the
+Supabase dashboard. The table names, keys and public-read rules are frozen in
+[`docs/handoffs/v1-schema-contract.md`](../docs/handoffs/v1-schema-contract.md).
 
-## What is here
+## Migration order
 
-- `migrations/` holds the schema, one timestamped file per change, applied in filename order.
-- `migrations/20261106085857_init_story_slice.sql` creates the `story` and `published_version` tables, their indexes,
-  row-level security policies, and the `publish_version(int)` function that promotes a version atomically (decision 42).
-  It contains no story content.
+Files are applied in filename order, one file at a time. Each file runs as one transaction and never edits an earlier one.
+
+1. `20261106085857_init_story_slice.sql`: `story`, `published_version`, their RLS policies, and `publish_version(bigint)`
+   (decisions 42 and 48). Applied to the owner's project already. It contains no story content.
+2. `20261106100000_core_content_schema.sql`: sources, citations, media assets, the tag vocabulary (`facet`, `tag`),
+   story tags, moments, facts and the extra metadata columns on `published_version`.
+3. `20261106100001_editorial_schema.sql`: volumes, issues, companies, storylines, fields, graph nodes, relations with
+   evidence, front placement and story fields.
+4. `20261106100002_public_views_rls.sql`: the `v_*` views that anon reads, their grants, and
+   `v_live_story_by_slug(text)`. It drops nothing and alters no table.
+
+Files 2 to 4 must run after the file before them. The publish importer (`scripts/publish-to-supabase.ts`) runs only after all four.
+
+## Applying (canonical path)
+
+`npm run apply:migration` is the record of record for this repo. It is the only path the repo's docs describe.
+
+1. Add `SUPABASE_DB_URL` to `.env` (one line, from the Supabase dashboard: Project Settings, Database, Connection string,
+   URI). The transaction-mode pooler on port 6543 is fine.
+2. From the repo root, apply each file in the order above:
+
+   ```bash
+   npm run apply:migration -- supabase/migrations/20261106100000_core_content_schema.sql
+   npm run apply:migration -- supabase/migrations/20261106100001_editorial_schema.sql
+   npm run apply:migration -- supabase/migrations/20261106100002_public_views_rls.sql
+   ```
+
+The applier prints the target hostname before it writes. A failed file rolls back and leaves nothing applied from that
+file. Fix it and run that file again. Do not re-run a file that already succeeded.
+
+Then run the orphan audits and leak checks at the end of each file by hand. Every audit must return zero rows.
+
+## Supabase CLI (optional)
+
+The CLI is not installed or used by default. Use it only if you want `supabase db push` and you have run
+`supabase link` for your own project. Do this once, before the first `db push`:
+
+1. Install and link: `brew install supabase/tap/supabase`, then `supabase link --project-ref <your-project-ref>`.
+   If the CLI reports that the project is not initialised, run `supabase init` once from the repo root.
+2. Tell the CLI that the migrations are already applied. Run this once in the SQL editor or with `psql`, and only after
+   the four files above have been applied with `npm run apply:migration`:
+
+   ```sql
+   insert into supabase_migrations.schema_migrations (version, name) values
+     ('20261106085857', 'init_story_slice'),
+     ('20261106100000', 'core_content_schema'),
+     ('20261106100001', 'editorial_schema'),
+     ('20261106100002', 'public_views_rls');
+   ```
+
+   Without these rows, `db push` would try to run all four files again. They are not idempotent, so the push would fail.
+3. From then on, `supabase db push` applies only new files.
+
+Do not paste the migration files into the dashboard SQL editor. A partial run there leaves no record.
 
 ## Rules
 
@@ -15,36 +67,15 @@ Schema for The Geeky Times lives here as SQL migrations (decision 34). Nothing i
   to a project, and never drop or rename a table or column in place.
 - **Never run `supabase db reset` against a project the owner uses.** It wipes the database it targets. It is only for a
   throwaway local database.
+- **No foreign keys** (decisions 30 and 38). Every `*_id` column holds another row's id and is indexed. Each file ends
+  with a commented orphan audit, one query per reference column.
+- **Public reads go through the views in migration 4 only.** Raw tables have no anon grant. Anon reads only the views and the
+  two existing story tables, and the existing policies on those two tables are kept (see the header of migration 4).
 - Readers use the publishable key only. The service-role key stays on the server (seed and publish CLI) and never
   carries a `VITE_` prefix.
 
-## Applying the migration
-
-Three options, pick whichever is easiest. All three apply the same SQL file.
-
-**A — the repo's own applier (no extra install).** Add `SUPABASE_DB_URL` to `.env` (one line, from the Supabase
-dashboard → Project Settings → Database → Connection string → URI; the transaction-mode pooler on port 6543 is fine),
-then from the repo root:
-
-```bash
-npm run apply:migration -- supabase/migrations/20261106085857_init_story_slice.sql
-```
-
-It runs the file as one transaction via `pg`. Any error rolls back. Prints the target hostname before writing.
-
-**B — Supabase CLI.** Install the CLI (`brew install supabase/tap/supabase`), then:
-
-```bash
-supabase link --project-ref <your-project-ref>
-supabase db push
-```
-
-If the CLI reports that the project is not initialised, run `supabase init` once from the repo root.
-
-**C — Dashboard SQL editor.** Open the project → SQL Editor → paste the migration file's contents → Run. Useful as a
-fallback. The migration still lives in `supabase/migrations/` for the record.
-
 ## Reference
 
+- Schema contract (frozen table names and public-read rules): [`docs/handoffs/v1-schema-contract.md`](../docs/handoffs/v1-schema-contract.md)
 - Row-level security: https://supabase.com/docs/guides/database/postgres/row-level-security
 - Securing data: https://supabase.com/docs/guides/database/secure-data

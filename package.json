@@ -16,7 +16,8 @@
     "prerender": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/prerender.ts",
     "check:prerender": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/check-prerender.ts",
     "publish:supabase": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/publish-to-supabase.ts",
-    "apply:migration": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/apply-migration.ts"
+    "apply:migration": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/apply-migration.ts",
+    "seed:editorial": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/seed-editorial-from-library.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",
