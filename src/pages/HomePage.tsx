@@ -116,7 +116,8 @@ function StoryCard({ story, archive, kicker }: { story: LibraryStory; archive: A
     <a className="card f-card" href={paperHref(story.id)}>
       <StoryArt story={story} archive={archive} />
       <div className="f-card-body">
-        <span className="label">{kicker ?? `${roleLabel[story.role]} · ${story.desk}`}{story.sample && ' · Sample'}</span>
+        {/* One text node: adjacent text children are merged by the prerendered HTML and mismatch on hydrate (React #418). */}
+        <span className="label">{`${kicker ?? `${roleLabel[story.role]} · ${story.desk}`}${story.sample ? ' · Sample' : ''}`}</span>
         <h4>{headlineOf(story)}</h4>
         <p>{story.dek}</p>
       </div>
@@ -146,7 +147,7 @@ function Snacks({ archive }: { archive: Archive }) {
   return (
     <section id="snacks" aria-labelledby="s-snacks" className="f-snacks">
       <div className="f-snacks-intro">
-        <span className="label">Snack mode · {count} snacks</span>
+        <span className="label">{`Snack mode · ${count} snacks`}</span>
         <h3 id="s-snacks">Swipe the snacks</h3>
         <p>One picture, one idea, one swipe. Each card opens the full story.</p>
         <a className="f-pill" href={feedHref()}>Start swiping ▶</a>
@@ -223,7 +224,7 @@ function RealWorld({ archive }: { archive: Archive }) {
               <p>{s.dek}</p>
               <span className="f-chips">
                 <span className="chip chip-warm">{trustLabel(s.trust)}</span>
-                {builtOn && <span className="chip chip-green">Puts into practice: {builtOn.title}</span>}
+                {builtOn && <span className="chip chip-green">{`Puts into practice: ${builtOn.title}`}</span>}
               </span>
             </a>
           );
@@ -269,7 +270,7 @@ function Storylines({ archive }: { archive: Archive }) {
       <div className="f-grid f-grid-2">
         {lines.map(l => (
           <a key={l.id} className="card f-line" href={appHref('map')}>
-            <span className="label">Storyline · {l.sample ? 'Sample' : `${l.steps.length} steps`}</span>
+            <span className="label">{`Storyline · ${l.sample ? 'Sample' : `${l.steps.length} steps`}`}</span>
             <h4>{l.title}</h4>
             <ol className="f-steps" style={{ gridTemplateColumns: `repeat(${l.steps.length}, minmax(0, 1fr))` }}>
               {l.steps.map(st => <li key={st.year + st.label} className={st.current ? 'is-now' : undefined}><b>{st.year}</b>{st.label}</li>)}
@@ -291,7 +292,7 @@ function Vault({ archive }: { archive: Archive }) {
         <a className="card f-vault-main" href={paperHref(vault.id)}>
           <StoryArt story={vault} archive={archive} />
           <div className="f-vault-body">
-            <span className="label">From the vault{vault.sample && ' · Sample'}</span>
+            <span className="label">{`From the vault${vault.sample ? ' · Sample' : ''}`}</span>
             <h3 id="s-vault">{vault.headline}</h3>
             <p>{vault.vaultNote ?? vault.dek}</p>
             <span className="f-more">Read the classic →</span>

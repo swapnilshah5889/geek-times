@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { BookLoader, type BookLoaderPhase } from './components/BookLoader';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { BookLoader, LOADER_GRACE_MS, type BookLoaderPhase } from './components/BookLoader';
 import { loadArchive, loadEdition, loadSite, type Archive, type Edition } from './data/load';
 import { editionFromInitial, makeInitialData, routeKeyFromLocation, type InitialData } from './data/initial-snapshot';
 import { Masthead } from './components/Masthead';
@@ -82,10 +82,17 @@ function viewFromInitial(initial: InitialData): View {
 
 type NavigationCommit = { kind: 'push' | 'pop'; url: string; sequence: number };
 
+// A navigation that has already shown the book lifts it out; a fast one only raises the new page.
+function settleNavigation(phase: BookLoaderPhase): BookLoaderPhase {
+  return phase === 'pending' || phase === 'nav-slow' ? 'reveal' : 'nav-reveal';
+}
+
 export function App({ initial }: { initial?: InitialData } = {}) {
   const [view, setView] = useState<View | null>(() => initial ? viewFromInitial(initial) : null);
   const [phase, setPhase] = useState<BookLoaderPhase>(() => initial ? 'idle' : 'pending');
   useEffect(() => { if (view && phase === 'pending') setPhase('reveal'); }, [view, phase]);
+  const finishReveal = useCallback(() => setPhase('idle'), []);
+  const navTimer = useRef<number | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
   const [liveError, setLiveError] = useState<string | null>(null);
   const [site, setSite] = useState<SiteConfig | null>(initial?.archive.site ?? null);
@@ -114,15 +121,23 @@ export function App({ initial }: { initial?: InitialData } = {}) {
       const token = ++sequence.current;
       setError(null);
       setLiveError(null);
+      // The book appears only if the load outlasts the grace period; a cold load already shows it.
+      window.clearTimeout(navTimer.current);
+      setPhase(p => p === 'pending' || p === 'nav-slow' ? p : 'nav-pending');
+      navTimer.current = window.setTimeout(() => setPhase(p => p === 'nav-pending' ? 'nav-slow' : p), LOADER_GRACE_MS);
       Promise.resolve().then(() => load(currentRoute())).then(next => {
         if (token !== sequence.current) return;
+        window.clearTimeout(navTimer.current);
         setView(next);
         setSite(next.archive.site);
+        setPhase(settleNavigation);
         setNavCommit({ kind, url: window.location.href, sequence: token });
       }).catch((err: Error) => {
         if (token !== sequence.current) return;
         console.error(err);
+        window.clearTimeout(navTimer.current);
         setError(err.message);
+        setPhase(settleNavigation);
         setNavCommit({ kind, url: window.location.href || urlBeforeRedirect, sequence: token });
       });
     }
@@ -158,6 +173,8 @@ export function App({ initial }: { initial?: InitialData } = {}) {
         if (token !== sequence.current) return;
         console.error(err);
         setError(err.message);
+        // Lift the book so the error is not hidden behind it.
+        setPhase(settleNavigation);
       });
     }
 
@@ -235,7 +252,7 @@ export function App({ initial }: { initial?: InitialData } = {}) {
     default: content = <HomePage archive={view.archive} />;
   }
   return <>
-    <BookLoader phase={phase} onComplete={() => setPhase('idle')}>
+    <BookLoader phase={phase} onComplete={finishReveal}>
       {content}
     </BookLoader>
     {liveError && <div className="live-error" role="status">{liveError}</div>}

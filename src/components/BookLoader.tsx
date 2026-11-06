@@ -1,7 +1,20 @@
 import { useEffect, type ReactNode } from 'react';
 import './BookLoader.css';
 
-export type BookLoaderPhase = 'pending' | 'reveal' | 'idle';
+/**
+ * pending     cold load: book shown over an empty page
+ * reveal      book lifts out while the new page rises (cold load or a slow in-app navigation)
+ * idle        steady state, no overlay
+ * nav-pending in-app navigation in flight; old page stays visible, no book yet
+ * nav-slow    navigation still in flight after LOADER_GRACE_MS; book fades in over the old page
+ * nav-reveal  fast in-app navigation landed; only the new page rises, no book
+ */
+export type BookLoaderPhase = 'pending' | 'reveal' | 'idle' | 'nav-pending' | 'nav-slow' | 'nav-reveal';
+
+/** In-app navigations that resolve within this many ms never show the book. */
+export const LOADER_GRACE_MS = 250;
+
+const REVEAL_MS = 900;
 
 type BookLoaderProps = {
   phase: BookLoaderPhase;
@@ -11,25 +24,27 @@ type BookLoaderProps = {
 
 /**
  * Wraps the page with a loading overlay (decision 50 handles the hydration path; this is the
- * post-mount loading experience). While `phase` is `pending` or `reveal` the overlay covers
- * the children. On `reveal` the loader lifts up and out while the page rises in from below.
+ * post-mount loading experience). The overlay is shown for `pending`, `nav-slow` and `reveal`.
+ * On either reveal phase the content rises from below; `reveal` also lifts the loader out.
  * Rotating captions and the eight floating field icons live in CSS so there is no timer churn.
  */
 export function BookLoader({ phase, onComplete, children }: BookLoaderProps) {
   useEffect(() => {
-    if (phase !== 'reveal') return;
+    if (phase !== 'reveal' && phase !== 'nav-reveal') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       onComplete?.();
       return;
     }
-    const timer = window.setTimeout(() => onComplete?.(), 900);
+    const timer = window.setTimeout(() => onComplete?.(), REVEAL_MS);
     return () => window.clearTimeout(timer);
   }, [phase, onComplete]);
+
+  const showsLoader = phase === 'pending' || phase === 'nav-slow' || phase === 'reveal';
 
   return (
     <div className={`book-transition book-transition--${phase}`} aria-busy={phase !== 'idle'} suppressHydrationWarning>
       <div className="book-transition__content" suppressHydrationWarning>{children}</div>
-      {phase !== 'idle' && (
+      {showsLoader && (
         <div className="book-loader" role="status" aria-live="polite">
           <div className="book-loader__scene" aria-hidden="true">
             <AtomIcon className="curio c1" />

@@ -25,7 +25,7 @@ export function PaperPage({ edition, archive }: { edition: Edition; archive: Arc
 
   useEffect(() => {
     if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
-  }, [site, doc]);
+  }, []);
 
   // Story tabs (decision 18): the same five sections on every story, linking to the matching part of the page.
   const idOf = (type: string) => doc.blocks.find(b => b.type === type)?.id;

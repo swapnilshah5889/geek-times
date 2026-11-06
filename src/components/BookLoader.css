@@ -7,9 +7,16 @@
 
 /* Reveal: loader lifts up and out, content rises from below */
 .book-transition--reveal .book-loader { animation: book-loader-exit 900ms cubic-bezier(.55, 0, .2, 1) forwards; pointer-events: none; }
-.book-transition--reveal .book-transition__content { animation: book-content-enter 900ms cubic-bezier(.22, 1.4, .36, 1) forwards; }
-.book-transition--idle .book-loader { display: none; }
+.book-transition--reveal .book-transition__content,
+.book-transition--nav-reveal .book-transition__content { animation: book-content-enter 900ms cubic-bezier(.22, 1.4, .36, 1) forwards; }
 
+/* Slow in-app navigation: the book fades in over the old page (the overlay background is opaque, so no snap) */
+.book-transition--nav-slow .book-loader { animation: book-loader-enter 240ms ease-out both; }
+
+@keyframes book-loader-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 @keyframes book-loader-exit {
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(-40px); opacity: 0; visibility: hidden; }
@@ -97,6 +104,8 @@
   .book-loader__book, .curio { animation: none !important; }
   .curio { opacity: 1; transform: none; }
   .book-transition--reveal .book-loader { animation: none; display: none; }
-  .book-transition--reveal .book-transition__content { animation: none; opacity: 1; transform: none; }
+  .book-transition--nav-slow .book-loader { animation: none; }
+  .book-transition--reveal .book-transition__content,
+  .book-transition--nav-reveal .book-transition__content { animation: none; opacity: 1; transform: none; }
   .book-loader__caption span { animation-timing-function: steps(1, end); }
 }

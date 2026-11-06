@@ -118,7 +118,7 @@ export function MapPage({ archive }: { archive: Archive }) {
         <aside aria-label="Selected" className="mp-selected" aria-live="polite">
           <span className="label">{`Selected · ${picked.type === 'blog' ? 'Engineering blog' : 'Paper'} · ${picked.year || 'blog'}`}</span>
           <h2>{picked.title}</h2>
-          <p>{picked.story ? 'We have explained this one.' : 'Not explained yet. Papers with the most links get drawn first.'} {picked.authors}</p>
+          <p>{`${picked.story ? 'We have explained this one.' : 'Not explained yet. Papers with the most links get drawn first.'} ${picked.authors}`}</p>
           <div className="mp-counts"><div><b>{fam.before.length}</b><span>ideas it built on</span></div><div><b>{fam.after.length}</b><span>works that grew from it</span></div></div>
           {picked.story && <a className="f-more" href={paperHref(picked.story)}>Read the story →</a>}
           <ul className="mp-key"><li><i style={{ background: '#377675' }} /> Explained paper (colour = field)</li><li><i className="is-open" /> Not explained yet</li><li><i className="is-blog" /> Engineering blog post</li><li>Dashed lines link ideas across fields.</li></ul>
