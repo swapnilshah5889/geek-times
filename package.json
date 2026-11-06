@@ -15,7 +15,8 @@
     "draw": "python3 tools/draw_attention.py",
     "prerender": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/prerender.ts",
     "check:prerender": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/check-prerender.ts",
-    "publish:supabase": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/publish-to-supabase.ts"
+    "publish:supabase": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/publish-to-supabase.ts",
+    "apply:migration": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/apply-migration.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",
@@ -24,10 +25,12 @@
   },
   "devDependencies": {
     "@types/node": "^24.19.2",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
     "oxlint": "^1.89.0",
+    "pg": "^8.23.1",
     "puppeteer": "^25.16.0",
     "typescript": "~7.0.2",
     "vite": "^8.3.5"

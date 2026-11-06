@@ -25,7 +25,8 @@ const url = process.env.VITE_SUPABASE_URL?.trim();
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
 if (!url) die('VITE_SUPABASE_URL is not set. Copy .env.example to .env and fill it in.');
 if (!serviceKey) die('SUPABASE_SERVICE_ROLE_KEY is not set. Copy .env.example to .env and fill it in.');
-if (serviceKey.startsWith('eyJ') === false) die('SUPABASE_SERVICE_ROLE_KEY does not look like a JWT. Check the value.');
+// Supabase ships two secret-key formats: legacy JWTs (eyJ...) and the newer `sb_secret_...` keys.
+// Don't gate on prefix; a wrong key will fail at auth time with a clearer message.
 
 // Show which project we're hitting so the owner can confirm before anything writes.
 console.log(`Target: ${new URL(url).hostname}`);

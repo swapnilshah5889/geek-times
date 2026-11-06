@@ -20,16 +20,29 @@ Schema for The Geeky Times lives here as SQL migrations (decision 34). Nothing i
 
 ## Applying the migration
 
-Install the Supabase CLI, then run these from the repo root. Use the project ref from the Supabase dashboard (not the
-URL, and never a key):
+Three options, pick whichever is easiest. All three apply the same SQL file.
+
+**A — the repo's own applier (no extra install).** Add `SUPABASE_DB_URL` to `.env` (one line, from the Supabase
+dashboard → Project Settings → Database → Connection string → URI; the transaction-mode pooler on port 6543 is fine),
+then from the repo root:
+
+```bash
+npm run apply:migration -- supabase/migrations/20261106085857_init_story_slice.sql
+```
+
+It runs the file as one transaction via `pg`. Any error rolls back. Prints the target hostname before writing.
+
+**B — Supabase CLI.** Install the CLI (`brew install supabase/tap/supabase`), then:
 
 ```bash
 supabase link --project-ref <your-project-ref>
 supabase db push
 ```
 
-If the CLI reports that the project is not initialised, the owner runs `supabase init` once from the repo root. That
-creates `supabase/config.toml`, which is then committed. Review the output of `supabase db push` before confirming.
+If the CLI reports that the project is not initialised, run `supabase init` once from the repo root.
+
+**C — Dashboard SQL editor.** Open the project → SQL Editor → paste the migration file's contents → Run. Useful as a
+fallback. The migration still lives in `supabase/migrations/` for the record.
 
 ## Reference
 
