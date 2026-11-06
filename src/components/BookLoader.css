@@ -1,0 +1,102 @@
+/* Wrapper */
+.book-transition { position: relative; min-height: 100vh; background: #f6f0df; color: #27251e; overflow: hidden; }
+.book-transition__content { min-height: inherit; }
+
+/* Pending: loader covers content */
+.book-transition--pending .book-transition__content { visibility: hidden; }
+
+/* Reveal: loader lifts up and out, content rises from below */
+.book-transition--reveal .book-loader { animation: book-loader-exit 900ms cubic-bezier(.55, 0, .2, 1) forwards; pointer-events: none; }
+.book-transition--reveal .book-transition__content { animation: book-content-enter 900ms cubic-bezier(.22, 1.4, .36, 1) forwards; }
+.book-transition--idle .book-loader { display: none; }
+
+@keyframes book-loader-exit {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-40px); opacity: 0; visibility: hidden; }
+}
+@keyframes book-content-enter {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loader overlay */
+.book-loader {
+  position: absolute; inset: 0; z-index: 5;
+  display: grid; place-content: center; justify-items: center; gap: 24px;
+  background: #f6f0df; text-align: center; padding: 24px;
+}
+.book-loader__scene { position: relative; width: 320px; height: 240px; max-width: 94vw; }
+.book-loader__book {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 240px; max-width: 86%; animation: book-bob 3.4s infinite ease-in-out;
+}
+.book-loader__book svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+@keyframes book-bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* Floating "any field" icons that drift up from the book */
+.curio {
+  position: absolute; width: 36px; height: 36px; opacity: 0;
+  animation: curio-float 7s infinite ease-out;
+  pointer-events: none;
+}
+.curio svg { display: block; width: 100%; height: 100%; }
+.curio.c1 { left: 20%; bottom: 60px; animation-delay: 0s; }
+.curio.c2 { right: 18%; bottom: 60px; animation-delay: .9s; }
+.curio.c3 { left: 44%; bottom: 60px; animation-delay: 1.8s; }
+.curio.c4 { left: 8%;  bottom: 60px; animation-delay: 2.7s; }
+.curio.c5 { right: 8%; bottom: 60px; animation-delay: 3.6s; }
+.curio.c6 { left: 32%; bottom: 60px; animation-delay: 4.5s; }
+.curio.c7 { right: 32%; bottom: 60px; animation-delay: 5.4s; }
+.curio.c8 { left: 56%; bottom: 60px; animation-delay: 6.3s; }
+
+@keyframes curio-float {
+  0%   { opacity: 0; transform: translate(0, 12px) rotate(-4deg) scale(.6); }
+  10%  { opacity: 1; }
+  60%  { opacity: 1; transform: translate(6px, -100px) rotate(6deg) scale(1); }
+  100% { opacity: 0; transform: translate(-6px, -180px) rotate(-8deg) scale(.9); }
+}
+
+/* Rotating witty caption */
+.book-loader__caption {
+  margin: 0; font: italic clamp(16px, 2vw, 20px) / 1.4 Georgia, 'Times New Roman', serif;
+  color: #27251e; min-height: 1.6em; position: relative; display: grid;
+  max-width: 44ch;
+}
+.book-loader__caption span {
+  grid-area: 1 / 1; opacity: 0;
+  animation-duration: 20s; animation-iteration-count: infinite; animation-timing-function: steps(1, end);
+}
+.book-loader__caption .s1  { animation-name: cap1; }
+.book-loader__caption .s2  { animation-name: cap2; }
+.book-loader__caption .s3  { animation-name: cap3; }
+.book-loader__caption .s4  { animation-name: cap4; }
+.book-loader__caption .s5  { animation-name: cap5; }
+.book-loader__caption .s6  { animation-name: cap6; }
+.book-loader__caption .s7  { animation-name: cap7; }
+.book-loader__caption .s8  { animation-name: cap8; }
+.book-loader__caption .s9  { animation-name: cap9; }
+.book-loader__caption .s10 { animation-name: cap10; }
+
+@keyframes cap1  { 0%, 10%  { opacity: 1; } 10.1%, 100% { opacity: 0; } }
+@keyframes cap2  { 10%, 20% { opacity: 1; } 0%, 9.9% { opacity: 0; } 20.1%, 100% { opacity: 0; } }
+@keyframes cap3  { 20%, 30% { opacity: 1; } 0%, 19.9% { opacity: 0; } 30.1%, 100% { opacity: 0; } }
+@keyframes cap4  { 30%, 40% { opacity: 1; } 0%, 29.9% { opacity: 0; } 40.1%, 100% { opacity: 0; } }
+@keyframes cap5  { 40%, 50% { opacity: 1; } 0%, 39.9% { opacity: 0; } 50.1%, 100% { opacity: 0; } }
+@keyframes cap6  { 50%, 60% { opacity: 1; } 0%, 49.9% { opacity: 0; } 60.1%, 100% { opacity: 0; } }
+@keyframes cap7  { 60%, 70% { opacity: 1; } 0%, 59.9% { opacity: 0; } 70.1%, 100% { opacity: 0; } }
+@keyframes cap8  { 70%, 80% { opacity: 1; } 0%, 69.9% { opacity: 0; } 80.1%, 100% { opacity: 0; } }
+@keyframes cap9  { 80%, 90% { opacity: 1; } 0%, 79.9% { opacity: 0; } 90.1%, 100% { opacity: 0; } }
+@keyframes cap10 { 90%, 100% { opacity: 1; } 0%, 89.9% { opacity: 0; } }
+
+/* Reduced motion: no bob, no float, snap transition */
+@media (prefers-reduced-motion: reduce) {
+  .book-loader__book, .curio { animation: none !important; }
+  .curio { opacity: 1; transform: none; }
+  .book-transition--reveal .book-loader { animation: none; display: none; }
+  .book-transition--reveal .book-transition__content { animation: none; opacity: 1; transform: none; }
+  .book-loader__caption span { animation-timing-function: steps(1, end); }
+}

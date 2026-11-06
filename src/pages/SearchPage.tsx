@@ -3,6 +3,7 @@ import { Masthead } from '../components/Masthead';
 import type { Archive } from '../data/load';
 import { homeHref, paperHref } from '../lib/routes';
 import { searchHref, searchPapers, tagCounts, tagLookup } from '../lib/tags';
+import { wasClientNavigation } from '../lib/navigation';
 
 function readUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -39,7 +40,7 @@ export function SearchPage({ archive }: { archive: Archive }) {
         <h2>Find a story</h2>
         <form className="search-box" role="search" onSubmit={e => e.preventDefault()}>
           <input type="search" value={q} onChange={e => setQuery(e.target.value)}
-            placeholder="Search by topic, title, author or company" aria-label="Search stories" autoFocus />
+            placeholder="Search by topic, title, author or company" aria-label="Search stories" autoFocus={!wasClientNavigation()} />
         </form>
         {tags.length > 0 && (
           <p className="active-tags">

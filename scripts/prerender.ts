@@ -90,11 +90,18 @@ function stopPreview(child: ChildProcess): Promise<void> {
 
 // Browser-side snippets are strings: this file is typechecked without the DOM lib.
 // Ready = the app replaced its loading state, set the title, and has run useHead (description and og:type exist).
-const READY_CHECK = `document.title.length > 0 && !!document.querySelector('main') && !document.querySelector('main[aria-busy="true"]')
+const READY_CHECK = `document.title.length > 0 && !!document.querySelector('main') && !document.querySelector('main[aria-busy="true"]') && !document.querySelector('.book-loader')
   && !!document.querySelector('meta[name="description"]') && !!document.querySelector('meta[property="og:type"]')`;
 const SNAPSHOT = `(() => {
   const error = document.querySelector('.load-error');
-  return error ? { error: error.textContent || 'load error' } : { html: document.documentElement.outerHTML };
+  const root = document.getElementById('root');
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelector('#__initial_data__')?.remove();
+  return error ? { error: error.textContent || 'load error' } : {
+    html: clone.outerHTML,
+    initialData: window.__initial_data_json__ || null,
+    route: window.__initial_route__ || null,
+  };
 })()`;
 
 // Visits one route and returns its rendered HTML. Fails if the app shows its load-error message.
@@ -103,12 +110,28 @@ async function renderRoute(browser: Browser, origin: string, route: string): Pro
   try {
     const pageErrors: string[] = [];
     page.on('pageerror', err => pageErrors.push(err instanceof Error ? err.message : String(err)));
+    // Passed as a string so Node's tsc doesn't try to typecheck `window` in a browser-eval callback.
+    await page.evaluateOnNewDocument(`
+      window.__gt_prerender__ = true;
+      window.__collect_initial_data__ = function(data) {
+        window.__initial_data_json__ = JSON.stringify(data);
+        window.__initial_route__ = data.route;
+      };
+    `);
     await page.goto(new URL(route, origin).href, { waitUntil: 'networkidle0', timeout: READY_TIMEOUT_MS });
     await page.waitForFunction(READY_CHECK, { timeout: READY_TIMEOUT_MS });
-    const result = (await page.evaluate(SNAPSHOT)) as { error: string } | { html: string };
+    const result = (await page.evaluate(SNAPSHOT)) as { error: string } | { html: string; initialData: string | null; route: string | null };
     if ('error' in result) throw new Error(`page reported: ${result.error}`);
     if (pageErrors.length) throw new Error(`uncaught page error: ${pageErrors[0]}`);
-    return result.html;
+    if (!result.initialData) throw new Error('page did not report its initial data');
+    if (result.route !== route) throw new Error(`reported route "${result.route}" does not match "${route}"`);
+    const json = result.initialData.replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+    if (/<\/script|<!--/i.test(json)) throw new Error('unsafe initial data JSON');
+    const script = `<script id="__initial_data__" type="application/json">${json}</script>`;
+    const bodyClose = result.html.toLowerCase().lastIndexOf('</body>');
+    if (bodyClose < 0) throw new Error('rendered document has no </body>');
+    const html = `${result.html.slice(0, bodyClose)}${script}${result.html.slice(bodyClose)}`;
+    return `<!doctype html>\n${html}`;
   } finally {
     await page.close();
   }

@@ -49,7 +49,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
   return (
     <MediaBaseContext.Provider value={mediaBaseFor(site)}>
       <MotionGroup>
-        <div className="feed">
+        <main className="feed" tabIndex={-1}>
           <header className="feed-bar">
             <a href={homeHref()} className="feed-brand">{site.name}</a>
             <span className="feed-count">{Math.min(current + 1, items.length)} / {items.length}</span>
@@ -103,7 +103,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
               </div>
             </article>
           </div>
-        </div>
+        </main>
       </MotionGroup>
     </MediaBaseContext.Provider>
   );

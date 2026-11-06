@@ -60,7 +60,31 @@ function checkRoute({ route, kind }: PrerenderRoute): RouteResult {
     result.errors.push(`missing ${relative(dirname(DIST), file)} (run npm run prerender)`);
     return result;
   }
-  const head = parseHead(readFileSync(file, 'utf8'));
+  const html = readFileSync(file, 'utf8');
+  const head = parseHead(html);
+  if (!/^\s*<!doctype html>/i.test(html)) result.errors.push('missing <!doctype html> (the page would render in quirks mode)');
+  const snapshots = [...html.matchAll(/<script\b(?=[^>]*\bid="__initial_data__")(?=[^>]*\btype="application\/json")[^>]*>([\s\S]*?)<\/script>/gi)];
+  if (snapshots.length !== 1) result.errors.push('missing or duplicate __initial_data__ script');
+  else {
+    const body = snapshots[0][1];
+    let data: Record<string, any> | undefined;
+    if (/<\/|<!--/.test(body)) result.errors.push('__initial_data__ body has an unescaped "<"');
+    try { data = JSON.parse(body) as Record<string, any>; }
+    catch { result.errors.push('__initial_data__ is not valid JSON'); }
+    if (data) {
+      if (data.schemaVersion !== 1) result.errors.push(`__initial_data__ schemaVersion is ${data.schemaVersion}; expected 1`);
+      if (data.route !== route) result.errors.push(`__initial_data__ route "${data.route}" does not match "${route}"`);
+      if (!['file', 'supabase'].includes(data.source) || typeof data.hideSamples !== 'boolean') result.errors.push('__initial_data__ source or hideSamples is invalid');
+      for (const key of ['site', 'vocab', 'index', 'library']) if (!data.archive?.[key]) result.errors.push(`__initial_data__ archive is missing ${key}`);
+      if (kind === 'paper') {
+        const slug = route.slice('/papers/'.length);
+        if (!data.edition?.doc || data.edition.doc.slug !== slug) result.errors.push('__initial_data__ edition.doc is missing or for another slug');
+        for (const key of ['site', 'vocab', 'mediaBaseUrl']) if (key in (data.edition ?? {})) result.errors.push(`__initial_data__ edition duplicates ${key}`);
+        if (head.title !== `${data.edition?.doc?.pageTitle} — ${data.archive?.site?.name}`) result.errors.push('title does not match the snapshot document');
+      } else if (data.edition !== undefined) result.errors.push(`__initial_data__ has an edition on a ${kind} route`);
+      if (/https?:\/\/(localhost|127\.0\.0\.1)/i.test(body) || /https?:\/\/(localhost|127\.0\.0\.1)/i.test(html)) result.errors.push('local preview origin leaked into the output');
+    }
+  }
   if (head.hasLoadError) result.errors.push('page shows its load-error message');
   if (!head.hasMain) result.errors.push('no <main> element rendered');
 

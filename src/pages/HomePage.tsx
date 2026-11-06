@@ -11,7 +11,7 @@ import { headlineOf, latestIssue, realPaper, roleLabel, storiesOf, storyById, tr
 import { MediaBaseContext } from '../lib/mediaBase';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
-import { todayLabel } from '../lib/format';
+import { useTodayLabel } from '../lib/format';
 import type { LibraryIssue, LibraryStory, Moment, SearchEntry } from '../types';
 
 const sectionOf = (m: Moment) => m.sourceLabel?.replace(/^Paper\s*/, '');
@@ -326,6 +326,7 @@ function Newsletter() {
 }
 
 export function HomePage({ archive }: { archive: Archive }) {
+  const today = useTodayLabel();
   const { site } = archive;
   // The home page keeps the site's own title (it is the generic one by design); the description says what the site is.
   useHead({
@@ -339,7 +340,7 @@ export function HomePage({ archive }: { archive: Archive }) {
     <MediaBaseContext.Provider value={mediaBase}>
       <MotionGroup>
         <main className="site-main">
-          <Masthead site={site} meta={[todayLabel(), '']} edition active="front" />
+          <Masthead site={site} meta={[today, '']} edition active="front" />
           <div className="f-motion"><MotionButton noun="animations" /></div>
           <Lead archive={archive} />
           <div className="f-explore-head">

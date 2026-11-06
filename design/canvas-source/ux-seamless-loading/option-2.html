@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Option 2 · Halftone proof</title>
+<style>
+:root{--ink:#27251e;--paper:#f6f0df;--red:#a13324;--line:#948b77;--tile-line:rgba(39,37,30,.55)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:#ebe4cf;font-family:Georgia,'Times New Roman',serif}
+.tool{max-width:1340px;margin:0 auto;padding:22px 24px 8px;font:700 12px/1.5 'Courier New',monospace;letter-spacing:.08em;text-transform:uppercase}
+.tool h1{font:900 30px/1.1 Georgia,serif;letter-spacing:-.04em;text-transform:none;margin:4px 0 8px}
+.tool p{font:15px/1.45 Georgia,serif;letter-spacing:0;text-transform:none;max-width:60em;margin:0 0 10px}
+.tool .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tool button{font:inherit;padding:10px 14px;min-height:44px;border:1px solid var(--ink);background:#fbf3dc;color:var(--ink);cursor:pointer}
+.tool button:hover{background:#f6e3a1}
+.tool button:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.stage{max-width:1340px;margin:0 auto;padding:10px 24px 30px;overflow-x:auto}
+.stage>h2{font:700 12px/1.5 'Courier New',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin:14px 0 8px}
+.frame{container-type:inline-size;position:relative;overflow:hidden;border:1px solid var(--ink);background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='1' cy='1' r='.6' fill='%238f7960' opacity='.19'/%3E%3C/svg%3E");color:var(--ink)}
+.frame.d{width:1280px;height:900px}.frame.m{width:375px;height:760px}
+.paper{position:relative}
+.site-main{max-width:1240px;margin:0 auto;padding:24px 48px 56px}
+.label,.meta,nav{font:700 12px/1.5 'Courier New',monospace;text-transform:uppercase;letter-spacing:.1em}
+.meta,nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.meta{border-bottom:1px solid;padding-bottom:8px}
+.mast{font-size:clamp(30px,9.6cqi,104px);letter-spacing:-.078em;font-weight:900;line-height:1.08;text-align:center;padding:12px 0 0}
+.motto{text-align:center;font-style:italic;padding:0 0 16px}
+nav{border-top:4px double;border-bottom:1px solid;padding:8px 0}
+nav .links{display:flex;gap:22px;flex-wrap:wrap}nav span span,nav .links span{padding:6px 0;display:inline-block}
+nav .links span:first-child{color:var(--red);box-shadow:0 2px 0 var(--red)}
+.f-lead{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:36px;padding:22px 0 30px}
+.f-lead-main{display:flex;flex-direction:column;gap:14px}
+.f-lead-main .label{color:var(--red)}
+.f-lead-main h2{margin:4px 0 0;font-size:clamp(44px,6cqi,76px);line-height:.94;letter-spacing:-.06em}.f-lead-main h2 em{color:var(--red)}
+.dek{margin:0;font-size:clamp(18px,1.8cqi,23px);line-height:1.38;max-width:36em}
+.plate{margin:0;border:1px solid var(--ink);background:#e3ddc8;position:relative}
+.plate .art-deer svg{display:block;width:100%;height:auto;aspect-ratio:600/340}
+.plate figcaption{padding:8px 10px;border-top:1px solid var(--ink);background:var(--paper)}
+.stamp{font:700 12px/1.4 'Courier New',monospace;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--red);padding:2px 7px;color:var(--ink)}
+.f-aside{display:flex;flex-direction:column;gap:20px;border-left:1px solid var(--line);padding-left:32px}
+.f-aside article{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ink);padding-top:16px}
+.f-aside .f-aside-first{border-top:0;padding-top:0}
+.f-aside .label,.f-card .label{color:var(--red)}
+.f-aside h3{margin:0;font-size:28px;line-height:1.02;letter-spacing:-.045em}.f-aside-first h3{font-size:34px}
+.f-aside p{margin:0;font-size:16px;line-height:1.45}
+.art{height:120px;border:1px solid var(--ink)}
+.a1{background:radial-gradient(circle,#b5835a 28%,transparent 31%) 0 0/10px 10px,#eee1bf}
+.a2{background:radial-gradient(circle,#7f9a86 28%,transparent 31%) 0 0/10px 10px,#e4ecdd}
+.a3{background:radial-gradient(circle,#c9a24b 28%,transparent 31%) 0 0/10px 10px,#f6e3a1}
+.a4{background:radial-gradient(circle,#b5835a 28%,transparent 31%) 5px 5px/10px 10px,#eee1bf}
+.a5{background:radial-gradient(circle,#7f9a86 28%,transparent 31%) 5px 5px/10px 10px,#e4ecdd}
+.f-explore-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-top:4px double var(--ink);padding-top:12px;margin-bottom:16px}
+.f-explore-head h2{margin:0;font-size:44px;line-height:1;letter-spacing:-.05em}.f-explore-head .label{color:var(--red)}
+.f-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.f-card{background:#fbf3dc;border:1px solid var(--tile-line);border-radius:6px;overflow:hidden}
+.f-card .art{border:0;border-bottom:1px solid var(--tile-line)}
+.f-card-body{padding:14px 16px 18px;display:flex;flex-direction:column;gap:6px}
+.f-card h4{margin:0;font-size:25px;line-height:1.02;letter-spacing:-.04em}.f-card p{margin:0;font-size:15px;line-height:1.42}
+@container(max-width:760px){
+ .site-main{padding:16px}.meta span:nth-child(2){display:none}nav{flex-wrap:wrap}.mast{letter-spacing:-.065em}
+ .f-lead{grid-template-columns:1fr;gap:22px;padding-top:16px}
+ .f-aside{border-left:0;padding-left:0;border-top:1px solid var(--ink);padding-top:16px}
+ .f-lead-main h2{font-size:48px}.f-grid{grid-template-columns:1fr}.f-explore-head h2{font-size:34px}
+ nav .links{gap:10px}nav,.meta{letter-spacing:.03em}nav .links span{padding:4px 0}
+}
+.note{position:absolute;right:10px;bottom:10px;z-index:9;pointer-events:none;font:700 11px/1.4 'Courier New',monospace;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:#fbf3dc;padding:5px 9px;min-width:0}
+.frame.m .note{left:10px;right:10px}
+.note{display:grid}.note span{grid-area:1/1;visibility:hidden}
+.note .p1{visibility:visible}
+.note .p1,.note .p2,.note .p3{animation-duration:12s;animation-iteration-count:infinite;animation-timing-function:steps(1,end)}
+.note .p1{animation-name:ph1}.note .p2{animation-name:ph2}.note .p3{animation-name:ph3}
+@keyframes ph1{0%{visibility:visible}38%{visibility:hidden}95%{visibility:visible}}
+@keyframes ph2{0%{visibility:hidden}38%{visibility:visible}55%{visibility:hidden}}
+@keyframes ph3{0%{visibility:hidden}55%{visibility:visible}95%{visibility:hidden}}
+
+/* Option 2 · Halftone proof. The whole paper is already there, seen through a fine halftone screen; the dots open until the screen is gone. */
+@property --r{syntax:'<length>';inherits:false;initial-value:1.3px}
+.site-main{position:relative}
+.screen{position:absolute;left:0;right:0;top:0;bottom:0;z-index:3;background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='1' cy='1' r='.6' fill='%238f7960' opacity='.19'/%3E%3C/svg%3E");pointer-events:none;
+ --r:1.3px;animation:dots 12s infinite;
+ -webkit-mask-image:radial-gradient(circle at 2px 2px,transparent var(--r),#000 calc(var(--r) + .7px)),radial-gradient(circle at 6px 6px,transparent var(--r),#000 calc(var(--r) + .7px));
+ -webkit-mask-size:8px 8px;-webkit-mask-composite:source-in;
+ mask-image:radial-gradient(circle at 2px 2px,transparent var(--r),#000 calc(var(--r) + .7px)),radial-gradient(circle at 6px 6px,transparent var(--r),#000 calc(var(--r) + .7px));
+ mask-size:8px 8px;mask-composite:intersect}
+@keyframes dots{0%,40%{--r:1.3px;animation-timing-function:cubic-bezier(.45,0,.35,1)}54%,93%{--r:4.4px;animation-timing-function:ease-in}98%,100%{--r:1.3px}}
+@keyframes dotsrm{0%,40%{--r:1.3px}40.01%,94%{--r:4.6px}94.01%,100%{--r:1.3px}}
+.chip{position:absolute;z-index:4;left:50%;top:560px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 20px 13px;background:#fbf3dc;border:1px solid var(--ink);animation:chip 12s infinite;white-space:nowrap}
+.chip .label{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.chip em{font-size:16px;color:#5e5748}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--red);animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+@container(max-width:760px){.chip{top:410px;max-width:92%;white-space:normal;text-align:center}}
+@keyframes chip{0%,34%{opacity:1}41%{opacity:0}94%{opacity:0}98%,100%{opacity:1}}
+@keyframes chiprm{0%,40%{opacity:1}40.01%,94%{opacity:0}94.01%,100%{opacity:1}}
+html.rm {}
+html.rm .screen{animation:dotsrm 12s infinite}
+html.rm .chip{animation:chiprm 12s infinite}
+html.rm .dot{animation:none;opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){html:not(.fm) .screen{animation:dotsrm 12s infinite}
+html:not(.fm) .chip{animation:chiprm 12s infinite}
+html:not(.fm) .dot{animation:none;opacity:1;transform:none}
+}
+</style></head><body>
+<div class="tool">
+<span>Canvas option 2 · loading to paper</span>
+<h1>Halftone proof</h1>
+<p>The paper is already on the page, seen through a fine halftone screen with a quiet “Going to press” slug and a slow-pulsing red ink dot. When data lands, the dots open until the screen disappears and the page is simply there. Loops every 12 seconds.</p>
+<div class="bar"><button id="replay" type="button">Replay</button><button id="mode" type="button">Motion: follow system</button><span id="state"></span></div>
+</div>
+<div class="stage">
+<h2>Desktop · 1280px</h2><div class="frame d" id="fd"></div>
+<h2>Phone · 375px</h2><div class="frame m" id="fm"></div>
+</div>
+<template id="t"><div class="paper"><header class="site-head"><div class="meta"><span>Friday, 6 November 2026</span><span>An independent illustrated science edition</span><span>Weekly edition →</span></div><div class="mast">The Geeky Times</div><div class="motto">Research, in pictures.</div><nav class="sitenav"><span class="links"><span>Front page</span><span>Explore ▾</span><span>Real world</span><span>Snacks ▶</span><span>Editions</span></span><span>Search ⌕</span></nav></header><main class="site-main" aria-busy="true"><div class="f-lead"><div class="f-lead-main"><span class="label">Lead story · Preprint</span><h2>Why a bigger deer <em>breaks</em></h2><p class="dek">Make an animal twice as big and it does not get twice as strong. A new preprint asks why every size of life has to be built differently.</p><figure class="plate"><div class="art-deer"><svg viewBox="0 0 600 340" role="img" aria-label="A deer standing on a green hill under a pale sun, drawn in muted colours" preserveAspectRatio="xMidYMid slice"><rect width="600" height="340" fill="#eee1bf"/><circle cx="505" cy="78" r="38" fill="#e3b960"/><path d="M0 262Q150 205 300 252T600 236V340H0Z" fill="#b9c4a0"/><g stroke="#27251e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M222 226v66M252 232v60M352 232v60M384 226v66" fill="none" stroke-width="17"/><path d="M222 226v66M252 232v60M352 232v60M384 226v66" fill="none" stroke="#b5835a" stroke-width="11"/><ellipse cx="305" cy="205" rx="108" ry="58" fill="#b5835a"/><path d="M372 168 424 100 454 120 414 192Z" fill="#b5835a"/><ellipse cx="456" cy="113" rx="30" ry="20" transform="rotate(-18 456 113)" fill="#b5835a"/><path d="M200 175q-26-8-34 12q16 4 34-2Z" fill="#f3e3b5"/><path d="M440 92 428 52m0 0-20-10m20 10 12-24M458 88l16-44m0 0-16-6m16 6 18-12" fill="none"/></g><circle cx="466" cy="108" r="3.5" fill="#27251e"/><path d="M250 215q50 22 110 0" fill="none" stroke="#8d6444" stroke-width="3"/></svg></div><figcaption><span class="stamp">Illustration · numbers invented</span></figcaption></figure></div><aside class="f-aside"><article class="f-aside-first"><span class="label">Peer-reviewed</span><h3>One word, two worlds</h3><p>How a machine learns which words matter to each other.</p><div class="art a1"></div></article><article><span class="label">Company-reported</span><h3>A world covered in honeycomb</h3><p>Uber Engineering, explained from scratch.</p><div class="art a2"></div></article></aside></div><div class="f-explore-head"><h2>Keep exploring</h2><span class="label">Topics · Storylines · Map</span></div><div class="f-grid"><div class="f-card"><div class="art a3"></div><div class="f-card-body"><span class="label">Explore</span><h4>Topics</h4><p>Browse every idea by what it is about.</p></div></div><div class="f-card"><div class="art a4"></div><div class="f-card-body"><span class="label">Explore</span><h4>Storylines</h4><p>Follow one thread across many papers.</p></div></div><div class="f-card"><div class="art a5"></div><div class="f-card-body"><span class="label">Explore</span><h4>Map of ideas</h4><p>See how stories connect.</p></div></div></div><div class="screen" aria-hidden="true"></div><div class="chip" role="status"><span class="label"><i class="dot"></i>Going to press</span><em>Awaiting today’s ink</em></div></main></div><div class="note" aria-hidden="true"><span class="p1">1 · Page frame up, loading</span><span class="p2">2 · Data in, paper arrives</span><span class="p3">3 · The paper</span></div></template>
+<script>
+(function(){
+var t=document.getElementById('t'),fr=[document.getElementById('fd'),document.getElementById('fm')];
+function fill(){fr.forEach(function(f){f.innerHTML='';f.appendChild(t.content.cloneNode(true));});}
+fill();
+document.getElementById('replay').onclick=fill;
+var modes=[['','Motion: follow system'],['rm','Motion: reduced (forced)'],['fm','Motion: full (forced)']],i=0,b=document.getElementById('mode'),r=document.documentElement;
+var mq=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)');
+function show(){var os=mq&&mq.matches?' · your system asks for reduced':'';document.getElementById('state').textContent=i==0?'System: '+(mq&&mq.matches?'reduced motion':'full motion'):'';}
+b.onclick=function(){i=(i+1)%3;r.className=modes[i][0];b.textContent=modes[i][1];show();fill();};show();
+})();
+</script></body></html>
