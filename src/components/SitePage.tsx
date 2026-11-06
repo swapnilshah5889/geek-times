@@ -23,7 +23,7 @@ export function SitePage({ archive, title, active, meta, motion = true, children
           {motion && <div className="f-motion"><MotionButton noun="animations" /></div>}
           {children}
           <footer>
-            <span>{site.name} &nbsp; ✦ &nbsp; {site.motto}</span>
+            <span>{`${site.name}   ✦   ${site.motto}`}</span>
             <span className="foot-links"><a href={appHref('issues')}>Editions</a><a href={searchHref()}>The archive →</a></span>
           </footer>
         </main>

@@ -29,7 +29,7 @@ export function SourceByline({ doc }: { doc: StoryDoc }) {
   const source = sourceOf(doc);
   return (
     <div className="byline">
-      <b>{source.kind === 'blog' ? 'The engineering post' : 'The paper'}</b> · {source.title}<i>{source.by}, {source.dated}</i>
+      <b>{source.kind === 'blog' ? 'The engineering post' : 'The paper'}</b>{` · ${source.title}`}<i>{`${source.by}, ${source.dated}`}</i>
     </div>
   );
 }

@@ -45,7 +45,7 @@ export function FamilyTree({ archive, nodeId }: { archive: Archive; nodeId: stri
   return (
     <section id="tree" className="ft" aria-labelledby="tree-title">
       <div className="ft-head">
-        <div><span className="label">Family tree · Papers before and after this one</span><h2 id="tree-title">Before and after {here.short ?? here.title}</h2></div>
+        <div><span className="label">Family tree · Papers before and after this one</span><h2 id="tree-title">{`Before and after ${here.short ?? here.title}`}</h2></div>
         <span className="chip chip-warm">Sample links · to be fact-checked</span>
       </div>
       <div className="ft-board">
@@ -73,9 +73,9 @@ export function FamilyTree({ archive, nodeId }: { archive: Archive; nodeId: stri
         <div className="ft-detail" aria-live="polite">
           <div>
             <span className="label">Tap a paper to see how it connects</span>
-            <h3>{picked.title} · {picked.year || 'blog post'}</h3>
+            <h3>{`${picked.title} · ${picked.year || 'blog post'}`}</h3>
             <p>{picked.blurb ?? pickedLink?.note ?? 'How this idea connects to the story.'}</p>
-            {pickedLink && <p className="ft-link">{library.nodes.find(n => n.id === pickedLink.to)?.title} {relationLabel[pickedLink.kind]} {library.nodes.find(n => n.id === pickedLink.from)?.title}{pickedLink.cited ? ' · Cited in the paper' : ''}</p>}
+            {pickedLink && <p className="ft-link">{`${library.nodes.find(n => n.id === pickedLink.to)?.title} ${relationLabel[pickedLink.kind]} ${library.nodes.find(n => n.id === pickedLink.from)?.title}${pickedLink.cited ? ' · Cited in the paper' : ''}`}</p>}
           </div>
           <div className="ft-ask">
             {picked.story

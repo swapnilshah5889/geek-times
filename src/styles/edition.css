@@ -133,3 +133,16 @@ footer{border-top:1px solid;padding-top:12px}
   .facts ul{grid-template-columns:1fr 1fr;gap:12px}.search-grid{grid-template-columns:1fr}.tag-shelf dl{grid-template-columns:1fr}.facts li{padding:9px}.facts p{font-size:15px}.facts .fig{font-size:27px}
 }
 @media(prefers-reduced-motion:reduce){.slide{transition:none}.feed-hint{animation:none!important}}
+
+/* Ambient idle motion: perpetual, subtle, and always on while the page is visible. No entrance choreography. */
+.f-lead-main h2 em{position:relative}
+.f-lead-main h2 em::after{content:"";position:absolute;left:0;right:0;bottom:-.06em;height:2px;background:var(--red);animation:ambient-accent 5s ease-in-out infinite}
+@keyframes ambient-accent{0%,100%{opacity:.45}50%{opacity:1}}
+.stamp{animation:ambient-stamp 6s ease-in-out infinite}
+@keyframes ambient-stamp{0%,100%{box-shadow:0 0 0 0 rgba(161,51,36,0)}50%{box-shadow:2px 2px 0 0 rgba(161,51,36,.16)}}
+.f-aside article{transition:transform .2s ease}
+.f-aside article:hover{transform:translateY(-1px)}
+@media(prefers-reduced-motion:reduce){
+  .f-lead-main h2 em::after,.stamp{animation:none}
+  .f-aside article,.f-aside article:hover{transition:none;transform:none}
+}

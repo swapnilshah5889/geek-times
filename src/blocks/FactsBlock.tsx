@@ -19,7 +19,7 @@ export function FactsBlock({ block }: { block: FactsData }) {
               <b className="fig">{f.figure}</b>
               <ClaimStamp claim={f.claim} />
               <p><Rich text={f.text} /></p>
-              {f.source && <a href={f.source.url}>{f.source.label} ↗</a>}
+              {f.source && <a href={f.source.url}>{`${f.source.label} ↗`}</a>}
             </li>
           ))}
         </ul>

@@ -21,7 +21,7 @@ function ComicStrip({ strip, n, anchor }: { strip: Strip; n: number; anchor: str
           </figure>
         ))}
       </div>
-      {strip.grownUpWords && <p className="gw">Grown-up words: {strip.grownUpWords}</p>}
+      {strip.grownUpWords && <p className="gw">{`Grown-up words: ${strip.grownUpWords}`}</p>}
     </article>
   );
 }
@@ -33,7 +33,7 @@ export function ComicBlock({ block }: { block: ComicData }) {
         <Kicker text={block.kicker} />
         <div className="story-intro"><h2>{block.title}</h2><MotionButton noun="the comics" /></div>
         {block.deck && <p className="comic-deck"><Rich text={block.deck} /></p>}
-        {block.howTo && <p className="howto"><span className="label">How to read it</span> <Rich text={block.howTo} /></p>}
+        {block.howTo && <p className="howto"><span className="label">How to read it </span><Rich text={block.howTo} /></p>}
         {block.strips.map((s, i) => <ComicStrip strip={s} n={i + 1} anchor={`${block.id}-${i + 1}`} key={s.title} />)}
       </section>
     </MotionGroup>

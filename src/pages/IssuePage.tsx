@@ -28,11 +28,11 @@ function Toc({ stories }: { stories: LibraryStory[] }) {
         <li key={s.id}>
           <b className="is-num">{String(i + 1).padStart(2, '0')}</b>
           <span className="is-entry">
-            <span className="label">{[roleLabel[s.role], kindLabel[s.kind], trustLabel(s.trust)].filter(Boolean).join(' · ')}{s.sample && ' · Sample'}</span>
-            <a href={paperHref(s.id)}>{s.headline}{s.accent ? ` ${s.accent}` : ''}</a>
+            <span className="label">{`${[roleLabel[s.role], kindLabel[s.kind], trustLabel(s.trust)].filter(Boolean).join(' · ')}${s.sample ? ' · Sample' : ''}`}</span>
+            <a href={paperHref(s.id)}>{`${s.headline}${s.accent ? ` ${s.accent}` : ''}`}</a>
             <span className="is-by">{byline(s)}</span>
           </span>
-          <span className="is-min">{s.minutes} min{s.note ? ` · ${s.note}` : ''}</span>
+          <span className="is-min">{`${s.minutes} min${s.note ? ` · ${s.note}` : ''}`}</span>
         </li>
       ))}
     </ol>
@@ -61,22 +61,22 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
       <Crumbs items={[{ href: appHref('issues'), label: 'Editions' }, vol ? `Volume ${vol.id} · ${vol.title}` : `Volume ${issue.volume}`, issue.number.startsWith('Special') ? issue.number : `Issue ${issue.number}`]} />
       <section className="is-hero">
         <div className="is-cover" style={{ background: issue.color }}>
-          <div className="label-ink is-cover-top"><span>The Geeky Times</span><span>Vol. {issue.volume} · {numberLabel(issue.number)}</span></div>
+          <div className="label-ink is-cover-top"><span>The Geeky Times</span><span>{`Vol. ${issue.volume} · ${numberLabel(issue.number)}`}</span></div>
           {coverPaper && <div className="is-cover-art"><MediaView media={coverPaper.cover.media} /></div>}
-          <div className="is-cover-foot"><b>{issue.title}</b>{cover && <span>Cover: “{cover.headline} {cover.accent}”</span>}</div>
+          <div className="is-cover-foot"><b>{issue.title}</b>{cover && <span>{`Cover: “${cover.headline} ${cover.accent}”`}</span>}</div>
         </div>
         <div className="is-intro">
-          <span className="label">Volume {issue.volume}{vol ? ` (${vol.title})` : ''} · {issue.number.startsWith('Special') ? issue.number : `Issue ${issue.number}`}{issue.published ? ` · Published ${issue.published}` : ''}{issue.sample && ' · Sample'}</span>
-          <h1>{words.join(' ')} <em>{last}</em></h1>
+          <span className="label">{`Volume ${issue.volume}${vol ? ` (${vol.title})` : ''} · ${issue.number.startsWith('Special') ? issue.number : `Issue ${issue.number}`}${issue.published ? ` · Published ${issue.published}` : ''}${issue.sample ? ' · Sample' : ''}`}</span>
+          <h1>{`${words.join(' ')} `}<em>{last}</em></h1>
           {stories.length > 0 ? (
             <>
-              <div className="is-stats"><span>{stories.length} stories</span><span>{mix}</span><span>About {Math.round(total / 5) * 5} minutes</span></div>
+              <div className="is-stats"><span>{`${stories.length} stories`}</span><span>{mix}</span><span>{`About ${Math.round(total / 5) * 5} minutes`}</span></div>
               <div className="is-actions">
                 <a className="btn-solid" href="#toc">Start with the lead →</a>
                 <a className="btn-line" href={feedHref()}>Swipe all snacks ▶</a>
               </div>
             </>
-          ) : <p className="is-note">This special issue is a sample: it will collect {issue.classics} classic papers on one theme, explained for the first time.</p>}
+          ) : <p className="is-note">{`This special issue is a sample: it will collect ${issue.classics} classic papers on one theme, explained for the first time.`}</p>}
         </div>
       </section>
 
@@ -92,9 +92,9 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
                 <a key={s.id} className="card f-card" href={paperHref(s.id)}>
                   {(s.art || s.real) ? <StoryArt story={s} archive={archive} /> : <div className="is-textcard"><span className="f-company">{s.title}</span><span className="chip chip-warm">{trustLabel(s.trust)}</span></div>}
                   <div className="f-card-body">
-                    <span className="label">{String(i + 1).padStart(2, '0')} · {roleLabel[s.role]}{s.sample && ' · Sample'}</span>
-                    <h4>{s.headline}{s.accent ? ` ${s.accent}` : ''}</h4>
-                    {s.real && <p>{s.dek.split('. ')[0]}.</p>}
+                    <span className="label">{`${String(i + 1).padStart(2, '0')} · ${roleLabel[s.role]}${s.sample ? ' · Sample' : ''}`}</span>
+                    <h4>{`${s.headline}${s.accent ? ` ${s.accent}` : ''}`}</h4>
+                    {s.real && <p>{`${s.dek.split('. ')[0]}.`}</p>}
                   </div>
                 </a>
               ))}
@@ -104,9 +104,9 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
       )}
 
       <nav className="is-pn" aria-label="Other issues">
-        {prev ? <a className="card" href={issueHref(prev.id)}><span className="label">← Previous · Vol. {prev.volume} · {numberLabel(prev.number)}</span><b>{prev.title}{prev.sample && ' (sample)'}</b></a> : <span />}
+        {prev ? <a className="card" href={issueHref(prev.id)}><span className="label">{`← Previous · Vol. ${prev.volume} · ${numberLabel(prev.number)}`}</span><b>{`${prev.title}${prev.sample ? ' (sample)' : ''}`}</b></a> : <span />}
         {next
-          ? <a className="card is-next" href={issueHref(next.id)}><span className="label">Next → Vol. {next.volume} · {numberLabel(next.number)}</span><b>{next.title}{next.sample && ' (sample)'}</b></a>
+          ? <a className="card is-next" href={issueHref(next.id)}><span className="label">{`Next → Vol. ${next.volume} · ${numberLabel(next.number)}`}</span><b>{`${next.title}${next.sample ? ' (sample)' : ''}`}</b></a>
           : <div className="card is-next"><span className="label">Next edition</span><b>Out next Friday</b></div>}
       </nav>
     </SitePage>

@@ -41,7 +41,7 @@ export function MapPage({ archive }: { archive: Archive }) {
   const onKey = (n: GraphNode) => (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPicked(n.id); } };
   const toggle = (k: keyof typeof show) => setShow(s => ({ ...s, [k]: !s[k] }));
   const pressed = (key: string, on: boolean, label: string, onClick: () => void) => (
-    <button key={key} type="button" className="mp-chip" aria-pressed={on} onClick={onClick}>{on ? '✓ ' : ''}{label}</button>
+    <button key={key} type="button" className="mp-chip" aria-pressed={on} onClick={onClick}>{`${on ? '✓ ' : ''}${label}`}</button>
   );
 
   return (
@@ -69,7 +69,7 @@ export function MapPage({ archive }: { archive: Archive }) {
           </div>
           <div><span className="label">Years</span>
             <label>From year<input type="range" min={1900} max={2026} step={1} value={from} onChange={e => setFrom(Number(e.target.value))} aria-valuetext={`${from}`} /></label>
-            <span className="mp-years">{from} – 2026</span>
+            <span className="mp-years">{`${from} – 2026`}</span>
           </div>
         </aside>
 
@@ -110,13 +110,13 @@ export function MapPage({ archive }: { archive: Archive }) {
         )}
         {view === 'list' && (
           <ul className="mp-list" aria-label="All papers and posts">
-            {visible.map(n => <li key={n.id}><button type="button" onClick={() => setPicked(n.id)} aria-pressed={n.id === picked.id}><b>{n.title}</b> · {n.year || 'blog'} · {library.fields.find(f => f.id === n.field)?.label} · {n.story ? 'explained' : 'not explained yet'}</button></li>)}
+            {visible.map(n => <li key={n.id}><button type="button" onClick={() => setPicked(n.id)} aria-pressed={n.id === picked.id}><b>{n.title}</b>{` · ${n.year || 'blog'} · ${library.fields.find(f => f.id === n.field)?.label} · ${n.story ? 'explained' : 'not explained yet'}`}</button></li>)}
             {!visible.length && <li>Nothing matches these filters.</li>}
           </ul>
         )}
 
         <aside aria-label="Selected" className="mp-selected" aria-live="polite">
-          <span className="label">Selected · {picked.type === 'blog' ? 'Engineering blog' : 'Paper'} · {picked.year || 'blog'}</span>
+          <span className="label">{`Selected · ${picked.type === 'blog' ? 'Engineering blog' : 'Paper'} · ${picked.year || 'blog'}`}</span>
           <h2>{picked.title}</h2>
           <p>{picked.story ? 'We have explained this one.' : 'Not explained yet. Papers with the most links get drawn first.'} {picked.authors}</p>
           <div className="mp-counts"><div><b>{fam.before.length}</b><span>ideas it built on</span></div><div><b>{fam.after.length}</b><span>works that grew from it</span></div></div>
@@ -131,7 +131,7 @@ export function MapPage({ archive }: { archive: Archive }) {
         <ul>
           {library.nodes.map(n => {
             const f = familyOf(library, n.id);
-            return <li key={n.id}><b>{n.title}</b> · {n.year || 'blog'} · {library.fields.find(x => x.id === n.field)?.label} · {n.story ? 'explained' : 'not explained yet'}{(f.before.length || f.after.length) ? ` · ${f.before.length} before, ${f.after.length} after` : ''}</li>;
+            return <li key={n.id}><b>{n.title}</b>{` · ${n.year || 'blog'} · ${library.fields.find(x => x.id === n.field)?.label} · ${n.story ? 'explained' : 'not explained yet'}${(f.before.length || f.after.length) ? ` · ${f.before.length} before, ${f.after.length} after` : ''}`}</li>;
           })}
         </ul>
       </section>

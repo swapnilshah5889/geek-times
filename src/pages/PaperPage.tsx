@@ -49,10 +49,10 @@ export function PaperPage({ edition, archive }: { edition: Edition; archive: Arc
             {node && <FamilyTree archive={archive} nodeId={node.id} />}
             <div id="related"><TagShelf tags={doc.tags} vocab={vocab} kind={source.kind} /></div>
             <footer>
-              <span>{site.name} &nbsp; ✦ &nbsp; {doc.desk}</span>
+              <span>{`${site.name}  ✦  ${doc.desk}`}</span>
               <a href={source.url}>{isBlog ? 'Read the original post ↗' : 'Read the original paper ↗'}</a>
               {source.archivedUrl && <a href={source.archivedUrl}>Archived copy ↗</a>}
-              {isBlog && <span>Real claims come from {source.by}’s own writeup. Each one is labelled with what kind of claim it is; illustration numbers are invented.</span>}
+              {isBlog && <span>{`Real claims come from ${source.by}’s own writeup. Each one is labelled with what kind of claim it is; illustration numbers are invented.`}</span>}
             </footer>
           </main>
          </SourceKindContext.Provider>

@@ -39,7 +39,7 @@ function useEdition(archive: Archive) {
 function EditionCover({ issue }: { issue: LibraryIssue }) {
   return (
     <span className="ed-cover" style={{ background: issue.color }} aria-hidden="true">
-      <span>No. {issue.number}</span><b>{issue.title}</b>
+      <span>{`No. ${issue.number}`}</span><b>{issue.title}</b>
     </span>
   );
 }
@@ -66,7 +66,7 @@ function EditionBand({ archive }: { archive: Archive }) {
       <div className="ed-text">
         <span className="label">This week’s edition · hand-picked</span>
         <b>{issue.title}</b>
-        <span>{count} {count === 1 ? 'story' : 'stories'} · about {minutes} minutes</span>
+        <span>{`${count} ${count === 1 ? 'story' : 'stories'} · about ${minutes} minutes`}</span>
       </div>
       <div className="ed-links">
         <a className="f-more" href={issueHref(issue.id)}>Read the edition →</a>
@@ -85,15 +85,14 @@ function Lead({ archive }: { archive: Archive }) {
   return (
     <section id="lead" className="f-lead" aria-label="Top stories">
       <article className="f-lead-main">
-        <div className="label">Lead story · {lead.desk}</div>
+        <div className="label">{`Lead story · ${lead.desk}`}</div>
         <a className="f-lead-art" href={paperHref(lead.id)} aria-label={`Open the story: ${paper.cover.headline.text} ${paper.cover.headline.accent ?? ''}`}>
           <MediaView media={paper.cover.media} />
         </a>
-        <h2><a href={paperHref(lead.id)}>{paper.cover.headline.text} <em>{paper.cover.headline.accent}</em></a></h2>
+        <h2><a href={paperHref(lead.id)}>{`${paper.cover.headline.text} `}<em>{paper.cover.headline.accent}</em></a></h2>
         <p className="f-lead-dek">{paper.summary}</p>
         <div className="f-lead-foot">
-          <p><b>{paper.title}</b> · <i>{paper.authors}, {paper.year}</i> · <span className="f-trust" title={lead.trust === 'peer_reviewed' ? 'Checked by other scientists before it was published' : undefined}>{trustLabel(lead.trust)}</span>{' '}
-            {lead.trust === 'peer_reviewed' && <small>(checked by other scientists)</small>}{lead.trust === 'preprint' && <small>(shared publicly, not yet checked by other scientists)</small>}</p>
+          <p><b>{paper.title}</b>{' · '}<i>{`${paper.authors}, ${paper.year}`}</i>{' · '}<span className="f-trust" title={lead.trust === 'peer_reviewed' ? 'Checked by other scientists before it was published' : undefined}>{trustLabel(lead.trust)}</span>{lead.trust === 'peer_reviewed' && <small>{' (checked by other scientists)'}</small>}{lead.trust === 'preprint' && <small>{' (shared publicly, not yet checked by other scientists)'}</small>}</p>
           <a className="f-more" href={paperHref(lead.id)}>Read the illustrated story →</a>
         </div>
       </article>
@@ -101,7 +100,7 @@ function Lead({ archive }: { archive: Archive }) {
         {aside.map((s, i) => (
           <article key={s.id} className={i === 0 ? 'f-aside-first' : undefined}>
             {i === 0 && <a href={paperHref(s.id)} className="f-aside-art"><StoryArt story={s} archive={archive} /></a>}
-            <div className="f-tags label"><span>{roleLabel[s.role]} · {s.desk}</span><SampleTag story={s} /></div>
+            <div className="f-tags label"><span>{`${roleLabel[s.role]} · ${s.desk}`}</span><SampleTag story={s} /></div>
             <h3><a href={paperHref(s.id)}>{s.headline}</a></h3>
             <p>{s.dek}</p>
           </article>
@@ -250,7 +249,7 @@ function Numbers({ archive }: { archive: Archive }) {
         {picks.map(({ paper, m }) => (
           <a key={paper.slug + m.id} className="f-number" href={appHref(m.href)}>
             <span className="label">
-              {paper.title} · <ClaimStamp claim={m.claim} trust={m.trust} source={sourceKindOf(library, paper.slug)} /> · {sectionOf(m)}
+              {`${paper.title} · `}<ClaimStamp claim={m.claim} trust={m.trust} source={sourceKindOf(library, paper.slug)} />{` · ${sectionOf(m)}`}
             </span>
             <b>{m.figure}</b>
             <span className="f-number-text">{m.text}</span>
@@ -357,7 +356,7 @@ export function HomePage({ archive }: { archive: Archive }) {
           <EditionBand archive={archive} />
           <Newsletter />
           <footer>
-            <span>{site.name} &nbsp; ✦ &nbsp; {site.motto}</span>
+            <span>{`${site.name}   ✦   ${site.motto}`}</span>
             <span className="foot-links"><a href={appHref('issues')}>Editions</a><a href={appHref('issues')}>Past editions</a><a href={searchHref()}>The archive →</a></span>
           </footer>
         </main>

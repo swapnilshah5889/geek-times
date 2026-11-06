@@ -24,8 +24,8 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
       <Crumbs items={[{ href: appHref('companies'), label: 'In the real world' }, { href: appHref('companies'), label: 'Companies' }, company.name]} />
       <section className="co-hero">
         <div>
-          <span className="label">Company · {company.sector}{sample && ' · Sample page'}</span>
-          <h1>{words[0]} {words.slice(1).join(' ')}</h1>
+          <span className="label">{`Company · ${company.sector}${sample ? ' · Sample page' : ''}`}</span>
+          <h1>{`${words[0]} ${words.slice(1).join(' ')}`}</h1>
           <p className="f-lead-dek">{company.blurb}</p>
         </div>
         <div className="co-stats">
@@ -34,10 +34,10 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
           <div><b>{base.length}</b><span>papers it builds on</span></div>
         </div>
       </section>
-      <p className="co-howto"><b className="label">How to read this page</b> &nbsp; Claims here come from {company.name}’s own writeup; each one is labelled with what kind of claim it is. We link every original post and use plain names, never logos.</p>
+      <p className="co-howto"><b className="label">How to read this page</b>{`   Claims here come from ${company.name}’s own writeup; each one is labelled with what kind of claim it is. We link every original post and use plain names, never logos.`}</p>
 
       <section aria-labelledby="explained" className="f-section">
-        <div className="f-sechead"><h2 id="explained">Explained posts</h2><span className="label">Newest first{sample && ' · Sample'}</span></div>
+        <div className="f-sechead"><h2 id="explained">Explained posts</h2><span className="label">{`Newest first${sample ? ' · Sample' : ''}`}</span></div>
         <div className="f-grid f-grid-3">
           {posts.map(s => {
             const on = s.builtOn ? storyById(library, s.builtOn) : undefined;
@@ -48,7 +48,7 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
                 <p>{s.dek}</p>
                 <span className="f-chips">
                   <span className="chip chip-warm">{trustLabel(s.trust)}</span>
-                  {on && <span className="chip chip-green">Puts into practice: {on.title}</span>}
+                  {on && <span className="chip chip-green">{`Puts into practice: ${on.title}`}</span>}
                 </span>
               </a>
             );
@@ -62,8 +62,8 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
           <h2>Research these posts put into practice</h2>
           <div className="co-chips">
             {base.map(n => n.story
-              ? <a key={n.id} className="co-chip" href={paperHref(n.story)}>{n.title} · {n.year}</a>
-              : <a key={n.id} className="co-chip is-open" href={mapHref(n.id)}>{n.title} · {n.year} · not explained yet</a>)}
+              ? <a key={n.id} className="co-chip" href={paperHref(n.story)}>{`${n.title} · ${n.year}`}</a>
+              : <a key={n.id} className="co-chip is-open" href={mapHref(n.id)}>{`${n.title} · ${n.year} · not explained yet`}</a>)}
           </div>
           <a className="f-more" href={mapHref(base[0]?.id)}>See this company on the map →</a>
         </div>
@@ -79,7 +79,7 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
         <section className="f-section">
           <div className="f-sechead"><h3>More companies</h3></div>
           <div className="f-chips">
-            {library.companies.filter(c => c.id !== company.id).map(c => <a key={c.id} className="co-chip" href={companyHref(c.id)}>{c.name} · {c.sector}</a>)}
+            {library.companies.filter(c => c.id !== company.id).map(c => <a key={c.id} className="co-chip" href={companyHref(c.id)}>{`${c.name} · ${c.sector}`}</a>)}
           </div>
         </section>
       )}
