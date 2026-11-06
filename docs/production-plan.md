@@ -1,7 +1,7 @@
 # Production plan
 
 Where The Geeky Times stands, what a review of the code found, and every step left before a public launch.
-Written 2026-11-04 on `feature/convert-scaling-paper`; updated 2026-11-06 on `v1` (decisions 40, 48 and 49). Keep it current: tick items as they land and move findings into
+Written 2026-11-04 on `feature/convert-scaling-paper`; updated 2026-11-06 on `v1` (decisions 40, 48, 49 and 50). Keep it current: tick items as they land and move findings into
 "Fixed" when they are resolved. Background: `AGENTS.md`, `docs/decisions.md`, `docs/roadmap.md`.
 
 ## 1. Review (2026-11-04)
@@ -65,6 +65,7 @@ None open. B1–B4 are resolved (see "Fixed" at the end); the Codex review's sma
 - [x] `VITE_HIDE_SAMPLES=1` build flag: hides every `sample` item at load time (`src/data/load.ts`, `048ad1d`).
 - [x] `vercel.json` SPA rewrite so `/papers/<slug>` deep links load directly (on `v1`, `b3b2cb8`).
 - [x] SSG prerender spike for one route (decision 41, `e4996af`).
+- [x] Hydration: `hydrateRoot` with route-specific embedded data (decision 50), gated by `npm run check:hydration`; in-app navigation uses the approved slide-up (Phase 4 UX).
 
 **Content and data**
 - [x] Story 1: "One word, two worlds" (Attention Is All You Need, peer-reviewed).
@@ -102,8 +103,7 @@ Landed on `v1` in `fd67461` (shared claim label, unique keys, "Swipe all snacks"
       source of truth (`scripts/prerender-routes.ts`); `npm run check:prerender` fails if any route is missing a page-specific
       title, description, `og:title`, `og:description` or `og:type`. Every page type (`Home`, `Paper`, `Issue`, `Company`, `Map`,
       `Sample`) uses `useHead`. `/?feed`, `/?search` and the legacy `/?paper=<slug>` are explicitly deferred (query views share
-      `/`; need distinct paths first). **Deferred to a later batch:** client hydration (`hydrateRoot` with embedded data, so
-      readers don't see a loading flash), the Vercel build wiring, and the raster OG card.
+      `/`; need distinct paths first). **Deferred to a later batch:** the Vercel build wiring and the raster OG card. Client hydration landed (see Achieved, decision 50).
 - [x] Preview deploy per push so the owner can review on a real URL. Vercel at https://the-geeky-times.vercel.app/ (tracks `main`); `vercel.json` adds the SPA rewrite so `/papers/<slug>` and other deep links don't 404 on direct load once `v1` merges. Still unticked at Phase 5: HTTPS / custom domain / CSP.
 
 > **Automated tests, CI and axe checks are deferred to the pre-launch gate (decision 39).** They aren't in Phase 1 while
@@ -148,7 +148,7 @@ normalized tables, and anon reads them only through `v_*` views. Contract: `docs
 - [x] One migration path: `npm run apply:migration` is the record of record. The Supabase CLI is optional (`supabase/README.md`).
 - [ ] Acceptance run by the lead: apply A, B and D to the owner's project; import the three real stories; orphan audits and
       leak checks return zero rows; `/` and `/papers/<slug>` checked at 1280px and 375px. Tick this, and the phase, after it passes.
-- [ ] Browser loader moves from `published_version` to `v_live_story`. Not in this batch; the direct reads keep working meanwhile.
+- [x] Browser loader reads `v_live_story` and `v_live_library_entry` (no raw `published_version` requests from the browser). The init-migration `published_version_public_read_live` policy no longer has a frontend reader — candidate for removal in a later SQL batch.
 
 **Moved to the database:** story documents and live library entries (decision 48), moments, facts, story tags, citations,
 media asset paths, story fields, the vocabulary (`facet`, `tag`), volumes, issues, companies, storylines, fields, graph nodes,

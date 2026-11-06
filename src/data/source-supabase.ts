@@ -1,11 +1,11 @@
-// The Supabase source (decision 48). Browser-side: uses only the URL and the publishable key. Row-level security
-// (published_version: status = 'live' only) is the sole guard on staging rows. Never read a service-role key here.
+// The Supabase source (decisions 48, 49). Browser-side: uses only the URL and the publishable key. Reads go through the
+// public views v_live_story and v_live_library_entry, which filter status = 'live' and sample = false. Never read a service-role key here.
 
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { STORY_SCHEMA_VERSION, storyVersionMessage, type LibraryStory, type PaperDoc } from '../types';
 import type { StoryDataSource } from './source';
 
-/** Row shape of the public read `published_version?status=eq.live`. */
+/** Row shape of the public read `v_live_story` (decision 49). */
 interface LiveDocRow {
   schema_version: number;
   document: unknown;
@@ -24,13 +24,12 @@ function requiredEnv(name: 'VITE_SUPABASE_URL' | 'VITE_SUPABASE_PUBLISHABLE_KEY'
   return value;
 }
 
-/** GET published_version WHERE story_slug = <slug> AND status = 'live'. Exactly one live row per story (DB-enforced). */
+/** GET v_live_story WHERE story_slug = <slug>. At most one live row per story (DB-enforced). */
 async function readLiveDoc(client: SupabaseClient, slug: string): Promise<PaperDoc> {
   const { data, error } = await client
-    .from('published_version')
+    .from('v_live_story')
     .select('schema_version, document')
     .eq('story_slug', slug)
-    .eq('status', 'live')
     .maybeSingle();
   if (error) throw new Error(`Could not read story “${slug}” from Supabase: ${error.message}`);
   if (!data) throw new Error(`Story “${slug}” has no live version in Supabase.`);
@@ -43,12 +42,11 @@ async function readLiveDoc(client: SupabaseClient, slug: string): Promise<PaperD
   return doc as PaperDoc;
 }
 
-/** GET published_version WHERE status = 'live' (story_slug, library_entry). */
+/** GET v_live_library_entry (story_slug, library_entry). Same set of rows as v_live_story. */
 async function readLiveLibrary(client: SupabaseClient): Promise<Map<string, LibraryStory>> {
   const { data, error } = await client
-    .from('published_version')
-    .select('story_slug, library_entry')
-    .eq('status', 'live');
+    .from('v_live_library_entry')
+    .select('story_slug, library_entry');
   if (error) throw new Error(`Could not read live library entries from Supabase: ${error.message}`);
 
   const entries = new Map<string, LibraryStory>();
