@@ -1,0 +1,933 @@
+{
+  "schemaVersion": 2,
+  "slug": "dynamo",
+  "pageTitle": "The cart that never disappears",
+  "desk": "Distributed systems",
+  "paper": {
+    "title": "Dynamo: Amazon’s Highly Available Key-value Store",
+    "authors": "DeCandia and colleagues",
+    "year": 2007,
+    "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+  },
+  "summary": "Amazon’s shopping cart has to keep working even when machines break. Dynamo spreads copies of each cart around a ring of servers, keeps both versions when copies disagree, and merges them later, so an added item is never forgotten. The price is that a removed item can sometimes reappear.",
+  "hook": {
+    "sticker": "Server on fire!",
+    "teaser": "A machine breaks while you shop. Why is your cart still full?",
+    "cta": "Save the shopping cart",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "99.9995%",
+      "text": "of requests answered"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "dynamo/lead/fire.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A server box with a small flame and smoke. A shopping cart on a screen next to it still shows a sneaker and a hat."
+        },
+        "tag": "Fire!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "dynamo/lead/cart-safe.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Three houses on a ring each hold a copy of the same cart. One house is dark; the other two glow."
+        },
+        "tag": "Safe!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Distributed systems",
+        "aliases": [
+          "distributed computing"
+        ]
+      }
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Databases",
+        "aliases": [
+          "data stores",
+          "storage systems"
+        ]
+      }
+    },
+    {
+      "tag": "concept/key-value-store",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Key-value stores",
+        "aliases": [
+          "key value store",
+          "kv store"
+        ]
+      }
+    },
+    {
+      "tag": "concept/consistent-hashing",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=5",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Consistent hashing"
+      }
+    },
+    {
+      "tag": "concept/virtual-nodes",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=6",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Virtual nodes",
+        "parent": "concept/consistent-hashing",
+        "aliases": [
+          "vnodes",
+          "tokens"
+        ]
+      }
+    },
+    {
+      "tag": "concept/vector-clocks",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=6",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Vector clocks",
+        "aliases": [
+          "version vectors"
+        ]
+      }
+    },
+    {
+      "tag": "concept/eventual-consistency",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Eventual consistency"
+      }
+    },
+    {
+      "tag": "concept/high-availability",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "High availability",
+        "aliases": [
+          "always-on",
+          "uptime"
+        ]
+      }
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=6",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Replication",
+        "aliases": [
+          "replicas",
+          "copies"
+        ]
+      }
+    },
+    {
+      "tag": "concept/quorum",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=7",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Quorums",
+        "aliases": [
+          "sloppy quorum",
+          "read quorum",
+          "write quorum"
+        ]
+      }
+    },
+    {
+      "tag": "concept/hinted-handoff",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=8",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Hinted handoff"
+      }
+    },
+    {
+      "tag": "concept/merkle-tree",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=8",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Merkle trees",
+        "aliases": [
+          "hash tree",
+          "anti-entropy"
+        ]
+      }
+    },
+    {
+      "tag": "concept/gossip-protocol",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=8",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Gossip protocols",
+        "aliases": [
+          "gossip"
+        ]
+      }
+    },
+    {
+      "tag": "concept/conflict-resolution",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Conflict resolution",
+        "aliases": [
+          "reconciliation",
+          "last write wins"
+        ]
+      }
+    },
+    {
+      "tag": "concept/tail-latency",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=3",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Tail latency",
+        "aliases": [
+          "99.9th percentile",
+          "percentile latency"
+        ]
+      }
+    },
+    {
+      "tag": "concept/service-level-agreement",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=3",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Service level agreements",
+        "aliases": [
+          "SLA"
+        ]
+      }
+    },
+    {
+      "tag": "technique/dynamo",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Dynamo"
+      }
+    },
+    {
+      "tag": "use/shopping-carts",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Shopping carts",
+        "aliases": [
+          "online shopping carts"
+        ]
+      }
+    },
+    {
+      "tag": "use/session-storage",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=10",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Session storage",
+        "aliases": [
+          "session state"
+        ]
+      }
+    },
+    {
+      "tag": "organization/amazon",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Amazon",
+        "aliases": [
+          "Amazon.com"
+        ]
+      }
+    },
+    {
+      "tag": "venue/sosp",
+      "relevance": 0.5,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "SOSP",
+        "aliases": [
+          "Symposium on Operating Systems Principles"
+        ]
+      }
+    },
+    {
+      "tag": "venue/sosp-2007",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "SOSP 2007",
+        "parent": "venue/sosp"
+      }
+    },
+    {
+      "tag": "author/giuseppe-decandia",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Giuseppe DeCandia"
+      }
+    },
+    {
+      "tag": "author/deniz-hastorun",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Deniz Hastorun"
+      }
+    },
+    {
+      "tag": "author/madan-jampani",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Madan Jampani"
+      }
+    },
+    {
+      "tag": "author/gunavardhan-kakulapati",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Gunavardhan Kakulapati"
+      }
+    },
+    {
+      "tag": "author/avinash-lakshman",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Avinash Lakshman"
+      }
+    },
+    {
+      "tag": "author/alex-pilchin",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Alex Pilchin"
+      }
+    },
+    {
+      "tag": "author/swaminathan-sivasubramanian",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Swaminathan Sivasubramanian"
+      }
+    },
+    {
+      "tag": "author/peter-vosshall",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Peter Vosshall"
+      }
+    },
+    {
+      "tag": "author/werner-vogels",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Werner Vogels"
+      }
+    },
+    {
+      "tag": "everyday/online-shopping",
+      "relevance": 0.9,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Online shopping"
+      }
+    },
+    {
+      "tag": "everyday/keeping-copies-safe",
+      "relevance": 0.8,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Keeping copies safe",
+        "aliases": [
+          "backups"
+        ]
+      }
+    },
+    {
+      "tag": "everyday/neighbors",
+      "relevance": 0.5,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Neighbors and mail"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "The cart that",
+        "accent": "never disappears."
+      },
+      "deck": "A machine breaks while you shop. Your cart is still there. How does a giant store keep that promise when something is always broken?",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Server on fire",
+            "caption": "<b>Fig. 1.</b> One machine in a huge room of machines breaks down. It happens all the time, so the store plans for it.",
+            "media": {
+              "type": "svg",
+              "src": "dynamo/lead/fire.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A server box with a small flame and smoke. A shopping cart on a screen next to it still shows a sneaker and a hat."
+            }
+          },
+          {
+            "label": "Cart still there",
+            "caption": "<b>Fig. 2.</b> Copies of your cart live on other machines, so your sneaker and your hat are still there.",
+            "media": {
+              "type": "svg",
+              "src": "dynamo/lead/cart-safe.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Three houses on a ring each hold a copy of the same cart. One house is dark; the other two glow."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "How a store keeps your cart alive",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "One shelf, one big oops",
+          "provenance": "illustration",
+          "caption": "Picture every shopping cart in the world kept on one shelf in one room. If the shelf breaks, every cart vanishes. Amazon runs tens of thousands of machines, and some of them are always broken. So the cart has one rule: you must always be able to add things, even while machines fail.",
+          "media": {
+            "type": "svg",
+            "src": "dynamo/story/01-one-shelf.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "One shelf holds a pile of carts. A crack runs through the shelf."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "A ring of houses",
+          "provenance": "illustration",
+          "caption": "Give each cart a name tag and turn it into a spot on a big circle. Machines sit on the same circle like houses on a round street. A cart goes to the first house you reach walking clockwise, and copies go to the next houses along. Add a new house and it takes a few carts from many neighbors, so nothing big has to move. Grown-up name: <b>consistent hashing</b>.",
+          "media": {
+            "type": "svg",
+            "src": "dynamo/story/02-ring-of-houses.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Houses sit around a circle. A cart tag lands on the circle and an arrow walks clockwise to the nearest house."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Keep both, then merge",
+          "provenance": "illustration",
+          "caption": "If a house is down, a neighbor keeps your cart copy until the house is back, like a neighbor holding your mail. If two houses end up with different versions of your cart, the system does not guess. It keeps both, and the cart code merges them so nothing you added is lost. The trade: an item you removed can sometimes pop back. Grown-up words: <b>hinted handoff</b>, <b>vector clocks</b>.",
+          "media": {
+            "type": "svg",
+            "src": "dynamo/story/03-merge-the-carts.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two carts, one with a sneaker and one with a hat, pour into a single cart holding both."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Count the carts",
+          "provenance": "evidence",
+          "caption": "Amazon counted what its live shopping cart service returned over 24 hours. In that time 99.94% of requests saw exactly one version of the cart. Each of the cases with two, three or four versions was under a thousandth of one percent. That is one service on one day, as the paper reports it. <a href=\"https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=13\">See the paper’s count ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "dynamo/story/04-one-version.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A big bar for one version of the cart, 99.94 percent of requests, and tiny marks for two, three and four versions."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "How the cart actually survives",
+      "deck": "Read each strip from left to right. Our shopper has a cart with one sneaker in it. Watch what the machines do.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under “grown-up words” are the paper’s own. The paper’s numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "Put each cart on the ring",
+          "kicker": "How carts find a home",
+          "provenance": "illustration",
+          "grownUpWords": "consistent hashing and virtual nodes",
+          "panels": [
+            {
+              "caption": "Every cart has a name. The system turns the name into a spot on a big <b>circle</b>.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/01a-name-to-spot.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A cart name tag goes into a machine and comes out as a dot on a circle."
+              }
+            },
+            {
+              "caption": "Machines are <b>houses</b> on the same circle. Walk clockwise from the cart’s spot. The first house you meet looks after the cart.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/01b-walk-clockwise.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "An arrow walks clockwise from a dot to the nearest house on the circle."
+              }
+            },
+            {
+              "caption": "Each machine takes <b>many</b> spots on the circle. When one joins or leaves, its work is shared across many neighbors, not dumped on one.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/01c-many-spots.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One machine has several spots around the circle. A new machine takes a little from each neighbor."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Three copies, two answers",
+          "kicker": "Why one copy is not enough",
+          "provenance": "illustration",
+          "grownUpWords": "replication (N = 3) and quorums (R = 2, W = 2)",
+          "panels": [
+            {
+              "caption": "One copy is risky. So each cart is saved on <b>three</b> houses in a row.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/02a-three-copies.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A cart is copied onto three houses in a row."
+              }
+            },
+            {
+              "caption": "To save a change, <b>two</b> houses must say “got it.” The third can catch up later.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/02b-two-say-got-it.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two of three houses wave a got-it flag; the third is still writing."
+              }
+            },
+            {
+              "caption": "To read the cart, ask the houses and wait for <b>two</b> answers. Two plus two is more than three, so a reader usually meets a house that saw the last save.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/02c-two-answers.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A reader asks three houses and two reply with the cart."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The neighbor holds your mail",
+          "kicker": "What if a house is down?",
+          "provenance": "illustration",
+          "grownUpWords": "sloppy quorum and hinted handoff",
+          "panels": [
+            {
+              "caption": "House A is down. A strict rule would say “sorry, can’t save.” A cart store must <b>never</b> say that.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/03a-house-down.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "House A has a dark window and a closed sign. A shopper holds a cart."
+              }
+            },
+            {
+              "caption": "So the next healthy house, D, takes the copy and sticks on a note: <b>“This belongs to A.”</b>",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/03b-note-for-a.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "House D holds a cart copy with a note that says for A."
+              }
+            },
+            {
+              "caption": "When A wakes up, D <b>hands the copy back</b>, like a neighbor holding your mail while you are away.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/03c-hand-back.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "House D passes the cart copy over the fence to House A."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Sticky notes",
+          "kicker": "How to tell old from new",
+          "provenance": "illustration",
+          "grownUpWords": "vector clocks",
+          "panels": [
+            {
+              "caption": "Every time a house changes a cart, it sticks on a note: <b>“house X, change number 1.”</b>",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/04a-sticky-note.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A house sticks a note reading X 1 on a cart."
+              }
+            },
+            {
+              "caption": "Two people change the same cart at the same moment, on two different houses. Now there are two versions with <b>different notes</b>.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/04b-two-versions.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two copies of one cart carry different sticky notes."
+              }
+            },
+            {
+              "caption": "Comparing notes shows whether one version is just an <b>update</b> of the other. If so, drop the old one. If they branched, <b>keep both</b>.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/04c-compare-notes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two sticky-note stacks are compared side by side. A tick for update, a fork for branch."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Merge the carts",
+          "kicker": "What to do with two versions",
+          "provenance": "illustration",
+          "grownUpWords": "application-assisted conflict resolution",
+          "panels": [
+            {
+              "caption": "One version has a sneaker. The other has a hat. Neither is wrong.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/05a-sneaker-hat.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Cart one holds a sneaker. Cart two holds a hat."
+              }
+            },
+            {
+              "caption": "The cart service knows carts best, so it <b>merges</b> them: sneaker and hat. No “add to cart” is lost.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/05b-merge.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The two carts pour into one cart with a sneaker and a hat."
+              }
+            },
+            {
+              "caption": "The catch: if someone <b>removed</b> an item on one branch, it can come back after a merge. A bit odd, but safe.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/05c-item-returns.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A crossed-out scarf pops back into the merged cart."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Gossip and fingerprints",
+          "kicker": "How houses stay in sync",
+          "provenance": "illustration",
+          "grownUpWords": "gossip protocol and Merkle trees",
+          "panels": [
+            {
+              "caption": "Every second, each house picks a random neighbor and swaps news about who joined or left. That is <b>gossip</b>.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/06a-gossip.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two houses chat over a fence while a third waits its turn."
+              }
+            },
+            {
+              "caption": "To check whether two houses hold the same carts, compare one short <b>fingerprint</b> of the whole shelf. Same fingerprint, same shelf.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/06b-fingerprint.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two shelves each show a single fingerprint stamp; the stamps match."
+              }
+            },
+            {
+              "caption": "If the fingerprints differ, compare each half, then smaller pieces, until you find the odd cart. Only <b>that</b> cart gets copied.",
+              "media": {
+                "type": "svg",
+                "src": "dynamo/comic/06c-find-the-odd-one.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tree of fingerprints narrows down to one mismatched cart."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "3 · 2 · 2",
+          "claim": "model_design",
+          "text": "is the common setting: keep 3 copies of each item, and 2 houses must answer for a save or a read. The paper calls them N, R and W.",
+          "source": {
+            "label": "Paper §6.1",
+            "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=11"
+          },
+          "media": {
+            "type": "svg",
+            "src": "dynamo/facts/copies-3-2-2.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "300 ms",
+          "claim": "model_design",
+          "text": "is the usual speed promise: 99.9% of reads and writes should finish that fast. The paper calls it a service level agreement.",
+          "source": {
+            "label": "Paper §6.1",
+            "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=11"
+          },
+          "media": {
+            "type": "svg",
+            "src": "dynamo/facts/promise-300ms.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "3 million+",
+          "claim": "measured_result",
+          "text": "checkouts went through the shopping cart service in a single day. It handled tens of millions of requests that day.",
+          "source": {
+            "label": "Paper §1",
+            "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=2"
+          },
+          "media": {
+            "type": "svg",
+            "src": "dynamo/facts/checkouts.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "~200 ms",
+          "claim": "measured_result",
+          "text": "is how long the slowest 1 in 1,000 reads and writes took in a 30-day look at live traffic. That is about ten times the average.",
+          "source": {
+            "label": "Paper §6.1",
+            "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=11"
+          },
+          "media": {
+            "type": "svg",
+            "src": "dynamo/facts/slowest-tail.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "99.94%",
+          "claim": "measured_result",
+          "text": "of cart requests saw exactly one version of the cart in a 24-hour check. Splits are rare.",
+          "source": {
+            "label": "Paper §6.3",
+            "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=13"
+          },
+          "media": {
+            "type": "svg",
+            "src": "dynamo/facts/one-version.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "99.9995%",
+          "claim": "measured_result",
+          "text": "of requests got a successful reply without timing out, across Amazon services using Dynamo for two years. The paper reports no data loss to date.",
+          "source": {
+            "label": "Paper §6.6",
+            "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf#page=14"
+          },
+          "media": {
+            "type": "svg",
+            "src": "dynamo/facts/answered.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -139,6 +139,65 @@
       "year": 2018,
       "trust": "company_reported",
       "minutes": 4
+    },
+    {
+      "id": "resnet",
+      "real": true,
+      "sample": false,
+      "headline": "Don’t start over.",
+      "accent": "Just fix it.",
+      "dek": "A photo-reading machine got worse when it was given more layers. A small shortcut, a copy of the picture added back at the end of each block, fixed that, and let networks grow past a hundred layers.",
+      "desk": "AI & vision",
+      "fields": [
+        "ai"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": "He and colleagues",
+      "year": 2016,
+      "trust": "peer_reviewed",
+      "minutes": 10,
+      "note": "comic + facts"
+    },
+    {
+      "id": "google-search",
+      "real": true,
+      "sample": false,
+      "kind": "paper",
+      "trust": "peer_reviewed",
+      "role": "lead",
+      "fields": [
+        "sw"
+      ],
+      "headline": "The web’s biggest",
+      "accent": "popularity vote.",
+      "dek": "The web had millions of pages and no good way to sort them. Two students at Stanford had an idea: a page matters if other pages point to it. This paper describes the search engine they built around it.",
+      "desk": "Computer science / Search and the web",
+      "title": "The Anatomy of a Large-Scale Hypertextual Web Search Engine",
+      "authors": "Sergey Brin, Lawrence Page",
+      "year": 1998,
+      "minutes": 10,
+      "note": "comic + facts"
+    },
+    {
+      "id": "dynamo",
+      "real": true,
+      "sample": false,
+      "headline": "The cart that",
+      "accent": "never disappears.",
+      "dek": "A machine breaks while you shop, and your cart is still there. Amazon’s Dynamo keeps copies on a ring of servers and merges them when they disagree.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Dynamo: Amazon’s Highly Available Key-value Store",
+      "authors": "DeCandia and colleagues",
+      "year": 2007,
+      "trust": "peer_reviewed",
+      "minutes": 4
     }
   ],
   "front": {
@@ -324,13 +383,16 @@
     },
     {
       "id": "resnet",
-      "title": "ResNet",
+      "title": "Deep Residual Learning for Image Recognition",
       "authors": "He and colleagues",
-      "year": 2015,
+      "year": 2016,
       "field": "ai",
       "type": "paper",
       "x": 300,
-      "y": 300
+      "y": 300,
+      "short": "ResNet",
+      "story": "resnet",
+      "blurb": "Made very deep photo-reading networks trainable by letting each block learn only a small fix on top of its input. The Transformer’s residual links use the same idea."
     },
     {
       "id": "alphafold",
@@ -474,6 +536,52 @@
       "x": 690,
       "y": 275,
       "story": "size-shapes-life"
+    },
+    {
+      "id": "google-search",
+      "title": "The Anatomy of a Large-Scale Hypertextual Web Search Engine",
+      "short": "Google & PageRank",
+      "authors": "Brin and Page",
+      "year": 1998,
+      "field": "sw",
+      "type": "paper",
+      "story": "google-search",
+      "x": 680,
+      "y": 470,
+      "blurb": "Ranks web pages by who links to them, and answers searches from a word-to-pages index. The first detailed public description of a large web search engine, by its own account."
+    },
+    {
+      "id": "dynamo",
+      "title": "Dynamo: Amazon’s Highly Available Key-value Store",
+      "authors": "DeCandia and colleagues",
+      "year": 2007,
+      "field": "sw",
+      "type": "paper",
+      "x": 680,
+      "y": 490,
+      "story": "dynamo",
+      "short": "Amazon’s Dynamo",
+      "blurb": "Amazon’s shopping-cart store. Copies of each cart sit on a ring of servers, and when copies disagree the cart code merges them so an added item is never lost."
+    },
+    {
+      "id": "chord",
+      "title": "Chord: a scalable peer-to-peer lookup service",
+      "authors": "Stoica and colleagues",
+      "year": 2001,
+      "field": "sw",
+      "type": "paper",
+      "x": 590,
+      "y": 505
+    },
+    {
+      "id": "karger-hashing",
+      "title": "Consistent hashing and random trees",
+      "authors": "Karger and colleagues",
+      "year": 1997,
+      "field": "sw",
+      "type": "paper",
+      "x": 545,
+      "y": 480
     }
   ],
   "relations": [
@@ -551,6 +659,20 @@
       "to": "scaling",
       "kind": "builds_on",
       "note": "The paper uses Haldane’s examples of how size limits bodies.",
+      "cited": true
+    },
+    {
+      "from": "karger-hashing",
+      "to": "dynamo",
+      "kind": "uses_method",
+      "note": "Dynamo places carts and machines on a ring using consistent hashing.",
+      "cited": true
+    },
+    {
+      "from": "chord",
+      "to": "dynamo",
+      "kind": "builds_on",
+      "note": "Dynamo uses a ring like Chord’s but lets every machine know where each cart lives, so there are no extra hops.",
       "cited": true
     }
   ]

@@ -18,7 +18,10 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 - `attention-is-all-you-need` (peer-reviewed paper): first story, reference for tone and style.
 - `size-shapes-life` (arXiv 2408.04070, preprint): front-page lead; fact-check in `docs/fact-checks/size-shapes-life.md`.
 - `h3-hexagons` (Uber Engineering blog, company-reported): first real engineering post; company page at `/companies/uber`; fact-check in `docs/fact-checks/h3-hexagons.md`.
-- Fact-check records for all three real stories now exist under `docs/fact-checks/` (attention-is-all-you-need.md added 2026-11-05: 47 rows, 39 pass).
+- `resnet` (He et al., CVPR 2016 / arXiv 1512.03385, peer-reviewed): added 2026-11-07; fact-check 42 rows, 38 pass. CVPR 2016 venue still needs manual confirmation.
+- `google-search` (Brin & Page, WWW7 1998, peer-reviewed): added 2026-11-07; fact-check 53 rows, 45 pass. WWW7 peer-review status needs manual confirmation.
+- `dynamo` (DeCandia et al., SOSP 2007, peer-reviewed): added 2026-11-07; fact-check 36 rows, 29 pass. SOSP 2007 peer-review status needs manual confirmation.
+- All 6 fact-check records live under `docs/fact-checks/`. All six stories use placeholder grey-plate SVGs under `public/media/<slug>/`; real hand-drawn art still pending for the 3 new stories (`resnet`, `google-search`, `dynamo`).
 - Sample stories, companies, storylines, nodes and relations were stripped from `data/seed/library.json` on 2026-11-07 and no longer appear in the DB-driven site (decision 51). Only the three real stories render.
 
 ## Built

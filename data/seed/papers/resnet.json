@@ -1,0 +1,687 @@
+{
+  "schemaVersion": 2,
+  "slug": "resnet",
+  "pageTitle": "Don’t start over. Just fix it.",
+  "desk": "Machine learning",
+  "paper": {
+    "title": "Deep Residual Learning for Image Recognition",
+    "authors": "He and colleagues",
+    "year": 2016,
+    "url": "https://arxiv.org/pdf/1512.03385"
+  },
+  "summary": "Making a picture-reading network deeper used to make it worse. This paper added shortcuts so each block only learns a small fix on top of its input. That made networks over a hundred layers deep trainable, and an ensemble won the 2015 ImageNet classification contest.",
+  "hook": {
+    "sticker": "Wait, what?",
+    "teaser": "More layers made a plain picture-reading machine worse. What tiny shortcut fixed it?",
+    "cta": "Find the shortcut",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "152",
+      "text": "layers deep"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "resnet/lead/redraw.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A long line of helpers, each redrawing a cat picture. The cat gets blurrier with every helper."
+        },
+        "tag": "Blurry!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "resnet/lead/fix-it.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "The same line of helpers, but the cat picture rides along on a shortcut and each helper only adds a small fix. The cat stays clear."
+        },
+        "tag": "Fixed!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "area/artificial-intelligence",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "area/machine-learning",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "area/deep-learning",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "area/computer-vision",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/neural-network",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/residual-connection",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=3",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/convolutional-neural-network",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=4",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/degradation-problem",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/bottleneck-block",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=6",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/batch-normalization",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=4",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/softmax",
+      "relevance": 0.3,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=4",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/resnet",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=3",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/faster-r-cnn",
+      "relevance": 0.3,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=8",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "task/image-classification",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=4",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "task/object-detection",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=8",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "dataset/imagenet",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=4",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "dataset/cifar-10",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=7",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "dataset/ms-coco",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=8",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "metric/top-5-error",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=4",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "metric/top-1-error",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=4",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/microsoft-research",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "author/kaiming-he",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "author/xiangyu-zhang",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "author/shaoqing-ren",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "author/jian-sun",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/pdf/1512.03385#page=1",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "venue/cvpr-2016",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/seeing-pictures",
+      "relevance": 0.9,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/smart-computers",
+      "relevance": 0.7,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/teamwork",
+      "relevance": 0.5,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Machine learning / Picture story",
+      "headline": {
+        "text": "Don’t start over.",
+        "accent": "Just fix it."
+      },
+      "deck": "Plain photo-reading machines got worse when they were given more layers. A small shortcut turned that around. What was the shortcut?",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "A long line of redrawers",
+            "caption": "<b>Fig. 1.</b> Each helper redraws the picture from scratch. By the end of a long line, the cat is a blur. (A made-up drawing.)",
+            "media": {
+              "type": "svg",
+              "src": "resnet/lead/redraw.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A long line of helpers, each redrawing a cat picture. The cat gets blurrier with every helper."
+            }
+          },
+          {
+            "label": "Pass it along",
+            "caption": "<b>Fig. 2.</b> Now each helper keeps the picture and only adds a small fix. The cat stays clear. (A made-up drawing.)",
+            "media": {
+              "type": "svg",
+              "src": "resnet/lead/fix-it.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "The same line of helpers, but the cat picture rides along on a shortcut and each helper only adds a small fix. The cat stays clear."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Machine learning / A picture story in four parts",
+      "title": "How a very deep machine learns to see",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Too many helpers",
+          "provenance": "illustration",
+          "caption": "Picture a machine as a long line of helpers. Each one gets a picture, redraws it, and hands it on. With a few helpers, fine. With many, little mistakes pile up. The researchers saw something like this for real: when they made a plain machine deeper, it did <i>worse</i> on its practice pictures, not better. It was not just memorising. It simply could not learn well.",
+          "media": {
+            "type": "svg",
+            "src": "resnet/story/01-too-many-helpers.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A line of helpers redraws a cat; each copy is a little blurrier than the last."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Only write down the fix",
+          "provenance": "illustration",
+          "caption": "Here is the trick. Do not ask each helper to redraw the whole picture. Let them keep the picture they were given and add only a <b>correction</b>. If the picture is already fine, the helper writes almost nothing. That is much easier than copying everything perfectly. Grown-ups call the correction a <b>residual</b>.",
+          "media": {
+            "type": "svg",
+            "src": "resnet/story/02-write-the-fix.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A helper holds the incoming cat picture and a small sticky note labelled fix."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "A shortcut beside the line",
+          "provenance": "illustration",
+          "caption": "So the picture travels on a <b>shortcut</b> right past the helpers. At the end it is added to their correction. The shortcut needs no learning and no extra settings to tune. Then the same block is stacked again and again, until the machine is dozens, even over a hundred, layers deep.",
+          "media": {
+            "type": "svg",
+            "src": "resnet/story/03-the-shortcut.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "The picture rides a bridge over a block of helpers and meets their fix at the far side."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Deeper got better, not worse",
+          "provenance": "evidence",
+          "caption": "The team compared two 34-layer machines that were identical except for the shortcuts. On a big photo test with 1,000 kinds of things, the plain one got 28.54% of its first guesses wrong. The one with shortcuts got 25.03% wrong. That is one test on one set of photos, but it is a controlled comparison: the two machines match in depth, width and number of settings. <a href=\"https://arxiv.org/pdf/1512.03385#page=5\">See the paper’s Table 2 ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "resnet/story/04-scorecard.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Plain 34-layer network: 28.54 percent top-1 error. Residual 34-layer network: 25.03 percent. Same ImageNet validation test."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Machine learning / Under the hood / A comic in five strips",
+      "title": "How the machine actually works",
+      "deck": "Read each strip from left to right. Our machine is a line of helpers that look at photos and say what is in them.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. Where a strip names a section, that part is the paper’s own. The paper’s numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "Guess what is in the photo",
+          "kicker": "What the machine is asked to do",
+          "provenance": "illustration",
+          "grownUpWords": "image classification; ImageNet; top-5 error",
+          "panels": [
+            {
+              "caption": "The machine looks at a photo and has to say what is in it. There are <b>1,000</b> possible answers, such as “tabby cat” or “teapot” (§4.1).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/01a-photo.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A photo of a cat with a question mark and a list of many labels."
+              }
+            },
+            {
+              "caption": "For one score, the machine gets <b>five guesses</b>. The paper’s <b>top-5 error</b> counts the photos where the right answer is not in those five (§4.1). Top-1 means only the first guess counts.",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/01b-five-guesses.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A machine holds up five guess cards beside a photo."
+              }
+            },
+            {
+              "caption": "So a <b>lower</b> error number is <b>better</b>. Keep that in mind: every score later in this story is an error rate.",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/01c-lower-better.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A scoreboard with a small number highlighted as better."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The more-layers puzzle",
+          "kicker": "Why deeper was not always better",
+          "provenance": "model_design",
+          "grownUpWords": "the degradation problem; identity mapping",
+          "panels": [
+            {
+              "caption": "Here is a puzzle. Take a shallow machine and add extra layers that <b>just pass things along unchanged</b>. That deeper machine can be exactly as good. So deeper should never be worse (§1).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/02a-copy-trick.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A short line of helpers and a longer line whose extra helpers simply pass the picture along."
+              }
+            },
+            {
+              "caption": "But in the paper’s tests, a deeper plain machine got <b>higher</b> error on its practice data. The authors call this the <b>degradation problem</b> (§1, Fig. 1).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/02b-but-worse.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A graph where the line for the deeper machine sits above the line for the shallower one."
+              }
+            },
+            {
+              "caption": "The authors’ guess: the training method has a hard time learning <b>“do nothing”</b> through a pile of layers (§3.1). So they changed what the layers learn.",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/02c-hard-to-learn.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A helper struggling to hold still, with a thought bubble that says do nothing."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Learn the fix, not the picture",
+          "kicker": "The residual idea",
+          "provenance": "model_design",
+          "grownUpWords": "residual learning, F(x) = H(x) − x, so the block outputs F(x) + x",
+          "panels": [
+            {
+              "caption": "Normally a few layers must learn the <b>whole answer</b> to a question. Call that answer H.",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/03a-whole-picture.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A helper draws a whole cat from scratch."
+              }
+            },
+            {
+              "caption": "The paper instead asks them to learn only the <b>difference</b>, F = H − x, between the answer and what came in. Then it adds the input back: <b>F(x) + x</b> (§3.1).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/03b-fix-only.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A helper writes only a small difference note while the input picture waits beside it."
+              }
+            },
+            {
+              "caption": "The authors <b>hypothesise</b> that this is easier. If the best move is to change nothing, the layers only have to push the fix toward <b>zero</b> (§1, §3.1).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/03c-push-to-zero.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A fix note shrinking to zero while the picture passes through untouched."
+              }
+            }
+          ]
+        },
+        {
+          "title": "A shortcut that costs nothing",
+          "kicker": "Identity shortcuts",
+          "provenance": "model_design",
+          "grownUpWords": "identity shortcut, parameter-free; projection shortcut",
+          "panels": [
+            {
+              "caption": "In the paper’s blocks, the shortcut is a plain <b>copy</b> of the input that skips over a few layers. The paper calls it an <b>identity shortcut</b> (§3.2).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/04a-bridge.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A bridge carries a copy of the picture over a block of layers."
+              }
+            },
+            {
+              "caption": "The paper says identity shortcuts add <b>no extra parameters</b> and no extra work to speak of (§3.2). That also lets it compare plain and shortcut machines fairly (§3.2).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/04b-no-extra.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tag reading zero extra settings on the bridge."
+              }
+            },
+            {
+              "caption": "If the picture’s size changes along the way, the shortcut needs help. The paper tries <b>padding with zeros</b> or a small <b>projection</b> step (§3.3).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/04c-sizes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two adapters on the bridge: one pads with zeros, one reshapes the picture."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Stacking it high",
+          "kicker": "From 34 layers to 152",
+          "provenance": "model_design",
+          "grownUpWords": "ResNet-34/50/101/152; bottleneck block; FLOPs",
+          "panels": [
+            {
+              "caption": "The authors stack the shortcut blocks into machines of <b>34, 50, 101 and 152</b> layers (§3.3, Table 1).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/05a-stack.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Four towers of different heights labelled 34, 50, 101 and 152."
+              }
+            },
+            {
+              "caption": "To keep the bigger ones affordable, each block squeezes the picture small, works on it, then expands it again. The paper calls this a <b>bottleneck</b> design (§4.1).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/05b-bottleneck.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A block that narrows in the middle like an hourglass."
+              }
+            },
+            {
+              "caption": "Even at 152 layers, the paper counts <b>11.3 billion</b> multiply-adds per picture. The older VGG-16 and VGG-19 machines need <b>15.3 and 19.6 billion</b> (§4.1).",
+              "media": {
+                "type": "svg",
+                "src": "resnet/comic/05c-lighter.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A 152-layer tower on a scale that tips lighter than a shorter VGG tower."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "152",
+          "claim": "model_design",
+          "text": "layers in the deepest ResNet on ImageNet. The paper says that is 8 times deeper than VGG nets, with lower complexity.",
+          "source": {
+            "label": "Paper, Abstract and §4.1",
+            "url": "https://arxiv.org/pdf/1512.03385#page=1"
+          },
+          "media": {
+            "type": "svg",
+            "src": "resnet/facts/layers.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "+0",
+          "claim": "model_design",
+          "text": "extra settings to learn from an identity shortcut. It adds neither extra parameters nor extra computation. Paper name: parameter-free.",
+          "source": {
+            "label": "Paper §3.2",
+            "url": "https://arxiv.org/pdf/1512.03385#page=3"
+          },
+          "media": {
+            "type": "svg",
+            "src": "resnet/facts/no-extra.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "25.03%",
+          "claim": "measured_result",
+          "text": "first-guess error for a 34-layer machine with shortcuts, against 28.54% for the same machine without them. ImageNet validation set.",
+          "source": {
+            "label": "Paper §4.1, Table 2",
+            "url": "https://arxiv.org/pdf/1512.03385#page=5"
+          },
+          "media": {
+            "type": "svg",
+            "src": "resnet/facts/plain-vs-res.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "3.57%",
+          "claim": "measured_result",
+          "text": "top-5 error on the ImageNet test set for an ensemble of ResNets. The paper reports that this entry won first place in the ILSVRC 2015 classification contest.",
+          "source": {
+            "label": "Paper §4.1, Table 5",
+            "url": "https://arxiv.org/pdf/1512.03385#page=6"
+          },
+          "media": {
+            "type": "svg",
+            "src": "resnet/facts/top5.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "28%",
+          "claim": "measured_result",
+          "text": "relative improvement on COCO object detection when VGG-16 was swapped for ResNet-101 inside the same detector (6.0 points of mAP@[.5, .95]).",
+          "source": {
+            "label": "Paper §4.3",
+            "url": "https://arxiv.org/pdf/1512.03385#page=8"
+          },
+          "media": {
+            "type": "svg",
+            "src": "resnet/facts/coco.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "1202",
+          "claim": "measured_result",
+          "text": "layers in the biggest CIFAR-10 test. It trained fine, but its test error (7.93%) was worse than the 110-layer one (6.43%). The authors suspect overfitting.",
+          "source": {
+            "label": "Paper §4.2, Table 6",
+            "url": "https://arxiv.org/pdf/1512.03385#page=8"
+          },
+          "media": {
+            "type": "svg",
+            "src": "resnet/facts/1202.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

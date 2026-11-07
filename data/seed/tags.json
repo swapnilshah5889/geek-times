@@ -855,6 +855,579 @@
         "cities",
         "getting a ride"
       ]
+    },
+    {
+      "id": "area/computer-vision",
+      "facet": "area",
+      "label": "Computer vision",
+      "parent": "area/artificial-intelligence",
+      "aliases": [
+        "vision",
+        "image recognition",
+        "machine vision"
+      ]
+    },
+    {
+      "id": "concept/degradation-problem",
+      "facet": "concept",
+      "label": "Degradation problem",
+      "aliases": [
+        "deeper is worse",
+        "accuracy degradation"
+      ]
+    },
+    {
+      "id": "concept/bottleneck-block",
+      "facet": "concept",
+      "label": "Bottleneck block",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "bottleneck design",
+        "bottleneck architecture"
+      ]
+    },
+    {
+      "id": "concept/batch-normalization",
+      "facet": "concept",
+      "label": "Batch normalization",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "batchnorm",
+        "BN"
+      ]
+    },
+    {
+      "id": "technique/resnet",
+      "facet": "technique",
+      "label": "ResNet",
+      "aliases": [
+        "residual network",
+        "residual networks",
+        "deep residual learning"
+      ]
+    },
+    {
+      "id": "technique/faster-r-cnn",
+      "facet": "technique",
+      "label": "Faster R-CNN",
+      "aliases": [
+        "faster rcnn"
+      ]
+    },
+    {
+      "id": "task/image-classification",
+      "facet": "task",
+      "label": "Image classification",
+      "aliases": [
+        "image recognition",
+        "photo classification"
+      ]
+    },
+    {
+      "id": "task/object-detection",
+      "facet": "task",
+      "label": "Object detection",
+      "aliases": [
+        "detecting objects"
+      ]
+    },
+    {
+      "id": "dataset/imagenet",
+      "facet": "dataset",
+      "label": "ImageNet",
+      "aliases": [
+        "ILSVRC",
+        "ImageNet 2012"
+      ]
+    },
+    {
+      "id": "dataset/cifar-10",
+      "facet": "dataset",
+      "label": "CIFAR-10",
+      "aliases": [
+        "CIFAR10"
+      ]
+    },
+    {
+      "id": "dataset/ms-coco",
+      "facet": "dataset",
+      "label": "MS COCO",
+      "aliases": [
+        "COCO",
+        "Microsoft COCO"
+      ]
+    },
+    {
+      "id": "metric/top-5-error",
+      "facet": "metric",
+      "label": "Top-5 error",
+      "aliases": [
+        "top5 error"
+      ]
+    },
+    {
+      "id": "metric/top-1-error",
+      "facet": "metric",
+      "label": "Top-1 error",
+      "aliases": [
+        "top1 error"
+      ]
+    },
+    {
+      "id": "organization/microsoft-research",
+      "facet": "organization",
+      "label": "Microsoft Research",
+      "aliases": [
+        "Microsoft",
+        "MSR"
+      ]
+    },
+    {
+      "id": "author/kaiming-he",
+      "facet": "author",
+      "label": "Kaiming He"
+    },
+    {
+      "id": "author/xiangyu-zhang",
+      "facet": "author",
+      "label": "Xiangyu Zhang"
+    },
+    {
+      "id": "author/shaoqing-ren",
+      "facet": "author",
+      "label": "Shaoqing Ren"
+    },
+    {
+      "id": "author/jian-sun",
+      "facet": "author",
+      "label": "Jian Sun"
+    },
+    {
+      "id": "venue/cvpr",
+      "facet": "venue",
+      "label": "CVPR",
+      "aliases": [
+        "Computer Vision and Pattern Recognition"
+      ]
+    },
+    {
+      "id": "venue/cvpr-2016",
+      "facet": "venue",
+      "label": "CVPR 2016",
+      "parent": "venue/cvpr"
+    },
+    {
+      "id": "everyday/seeing-pictures",
+      "facet": "everyday",
+      "label": "Seeing pictures",
+      "aliases": [
+        "photos",
+        "recognising things",
+        "vision"
+      ]
+    },
+    {
+      "id": "everyday/teamwork",
+      "facet": "everyday",
+      "label": "Teamwork",
+      "aliases": [
+        "helpers",
+        "passing it along"
+      ]
+    },
+    {
+      "id": "area/information-retrieval",
+      "facet": "area",
+      "label": "Information retrieval",
+      "aliases": [
+        "IR",
+        "finding documents"
+      ],
+      "description": "Finding the documents that answer a question."
+    },
+    {
+      "id": "concept/pagerank",
+      "facet": "concept",
+      "label": "PageRank",
+      "aliases": [
+        "page rank",
+        "link ranking"
+      ],
+      "description": "A score for how important a page is, based on who links to it."
+    },
+    {
+      "id": "concept/link-analysis",
+      "facet": "concept",
+      "label": "Link analysis",
+      "aliases": [
+        "hyperlink analysis",
+        "citation graph"
+      ],
+      "description": "Using the links between pages to learn about them."
+    },
+    {
+      "id": "concept/hyperlink-graph",
+      "facet": "concept",
+      "label": "Hyperlink graph",
+      "aliases": [
+        "link graph",
+        "web graph"
+      ],
+      "description": "The web seen as pages (dots) joined by links (lines)."
+    },
+    {
+      "id": "concept/anchor-text",
+      "facet": "concept",
+      "label": "Anchor text",
+      "aliases": [
+        "link text"
+      ],
+      "description": "The clickable words of a link."
+    },
+    {
+      "id": "concept/inverted-index",
+      "facet": "concept",
+      "label": "Inverted index",
+      "aliases": [
+        "search index",
+        "word-to-pages index"
+      ],
+      "description": "A list that says, for each word, which documents contain it."
+    },
+    {
+      "id": "concept/random-surfer",
+      "facet": "concept",
+      "label": "Random surfer",
+      "parent": "concept/pagerank",
+      "aliases": [
+        "random walk"
+      ],
+      "description": "An imaginary web user who keeps clicking links; used to explain PageRank."
+    },
+    {
+      "id": "technique/web-crawler",
+      "facet": "technique",
+      "label": "Web crawler",
+      "aliases": [
+        "spider",
+        "bot",
+        "crawling"
+      ],
+      "description": "A program that visits web pages and copies them for later use."
+    },
+    {
+      "id": "task/web-search",
+      "facet": "task",
+      "label": "Web search",
+      "aliases": [
+        "search engine",
+        "searching the web"
+      ],
+      "description": "Finding web pages that answer what someone typed."
+    },
+    {
+      "id": "use/search-engines",
+      "facet": "use",
+      "label": "Search engines",
+      "aliases": [
+        "Google Search",
+        "web search engines"
+      ],
+      "description": "Sites you type a question into to find web pages."
+    },
+    {
+      "id": "organization/stanford-university",
+      "facet": "organization",
+      "label": "Stanford University",
+      "aliases": [
+        "Stanford"
+      ]
+    },
+    {
+      "id": "author/sergey-brin",
+      "facet": "author",
+      "label": "Sergey Brin"
+    },
+    {
+      "id": "author/lawrence-page",
+      "facet": "author",
+      "label": "Lawrence Page",
+      "aliases": [
+        "Larry Page"
+      ]
+    },
+    {
+      "id": "venue/world-wide-web-conference",
+      "facet": "venue",
+      "label": "World Wide Web Conference",
+      "aliases": [
+        "WWW",
+        "The Web Conference"
+      ]
+    },
+    {
+      "id": "venue/www7-1998",
+      "facet": "venue",
+      "label": "WWW7 (1998)",
+      "parent": "venue/world-wide-web-conference",
+      "aliases": [
+        "Seventh International World Wide Web Conference",
+        "WWW 1998"
+      ]
+    },
+    {
+      "id": "everyday/finding-things",
+      "facet": "everyday",
+      "label": "Finding things",
+      "aliases": [
+        "googling",
+        "looking things up"
+      ]
+    },
+    {
+      "id": "everyday/the-internet",
+      "facet": "everyday",
+      "label": "The internet",
+      "aliases": [
+        "websites",
+        "the web"
+      ]
+    },
+    {
+      "id": "area/distributed-systems",
+      "facet": "area",
+      "label": "Distributed systems",
+      "aliases": [
+        "distributed computing"
+      ]
+    },
+    {
+      "id": "area/databases",
+      "facet": "area",
+      "label": "Databases",
+      "aliases": [
+        "data stores",
+        "storage systems"
+      ]
+    },
+    {
+      "id": "concept/key-value-store",
+      "facet": "concept",
+      "label": "Key-value stores",
+      "aliases": [
+        "key value store",
+        "kv store"
+      ]
+    },
+    {
+      "id": "concept/consistent-hashing",
+      "facet": "concept",
+      "label": "Consistent hashing"
+    },
+    {
+      "id": "concept/virtual-nodes",
+      "facet": "concept",
+      "label": "Virtual nodes",
+      "parent": "concept/consistent-hashing",
+      "aliases": [
+        "vnodes",
+        "tokens"
+      ]
+    },
+    {
+      "id": "concept/vector-clocks",
+      "facet": "concept",
+      "label": "Vector clocks",
+      "aliases": [
+        "version vectors"
+      ]
+    },
+    {
+      "id": "concept/eventual-consistency",
+      "facet": "concept",
+      "label": "Eventual consistency"
+    },
+    {
+      "id": "concept/high-availability",
+      "facet": "concept",
+      "label": "High availability",
+      "aliases": [
+        "always-on",
+        "uptime"
+      ]
+    },
+    {
+      "id": "concept/replication",
+      "facet": "concept",
+      "label": "Replication",
+      "aliases": [
+        "replicas",
+        "copies"
+      ]
+    },
+    {
+      "id": "concept/quorum",
+      "facet": "concept",
+      "label": "Quorums",
+      "aliases": [
+        "sloppy quorum",
+        "read quorum",
+        "write quorum"
+      ]
+    },
+    {
+      "id": "concept/hinted-handoff",
+      "facet": "concept",
+      "label": "Hinted handoff"
+    },
+    {
+      "id": "concept/merkle-tree",
+      "facet": "concept",
+      "label": "Merkle trees",
+      "aliases": [
+        "hash tree",
+        "anti-entropy"
+      ]
+    },
+    {
+      "id": "concept/gossip-protocol",
+      "facet": "concept",
+      "label": "Gossip protocols",
+      "aliases": [
+        "gossip"
+      ]
+    },
+    {
+      "id": "concept/conflict-resolution",
+      "facet": "concept",
+      "label": "Conflict resolution",
+      "aliases": [
+        "reconciliation",
+        "last write wins"
+      ]
+    },
+    {
+      "id": "concept/tail-latency",
+      "facet": "concept",
+      "label": "Tail latency",
+      "aliases": [
+        "99.9th percentile",
+        "percentile latency"
+      ]
+    },
+    {
+      "id": "concept/service-level-agreement",
+      "facet": "concept",
+      "label": "Service level agreements",
+      "aliases": [
+        "SLA"
+      ]
+    },
+    {
+      "id": "technique/dynamo",
+      "facet": "technique",
+      "label": "Dynamo"
+    },
+    {
+      "id": "use/shopping-carts",
+      "facet": "use",
+      "label": "Shopping carts",
+      "aliases": [
+        "online shopping carts"
+      ]
+    },
+    {
+      "id": "use/session-storage",
+      "facet": "use",
+      "label": "Session storage",
+      "aliases": [
+        "session state"
+      ]
+    },
+    {
+      "id": "organization/amazon",
+      "facet": "organization",
+      "label": "Amazon",
+      "aliases": [
+        "Amazon.com"
+      ]
+    },
+    {
+      "id": "venue/sosp",
+      "facet": "venue",
+      "label": "SOSP",
+      "aliases": [
+        "Symposium on Operating Systems Principles"
+      ]
+    },
+    {
+      "id": "venue/sosp-2007",
+      "facet": "venue",
+      "label": "SOSP 2007",
+      "parent": "venue/sosp"
+    },
+    {
+      "id": "author/giuseppe-decandia",
+      "facet": "author",
+      "label": "Giuseppe DeCandia"
+    },
+    {
+      "id": "author/deniz-hastorun",
+      "facet": "author",
+      "label": "Deniz Hastorun"
+    },
+    {
+      "id": "author/madan-jampani",
+      "facet": "author",
+      "label": "Madan Jampani"
+    },
+    {
+      "id": "author/gunavardhan-kakulapati",
+      "facet": "author",
+      "label": "Gunavardhan Kakulapati"
+    },
+    {
+      "id": "author/avinash-lakshman",
+      "facet": "author",
+      "label": "Avinash Lakshman"
+    },
+    {
+      "id": "author/alex-pilchin",
+      "facet": "author",
+      "label": "Alex Pilchin"
+    },
+    {
+      "id": "author/swaminathan-sivasubramanian",
+      "facet": "author",
+      "label": "Swaminathan Sivasubramanian"
+    },
+    {
+      "id": "author/peter-vosshall",
+      "facet": "author",
+      "label": "Peter Vosshall"
+    },
+    {
+      "id": "author/werner-vogels",
+      "facet": "author",
+      "label": "Werner Vogels"
+    },
+    {
+      "id": "everyday/online-shopping",
+      "facet": "everyday",
+      "label": "Online shopping"
+    },
+    {
+      "id": "everyday/keeping-copies-safe",
+      "facet": "everyday",
+      "label": "Keeping copies safe",
+      "aliases": [
+        "backups"
+      ]
+    },
+    {
+      "id": "everyday/neighbors",
+      "facet": "everyday",
+      "label": "Neighbors and mail"
     }
   ]
 }
