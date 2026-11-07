@@ -1,5 +1,4 @@
 let clientNavigation = false;
-let pendingNavigation = false;
 
 /** Push an in-app URL and ask App to resolve the newly active route. */
 export function navigate(url: string): void {
@@ -7,7 +6,6 @@ export function navigate(url: string): void {
   if (next.href === window.location.href) return;
   window.history.pushState(null, '', next.href);
   clientNavigation = true;
-  pendingNavigation = true;
   window.dispatchEvent(new CustomEvent('geekytimes:navigate'));
 }
 
@@ -30,7 +28,6 @@ export function installInternalLinkInterceptor(): () => void {
     // Same-URL activations still notify App to apply its navigation focus rules.
     clientNavigation = true;
     if (next.href === window.location.href) {
-      pendingNavigation = true;
       window.dispatchEvent(new CustomEvent('geekytimes:navigate'));
     } else navigate(next.href);
   };
@@ -41,14 +38,6 @@ export function installInternalLinkInterceptor(): () => void {
 /** Mark a history traversal as client navigation (used by route state handling). */
 export function markPopNavigation(): void {
   clientNavigation = true;
-  pendingNavigation = true;
-}
-
-/** Consume whether a client route change is pending. */
-export function takePendingNavigation(): boolean {
-  const pending = pendingNavigation;
-  pendingNavigation = false;
-  return pending;
 }
 
 /** True after a route has changed in this document, until a full reload. */

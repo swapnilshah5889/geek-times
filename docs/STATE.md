@@ -9,9 +9,9 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 - Everything through PR #9 (the Supabase plan) is merged into `main`. No feature branch open.
 - `main` is at `fba4323`. Work continues on `v1` (decision 40), many commits ahead.
 - **Phase 3b landed in code on `v1` (decision 49):** the normalized V1 schema is in SQL migrations (core, editorial, public views and RLS, applied in filename order after the init migration). The `v_*` views expose only live, non-sample, approved or verified rows to anon. The importer writes one version and its extracted rows in one `pg` transaction. Migration history is one path: `npm run apply:migration` (see `supabase/README.md`). Acceptance (applying A, B and D to the owner's project, importing the three real stories, orphan audit, leak check) is the lead's run and is not recorded as done here yet.
-- **Runtime Supabase path (decision 48):** story documents and live library entries for published slugs can come from Supabase when `VITE_DATA_SOURCE=supabase`. The browser still reads `published_version` directly; the loader cutover to the public views is landing in this batch. Everything else stays static (see "Runtime data" below). The default stays `file`. Owner's project is ready; values live in a local `.env` only.
+- **Supabase-only runtime landed (decision 51):** every frontend read goes through Supabase views. File mode is gone (`VITE_DATA_SOURCE` removed, `src/data/source-file.ts` deleted). `data/seed/` holds the editorial seed (no sample content); `public/data/` is empty. The prerender walker enumerates routes from `v_live_story` / `v_issue` / `v_company` at build time via a Node Supabase client reading the publishable key. The new migration `20261107120000_runtime_cutover.sql` adds `v_site` + `site_settings`, `tag.parent`, `facet.description`, `node.blurb`/`short`, `relation.cited`/`cross_field`, and normalizes the `v_issue` grant regression.
 - **Hydration and in-app navigation landed (decision 50):** `hydrateRoot` with an embedded snapshot per route; `npm run check:hydration` is the smoke gate; in-app navigation uses the approved slide-up (Phase 4 UX).
-- Last decisions: 41 SSG prerender · 42 publish atomicity (refines 38) · 43 claim + trust on moments · 44 trust on every sourced claim · 45 createRoot not hydrateRoot (clarifies 41) · 46 story `schemaVersion: 2` · 47 single-stamp comic model (reclassify + rewrite; per-panel rejected) · 48 runtime Supabase reads, RLS required (refines 34) · 49 normalized V1 schema, transactional extraction, one migration path · 50 hydrateRoot with embedded data (supersedes 45 for prerendered routes).
+- Last decisions: 42 publish atomicity (refines 38) · 43 claim + trust on moments · 44 trust on every sourced claim · 45 createRoot not hydrateRoot (clarifies 41) · 46 story `schemaVersion: 2` · 47 single-stamp comic model (reclassify + rewrite; per-panel rejected) · 48 runtime Supabase reads, RLS required (refines 34) · 49 normalized V1 schema, transactional extraction, one migration path · 50 hydrateRoot with embedded data (supersedes 45 for prerendered routes) · 51 Supabase-only runtime (supersedes 48; file mode removed, samples stripped from the seed and from the DB references).
 
 ## Real content
 
@@ -19,7 +19,7 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 - `size-shapes-life` (arXiv 2408.04070, preprint): front-page lead; fact-check in `docs/fact-checks/size-shapes-life.md`.
 - `h3-hexagons` (Uber Engineering blog, company-reported): first real engineering post; company page at `/companies/uber`; fact-check in `docs/fact-checks/h3-hexagons.md`.
 - Fact-check records for all three real stories now exist under `docs/fact-checks/` (attention-is-all-you-need.md added 2026-11-05: 47 rows, 39 pass).
-- Everything else in `public/data/library.json` is `sample: true` (three placeholder companies now explicitly flagged).
+- Sample stories, companies, storylines, nodes and relations were stripped from `data/seed/library.json` on 2026-11-07 and no longer appear in the DB-driven site (decision 51). Only the three real stories render.
 
 ## Built
 
@@ -29,38 +29,31 @@ Path URLs (`/papers/<slug>`). Reduced motion respected; pause switch per section
 
 ## Runtime data: what's live, what's static
 
-Live (the one runtime read, Supabase, only when `VITE_DATA_SOURCE=supabase`; decision 48):
-- Story document (`PaperDoc`) for each published slug, from `published_version` where `status = 'live'`.
-- Live library entry (`LibraryStory`) for each published slug, overlaid on the `library.json` story list before render.
+**Every frontend read comes from Supabase (decision 51).** On app mount, `src/data/load.ts` does one `Promise.all` of view fetches that assemble the in-memory Archive:
 
-**Loader cutover (landed):** both reads go through the public views `v_live_story` and `v_live_library_entry` (decision 49). Raw `published_version` is no longer requested by the browser; the init-migration policy on that table is now a candidate for removal in a later SQL batch.
+- Site metadata → `v_site`
+- Tag vocabulary → `v_tag` + `v_facet`
+- Story documents + library entries → `v_live_story`, `v_live_library_entry`
+- Moments (home discovery, feed, search) → `v_live_moment`
+- Library shell → `v_field`, `v_volume`, `v_issue` + `v_issue_story`, `v_company` + `v_company_post` + `v_company_built_on`, `v_storyline` + `v_storyline_step`, `v_node`, `v_relation`, `v_front_placement`
 
-Live in the database, not read by the app yet (decision 49): moments, facts, story tags, citations, media asset paths,
-story fields, the vocabulary, volumes, issues, companies, storylines, fields, nodes, verified relations and the front
-placement row. Anon reads them only through the `v_*` views in `supabase/migrations/20261106100002_public_views_rls.sql`.
+Search runs client-side against the loaded Archive (the prebuilt `search-index.json` was deleted — `scripts/build-index.ts` is gone). `/papers/:slug` is a single dynamic route; the client fetches the story from `v_live_story_by_slug` on mount.
 
-Static (read from files or prerendered HTML, as today):
-- `public/data/tags.json`: tag vocabulary (still the editorial seed; mirrored to `facet` and `tag` by the importer).
-- `public/data/library.json` shell: front-page slots, issues, companies, storylines, nodes, relations, map.
-- `public/data/search-index.json`: feed, search and home-page moments.
-- `public/data/site.json`: site name, papers list, `mediaBaseUrl`.
-- Prerendered HTML (`dist/<route>/index.html`): build-time content. Readers see live data once React mounts.
-- Media under `public/media/<slug>/` (moving to a CDN later).
+The prerender script (`npm run prerender`) enumerates routes from `v_live_story` / `v_issue` / `v_company` at build time using a Node Supabase client (`--env-file=.env`), writes 10 routes today (home · 3 real papers · 2 issues + `/issues` · 1 company + `/companies` · `/map`), and inlines the per-route snapshot. 27-route baseline is gone with the samples.
 
-In file mode (the default), the story document and library entries come from `public/data/papers/<slug>.json` and `library.json`.
+Still file-backed (not read at runtime):
+- `data/seed/*.json`: the editorial seed consumed by `scripts/seed-editorial-from-library.ts` and `scripts/publish-to-supabase.ts`. Sample content was stripped on 2026-11-07.
+- Media under `public/media/<slug>/`: moving to Supabase Storage in a later batch.
 
 ## Next
 
 Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 
-1. **Loader cutover to public views landed (Phase 3b, decision 49).** The browser reads `v_live_story` and `v_live_library_entry`; `published_version` requests dropped to zero.
-2. **Fix now and Phase 0:** mostly landed on `v1` (see "Fixed" in the production plan). Still open: parents for the other new tags.
-3. **Phase 1, rendering and hydration (landed, decisions 41 and 50):** `npm run build && npm run prerender` writes all 27 routes in the default build (home, papers, samples, issues, companies, map) from one list, `scripts/prerender-routes.ts`. `npm run check:prerender` fails if any route lacks a page-specific title, description, `og:title`, `og:description` or `og:type`. Every page type uses `useHead`. `?feed`, `?search` and `?paper=` stay deferred (they share `/`). Hydration is done (`check:hydration`, in-app slide-up navigation). **Deferred:** Vercel build wiring (the prerender still runs by hand). Preview deploy: https://the-geeky-times.vercel.app/ (tracks `main`; the `vercel.json` SPA rewrite goes live when `v1` merges). Tests, CI and axe stay **deferred to pre-launch** (decision 39).
-4. **Phase 3a, Supabase runtime slice (decision 48):** the story-slice migration, the `src/data/source.ts` boundary and the publish script are in. The no-rebuild proof (publish a changed headline, reload, no build) is still open. Story production waits for that proof.
-5. **Phase 3b, normalized schema and public views (decision 49): landed in code.** Next, the lead's acceptance run (apply A, B and D; import `attention-is-all-you-need`, `size-shapes-life` and `h3-hexagons`; orphan audit and leak check, all empty). Then the loader cutover (item 1) and the remaining static reads.
-6. **Phase 2 (resumes after the Phase 3a proof):** the first company engineering post has landed (H3, `h3-hexagons`, with the blog data contract and decision 43's claim and trust labels). Still open: 3–5 more papers to replace samples, plus the rest of the Phase 2 list in the production plan.
-7. **Phase 3, later batches:** seed and export reconciliation, media on a CDN with CORS, then the remaining static reads listed in the production plan (feed and search index, the `library.json` shell, tags, site). Import job with orphan checks and transactional publish is in Phase 3b.
-8. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, no samples, hosted).
+1. **Supabase-only runtime landed (decision 51).** Frontend reads come entirely from views; file mode removed; samples stripped from the seed and DB references; prerender enumerates from the DB (10 routes today). `tsc`, `lint`, `build`, `prerender`, `check:prerender` and `check:hydration` all pass.
+2. **More real stories** — 3 landed (`attention-is-all-you-need`, `size-shapes-life`, `h3-hexagons`). Target: 3–5 more papers and a second company post, so Home, Issues, Companies and Map fill out without placeholder content.
+3. **Media to Supabase Storage** (deferred to a separate batch): bucket + upload CLI, `VITE_MEDIA_BASE_URL` cutover. Media still served from `public/media/`.
+4. **Seed + export reconciliation / backup restore** (pre-launch gate, decisions 35, 37, 38): scripts, restore drill, backup location.
+5. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, hosted, media on CDN).
 
 ## Pre-launch gates (not started)
 
@@ -76,8 +69,7 @@ Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
   The pages carry a "Mockup · links to be fact-checked" badge and `src/components/FamilyTree.tsx`
   carries a DEMO CONTENT banner at the top. We will properly build the screen once there are
   enough verified relations (see decisions 15, 24; production plan section 4).
-- Sample stories, companies and placeholders (`[Company name]`, `[Year]`) render on the live
-  pages. That is deliberate for design review. Replacing them is Phase 2 work, not a bug.
+- Short lists on Home, Issues, Companies and Map until more real stories land. Decision 51 removed samples from the DB; sparse slots are expected, and components render empty states rather than placeholders.
 
 ## Build flags
 

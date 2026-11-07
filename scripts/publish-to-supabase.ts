@@ -4,7 +4,7 @@
 //
 //   npm run publish:supabase -- <slug>
 //
-// Reads public/data/papers/<slug>.json, its entry in public/data/library.json and the vocabulary in tags.json.
+// Reads data/seed/papers/<slug>.json, its entry in data/seed/library.json and the vocabulary in tags.json.
 // Pure checks run before the connection opens. Checks that need the database run inside the transaction. Any
 // failure rolls back, so the previous live version stays authoritative. A document that matches the live
 // version exits 0 and writes nothing.
@@ -22,7 +22,7 @@ import type {
 type Trust = NonNullable<LibraryStory['trust']>;
 type MomentKind = 'lead' | 'hook' | 'chapter' | 'strip_panel' | 'fact';
 
-const PUBLIC = join(import.meta.dirname, '..', 'public');
+const SEED = join(import.meta.dirname, '..', 'data', 'seed');
 const TRUSTS: readonly Trust[] = ['peer_reviewed', 'preprint', 'company_reported'];
 const ROLES: readonly StoryRole[] = ['lead', 'feature', 'brief', 'vault', 'real_world'];
 const CLAIMS: readonly ClaimKind[] = ['illustration', 'model_design', 'measured_result'];
@@ -162,7 +162,7 @@ function validate(slug: string, raw: unknown, library: Library, vocab: TagVocabu
 
   // 2. Library entry must exist and agree on kind (the contract's "missing library entry" and "slug mismatch" cases).
   const entry = library.stories.find(s => s.id === slug);
-  if (!entry) abort(`no library entry for "${slug}" in public/data/library.json (the front page needs one)`);
+  if (!entry) abort(`no library entry for "${slug}" in data/seed/library.json (the front page needs one)`);
   const kind: SourceKind = doc.kind ?? 'paper';
   if (kind !== 'paper' && kind !== 'blog') abort(`kind must be "paper" or "blog", not "${String(doc.kind)}"`);
   if (entry.kind !== kind) abort(`library entry says kind "${entry.kind}" but the story is "${kind}"`);
@@ -259,7 +259,7 @@ function validate(slug: string, raw: unknown, library: Library, vocab: TagVocabu
     if (tagSeen.has(t.tag)) abort(`tag ${t.tag} is listed twice`);
     tagSeen.add(t.tag);
     if (t.status !== 'approved') abort(`tag ${t.tag} is "${String(t.status)}"; only approved tags can be published`);
-    if (!vocabTags.has(t.tag)) abort(`tag ${t.tag} is not in public/data/tags.json`);
+    if (!vocabTags.has(t.tag)) abort(`tag ${t.tag} is not in data/seed/tags.json`);
     const basis = oneOf(BASES, t.basis, `tag ${t.tag} basis`);
     if (!(t.relevance >= 0 && t.relevance <= 1)) abort(`tag ${t.tag} relevance must be between 0 and 1`);
     if (basis === 'paper' && !sourceBases.some(u => t.evidence?.startsWith(u))) {
@@ -688,7 +688,7 @@ function printReport(plan: Plan, pvId: string, counts: Map<string, number>, voca
 // ---------- Entry point ----------
 
 async function readJson<T>(rel: string): Promise<T> {
-  return JSON.parse(await readFile(join(PUBLIC, rel), 'utf8')) as T;
+  return JSON.parse(await readFile(join(SEED, rel), 'utf8')) as T;
 }
 
 async function main(): Promise<void> {
@@ -705,10 +705,10 @@ async function main(): Promise<void> {
   const target = new URL(dbUrl);
   console.log(`Target: ${target.hostname}${target.port ? `:${target.port}` : ''}`);
 
-  const library = await readJson<Library>('data/library.json');
-  const vocab = await readJson<TagVocabulary>('data/tags.json');
-  const raw = await readJson<unknown>(`data/papers/${slug}.json`).catch(() => {
-    abort(`no story file public/data/papers/${slug}.json`);
+  const library = await readJson<Library>('library.json');
+  const vocab = await readJson<TagVocabulary>('tags.json');
+  const raw = await readJson<unknown>(`papers/${slug}.json`).catch(() => {
+    abort(`no story file data/seed/papers/${slug}.json`);
   });
   const warnings: string[] = [];
   const plan = validate(slug, raw, library, vocab, warnings);

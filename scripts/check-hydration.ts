@@ -37,7 +37,7 @@ async function main(): Promise<number> {
   const browser = await puppeteer.launch({ headless: true });
   const rows: { route: string; count: number; first: string }[] = [];
   try {
-    for (const { route } of prerenderRoutes()) {
+    for (const { route } of await prerenderRoutes()) {
       const page = await browser.newPage();
       const hits: string[] = [];
       page.on('console', m => {

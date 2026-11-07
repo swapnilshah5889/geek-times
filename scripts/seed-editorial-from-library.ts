@@ -1,4 +1,4 @@
-// Seeds the editorial tables from public/data/library.json and the facet/tag vocabulary from public/data/tags.json.
+// Seeds the editorial tables from data/seed/library.json and the facet/tag vocabulary from data/seed/tags.json.
 // Idempotent: upserts by slug/key, so re-running is safe. Runs in one pg transaction — any failure rolls back.
 //
 // Also inserts PLACEHOLDER `story` rows for every slug referenced by the editorial joins (issue_story,
@@ -38,8 +38,8 @@ const dbUrl = process.env.SUPABASE_DB_URL?.trim();
 if (!dbUrl) die('SUPABASE_DB_URL is not set. See .env.example.');
 console.log(`Target: ${new URL(dbUrl).hostname}`);
 
-const library = JSON.parse(await readFile(resolve('public/data/library.json'), 'utf8')) as Library;
-const vocab = JSON.parse(await readFile(resolve('public/data/tags.json'), 'utf8')) as Vocab;
+const library = JSON.parse(await readFile(resolve('data/seed/library.json'), 'utf8')) as Library;
+const vocab = JSON.parse(await readFile(resolve('data/seed/tags.json'), 'utf8')) as Vocab;
 
 // Mapping from kind values in library to the story.kind CHECK (paper|blog|classic).
 const kindOf = (k: string | undefined): string => (k === 'blog' || k === 'classic' ? k : 'paper');

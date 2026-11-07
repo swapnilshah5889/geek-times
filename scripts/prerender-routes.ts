@@ -1,28 +1,33 @@
 // The one list of routes that `npm run prerender` writes and `npm run check:prerender` verifies (decision 41).
-// It is generated from the approved data in public/data (site.json and library.json), so adding a paper, issue or
-// company to the data adds its page here without editing any script.
+// It is generated from Supabase at build time: v_live_story for papers, v_issue for issues, v_company for companies.
+// Add a story (via `npm run publish:supabase`), issue or company to the database and its page appears here on the
+// next prerender without editing any script.
 //
-// Build flag: set VITE_HIDE_SAMPLES=1 for prerender and check too when the build used it. Sample routes are then
-// left out, because the build no longer contains those stories.
+// Supabase reads use the publishable (anon) key, matching src/data/source-supabase.ts. Row-level security on the
+// public views limits the read to non-sample, live rows, so no sample paper routes are emitted.
 //
 // Query-string views (?feed, ?search) share "/" with the front page, so they cannot each have their own
 // dist/<path>/index.html. They are listed in DEFERRED with a reason, and both scripts print that list.
-import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { Library, SiteConfig } from '../src/types.ts';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 const ROOT = join(import.meta.dirname, '..');
 export const DIST = join(ROOT, 'dist');
-const PUBLIC = join(ROOT, 'public');
-const read = <T>(path: string): T => JSON.parse(readFileSync(join(PUBLIC, path), 'utf8')) as T;
 
-export const site = read<SiteConfig>('data/site.json');
-const library = read<Library>('data/library.json');
+/** Site name + motto from v_site. Used to build the generic page title the home page carries. */
+export async function loadSiteMeta(): Promise<{ name: string; motto: string; genericTitle: string }> {
+  const { data, error } = await makeClient()
+    .from('v_site')
+    .select('site_name, motto')
+    .maybeSingle();
+  if (error) throw new Error(`Could not read v_site: ${error.message}`);
+  if (!data) throw new Error('v_site has no row.');
+  const row = data as { site_name: string; motto: string | null };
+  const motto = row.motto ?? '';
+  return { name: row.site_name, motto, genericTitle: `${row.site_name} — ${motto}` };
+}
 
-/** The title every page had before it got its own (the home page keeps it). */
-export const GENERIC_TITLE = `${site.name} — ${site.motto}`;
-
-export type RouteKind = 'home' | 'paper' | 'sample' | 'issue' | 'issues' | 'company' | 'companies' | 'map';
+export type RouteKind = 'home' | 'paper' | 'issue' | 'issues' | 'company' | 'companies' | 'map';
 
 export interface PrerenderRoute {
   /** URL path, e.g. "/papers/attention-is-all-you-need". */
@@ -57,40 +62,58 @@ function segment(id: string, what: string): string {
   return id;
 }
 
+function requiredEnv(name: 'VITE_SUPABASE_URL' | 'VITE_SUPABASE_PUBLISHABLE_KEY'): string {
+  const value = (process.env[name] ?? '').trim();
+  if (!value) {
+    throw new Error(`${name} is not set. Run the script with --env-file=.env (see package.json), or export it in the shell.`);
+  }
+  return value;
+}
+
+let clientSingleton: SupabaseClient | undefined;
+function makeClient(): SupabaseClient {
+  clientSingleton ??= createClient(requiredEnv('VITE_SUPABASE_URL'), requiredEnv('VITE_SUPABASE_PUBLISHABLE_KEY'), {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+  });
+  return clientSingleton;
+}
+
 /** Every route to prerender, in a stable order, with duplicates removed. */
-export function prerenderRoutes(): PrerenderRoute[] {
-  const hideSamples = process.env.VITE_HIDE_SAMPLES === '1';
+export async function prerenderRoutes(): Promise<PrerenderRoute[]> {
+  const client = makeClient();
   const out: PrerenderRoute[] = [{ route: '/', kind: 'home' }];
-  const realStories = new Set(library.stories.filter(s => s.real).map(s => s.id));
 
-  // Real papers: every entry in site.json has its own page (App loads papers/<slug>.json for it).
-  for (const paper of site.papers) {
-    out.push({ route: `/papers/${segment(paper.slug, 'paper')}`, kind: 'paper' });
-    realStories.delete(paper.slug);
-  }
-  if (realStories.size) {
-    throw new Error(`library.json marks ${[...realStories].join(', ')} as real, but site.json does not list ${realStories.size > 1 ? 'them' : 'it'}; the page would fail to load.`);
-  }
-
-  // Sample stories: App renders any story that is not real as a labelled sample page.
-  for (const story of library.stories) {
-    if (story.real) continue;
-    if (hideSamples && story.sample) continue;
-    out.push({ route: `/papers/${segment(story.id, 'story')}`, kind: 'sample' });
+  // Real papers: every live story in v_live_story. The view filters status = 'live' and sample = false (decision 48/49),
+  // so sample stories never appear here.
+  const { data: stories, error: storiesError } = await client
+    .from('v_live_story')
+    .select('story_slug')
+    .order('story_slug', { ascending: true });
+  if (storiesError) throw new Error(`Could not read v_live_story: ${storiesError.message}`);
+  for (const row of stories ?? []) {
+    out.push({ route: `/papers/${segment(row.story_slug as string, 'paper')}`, kind: 'paper' });
   }
 
-  for (const issue of library.issues) {
-    if (hideSamples && issue.sample) continue;
-    out.push({ route: `/issues/${segment(issue.id, 'issue')}`, kind: 'issue' });
+  const { data: issues, error: issuesError } = await client
+    .from('v_issue')
+    .select('slug, position')
+    .order('position', { ascending: true });
+  if (issuesError) throw new Error(`Could not read v_issue: ${issuesError.message}`);
+  for (const row of issues ?? []) {
+    out.push({ route: `/issues/${segment(row.slug as string, 'issue')}`, kind: 'issue' });
   }
   // With no id, /issues shows the latest issue and /companies the first company, so these need at least one.
-  if (library.issues.length) out.push({ route: '/issues', kind: 'issues' });
+  if ((issues ?? []).length) out.push({ route: '/issues', kind: 'issues' });
 
-  for (const company of library.companies) {
-    if (hideSamples && company.sample) continue;
-    out.push({ route: `/companies/${segment(company.id, 'company')}`, kind: 'company' });
+  const { data: companies, error: companiesError } = await client
+    .from('v_company')
+    .select('slug')
+    .order('slug', { ascending: true });
+  if (companiesError) throw new Error(`Could not read v_company: ${companiesError.message}`);
+  for (const row of companies ?? []) {
+    out.push({ route: `/companies/${segment(row.slug as string, 'company')}`, kind: 'company' });
   }
-  if (library.companies.length) out.push({ route: '/companies', kind: 'companies' });
+  if ((companies ?? []).length) out.push({ route: '/companies', kind: 'companies' });
 
   out.push({ route: '/map', kind: 'map' });
 

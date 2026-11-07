@@ -13,7 +13,7 @@
 //   - SITE_ORIGIN unset: the local preview origin (http://localhost:<port>) stays in the output. That makes it obvious
 //     these are local files, not production share URLs.
 //   - SITE_ORIGIN=https://... set: the local origin is replaced by it. Use this for a real release build only.
-// Set VITE_HIDE_SAMPLES=1 here too when the build used it, so sample routes are skipped.
+// Supabase-only enumeration: v_live_story filters status = 'live' and sample = false, so sample stories are never routes.
 //
 // Browser: full `puppeteer` (downloads its own Chrome, ~170 MB, at install). On Vercel set PUPPETEER_SKIP_DOWNLOAD=1
 // until the Vercel strategy is decided (Vercel does not run this yet).
@@ -139,8 +139,8 @@ async function renderRoute(browser: Browser, origin: string, route: string): Pro
 
 async function main() {
   if (!existsSync(join(DIST, 'index.html'))) throw new Error('dist/index.html not found: run `npm run build` first');
-  const routes = prerenderRoutes().map(r => r.route);
-  console.log(`Routes: ${routes.length} (generated from public/data${process.env.VITE_HIDE_SAMPLES === '1' ? ', samples hidden' : ''}).`);
+  const routes = (await prerenderRoutes()).map(r => r.route);
+  console.log(`Routes: ${routes.length} (generated from Supabase).`);
   for (const d of DEFERRED) console.log(`Deferred (not prerendered): ${d.route}: ${d.reason}.`);
 
   const started = performance.now();

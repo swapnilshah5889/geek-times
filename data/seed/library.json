@@ -1,6 +1,5 @@
 {
   "schemaVersion": 1,
-  "note": "Sample editorial content that fills the front page and the pages around it until more papers are converted. Everything with sample:true (all but the first story) is layout-only and is labelled Sample on screen.",
   "fields": [
     {
       "id": "ai",
@@ -123,203 +122,6 @@
       "sample": false
     },
     {
-      "id": "resnet",
-      "headline": "Shortcuts that go deeper",
-      "dek": "Shortcut paths let picture-recognizing networks grow much deeper.",
-      "desk": "AI",
-      "fields": [
-        "ai"
-      ],
-      "role": "feature",
-      "kind": "paper",
-      "title": "ResNet",
-      "authors": "He and colleagues",
-      "year": 2015,
-      "art": "stairs",
-      "minutes": 8,
-      "sample": true
-    },
-    {
-      "id": "alphafold",
-      "headline": "The protein-folding puzzle",
-      "dek": "An AI learned to predict a protein’s 3D shape from the recipe of building blocks.",
-      "desk": "AI & biology",
-      "fields": [
-        "ai",
-        "bio"
-      ],
-      "role": "feature",
-      "kind": "paper",
-      "title": "AlphaFold",
-      "authors": "Jumper and colleagues",
-      "year": 2021,
-      "art": "protein",
-      "minutes": 9,
-      "sample": true
-    },
-    {
-      "id": "crispr",
-      "headline": "Scissors for DNA",
-      "dek": "Scientists turned a germ-fighting trick from bacteria into a tool that cuts DNA exactly where they choose.",
-      "desk": "Biology",
-      "fields": [
-        "bio"
-      ],
-      "role": "feature",
-      "kind": "paper",
-      "title": "CRISPR–Cas9",
-      "authors": "Jinek and colleagues",
-      "year": 2012,
-      "art": "dna",
-      "minutes": 8,
-      "sample": true
-    },
-    {
-      "id": "ligo",
-      "headline": "Space shook, and we heard it",
-      "dek": "Two black holes crashed far away. Detectors on Earth caught the ripple.",
-      "desk": "Space",
-      "fields": [
-        "space"
-      ],
-      "role": "brief",
-      "kind": "paper",
-      "title": "Gravitational waves",
-      "authors": "LIGO and Virgo",
-      "year": 2016,
-      "art": "waves",
-      "minutes": 3,
-      "note": "snack only",
-      "sample": true
-    },
-    {
-      "id": "higgs",
-      "headline": "The particle that was missing",
-      "dek": "A long-predicted particle tied to how basic particles get their mass.",
-      "desk": "Physics",
-      "fields": [
-        "physics"
-      ],
-      "role": "brief",
-      "kind": "paper",
-      "title": "Higgs boson",
-      "authors": "ATLAS and CMS",
-      "year": 2012,
-      "art": "particle",
-      "minutes": 3,
-      "sample": true
-    },
-    {
-      "id": "penicillin",
-      "headline": "The mold that fought germs",
-      "dek": "A mold on a lab dish stopped the bacteria around it, and led to the first antibiotics.",
-      "desk": "Medicine",
-      "fields": [
-        "bio"
-      ],
-      "role": "vault",
-      "kind": "classic",
-      "title": "Penicillin",
-      "authors": "Fleming",
-      "year": 1929,
-      "art": "mold",
-      "minutes": 7,
-      "vaultNote": "A classic paper from 1929, explained for the first time. Old ideas, new pictures.",
-      "sample": true
-    },
-    {
-      "id": "blog-streaming",
-      "headline": "How a streaming service picks your next show",
-      "dek": "Sample blog story: the recommendation system behind the home screen.",
-      "desk": "In the real world",
-      "fields": [
-        "ai"
-      ],
-      "role": "real_world",
-      "kind": "blog",
-      "title": "[Company name] Engineering blog",
-      "authors": "",
-      "year": 0,
-      "trust": "company_reported",
-      "company": "streaming",
-      "minutes": 6,
-      "builtOn": "attention-is-all-you-need",
-      "sample": true
-    },
-    {
-      "id": "blog-video",
-      "headline": "How videos start playing so fast",
-      "dek": "Sample blog story: getting the first picture on screen in a blink.",
-      "desk": "In the real world",
-      "fields": [
-        "ai"
-      ],
-      "role": "real_world",
-      "kind": "blog",
-      "title": "[Company name] Engineering blog",
-      "authors": "",
-      "year": 0,
-      "trust": "company_reported",
-      "company": "streaming",
-      "minutes": 6,
-      "sample": true
-    },
-    {
-      "id": "blog-artwork",
-      "headline": "How artwork is chosen for each viewer",
-      "dek": "Sample blog story: showing each person the picture they are most likely to like.",
-      "desk": "In the real world",
-      "fields": [
-        "ai"
-      ],
-      "role": "real_world",
-      "kind": "blog",
-      "title": "[Company name] Engineering blog",
-      "authors": "",
-      "year": 0,
-      "trust": "company_reported",
-      "company": "streaming",
-      "minutes": 6,
-      "builtOn": "resnet",
-      "sample": true
-    },
-    {
-      "id": "blog-social",
-      "headline": "How a social network decides what you see first",
-      "dek": "Sample blog story: ranking a feed for millions of people at once.",
-      "desk": "In the real world",
-      "fields": [
-        "ai"
-      ],
-      "role": "real_world",
-      "kind": "blog",
-      "title": "[Company name] Engineering blog",
-      "authors": "",
-      "year": 0,
-      "trust": "company_reported",
-      "company": "social",
-      "minutes": 6,
-      "sample": true
-    },
-    {
-      "id": "blog-ride",
-      "headline": "How a ride app guesses when your car arrives",
-      "dek": "Sample blog story: predicting travel times from city traffic.",
-      "desk": "In the real world",
-      "fields": [
-        "ai"
-      ],
-      "role": "real_world",
-      "kind": "blog",
-      "title": "[Company name] Engineering blog",
-      "authors": "",
-      "year": 0,
-      "trust": "company_reported",
-      "company": "ride",
-      "minutes": 6,
-      "sample": true
-    },
-    {
       "id": "h3-hexagons",
       "real": true,
       "sample": false,
@@ -341,50 +143,37 @@
   ],
   "front": {
     "lead": "size-shapes-life",
-    "aside": [
-      "crispr",
-      "alphafold",
-      "penicillin"
-    ],
+    "aside": [],
     "more": [
-      "attention-is-all-you-need",
-      "ligo",
-      "resnet"
+      "attention-is-all-you-need"
     ],
     "topics": [
       {
         "field": "ai",
         "label": "AI & computers",
         "stories": [
-          "attention-is-all-you-need",
-          "resnet",
-          "alphafold"
+          "attention-is-all-you-need"
         ]
       },
       {
         "field": "bio",
         "label": "Your body & medicine",
         "stories": [
-          "size-shapes-life",
-          "crispr",
-          "penicillin"
+          "size-shapes-life"
         ]
       }
     ],
     "real": [
-      "blog-streaming",
-      "blog-social",
       "h3-hexagons"
     ],
     "storylines": [
-      "machines-read",
-      "mold"
+      "machines-read"
     ],
-    "vault": "penicillin",
+    "vault": "",
     "onThisDay": {
       "year": "[Year]",
       "text": "[A famous paper] was published. See how it changed what came next.",
-      "story": "penicillin"
+      "story": "attention-is-all-you-need"
     }
   },
   "issues": [
@@ -409,104 +198,13 @@
       "color": "#82acad",
       "published": "Friday, [publish date]",
       "stories": [
-        "attention-is-all-you-need",
-        "resnet",
-        "alphafold",
-        "blog-social",
-        "ligo",
-        "penicillin"
+        "attention-is-all-you-need"
       ],
       "covers": "attention-is-all-you-need",
       "sample": false
-    },
-    {
-      "id": "special-3",
-      "volume": "0",
-      "number": "Special 3",
-      "title": "Space and time",
-      "color": "#efae78",
-      "classics": 8,
-      "sample": true
-    },
-    {
-      "id": "special-2",
-      "volume": "0",
-      "number": "Special 2",
-      "title": "Biology’s big breaks",
-      "color": "#a2c2a7",
-      "classics": 7,
-      "sample": true
-    },
-    {
-      "id": "special-1",
-      "volume": "0",
-      "number": "Special 1",
-      "title": "The AI classics",
-      "color": "#c3b2d8",
-      "classics": 10,
-      "sample": true
     }
   ],
   "companies": [
-    {
-      "id": "streaming",
-      "name": "[Company name] Engineering",
-      "sector": "Streaming & entertainment",
-      "blurb": "Our picture-first explainers of this company’s engineering blog, plus the research their systems are built on.",
-      "postsFollowed": 12,
-      "posts": [
-        "blog-streaming",
-        "blog-video",
-        "blog-artwork"
-      ],
-      "builtOn": [
-        "transformer",
-        "resnet",
-        "lstm"
-      ],
-      "coming": [
-        "[Post title] · [year]",
-        "[Post title] · [year]",
-        "[Post title] · [year]"
-      ],
-      "sample": true
-    },
-    {
-      "id": "social",
-      "name": "[Company name] Engineering",
-      "sector": "Social networks",
-      "blurb": "Our picture-first explainers of this company’s engineering blog, plus the research their systems are built on.",
-      "postsFollowed": 8,
-      "posts": [
-        "blog-social"
-      ],
-      "builtOn": [
-        "transformer"
-      ],
-      "coming": [
-        "[Post title] · [year]",
-        "[Post title] · [year]"
-      ],
-      "sample": true
-    },
-    {
-      "id": "ride",
-      "name": "[Company name] Engineering",
-      "sector": "Maps & rides",
-      "blurb": "Our picture-first explainers of this company’s engineering blog, plus the research their systems are built on.",
-      "postsFollowed": 5,
-      "posts": [
-        "blog-ride"
-      ],
-      "builtOn": [
-        "resnet"
-      ],
-      "coming": [
-        "[Post title] · [year]",
-        "[Post title] · [year]"
-      ],
-      "sample": true
-    },
     {
       "id": "uber",
       "name": "Uber Engineering",
@@ -546,29 +244,6 @@
         {
           "year": "2018 →",
           "label": "BERT, GPT and chatbots"
-        }
-      ]
-    },
-    {
-      "id": "mold",
-      "title": "From a moldy dish to modern medicine",
-      "sample": true,
-      "steps": [
-        {
-          "year": "[Year]",
-          "label": "[Step one]"
-        },
-        {
-          "year": "[Year]",
-          "label": "[Step two]"
-        },
-        {
-          "year": "[Year]",
-          "label": "[Step three]"
-        },
-        {
-          "year": "[Year]",
-          "label": "[Step four]"
         }
       ]
     }
@@ -655,8 +330,7 @@
       "field": "ai",
       "type": "paper",
       "x": 300,
-      "y": 300,
-      "story": "resnet"
+      "y": 300
     },
     {
       "id": "alphafold",
@@ -666,8 +340,7 @@
       "field": "ai",
       "type": "paper",
       "x": 440,
-      "y": 240,
-      "story": "alphafold"
+      "y": 240
     },
     {
       "id": "blog-social",
@@ -678,7 +351,6 @@
       "type": "blog",
       "x": 425,
       "y": 300,
-      "story": "blog-social",
       "short": "Social feed post"
     },
     {
@@ -689,8 +361,7 @@
       "field": "bio",
       "type": "paper",
       "x": 520,
-      "y": 160,
-      "story": "penicillin"
+      "y": 160
     },
     {
       "id": "crispr",
@@ -700,8 +371,7 @@
       "field": "bio",
       "type": "paper",
       "x": 580,
-      "y": 200,
-      "story": "crispr"
+      "y": 200
     },
     {
       "id": "dna",
@@ -741,8 +411,7 @@
       "field": "space",
       "type": "paper",
       "x": 240,
-      "y": 450,
-      "story": "ligo"
+      "y": 450
     },
     {
       "id": "hubble",
@@ -772,8 +441,7 @@
       "field": "physics",
       "type": "paper",
       "x": 620,
-      "y": 430,
-      "story": "higgs"
+      "y": 430
     },
     {
       "id": "thompson",

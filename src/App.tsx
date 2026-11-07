@@ -17,8 +17,6 @@ import { PaperPage } from './pages/PaperPage';
 import { SamplePage } from './pages/SamplePage';
 import { SearchPage } from './pages/SearchPage';
 
-export { navigate } from './lib/navigation';
-
 type Route =
   | { page: 'home' | 'feed' | 'search' | 'map' }
   | { page: 'paper'; slug: string }

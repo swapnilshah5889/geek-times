@@ -8,7 +8,7 @@ export const SNAPSHOT_SCHEMA_VERSION = 1;
 export interface InitialData {
   schemaVersion: typeof SNAPSHOT_SCHEMA_VERSION;
   route: string;
-  source: 'file' | 'supabase';
+  source: 'supabase';
   hideSamples: boolean;
   archive: Archive;
   /** Present on a real paper/post route only. Sample story pages use the archive alone. */
@@ -25,12 +25,6 @@ declare global {
   }
 }
 
-function sourceMode(): 'file' | 'supabase' {
-  const mode = ((import.meta.env.VITE_DATA_SOURCE as string | undefined) ?? '').trim() || 'file';
-  if (mode !== 'file' && mode !== 'supabase') throw new Error(`Unknown VITE_DATA_SOURCE: ${mode}`);
-  return mode;
-}
-
 /** A null key means the URL selects a client-only view of a shared prerendered path. */
 export function routeKeyFromLocation(): string | null {
   const path = currentPath();
@@ -44,15 +38,11 @@ export function makeInitialData(route: string, archive: Archive, editionDoc?: Pa
   return {
     schemaVersion: SNAPSHOT_SCHEMA_VERSION,
     route,
-    source: sourceMode(),
+    source: 'supabase',
     hideSamples: import.meta.env.VITE_HIDE_SAMPLES === '1',
     archive,
     ...(editionDoc ? { edition: { doc: editionDoc } } : {}),
   };
-}
-
-export function setPrerenderCollector(collect: ((data: InitialData) => void) | undefined): void {
-  window.__collect_initial_data__ = collect;
 }
 
 export function editionFromInitial(initial: InitialData): Edition | null {
@@ -76,7 +66,7 @@ export function readInitialData(): InitialData | null {
     return null;
   }
   const route = routeKeyFromLocation();
-  if (!route || data.route !== route || data.source !== sourceMode()
+  if (!route || data.route !== route || data.source !== 'supabase'
     || data.hideSamples !== (import.meta.env.VITE_HIDE_SAMPLES === '1')) return null;
   const archive = data.archive;
   if (!isRecord(archive) || !isRecord(archive.site) || !isRecord(archive.vocab)

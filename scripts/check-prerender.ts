@@ -11,7 +11,7 @@
 // used it.
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, relative } from 'node:path';
-import { DEFERRED, DIST, GENERIC_TITLE, htmlPathFor, prerenderRoutes, type PrerenderRoute } from './prerender-routes.ts';
+import { DEFERRED, DIST, htmlPathFor, loadSiteMeta, prerenderRoutes, type PrerenderRoute } from './prerender-routes.ts';
 
 interface PageHead {
   title?: string;
@@ -53,7 +53,7 @@ interface RouteResult {
   title?: string;
 }
 
-function checkRoute({ route, kind }: PrerenderRoute): RouteResult {
+function checkRoute({ route, kind }: PrerenderRoute, genericTitle: string): RouteResult {
   const result: RouteResult = { route, errors: [], warnings: [] };
   const file = htmlPathFor(route);
   if (!existsSync(file)) {
@@ -91,7 +91,7 @@ function checkRoute({ route, kind }: PrerenderRoute): RouteResult {
   const title = head.title ?? '';
   result.title = title;
   if (!title) result.errors.push('<title> is missing or empty');
-  else if (title === GENERIC_TITLE && kind !== 'home') result.errors.push(`<title> is the generic site title "${GENERIC_TITLE}"; expected a page-specific title`);
+  else if (title === genericTitle && kind !== 'home') result.errors.push(`<title> is the generic site title "${genericTitle}"; expected a page-specific title`);
 
   const required: [string, string | undefined][] = [
     ['<meta name="description">', metaValue(head, 'name', 'description')],
@@ -110,14 +110,14 @@ function checkRoute({ route, kind }: PrerenderRoute): RouteResult {
   return result;
 }
 
-function main() {
+async function main() {
   if (!existsSync(htmlPathFor('/'))) {
     console.error('dist/index.html not found: run `npm run build && npm run prerender` first.');
     process.exitCode = 1;
     return;
   }
-  const routes = prerenderRoutes();
-  const results = routes.map(checkRoute);
+  const [routes, siteMeta] = await Promise.all([prerenderRoutes(), loadSiteMeta()]);
+  const results = routes.map(route => checkRoute(route, siteMeta.genericTitle));
   const failed = results.filter(r => r.errors.length);
 
   for (const r of failed) {
@@ -148,4 +148,7 @@ function main() {
   console.log('Inspect with `npx vite preview` at trailing-slash URLs, e.g. /papers/resnet/ (not file:// and not extensionless URLs).');
 }
 
-main();
+main().catch(err => {
+  console.error(err instanceof Error ? err.message : err);
+  process.exitCode = 1;
+});

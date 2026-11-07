@@ -97,7 +97,7 @@ export type StoryDoc = PaperStoryDoc | BlogStoryDoc;
 export type PaperDoc = StoryDoc;
 
 // ---------- Tags ----------
-// Tags come from a shared vocabulary (public/data/tags.json, a `tags` table later) so the same idea has
+// Tags come from a shared vocabulary (Supabase: v_tag/v_facet; seeded from data/seed/tags.json) so the same idea has
 // one id across every paper. Each paper links to tags with a relevance score and a note on where the
 // tag comes from, just like evidence facts.
 
