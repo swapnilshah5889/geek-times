@@ -271,6 +271,10 @@ ready to host. These were originally in Phase 1 and were moved here by decision 
 - [ ] Editorial: a corrections policy, a contact address, and an "About how we label claims" page.
 - [ ] Final review on the canvas and a launch checklist sign-off by the owner.
 
+### Deferred to next weekend (weekly-usage window)
+
+- [ ] **Admin page, dev-only.** A browser view of every story with slug, status, version and publish date, plus buttons to open in dev, approve `preview → live`, and (once the conversion pipeline lands) trigger a new conversion from a URL. Visible only when `VITE_SHOW_PREVIEW=1` so it never ships to Vercel. Replaces today's CLI (`npm run status`, `npm run approve`) with a UI.
+
 ## 4. Known gaps kept on purpose until launch
 
 These are visual-prototype scaffolding, not defects: unverified relations visible on the family tree and map, hard-coded
