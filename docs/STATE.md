@@ -60,6 +60,10 @@ Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
 4. **Seed + export reconciliation / backup restore** (pre-launch gate, decisions 35, 37, 38): scripts, restore drill, backup location.
 5. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, hosted, media on CDN).
 
+## Deferred to next weekend (weekly-usage window)
+
+- **Admin page, dev-only.** A `/admin` route (or similar) visible only when `VITE_SHOW_PREVIEW=1` (so it never ships to Vercel). Lists every story with slug, status, version, publish date; buttons to open in dev, approve preview → live, and eventually trigger the conversion pipeline for a new URL. Replaces today's CLI (`npm run status`, `npm run approve`) with a browser view.
+
 ## Pre-launch gates (not started)
 
 - **Seed and export reconciliation (decisions 35, 37):** `npm run seed` and `npm run export` must exist, and every release runs the export
