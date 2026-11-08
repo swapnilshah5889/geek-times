@@ -54,7 +54,7 @@ def flame(x, y, s=1, cls='', delay=None):
 
 def smoke(x, y):
     return ''.join(f'<circle cx="{x + dx}" cy="{y - dy}" r="{r}" fill="#d8cfb8" stroke="{INK}" stroke-width="2.5"/>'
-                   for dx, dy, r in [(0, 0, 14), (14, 26, 18), (-4, 56, 22), (18, 90, 16)])
+                   for dx, dy, r in [(0, 0, 12), (12, 22, 15), (-2, 46, 18), (14, 70, 14)])
 
 
 def server(x, y, burning=True):
@@ -69,7 +69,7 @@ def server(x, y, burning=True):
 
 # ---- fire: the machine burns, the cart carries on ----
 fx, fy = 70, 100
-fire_body = (smoke(fx + 70, fy - 6)
+fire_body = (smoke(fx + 120, fy - 10)
              + server(fx, fy)
              + flame(fx + 30, fy + 8, 1.5, 'm-pulse') + flame(fx + 95, fy + 20, 1.9, 'm-pulse', .5) + flame(fx + 62, fy + 70, 1.3, 'm-pulse', .9)
              + f'<g{anim("m-shake")}>' + t(fx + 65, fy + 180, 'FWOOSH!', 'sfx') + '</g>'
@@ -86,7 +86,7 @@ fire_body = (smoke(fx + 70, fy - 6)
              + t(446, 262, 'still there', 'w-s', style=f'fill:{RED}'))
 
 # ---- cart-safe: three houses on a ring, each with a copy of the cart; one dark ----
-cx, cy, R = 300, 150, 92
+cx, cy, R = 300, 164, 92
 ring = f'<circle cx="{cx}" cy="{cy}" r="{R}" fill="none" stroke="{INK}" stroke-width="3" stroke-dasharray="10 7"/>'
 houses = ''
 for i, ang in enumerate([-90, 30, 150]):
@@ -108,7 +108,7 @@ for i, ang in enumerate([-90, 30, 150]):
     else:
         houses += t(x, y + 54, 'SAFE', 'micro', style='fill:#377675')
 safe_body = (ring + houses
-             + t(cx, cy + 6, 'ONE CART', 'w-s') + t(cx, cy + 24, 'THREE COPIES', 'micro')
+             + t(cx, cy + 6, 'ONE CART', 'w-s')
              + f'<g{anim("m-wiggle")}>' + t(500, 150, 'NO PROBLEM!', 'sfx-s') + '</g>')
 
 if __name__ == '__main__':

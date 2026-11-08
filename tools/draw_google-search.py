@@ -88,7 +88,6 @@ votes_body = (edges + ''.join(node(x, y, RS, '#f0e3c6') for x, y in smalls)
               + node(*MID, RM, '#a2c2a7') + node(*C, RC, '#f7d79b')
               + f'<g{anim("m-twinkle")}>' + star_row(C[0], C[1] - RC - 16, 3) + '</g>'
               + star_row(MID[0], MID[1] - RM - 14, 1)
-              + t(C[0], C[1] + RC + 20, 'MOST VOTES', 'micro', style=f'fill:{RED}')
               + f'<g{anim("m-wiggle")}>' + t(80, 262, 'VOTE!', 'sfx-s') + '</g>')
 
 if __name__ == '__main__':

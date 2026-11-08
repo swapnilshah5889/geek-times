@@ -62,16 +62,16 @@ shortcut = (f'<path d="M62 78Q300 -10 538 78" fill="none" stroke="{RED}" stroke-
             + t(300, 43, 'SHORTCUT', 'micro', style=f'fill:{RED}'))
 arrows = ''.join(f'<path d="M{x + 56} 128H{x + 84}" stroke="{INK}" stroke-width="3" marker-end="url(#ah)"/>' for x in XS[:3])
 fix_body = (shortcut + arrows + row(XS, [cat(0, i + 1) for i in range(4)])
-            + f'<g{anim("m-twinkle")}>' + t(548, 208, 'SAME CAT!', 'sfx-s') + '</g>'
-            + t(150, 276, '+ fix', 'micro', style=f'fill:{RED}') + t(290, 276, '+ fix', 'micro', style=f'fill:{RED}')
-            + t(430, 276, '+ fix', 'micro', style=f'fill:{RED}') + t(570, 276, '+ fix', 'micro', style=f'fill:{RED}'))
+            + f'<g{anim("m-twinkle")}>' + t(440, 222, 'SAME CAT!', 'sfx-s') + '</g>'
+            + t(90, 278, '+ fix', 'micro', style=f'fill:{RED}') + t(230, 278, '+ fix', 'micro', style=f'fill:{RED}')
+            + t(370, 278, '+ fix', 'micro', style=f'fill:{RED}') + t(510, 278, '+ fix', 'micro', style=f'fill:{RED}'))
 
 # ---- redraw: every helper redraws from scratch, the cat degrades ----
 redraw_arrows = ''.join(f'<path d="M{x + 56} 128H{x + 84}" stroke="{INK}" stroke-width="3" marker-end="url(#ah)"/>' for x in XS[:3])
 redraw_body = (redraw_arrows + row(XS, [cat(i) for i in range(4)])
                + t(300, 62, 'EACH HELPER REDRAWS FROM SCRATCH', 'micro', style=f'fill:{RED}')
-               + f'<g{anim("m-wobble")}>' + t(520, 218, 'BLUR!', 'sfx') + '</g>'
-               + t(90, 272, 'clear', 'micro') + t(510, 272, 'a smudge', 'micro'))
+               + f'<g{anim("m-wobble")}>' + t(440, 222, 'BLUR!', 'sfx') + '</g>'
+               + t(90, 80, 'clear', 'micro') + t(510, 80, 'a smudge', 'micro'))
 
 if __name__ == '__main__':
     write(OUT, 'fix-it.svg', standalone('0 0 600 340', plate('#b8cec0', 'PLATE 01 / FIX-IT', fix_body, 'The picture rides along. Each helper adds one small fix.'),
