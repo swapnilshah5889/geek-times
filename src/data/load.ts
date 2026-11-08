@@ -202,8 +202,59 @@ export async function loadArchive(): Promise<Archive> {
   const stories: LibraryStory[] = Array.from(liveLibrary.values());
   const library: Library = {
     schemaVersion: 1,
-    fields, volumes, stories, front, issues, companies, storylines, nodes, relations,
+    fields, volumes, stories,
+    front: deriveFront(stories, fields, site, front),
+    issues, companies, storylines, nodes, relations,
   };
 
   return { site, vocab, index, library };
+}
+
+/**
+ * Builds the front-page slots from the live stories so a newly published paper surfaces on the next load
+ * without hand-editing any JSON. Curated bits that need human judgement (storylines, vault, onThisDay) are
+ * taken from the DB-stored `front_placement` row as-is.
+ *
+ * Rules:
+ *  - `lead`: site.defaultPaper if that slug is live; else the newest story.
+ *  - `aside`: up to 3 other stories, newest first.
+ *  - `more`: the rest of the stories, newest first.
+ *  - `topics`: one row per field that has at least one live story in it, newest-first within each row.
+ *  - `real`: every story (they are all real; the view filters samples out).
+ */
+function deriveFront(
+  stories: LibraryStory[],
+  fields: Library['fields'],
+  site: SiteConfig,
+  stored: Library['front'],
+): Library['front'] {
+  const byNewest = stories.slice().sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+  const slugs = new Set(byNewest.map(s => s.id));
+  const lead = slugs.has(site.defaultPaper) ? site.defaultPaper : (byNewest[0]?.id ?? '');
+  const rest = byNewest.filter(s => s.id !== lead).map(s => s.id);
+  const aside = rest.slice(0, 3);
+  const more = rest.slice(3);
+
+  const labelByField = new Map(fields.map(f => [f.id, f.label]));
+  const groupsByField = new Map<string, string[]>();
+  for (const story of byNewest) {
+    const field = story.fields?.[0];
+    if (!field) continue;
+    if (!groupsByField.has(field)) groupsByField.set(field, []);
+    groupsByField.get(field)!.push(story.id);
+  }
+  const topics = fields
+    .filter(f => groupsByField.has(f.id))
+    .map(f => ({ field: f.id, label: labelByField.get(f.id) ?? f.id, stories: groupsByField.get(f.id)! }));
+
+  return {
+    lead,
+    aside,
+    more,
+    topics,
+    real: byNewest.map(s => s.id),
+    storylines: stored.storylines,
+    vault: stored.vault,
+    onThisDay: stored.onThisDay,
+  };
 }
