@@ -156,16 +156,15 @@
       "title": "Deep Residual Learning for Image Recognition",
       "authors": "He and colleagues",
       "year": 2016,
-      "trust": "peer_reviewed",
       "minutes": 10,
-      "note": "comic + facts"
+      "note": "comic + facts",
+      "trust": "preprint"
     },
     {
       "id": "google-search",
       "real": true,
       "sample": false,
       "kind": "paper",
-      "trust": "peer_reviewed",
       "role": "lead",
       "fields": [
         "sw"
@@ -178,7 +177,8 @@
       "authors": "Sergey Brin, Lawrence Page",
       "year": 1998,
       "minutes": 10,
-      "note": "comic + facts"
+      "note": "comic + facts",
+      "trust": "preprint"
     },
     {
       "id": "dynamo",
@@ -196,8 +196,8 @@
       "title": "Dynamo: Amazon’s Highly Available Key-value Store",
       "authors": "DeCandia and colleagues",
       "year": 2007,
-      "trust": "peer_reviewed",
-      "minutes": 4
+      "minutes": 4,
+      "trust": "preprint"
     }
   ],
   "front": {
