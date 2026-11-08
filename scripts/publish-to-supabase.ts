@@ -2,7 +2,10 @@
 // "Importer / publish transaction"; decisions 42, 46, 48). Server-side only. It connects with SUPABASE_DB_URL and
 // never calls the Supabase HTTP API. Run with:
 //
-//   npm run publish:supabase -- <slug>
+//   npm run publish:supabase -- <slug> [--status preview|live] [--force]
+//
+// --status defaults to preview: the row is written as 'preview' and is NOT promoted. Review it, then run
+// `npm run approve -- <slug>`. --status live promotes it immediately (the old behaviour).
 //
 // Reads data/seed/papers/<slug>.json, its entry in data/seed/library.json and the vocabulary in tags.json.
 // Pure checks run before the connection opens. Checks that need the database run inside the transaction. Any
@@ -19,6 +22,7 @@ import type {
   TagBasis, TagVocabulary,
 } from '../src/types.ts';
 
+type PublishStatus = 'preview' | 'live';
 type Trust = NonNullable<LibraryStory['trust']>;
 type MomentKind = 'lead' | 'hook' | 'chapter' | 'strip_panel' | 'fact';
 
@@ -431,7 +435,7 @@ function validate(slug: string, raw: unknown, library: Library, vocab: TagVocabu
  * Steps 1, 3 to 8 of the contract, in one pg transaction. Returns the new live version id, or null when the
  * document is unchanged (nothing written).
  */
-async function publish(plan: Plan, library: Library, vocab: TagVocabulary, dbUrl: string, force = false): Promise<string | null> {
+async function publish(plan: Plan, library: Library, vocab: TagVocabulary, dbUrl: string, force = false, status: PublishStatus = 'preview'): Promise<string | null> {
   const client = new pg.Client({ connectionString: dbUrl });
   const counts = new Map<string, number>();
   const bump = (name: string, by = 1) => counts.set(name, (counts.get(name) ?? 0) + by);
@@ -530,12 +534,12 @@ async function publish(plan: Plan, library: Library, vocab: TagVocabulary, dbUrl
          (story_id, story_slug, schema_version, status, document, library_entry,
           headline, accent, dek, summary, page_title, desk, authors, year, trust, minutes, role, note,
           source_url, source_archived_url)
-       values ($1, $2, $3, 'staging', $4::jsonb, $5::jsonb, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17,
+       values ($1, $2, $3, $20, $4::jsonb, $5::jsonb, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17,
           $18, $19)
        returning id`,
       [storyId, plan.slug, STORY_SCHEMA_VERSION, plan.documentJson, plan.libraryJson,
         m.headline, m.accent, m.dek, m.summary, m.pageTitle, m.desk, m.authors, m.year, m.trust, m.minutes,
-        m.role, m.note, m.sourceUrl, m.sourceArchivedUrl])).rows[0].id;
+        m.role, m.note, m.sourceUrl, m.sourceArchivedUrl, status === 'live' ? 'staging' : status])).rows[0].id;
     bump('published_version');
 
     // Step 5: every derived row, each carrying published_version_id.
@@ -649,15 +653,18 @@ async function publish(plan: Plan, library: Library, vocab: TagVocabulary, dbUrl
     }
 
     // Step 7: promote (publish_version retires the old live row, flips this one, updates story.live_version_id).
-    await client.query('select publish_version($1::bigint)', [pvId]);
-    const verify = await client.query<{ ok: boolean }>(
-      `select (s.live_version_id = pv.id and pv.status = 'live') as ok
-         from story s join published_version pv on pv.story_id = s.id where pv.id = $1::bigint`, [pvId]);
-    if (verify.rows[0]?.ok !== true) abort(`promotion of version ${pvId} did not make it live`);
+    // A preview row stays a preview until `npm run approve -- <slug>`.
+    if (status === 'live') {
+      await client.query('select publish_version($1::bigint)', [pvId]);
+      const verify = await client.query<{ ok: boolean }>(
+        `select (s.live_version_id = pv.id and pv.status = 'live') as ok
+           from story s join published_version pv on pv.story_id = s.id where pv.id = $1::bigint`, [pvId]);
+      if (verify.rows[0]?.ok !== true) abort(`promotion of version ${pvId} did not make it live`);
+    }
 
     // Step 8: commit, then the report.
     await client.query('commit');
-    printReport(plan, pvId, counts, {
+    printReport(plan, pvId, status, counts, {
       facet: facetIdByKey.size, tag: tagIdByKey.size, field: fieldIdBySlug.size,
     });
     return pvId;
@@ -670,12 +677,13 @@ async function publish(plan: Plan, library: Library, vocab: TagVocabulary, dbUrl
 }
 
 /** The reconciliation report: what this publish wrote, and the hashes that identify the version. */
-function printReport(plan: Plan, pvId: string, counts: Map<string, number>, vocab: { facet: number; tag: number; field: number }): void {
+function printReport(plan: Plan, pvId: string, status: PublishStatus, counts: Map<string, number>, vocab: { facet: number; tag: number; field: number }): void {
   const c = (name: string) => counts.get(name) ?? 0;
   const byKind = (['lead', 'hook', 'chapter', 'strip_panel', 'fact'] as const)
     .map(k => `${k} ${c(`moment:${k}`)}`).join(', ');
   console.log('');
-  console.log(`Published ${plan.slug} (kind ${plan.kind}) as live version ${pvId}.`);
+  console.log(`Published ${plan.slug} (kind ${plan.kind}) as ${status} version ${pvId}.`);
+  console.log(`  status: ${status}${status === 'preview' ? ` (run \`npm run approve -- ${plan.slug}\` to make it live)` : ''}`);
   console.log(`  document sha256: ${plan.documentHash}`);
   console.log(`  publish sha256 (document + library entry): ${plan.payloadHash}`);
   console.log(`  story_source=${c('story_source')} citation=${c('citation')} media_asset=${c('media_asset')} ` +
@@ -694,8 +702,18 @@ async function readJson<T>(rel: string): Promise<T> {
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const force = args.includes('--force');
-  const slug = args.find(a => !a.startsWith('-'))?.trim();
-  if (!slug) die('usage: npm run publish:supabase -- <slug> [--force]');
+  let status: PublishStatus = 'preview';
+  const rest: string[] = [];
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a === '--status' || a.startsWith('--status=')) {
+      const v = a === '--status' ? args[++i] : a.slice('--status='.length);
+      if (v !== 'preview' && v !== 'live') die(`--status must be "preview" or "live"; found "${String(v)}"`);
+      status = v;
+    } else rest.push(a);
+  }
+  const slug = rest.find(a => !a.startsWith('-'))?.trim();
+  if (!slug) die('usage: npm run publish:supabase -- <slug> [--status preview|live] [--force]');
   if (!/^[a-z0-9-]+$/.test(slug)) die(`"${slug}" is not a slug (lowercase letters, digits and hyphens only)`);
 
   const dbUrl = process.env.SUPABASE_DB_URL?.trim();
@@ -715,7 +733,8 @@ async function main(): Promise<void> {
   warnings.forEach(w => console.warn(`warning: ${w}`));
   console.log(`Checks passed for ${slug}: ${plan.moments.length} moments, ${plan.facts.length} facts, ${plan.media.length} media, ${plan.citations.length} citations, ${plan.tags.length} tags.`);
 
-  await publish(plan, library, vocab, dbUrl, force);
+  console.log(`Status: ${status}`);
+  await publish(plan, library, vocab, dbUrl, force, status);
 }
 
 main().catch((err: unknown) => {

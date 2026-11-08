@@ -79,3 +79,10 @@ Do not paste the migration files into the dashboard SQL editor. A partial run th
 - Schema contract (frozen table names and public-read rules): [`docs/handoffs/v1-schema-contract.md`](../docs/handoffs/v1-schema-contract.md)
 - Row-level security: https://supabase.com/docs/guides/database/postgres/row-level-security
 - Securing data: https://supabase.com/docs/guides/database/secure-data
+
+## Preview, then approve
+
+`npm run publish:supabase -- <slug>` now writes the version with `status = 'preview'` (default); it is not live. With
+`VITE_SHOW_PREVIEW=1` (dev) the site reads the `v_preview_*` views and shows it. `npm run status` lists every version.
+`npm run approve -- <slug>` calls `approve_version(slug)` and makes the preview live. `--status live` skips the
+preview step and publishes live immediately.

@@ -26,6 +26,21 @@ function client(): SupabaseClient {
   return singleton;
 }
 
+/**
+ * Dev flag (VITE_SHOW_PREVIEW=1): read the v_preview_* views (status = 'preview') instead of v_live_*. Unset in
+ * production so the hosted site only renders live stories. Read once at module load.
+ */
+const showPreview = import.meta.env.VITE_SHOW_PREVIEW === '1';
+const LIVE = {
+  story: 'v_live_story', storyBySlug: 'v_live_story', libraryEntry: 'v_live_library_entry', moment: 'v_live_moment',
+} as const;
+const PREVIEW = {
+  story: 'v_preview_story', storyBySlug: 'v_preview_story_by_slug', libraryEntry: 'v_preview_library_entry',
+  moment: 'v_preview_moment',
+} as const;
+const VIEW_BY_KIND: Record<keyof typeof LIVE, string> = showPreview ? PREVIEW : LIVE;
+const SET_NAME = showPreview ? 'preview' : 'live';
+
 // Module-level memoization: one fetch per view per page load (same shape as the old getJson cache).
 const memo = new Map<string, Promise<unknown>>();
 function once<T>(key: string, fn: () => Promise<T>): Promise<T> {
@@ -142,13 +157,13 @@ export const readVocabulary = () => once('v_tag+v_facet', async (): Promise<TagV
 
 /** Fetches one live story's document. 404 if no row. Also validates the document's schemaVersion. */
 export async function readLiveStoryBySlug(slug: string): Promise<PaperDoc> {
-  const { data, error } = await client()
-    .from('v_live_story')
-    .select('schema_version, document')
-    .eq('story_slug', slug)
-    .maybeSingle();
-  if (error) throw new Error(`Could not read story “${slug}” from Supabase: ${error.message}`);
-  if (!data) throw new Error(`Story “${slug}” has no live version in Supabase.`);
+  const columns = 'schema_version, document';
+  // Preview set: v_preview_story_by_slug is an RPC (argument p_slug) returning the same columns as the live view.
+  const { data, error } = showPreview
+    ? await client().rpc(VIEW_BY_KIND.storyBySlug, { p_slug: slug }).select(columns).maybeSingle()
+    : await client().from(VIEW_BY_KIND.storyBySlug).select(columns).eq('story_slug', slug).maybeSingle();
+  if (error) throw new Error(`Could not read story “${slug}” from ${VIEW_BY_KIND.storyBySlug} in Supabase: ${error.message}`);
+  if (!data) throw new Error(`Story “${slug}” has no ${SET_NAME} version in Supabase.`);
   const row = data as { schema_version: number; document: unknown };
   const doc = row.document as { schemaVersion?: unknown } | null;
   if (!doc || typeof doc !== 'object') throw new Error(`Story “${slug}” in Supabase has no document.`);
@@ -158,8 +173,8 @@ export async function readLiveStoryBySlug(slug: string): Promise<PaperDoc> {
 }
 
 /** All live stories (full rows) in one fetch. Validates each document's schemaVersion. */
-export const readLiveStories = () => once('v_live_story', async (): Promise<LiveStoryRow[]> => {
-  const rows = await selectAll<LiveStoryRow>('v_live_story', 'story_slug, schema_version, document, library_entry, trust');
+export const readLiveStories = () => once(VIEW_BY_KIND.story, async (): Promise<LiveStoryRow[]> => {
+  const rows = await selectAll<LiveStoryRow>(VIEW_BY_KIND.story, 'story_slug, schema_version, document, library_entry, trust');
   for (const row of rows) {
     const doc = row.document as { schemaVersion?: unknown } | null;
     if (!doc || typeof doc !== 'object') throw new Error(`Story “${row.story_slug}” in Supabase has no document.`);
@@ -169,8 +184,8 @@ export const readLiveStories = () => once('v_live_story', async (): Promise<Live
   return rows;
 });
 
-export const readLiveLibraryEntries = () => once('v_live_library_entry', async (): Promise<Map<string, LibraryStory>> => {
-  const rows = await selectAll<LiveLibraryEntryRow>('v_live_library_entry', 'story_slug, library_entry');
+export const readLiveLibraryEntries = () => once(VIEW_BY_KIND.libraryEntry, async (): Promise<Map<string, LibraryStory>> => {
+  const rows = await selectAll<LiveLibraryEntryRow>(VIEW_BY_KIND.libraryEntry, 'story_slug, library_entry');
   const entries = new Map<string, LibraryStory>();
   for (const row of rows) {
     const entry = row.library_entry as { id?: unknown } | null;
@@ -321,11 +336,11 @@ export const readFront = () => once('v_front_placement', async (): Promise<Libra
 });
 
 /** Exposed so loadArchive can parallelize the editorial fetches together with v_live_moment. */
-export const readLiveMoments = () => once('v_live_moment', () =>
+export const readLiveMoments = () => once(VIEW_BY_KIND.moment, () =>
   selectAll<{
     story_slug: string; key: string; kind: 'lead' | 'hook' | 'chapter' | 'strip_panel' | 'fact';
     position: number | null; claim: string | null; trust: LibraryStory['trust'] | null;
     source_label: string | null; source_url: string | null; media_path: string | null;
     headline: string | null; text: string | null; ref: string | null;
-  }>('v_live_moment', 'story_slug, key, kind, position, claim, trust, source_label, source_url, media_path, headline, text, ref'),
+  }>(VIEW_BY_KIND.moment, 'story_slug, key, kind, position, claim, trust, source_label, source_url, media_path, headline, text, ref'),
 );

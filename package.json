@@ -14,6 +14,8 @@
     "check:prerender": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/check-prerender.ts",
     "check:hydration": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/check-hydration.ts",
     "publish:supabase": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/publish-to-supabase.ts",
+    "status": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/status.ts",
+    "approve": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/approve.ts",
     "apply:migration": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/apply-migration.ts",
     "seed:editorial": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/seed-editorial-from-library.ts"
   },
