@@ -11,7 +11,7 @@ Full rules: `docs/tagging.md`. Prompt template for automated tagging: `prompts/t
 
 ## Steps
 
-1. Read `public/data/tags.json` (facets, tags, parents, aliases).
+1. Read `data/seed/tags.json` (facets, tags, parents, aliases). The app reads the approved vocabulary from Supabase; this seed is for the server-side import and recovery workflow.
 2. Tag across every facet that applies: field, area, concept, technique, task, dataset, metric, use, impact,
    organization, author, venue, everyday. Aim for 30–60 tags.
 3. Prefer existing ids, and match on aliases too. Pick the most specific tag; parents are implied.
@@ -21,9 +21,8 @@ Full rules: `docs/tagging.md`. Prompt template for automated tagging: `prompts/t
    - `source` and `status`
 
    AI output is `source: "ai", status: "suggested"`.
-5. For a new idea not in the vocabulary, propose it (`proposed: {label, parent, aliases}`). Add it to `tags.json` only
-   once it's approved.
-6. Always include every author and at least two kid-friendly `everyday` themes.
+5. For a new idea not in the vocabulary, propose it (`proposed: {label, parent, aliases}`). Do not add it to the seed or database until the owner approves it.
+6. Always include every author and at least two `everyday` themes ordinary readers might search for. Avoid the literal phrases "kid-friendly" and "for kids" in user-facing labels or descriptions.
 7. For blog posts, add the company under `organization` and, where it applies, `use` tags (real-world uses).
-8. Run `npm run data`. Errors block the build; warnings list what's waiting for review.
-9. Approve by setting `status: "approved"`. Only approved tags appear on the site.
+8. AI output must use `source: "ai", status: "suggested"`. The publish CLI rejects suggested tags, so the owner must review them and explicitly approve each accepted tag before seeding or publishing. Never auto-approve to make publishing pass.
+9. The publisher mirrors owner-approved tags and fields transactionally with the story. Do not run `npm run seed:editorial` for a per-story preview; that global sync is reserved for separately reviewed editorial-table updates, after approval or through a dedicated safe workflow.

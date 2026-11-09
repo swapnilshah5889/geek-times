@@ -8,7 +8,7 @@ description: Verify every real number, quote, section anchor and paper-basis tag
 # Fact-check a story
 
 Nothing marked as evidence ships unchecked. Invented teaching numbers (illustration blocks) aren't fact-checked, but
-they must be labelled as invented.
+they must be labelled as invented. An AI-generated ledger is a draft: it does not prove its own claims. The owner reviews the evidence before approving a preview.
 
 ## What to check
 
@@ -30,7 +30,7 @@ they must be labelled as invented.
    gaps from memory.
    - Example from the first story: the current arXiv version doesn't print "NIPS 2017", so the venue tag is
      `background`.
-4. Re-run `npm run data`. It checks that `paper`-basis tags have evidence links into the source URL.
+4. The publish CLI performs structural checks before writing a preview. It does not verify that claims are true. The owner must review this ledger and the source links before running `npm run approve -- <slug>`.
 
 ## Blog branch (company engineering posts)
 
@@ -54,10 +54,9 @@ differences.
    tag. A `background` tag is not checked against the post.
 7. **Footer.** The story page's footer line ("every number is company-reported") must stay in the blog layout.
 
-The validator (`npm run data`) only checks structure: the blog block, the trust value, link prefixes and the presence of
-a `source.url` on each measured result. It does not confirm any number. Only this check does.
+The publish CLI only checks structure: the blog block, the trust value, link prefixes and the presence of a `source.url`
+on each measured result. It does not confirm any number. Only source comparison can do that, and the owner reviews the ledger.
 
 ## Output
 
-A short list for the PR description: each claim, its exact phrase, its anchor, and pass/changed/removed. For a blog, also
-the archive URL and the retrieval date.
+A review record at `docs/fact-checks/<slug>.md`: each claim, its exact phrase, its anchor, and pass/weakened/rejected. For a blog, also the archive URL and retrieval date. Do not describe model-only checks as independently verified.

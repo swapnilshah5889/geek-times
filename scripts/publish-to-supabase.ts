@@ -18,7 +18,7 @@ import { join } from 'node:path';
 import pg from 'pg';
 import { STORY_SCHEMA_VERSION, storyVersionMessage } from '../src/types.ts';
 import type {
-  BlockType, BlogSource, ClaimKind, Library, LibraryStory, Media, Provenance, SourceKind, StoryDoc, StoryRole,
+  BlockType, ClaimKind, Library, LibraryStory, Media, Provenance, SourceKind, StoryDoc, StoryRole,
   TagBasis, TagVocabulary,
 } from '../src/types.ts';
 
@@ -213,8 +213,7 @@ function validate(slug: string, raw: unknown, library: Library, vocab: TagVocabu
     if (b.archivedUrl !== undefined) {
       if (!isUrl(b.archivedUrl)) abort('blog.archivedUrl must be an http(s) link when given');
       archived = b.archivedUrl;
-      // retrievedOn is not in the BlogSource type yet. Without it there is no date for source_snapshot.
-      const retrievedOn = (b as BlogSource & { retrievedOn?: unknown }).retrievedOn;
+      const retrievedOn = b.retrievedOn;
       if (retrievedOn === undefined) {
         warnings.push('blog.archivedUrl has no retrievedOn date, so no source_snapshot row is written');
       } else if (isIsoDate(retrievedOn)) {
@@ -222,6 +221,8 @@ function validate(slug: string, raw: unknown, library: Library, vocab: TagVocabu
       } else {
         abort('blog.retrievedOn must be a real date, YYYY-MM-DD');
       }
+    } else if (b.retrievedOn !== undefined) {
+      abort('blog.retrievedOn requires blog.archivedUrl');
     }
     source = {
       kind, url: b.url, title: b.title, authors: b.organization, year: Number(b.published.slice(0, 4)),

@@ -1,11 +1,11 @@
 # Prompt: infer tags for a paper
 
-Used by the paper-to-issue converter. Fill in the `{{…}}` placeholders. Validate the model's output with
-`npm run data` after writing it into the paper's JSON. The rules are in [`docs/tagging.md`](../docs/tagging.md).
+Used by the paper-to-story converter. Fill in the `{{…}}` placeholders. Validate the output with the story publish
+CLI after editorial review. The rules are in [`docs/tagging.md`](../docs/tagging.md).
 
 ---
 
-You are tagging a research paper for The Geeky Times, a site that explains research to anyone, kids included.
+You are tagging a research paper for The Geeky Times, a site that explains research to anyone without assuming prior knowledge.
 Readers will find papers by searching and browsing these tags, so be thorough, specific and honest.
 
 ## Inputs
@@ -42,17 +42,17 @@ Readers will find papers by searching and browsing these tags, so be thorough, s
      - `paper`, with `evidence` = `{{paper_url}}#<anchor>` for the section that supports it. The bare URL is only
        for authors and affiliations.
      - `background`, for well-known context the paper doesn't state (later impact, real-world uses, a venue not printed).
-     - `editorial`, for kid-friendly `everyday` themes only.
+     - `editorial`, for `everyday` themes only.
 5. Cover these facets when they apply: field, area, concept, technique, task, dataset, metric, use, impact,
    organization, author, venue, everyday.
    - Always include every author.
-   - Always include at least two `everyday` themes a child might search for.
+   - Always include at least two `everyday` themes a curious reader might search for. Don't use the phrases “kid-friendly” or “for kids” in user-facing tag labels or descriptions.
    - Aim for 30–60 tags.
 6. Don't invent anything. Leave out `impact` and `use` unless they're widely known and true. If unsure, leave it out.
 
 ## Output
 
-Return **only** a JSON array, no commentary. Every item has this shape:
+Return **only** a JSON array, no commentary. Every item has this shape. Keep every AI-created item `source: "ai"` and `status: "suggested"`; never mark a tag approved or add a proposed tag to the shared vocabulary. The owner makes those decisions.
 
 ```json
 {

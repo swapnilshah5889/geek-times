@@ -39,7 +39,7 @@ description: Create Geeky Times illustrations (lead plates, comic panels, fact i
 
 - `tools/media_kit.py`: helpers (`buddy`, `bubble`, `can`, `gear`, `panel`, `standalone`) and the shared CSS
   animations (`m-pop`, `m-meter`, `m-flow`, `m-ride`, …).
-- Copy `tools/draw_attention.py` as `tools/draw_<slug>.py` for a new story. It writes into `public/media/<slug>/`.
-- Run `python3 tools/draw_<slug>.py`, then reference each file from the story JSON as
-  `{type: "svg", src, width, height, alt}`.
+- Copy a reviewed `tools/draw_<slug>.py` pattern for a new story. It writes into `public/media/<slug>/`.
+- Model-generated Python is code, not an image description. Never execute it automatically. Review the complete script first, or use a trusted renderer that consumes structured drawing data and emits SVG. After a person reviews a script, run it manually and reference each file from the story document as `{type: "svg", src, width, height, alt}`.
+- The publisher expects media paths relative to the configured media base URL; local files currently live under `public/media/<slug>/`. Never put scripts or external asset references inside the SVG itself.
 - Illustrator-made GIF/WebP/MP4/Lottie files also work as media types. Keep the same palette.

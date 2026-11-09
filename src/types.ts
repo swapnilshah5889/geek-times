@@ -57,6 +57,8 @@ export interface BlogSource {
   url: string;
   /** An archived copy (e.g. Wayback) of the version we checked, so evidence links survive later edits. */
   archivedUrl?: string;
+  /** Date the archived copy was retrieved, used to record the source snapshot. */
+  retrievedOn?: string;
   /** Always company_reported (decision 18): the claim comes from the company's own post, not independently checked. */
   trust: 'company_reported';
 }
