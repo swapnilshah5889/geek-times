@@ -58,7 +58,7 @@ AGENTS.md                 you are here (CLAUDE.md / GEMINI.md just point here)
 docs/
   decisions.md            every product/tech decision so far, with the reason (read this second)
   product-plan.md         navigation, front page, issues & volumes, graph, blogs, search: the target product
-  data-model.md           current JSON model + target database schema (class diagram) + runtime read path
+  data-model.md           current Postgres model, Git seed/import shape, and runtime read path
   roadmap.md              what's done, what's next, in order
   tagging.md              tag rules
 skills/                   playbooks any agent can follow (open SKILL.md format); start with skills/convert-paper
@@ -66,7 +66,7 @@ design/                   exported mockups (PNG + standalone HTML) and the revie
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
 data/seed/                Git-tracked editorial backup: site.json, tags.json, library.json, papers/<slug>.json
 data/intake/              ignored, resumable conversion checkpoints and drafts
-public/media/<slug>/      standalone animated SVGs (moving to a CDN later)
+public/media/<slug>/      current local media source; moving live assets to Supabase Storage is a V1 merge gate
 supabase/                 schema migrations (decisions 34, 48, 49) and README; applied with `npm run apply:migration`
 src/
   types.ts                the content model: the contract between data and UI
@@ -127,30 +127,14 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 what's next, and the model-routing default. The paragraphs below are kept for context; `STATE.md` is the
 single source of truth for status.
 
-The loader can now read story documents and live library entries from Supabase (`VITE_DATA_SOURCE=supabase`,
-decision 48). Files remain the default, and everything else is still static.
+The app reads story and editorial data from Supabase views (decision 51); there is no file-backed frontend mode.
+`data/seed/*.json` is retained for publish/import and recovery only. Media is still local under `public/media/` and
+must move to Supabase Storage before the owner's cloud-only V1 merge gate is complete. See `docs/production-plan.md`.
 
 ## Status detail (kept for background)
 
-This section is a long-form backgrounder. For current status use `docs/STATE.md` — it supersedes anything below that
-contradicts it.
-
-- All day-to-day work is on the `v1` branch (decision 40); `main` is never written to directly.
-- Built: data-driven React site; front page **D**; story pages (five tabs, picture story, comic strips, evidence
-  cards, family tree, tag shelf); issue, company and map pages (with list view); swipe feed; search with tag filters;
-  path URLs (`/papers/<slug>`); SSG prerender of 27 routes with a `check:prerender` metadata gate (decision 41).
-- Real stories: "One word, two worlds" (Attention Is All You Need, peer-reviewed); "Why a bigger deer breaks"
-  (`size-shapes-life`, arXiv 2408.04070, a preprint, the front-page lead); and "A world covered in honeycomb"
-  (`h3-hexagons`, Uber Engineering, the first real company post, company-reported). Fact-check records under
-  `docs/fact-checks/` for all three. Everything else in `library.json` is `sample: true`.
-- Database: Supabase (34). The runtime story slice is in flight (decision 48): story documents and live library entries
-  for published slugs, with RLS required and atomic publish (42). Files in git stay the full seed and backup (35, 37),
-  with no foreign keys and integrity checks (30, 38). Env var names are in `.env.example`; copy it to `.env` (gitignored)
-  and never commit a value.
-- Design source: the claude.ai canvas (copied into `design/canvas-source/`), exports in `design/exports/`. The
-  data-model board is still stale (production plan, Phase 0).
-- Next: `docs/production-plan.md` is the only maintained launch sequence. Phase 3a (the Supabase runtime slice,
-  decision 48) comes before more Phase 2 story work. `docs/STATE.md` has the order and the exact static reads.
+This status detail is intentionally omitted so it cannot drift from the live snapshot. Use `docs/STATE.md` for current
+counts and `docs/production-plan.md` for the authoritative V1 merge gate and remaining work.
 
 ## Keeping this file true
 

@@ -50,7 +50,9 @@ Path URLs (`/papers/<slug>`). Reduced motion respected; pause switch per section
 
 Search runs client-side against the loaded Archive (the prebuilt `search-index.json` was deleted — `scripts/build-index.ts` is gone). `/papers/:slug` is a single dynamic route; the client fetches the story from `v_live_story_by_slug` on mount.
 
-The prerender script (`npm run prerender`) enumerates routes from `v_live_story` / `v_issue` / `v_company` at build time using a Node Supabase client (`--env-file=.env`), writes 10 routes today (home · 3 real papers · 2 issues + `/issues` · 1 company + `/companies` · `/map`), and inlines the per-route snapshot. 27-route baseline is gone with the samples.
+The prerender script (`npm run prerender`) enumerates routes from `v_live_story` / `v_issue` / `v_company` at build time using a Node Supabase client (`--env-file=.env`), writes 14 routes today (home · 7 stories · 2 issues + `/issues` · 1 company + `/companies` · `/map`), and inlines the per-route snapshot. Query-mode routes (`/?feed`, `/?search`) are client routes and are not separate prerender outputs. 27-route baseline is gone with the samples.
+
+The embedded snapshot is serialized JSON in generated HTML for hydration. It is built from Supabase and is not a frontend read of `data/seed/*.json`; once the client starts, Supabase remains authoritative. The user's V1 requirement is cloud-hosted story/editorial data and media, with Git seed files retained only for import and recovery.
 
 Still file-backed (not read at runtime):
 - `data/seed/*.json`: the editorial seed consumed by `scripts/seed-editorial-from-library.ts` and `scripts/publish-to-supabase.ts`. Sample content was stripped on 2026-11-07.
@@ -58,13 +60,9 @@ Still file-backed (not read at runtime):
 
 ## Next
 
-Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
+Follow the **V1 merge gate** in `docs/production-plan.md`. Current blockers/verification items are: move `public/media/` assets to Supabase Storage; record the target-project schema/RLS/data acceptance; prove publish → home/search/story URL without a site rebuild; complete a non-production export/restore reconciliation; verify Vercel environment/build/deep-link behavior; close the page-review heading and touch-target gaps; then run the final gates. Do not merge `v1` into `main` until those checks have evidence and the owner chooses to release.
 
-1. **Supabase-only runtime landed (decision 51).** Frontend reads come entirely from views; file mode removed; samples stripped from the seed and DB references; prerender enumerates from the DB (10 routes today). `tsc`, `lint`, `build`, `prerender`, `check:prerender` and `check:hydration` all pass.
-2. **More real stories** — 3 landed (`attention-is-all-you-need`, `size-shapes-life`, `h3-hexagons`). Target: 3–5 more papers and a second company post, so Home, Issues, Companies and Map fill out without placeholder content.
-3. **Media to Supabase Storage** (deferred to a separate batch): bucket + upload CLI, `VITE_MEDIA_BASE_URL` cutover. Media still served from `public/media/`.
-4. **Seed + export reconciliation / backup restore** (pre-launch gate, decisions 35, 37, 38): scripts, restore drill, backup location.
-5. **Phase 4.5 (pre-launch gate):** Vitest + Playwright + axe + CI, once v1 is reached (DB-backed, hosted, media on CDN).
+The browser review checked 17 route variants at 1280px and 375px with no site console errors or horizontal overflow. Remaining accessibility findings: home/feed/search need an `<h1>`; issue/company card headings skip a level; several mobile tap targets are under 44px.
 
 ## Deferred to next weekend (weekly-usage window)
 
