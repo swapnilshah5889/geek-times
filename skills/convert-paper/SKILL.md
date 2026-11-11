@@ -3,7 +3,7 @@ name: convert-paper
 description: The start-to-finish runbook for turning one research paper or company blog post into a published Geeky Times story. Start here; it calls the other skills in order and covers the library, graph, claim labels, canvas and branch rules.
 ---
 
-> **Default model:** **medium** (Sonnet 5.5 or equivalent) — orchestrates smaller mechanical steps. Fall back to larger only when the task genuinely needs it.
+> **Model choice:** provider-neutral. Use a low-cost model for source extraction, tagging and mechanical validation; use a stronger model only when plain-language explanation or a difficult science judgment needs it. The converter accepts the configured provider and model through `scripts/convert/model.ts`.
 
 # Convert a source into a Geeky Times story
 
@@ -22,11 +22,16 @@ Rules that apply the whole way through (full text in `AGENTS.md`):
 
 ## 0. Pick and check the source
 
-1. Take the exact arXiv id (or blog URL). **Open the abstract page yourself** and confirm title, authors, submission
-   date, subjects, page and figure counts. Titles and ids from chat or from a model's memory are unreliable.
-   For a company engineering post, open the post itself and follow the **Blog branch** at the end of this file.
-2. Decide the trust level: `peer_reviewed` (confirm from an authoritative venue record, not just the paper title page), `preprint`, or
-   `company_reported` (a company blog's own numbers). A preprint is never called peer-reviewed.
+1. Take the exact arXiv id or public paper/blog URL. **Open the source yourself** and confirm title, authors, date,
+   venue, source type and whether the readable page is the original, a preprint, a translation, or a later edition.
+   Titles and ids from chat or from a model's memory are unreliable. The converter reads HTML; a DOI landing page may
+   identify the paper but not contain enough text. If extraction is short or loses section headings, choose a readable
+   full-text source and record its relationship to the canonical paper in the fact-check file.
+   For a company engineering post, open the post itself and follow the **Blog branch** at the end of this file. For a
+   non-arXiv paper URL, pass `--kind paper` and an owner-verified `--trust` value; other public URLs default to blog posts.
+2. Decide the trust level from publication evidence: `peer_reviewed` only when an authoritative venue record establishes
+   external review; `journal_published` when journal publication is clear but external review is not established;
+   `preprint` for a preprint; `company_reported` for a company blog's own claims. A preprint is never called peer-reviewed.
 3. Note the kind of source, because it changes how you tell it:
    - **Method or result paper** (Transformer): one everyday example carries the story; evidence is measured results.
    - **Theory, review or classroom paper** (scaling laws): there may be no experiment. Evidence cards are the paper's
@@ -54,14 +59,15 @@ from memory. A model-generated ledger is only a draft; the owner reviews it befo
 
 ## 3. Tag (`tag-story`, `prompts/tag-paper.md`)
 
-Infer tags from the shared vocabulary (13 facets). Propose new tags under `proposed`; the owner approves them into
+Infer tags from the shared vocabulary (13 facets). Put new concepts only in `tagProposals`, outside `story.tags`; the owner approves them into
 `data/seed/tags.json` and the database vocabulary. Only approved tags reach readers. Do not add a proposed tag to the seed or database, or change its status to approved, until the owner approves it.
 
 ## 4. Show the owner the cover and layout on the canvas
 
 Before drawing final art or changing any UI:
 1. Mock the lead art, the front-page tile and the story opening on the canvas (https://claude.ai/artifact/Etbd81Tw6BuFzcKxR7dAhf),
-   using the real headline, hook and one real number.
+   using the real headline and hook. Any number shown must be source-checked and labelled with its claim kind; for a theory
+   paper, use a sourced definition or derivation rather than inventing a measurement.
 2. Offer 1–2 options with a recommendation. Wait for the owner's pick.
 Skip this step only when the story uses existing layouts unchanged and the art follows an already-approved style.
 
@@ -89,6 +95,20 @@ The app reads stories and editorial data from Supabase views. The seed is CLI in
 3. Start dev with `VITE_SHOW_PREVIEW=1 npm run dev`; verify the preview story, home, and feed at 1280px and 375px. No horizontal scroll or console errors.
 4. The owner reviews the fact-check record, story, tags and art. Only then run `npm run approve -- <slug>` to make it live.
 5. Run `npm run seed:editorial` only for separately reviewed editorial-table updates, after owner approval or through a dedicated safe workflow. Never run it as part of the per-story preview path. Run `npx tsc -b`, `npm run lint`, `npm run build`, `npm run prerender`, `npm run check:prerender`, and `npm run check:hydration`. A production build must not set `VITE_SHOW_PREVIEW`.
+
+### Conversion preflight and failure prevention
+
+- Before drafting, save a compact intake record: canonical identity, fetched text edition or translation, trust value,
+  available heading anchors, allowed tag IDs and source caveats. Keep it with the fact-check file.
+- Run the converter's structure, vocabulary, claim-kind, source-URL and captured-anchor checks immediately after drafting.
+  Fix failures before fact-check or illustration stages; later stages should not be asked to hide an invalid draft.
+- `story.tags` may contain only existing vocabulary IDs. New ideas belong in `tagProposals`; never put proposed IDs in story JSON.
+- Every source reference must point to the fetched page or a declared archive. Fragments must exactly match anchors captured
+  from that page. If the introduction has no fragment, cite the page without one and name the paragraph in the ledger.
+- Each repeated `media.src` must keep one stable width, height and alt description. Use a distinct path for a distinct scene;
+  do not reuse one path with panel-specific alt text. The illustration stage owns SVG output and receives paths from the checked story.
+- For theory papers or translations with known corrections, prefer a few directly supported `model_design` claims. Do not force
+  measured results, formulas, or famous thought experiments from other works.
 
 ## 8. Ship (`publish-issue`)
 

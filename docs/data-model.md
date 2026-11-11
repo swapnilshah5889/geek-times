@@ -70,10 +70,10 @@ the diagram below (Moment, Fact, Source and the rest) are not built by this slic
    document (`blockPath`).
 3. **Every claim has a kind and every source has a trust level** (decisions 18, 43 and 44):
    - `claimKind`: `illustration` | `model_design` | `measured_result`
-   - `trust`: `peer_reviewed` | `preprint` | `company_reported`
+   - `trust`: `peer_reviewed` | `preprint` | `company_reported` | `journal_published`
 
    The UI renders these as fixed labels: "Illustration · numbers invented", "From the paper · model design",
-   "Measured result · peer-reviewed". Trust describes the source and the claim kind describes the assertion. A sourced claim
+   "Measured result · peer-reviewed", and the journal-publication label. Trust describes the source and the claim kind describes the assertion. A sourced claim
    carries both. An illustration carries neither (decision 44).
 4. **Keys and references** (decision 30):
    - Every table has `id bigint generated always as identity`, the Postgres auto-increment key. It is the only thing
@@ -104,7 +104,7 @@ classDiagram
   class PublishedVersion { story→Story; version; schemaVersion; document: typed JSON; contentHash; publishedAt; status: staging|live|retired }
   class Moment { key (stable, unique per story); story→Story; version→PublishedVersion; blockPath; kind: strip|chapter|fact|slide; presentation: card|snack; position; claimKind; status; media→MediaAsset; fact→Fact }
 
-  class Source { type: paper|blog|talk|rfc|patent; title; url; year; venue; trust: peer_reviewed|preprint|company_reported; doi; arxivId; openalexId; s2Id; organization→Organization }
+  class Source { type: paper|blog|talk|rfc|patent; title; url; year; venue; trust: peer_reviewed|preprint|company_reported|journal_published; doi; arxivId; openalexId; s2Id; organization→Organization }
   class SourceSnapshot { source→Source; versionLabel; retrievedAt; archivedUrl; contentHash; status: live|updated|removed }
   class StorySource { story→Story; source→Source; role: primary|supporting }
   class Author { name; orcid }

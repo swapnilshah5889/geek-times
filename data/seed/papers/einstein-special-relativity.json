@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 2,
+  "slug": "einstein-special-relativity",
+  "pageTitle": "When clocks disagree, whose time is it?",
+  "desk": "Physics",
+  "paper": {
+    "title": "On the Electrodynamics of Moving Bodies",
+    "authors": "Albert Einstein",
+    "year": 1905,
+    "url": "https://www.fourmilab.ch/etexts/einstein/specrel/www/"
+  },
+  "summary": "Einstein starts with a puzzle about magnets and moving wires, then asks how distant clocks can agree. His principles lead to a new way to compare space and time in steadily moving frames.",
+  "hook": {
+    "sticker": "Same current?",
+    "teaser": "Why can a magnet and a wire seem to tell two stories about the same electric current?",
+    "cta": "Follow Einstein’s puzzle",
+    "readMinutes": 3
+  },
+  "tags": [
+    {
+      "tag": "field/physics",
+      "relevance": 1,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "area/physics",
+      "relevance": 0.9,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "kicker": "Physics / Picture story",
+      "headline": {
+        "text": "When clocks disagree,",
+        "accent": "whose time is it?"
+      },
+      "deck": "Einstein starts with a magnet-and-wire puzzle, then asks how distant clocks can share a time.",
+      "slideshow": {
+        "slides": [
+          {
+            "label": "Same current?",
+            "caption": "One setup moves the magnet; the other moves the wire. The current can match. Why do the explanations differ?",
+            "media": {
+              "type": "svg",
+              "src": "einstein-special-relativity/lead/magnet-moves.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Two setups side by side: magnet moves on the left, wire moves on the right. Matching current arrows are already visible, with the question “Same current. Why different?”"
+            }
+          },
+          {
+            "label": "Who moved?",
+            "caption": "The moving part changes. The current cue stays the same.",
+            "media": {
+              "type": "svg",
+              "src": "einstein-special-relativity/lead/wire-moves.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "The same side-by-side puzzle remains visible: magnet moves on the left, wire moves on the right, and matching current arrows stay in both loops."
+            }
+          }
+        ]
+      },
+      "id": "lead"
+    },
+    {
+      "type": "story",
+      "kicker": "The picture story",
+      "title": "A new way to compare motion",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "A magnet, a wire, and a mismatch",
+          "provenance": "model_design",
+          "caption": "Move a magnet near a wire and a current appears. Describe the wire as moving while the magnet rests, and the current can be the same—but the usual explanation changes. Einstein wants the laws of moving bodies described without giving one viewpoint special status. <i>Grown-up words:</i> electromotive force; electrodynamics.",
+          "media": {
+            "type": "svg",
+            "src": "einstein-special-relativity/story/magnet-wire.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Magnet-moving and wire-moving setups appear side by side with matching current arrows and the question “Same current. Why different?”"
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Set distant clocks with light",
+          "provenance": "model_design",
+          "caption": "A nearby clock gives a local time. For distant clocks, Einstein defines a synchronization rule: send light from A to B, reflect it back, and set the clocks so both parts of the trip take equal time. <i>Grown-up words:</i> synchronization; simultaneity.",
+          "media": {
+            "type": "svg",
+            "src": "einstein-special-relativity/story/clock-synchronization.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two distant clocks and a light signal traveling from A to B and reflecting back."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Two principles",
+          "provenance": "model_design",
+          "caption": "The laws of nature work the same in steadily moving frames. Light in empty space has the same speed in a frame whether its source is still or moving. These are the two principles Einstein uses to build the account in this paper. <i>Grown-up words:</i> principle of relativity; constancy of the velocity of light.",
+          "media": {
+            "type": "svg",
+            "src": "einstein-special-relativity/story/principles.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two steadily moving frames with a light ray, illustrating the principles named in the paper introduction."
+          }
+        },
+        {
+          "part": "The consequences",
+          "title": "Clocks and rods compare differently",
+          "provenance": "model_design",
+          "caption": "The paper derives what its principles mean for moving clocks and rods: for the clock setup analyzed in section 4, the other frame’s observer finds a small slowing, approximated there when higher-order terms are neglected. The paper also derives a shorter measured length for a rod along its direction of motion. These are theoretical consequences, not measurements reported in this paper. <i>Grown-up words:</i> time dilation; length contraction.",
+          "media": {
+            "type": "svg",
+            "src": "einstein-special-relativity/story/clock-rod-consequences.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A moving clock and a rod aligned with motion, compared from another frame."
+          }
+        }
+      ],
+      "id": "picture-story"
+    },
+    {
+      "type": "comic",
+      "kicker": "How the reasoning works",
+      "title": "From a magnet to moving clocks",
+      "strips": [
+        {
+          "title": "A magnet and a wire",
+          "provenance": "model_design",
+          "grownUpWords": "Electromotive force; electrodynamics",
+          "panels": [
+            {
+              "caption": "Two setups show the same current. Why does the explanation change?",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-1-panel-1.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Opening comparison: magnet moves on the left, wire moves on the right, matching current arrows, and “Same current. Why different?”"
+              }
+            },
+            {
+              "caption": "In one account the magnet moves; in the other, the wire moves.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-1-panel-2.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A wire loop moves past a stationary bar magnet."
+              }
+            },
+            {
+              "caption": "For the same relative motion, the current can match while the usual explanation changes.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-1-panel-3.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Both motion setups side by side; their current arrows match beneath “Same current. Why different?”"
+              }
+            }
+          ]
+        },
+        {
+          "title": "Set clocks by light",
+          "provenance": "model_design",
+          "grownUpWords": "Synchronization; simultaneity",
+          "panels": [
+            {
+              "caption": "A light signal travels from clock A to clock B.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-2-panel-1.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A light pulse leaves clock A and heads toward clock B."
+              }
+            },
+            {
+              "caption": "At B, the signal reflects and returns to A.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-2-panel-2.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A light pulse reflects at clock B and travels back toward clock A."
+              }
+            },
+            {
+              "caption": "Equal travel times define synchronized clocks.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-2-panel-3.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two clocks are joined by an out-and-back light path with equal trip labels."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Two principles",
+          "provenance": "model_design",
+          "grownUpWords": "Principle of relativity; constancy of light speed",
+          "panels": [
+            {
+              "caption": "Compare frames moving steadily past each other.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-3-panel-1.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two coordinate frames coast steadily past each other."
+              }
+            },
+            {
+              "caption": "The laws of nature follow the same rule in either frame.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-3-panel-2.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Matching simple physics symbols appear in two steadily moving frames."
+              }
+            },
+            {
+              "caption": "Light in empty space has the same speed whether its source is still or moving.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-3-panel-3.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A light ray is shown in two moving frames with the same speed label."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Compare clocks and rods",
+          "provenance": "model_design",
+          "grownUpWords": "Time dilation; length contraction",
+          "panels": [
+            {
+              "caption": "Describe a moving clock from another frame.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-4-panel-1.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A clock travels past a marker belonging to another frame."
+              }
+            },
+            {
+              "caption": "For the clock setup in the paper, the other frame’s observer finds a small slowing.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-4-panel-2.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A moving clock is shown with a small tick-rate comparison for the section 4 setup."
+              }
+            },
+            {
+              "caption": "A rod along the motion is measured shorter there.",
+              "media": {
+                "type": "svg",
+                "src": "einstein-special-relativity/comic/strip-4-panel-3.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A rod aligned with its motion is compared with its rest-length marks."
+              }
+            }
+          ]
+        }
+      ],
+      "id": "comic"
+    },
+    {
+      "type": "facts",
+      "kicker": "What the paper says",
+      "facts": [
+        {
+          "figure": "2 setups",
+          "claim": "model_design",
+          "text": "Einstein compares a magnet moving near a conductor with a conductor moving near a magnet; the current can be the same although the usual explanations differ.",
+          "source": {
+            "label": "Paper introduction",
+            "url": "https://www.fourmilab.ch/etexts/einstein/specrel/www/"
+          }
+        },
+        {
+          "figure": "A→B→A",
+          "claim": "model_design",
+          "text": "The clock-synchronization definition uses a light signal sent to a second clock and reflected back, with equal outward and return travel times.",
+          "source": {
+            "label": "Paper §1",
+            "url": "https://www.fourmilab.ch/etexts/einstein/specrel/www/#SECTION11"
+          }
+        },
+        {
+          "figure": "2 principles",
+          "claim": "model_design",
+          "text": "The paper starts from the relativity principle and the constancy of light speed.",
+          "source": {
+            "label": "Paper introduction",
+            "url": "https://www.fourmilab.ch/etexts/einstein/specrel/www/"
+          }
+        },
+        {
+          "figure": "Moving clock",
+          "claim": "model_design",
+          "text": "For the clock-transport setup in §4, Einstein derives a small difference between the carried clock and the one left at B; his calculation uses a small-speed approximation.",
+          "source": {
+            "label": "Paper §4",
+            "url": "https://www.fourmilab.ch/etexts/einstein/specrel/www/#SECTION14"
+          }
+        },
+        {
+          "figure": "Moving rod",
+          "claim": "model_design",
+          "text": "The paper derives that a rod’s measured length along its motion is shorter in the other frame.",
+          "source": {
+            "label": "Paper §4",
+            "url": "https://www.fourmilab.ch/etexts/einstein/specrel/www/#SECTION14"
+          }
+        }
+      ],
+      "id": "facts"
+    }
+  ]
+}

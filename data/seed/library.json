@@ -198,6 +198,25 @@
       "year": 2007,
       "minutes": 4,
       "trust": "preprint"
+    },
+    {
+      "id": "einstein-special-relativity",
+      "sample": false,
+      "real": true,
+      "headline": "When clocks disagree, whose time is it?",
+      "accent": "whose time is it?",
+      "dek": "Einstein starts with a magnet-and-wire puzzle, then asks how distant clocks can share a time.",
+      "desk": "Physics",
+      "fields": [
+        "physics"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "On the Electrodynamics of Moving Bodies",
+      "authors": "Albert Einstein",
+      "year": 1905,
+      "trust": "journal_published",
+      "minutes": 3
     }
   ],
   "front": {
@@ -229,11 +248,7 @@
       "machines-read"
     ],
     "vault": "",
-    "onThisDay": {
-      "year": "[Year]",
-      "text": "[A famous paper] was published. See how it changed what came next.",
-      "story": "attention-is-all-you-need"
-    }
+    "onThisDay": null
   },
   "issues": [
     {

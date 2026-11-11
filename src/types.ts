@@ -217,7 +217,7 @@ export interface Moment {
    */
   provenance?: Provenance;
   /**
-   * Trust of the parent story's source (peer_reviewed, preprint, company_reported). It describes the source and
+   * Trust of the parent story's source. It describes the source and
    * never changes a claim's kind. Additive in schemaVersion 1: older renders ignore it.
    */
   trust?: LibraryStory['trust'];
@@ -356,6 +356,7 @@ export interface LibraryField {
 }
 export type SampleArtKind = 'dna' | 'protein' | 'waves' | 'stairs' | 'particle' | 'mold';
 export type StoryRole = 'lead' | 'feature' | 'brief' | 'vault' | 'real_world';
+export type SourceTrust = 'peer_reviewed' | 'preprint' | 'company_reported' | 'journal_published';
 
 export interface LibraryStory {
   id: string;
@@ -372,7 +373,7 @@ export interface LibraryStory {
   title: string;
   authors: string;
   year: number;
-  trust?: 'peer_reviewed' | 'preprint' | 'company_reported';
+  trust?: SourceTrust;
   art?: SampleArtKind;
   minutes: number;
   note?: string;
@@ -455,7 +456,7 @@ export interface Library {
     lead: string; aside: string[]; more: string[];
     topics: { field: string; label: string; stories: string[] }[];
     real: string[]; storylines: string[]; vault: string;
-    onThisDay: { year: string; text: string; story: string };
+    onThisDay: { year: string; text: string; story: string } | null;
   };
   issues: LibraryIssue[];
   companies: LibraryCompany[];

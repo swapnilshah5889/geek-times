@@ -435,3 +435,13 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
     - **Navigation stays with the custom router.** `src/App.tsx` keeps its single `route` state and the switch over `App.routeFor(pathname+search)`. Agent C adds a `popstate` listener and exports a `navigate(url)` that updates `history.pushState` plus the route state, since `pushState` does not fire `popstate` on its own (per [MDN's History API guidance](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)). Modified clicks (⌘/ctrl/shift/alt + click, middle-click, in-page hashes, anchors to other origins, `download`) stay native.
     - **Measured by filmstrip, not paint count.** Direct-load FCP + a 10-frame screenshot sequence across the prerender → hydration transition and the front → paper transition. Animated SVGs can trigger phantom paints; the honest signal is "what does the reader see." Numbers recorded in the closeout.
 
+53. **Conversion prompts are provider-neutral, and paper/blog classification must be explicit when a URL is ambiguous.**
+    - `scripts/convert/model.ts` isolates model-provider calls; the converter supports Anthropic and OpenAI-compatible endpoints through server-only `.env` settings. Prompts and output contracts do not name a vendor.
+    - arXiv identifiers remain papers by default. A non-arXiv URL remains a blog by default; `--kind paper --trust <level>` is required to convert another paper URL, so the URL is never silently treated as an academic paper.
+    - Provider choice does not change fact-check requirements, tag approval, canvas review, preview status, or the owner’s final publish approval.
+
+54. **Add `journal_published` as a source-trust value for journal papers that were not externally peer-reviewed.**
+    - `peer_reviewed` describes external scientific review; journal publication alone is not enough. Historical accounts report that Einstein’s 1905 Annalen papers were accepted without external peer review ([historical review of peer-review practice](https://www.tandfonline.com/doi/full/10.1080/07373937.2016.1234347)).
+    - `journal_published` labels the source as journal-published without claiming external peer review. Claim kind remains independent (`model_design` or `measured_result`).
+    - The trust value is added to the story model, importer and database checks in migration `20261110120000_journal_published_trust.sql`; the UI says “journal-published · not externally peer-reviewed.”
+

@@ -16,6 +16,10 @@ Files are applied in filename order, one file at a time. Each file runs as one t
    evidence, front placement and story fields.
 4. `20261106100002_public_views_rls.sql`: the `v_*` views that anon reads, their grants, and
    `v_live_story_by_slug(text)`. It drops nothing and alters no table.
+5. `20261108120000_preview_status.sql`: preview status, `v_preview_*` views and the service-role-only
+   `approve_version(text)` function. Local development selects preview views only when `VITE_SHOW_PREVIEW=1`.
+6. `20261110120000_journal_published_trust.sql`: adds `journal_published` to the trust checks for stories,
+   sources and moments.
 
 Files 2 to 4 must run after the file before them. The publish importer (`scripts/publish-to-supabase.ts`) runs only after all four.
 
@@ -46,14 +50,16 @@ The CLI is not installed or used by default. Use it only if you want `supabase d
 1. Install and link: `brew install supabase/tap/supabase`, then `supabase link --project-ref <your-project-ref>`.
    If the CLI reports that the project is not initialised, run `supabase init` once from the repo root.
 2. Tell the CLI that the migrations are already applied. Run this once in the SQL editor or with `psql`, and only after
-   the four files above have been applied with `npm run apply:migration`:
+   the files above have been applied with `npm run apply:migration`:
 
    ```sql
    insert into supabase_migrations.schema_migrations (version, name) values
      ('20261106085857', 'init_story_slice'),
      ('20261106100000', 'core_content_schema'),
      ('20261106100001', 'editorial_schema'),
-     ('20261106100002', 'public_views_rls');
+     ('20261106100002', 'public_views_rls'),
+     ('20261108120000', 'preview_status'),
+     ('20261110120000', 'journal_published_trust');
    ```
 
    Without these rows, `db push` would try to run all four files again. They are not idempotent, so the push would fail.
@@ -69,8 +75,10 @@ Do not paste the migration files into the dashboard SQL editor. A partial run th
   throwaway local database.
 - **No foreign keys** (decisions 30 and 38). Every `*_id` column holds another row's id and is indexed. Each file ends
   with a commented orphan audit, one query per reference column.
-- **Public reads go through the views in migration 4 only.** Raw tables have no anon grant. Anon reads only the views and the
-  two existing story tables, and the existing policies on those two tables are kept (see the header of migration 4).
+- **Public reads go through views.** The live views from migration 4 exclude previews. The preview views from migration 5
+  are also readable by anon and are selected only by a local build with `VITE_SHOW_PREVIEW=1`; this hides drafts from the
+  hosted site's UI, but it is not a confidentiality boundary. Raw tables have no anon grant beyond the existing story
+  table policies (see the header of migration 4).
 - Readers use the publishable key only. The service-role key stays on the server (seed and publish CLI) and never
   carries a `VITE_` prefix.
 

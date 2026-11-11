@@ -92,7 +92,7 @@ function Lead({ archive }: { archive: Archive }) {
         <h2><a href={paperHref(lead.id)}>{`${paper.cover.headline.text} `}<em>{paper.cover.headline.accent}</em></a></h2>
         <p className="f-lead-dek">{paper.summary}</p>
         <div className="f-lead-foot">
-          <p><b>{paper.title}</b>{' · '}<i>{`${paper.authors}, ${paper.year}`}</i>{' · '}<span className="f-trust" title={lead.trust === 'peer_reviewed' ? 'Checked by other scientists before it was published' : undefined}>{trustLabel(lead.trust)}</span>{lead.trust === 'peer_reviewed' && <small>{' (checked by other scientists)'}</small>}{lead.trust === 'preprint' && <small>{' (shared publicly, not yet checked by other scientists)'}</small>}</p>
+          <p><b>{paper.title}</b>{' · '}<i>{`${paper.authors}, ${paper.year}`}</i>{' · '}<span className="f-trust" title={lead.trust === 'peer_reviewed' ? 'Checked by other scientists before it was published' : undefined}>{trustLabel(lead.trust)}</span>{lead.trust === 'peer_reviewed' && <small>{' (checked by other scientists)'}</small>}{lead.trust === 'preprint' && <small>{' (shared publicly, not yet checked by other scientists)'}</small>}{lead.trust === 'journal_published' && <small>{' (published in a journal; not externally peer-reviewed)'}</small>}</p>
           <a className="f-more" href={paperHref(lead.id)}>Read the illustrated story →</a>
         </div>
       </article>
@@ -286,8 +286,19 @@ function Vault({ archive }: { archive: Archive }) {
   const { library } = archive;
   const vault = storyById(library, library.front.vault);
   const day = library.front.onThisDay;
+  const validDay = day
+    && Boolean(day.year.trim())
+    && Boolean(day.text.trim())
+    && Boolean(day.story.trim())
+    && !day.year.includes('[') && !day.year.includes(']')
+    && !day.text.includes('[') && !day.text.includes(']')
+    && Boolean(storyById(library, day.story));
+  if (!vault && !validDay) return null;
+  const singleTile = Boolean(vault) !== Boolean(validDay);
+  const sectionLabel = vault && validDay ? 'From the vault and on this day'
+    : vault ? 'From the vault' : 'On this day';
   return (
-    <section aria-labelledby="s-vault" className="f-vault">
+    <section aria-label={sectionLabel} aria-labelledby={vault ? 's-vault' : undefined} className={`f-vault${singleTile ? ' f-vault-single' : ''}`}>
       {vault && (
         <a className="card f-vault-main" href={paperHref(vault.id)}>
           <StoryArt story={vault} archive={archive} />
@@ -299,12 +310,14 @@ function Vault({ archive }: { archive: Archive }) {
           </div>
         </a>
       )}
-      <div className="card f-day">
-        <span className="label">On this day · Sample</span>
-        <b>{day.year}</b>
-        <p>{day.text}</p>
-        <a className="f-more" href={paperHref(day.story)}>Open its family tree →</a>
-      </div>
+      {validDay && (
+        <div className="card f-day">
+          <span className="label">On this day</span>
+          <b>{day.year}</b>
+          <p>{day.text}</p>
+          <a className="f-more" href={`${paperHref(day.story)}#tree`}>Open its family tree →</a>
+        </div>
+      )}
     </section>
   );
 }

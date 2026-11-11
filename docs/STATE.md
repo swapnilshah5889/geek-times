@@ -11,10 +11,11 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 - **Phase 3b landed in code on `v1` (decision 49):** the normalized V1 schema is in SQL migrations (core, editorial, public views and RLS, applied in filename order after the init migration). The `v_*` views expose only live, non-sample, approved or verified rows to anon. The importer writes one version and its extracted rows in one `pg` transaction. Migration history is one path: `npm run apply:migration` (see `supabase/README.md`). Acceptance (applying A, B and D to the owner's project, importing the three real stories, orphan audit, leak check) is the lead's run and is not recorded as done here yet.
 - **Supabase-only runtime landed (decision 51):** every frontend read goes through Supabase views. File mode is gone (`VITE_DATA_SOURCE` removed, `src/data/source-file.ts` deleted). `data/seed/` holds the editorial seed (no sample content); `public/data/` is empty. The prerender walker enumerates routes from `v_live_story` / `v_issue` / `v_company` at build time via a Node Supabase client reading the publishable key.
 - **Dynamic front page landed:** `src/data/load.ts` derives `lead`, `aside`, `more`, `topics` and `real` from live stories on mount; publishing a new paper surfaces it on the home page on the next load. Curated bits (storylines, vault, onThisDay) still come from `front_placement`.
+- **On this day is intentionally empty** until a real, dated anniversary with a source is curated. The seed now stores `null`, and the UI hides absent or placeholder entries. Supabase still holds the old sample object; sync it to `null` only after all deployed clients accept the nullable value, since older clients dereference it directly.
 - **Preview / live status gate landed (decision 52):** stories can be published as `preview` (visible only when `VITE_SHOW_PREVIEW=1` is set, i.e. local dev) and approved to `live` with `npm run approve -- <slug>`. The hosted site (no flag) only renders `live` rows. Migration `20261108120000_preview_status.sql` adds `v_preview_*` twin views, the `approve_version(slug)` RPC (service_role only), and the preview-status addition to the check constraint. `npm run status` lists every published_version row with its status.
-- **Conversion pipeline implemented locally, pending first paid acceptance run:** `npm run convert -- <source>` stages a local draft, fact-check draft, proposed tags, and validated SVG art. After human review and explicit tag approval, `npm run convert -- --publish-preview <slug>` uses the preview gate. It never runs the global editorial seed or approves content. See `docs/handoffs/codex-2026-11-09.md`; no Anthropic API request has yet been made by this pipeline.
+- **Conversion pipeline is provider-neutral:** `scripts/convert/model.ts` supports Anthropic and OpenAI-compatible providers, with optional per-stage provider/model overrides for `convert`, `fact-check`, and `illustrate`. A non-arXiv paper URL requires explicit `--kind paper --trust ...`; ambiguous URLs never silently become paper sources. Einstein's 1905 story is now Supabase `live` version 15 with `journal_published` trust. The trust migration is applied. No paid provider API call has been made.
 - **Hydration and in-app navigation landed (decision 50):** `hydrateRoot` with an embedded snapshot per route; `npm run check:hydration` is the smoke gate; in-app navigation uses the approved slide-up (Phase 4 UX).
-- Last decisions: 44 trust on every sourced claim · 45 createRoot not hydrateRoot (clarifies 41) · 46 story `schemaVersion: 2` · 47 single-stamp comic model · 48 runtime Supabase reads, RLS required (refines 34) · 49 normalized V1 schema, transactional extraction, one migration path · 50 hydrateRoot with embedded data · 51 Supabase-only runtime (supersedes 48) · 52 preview/live status gate for publishes (new stories land as preview and ship live only on `npm run approve`).
+- Last decisions: 44 trust on every sourced claim · 45 createRoot not hydrateRoot (clarifies 41) · 46 story `schemaVersion: 2` · 47 single-stamp comic model · 48 runtime Supabase reads, RLS required (refines 34) · 49 normalized V1 schema, transactional extraction, one migration path · 50 hydrateRoot with embedded data · 51 Supabase-only runtime (supersedes 48) · 52 preview/live status gate for publishes · 53 provider-neutral conversion and explicit paper URL classification · 54 journal-published trust without claiming external peer review.
 
 ## Real content
 
@@ -24,8 +25,12 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 - `resnet` (He et al., CVPR 2016 / arXiv 1512.03385, peer-reviewed): added 2026-11-07; fact-check 42 rows, 38 pass. CVPR 2016 venue still needs manual confirmation.
 - `google-search` (Brin & Page, WWW7 1998, peer-reviewed): added 2026-11-07; fact-check 53 rows, 45 pass. WWW7 peer-review status needs manual confirmation.
 - `dynamo` (DeCandia et al., SOSP 2007, peer-reviewed): added 2026-11-07; fact-check 36 rows, 29 pass. SOSP 2007 peer-review status needs manual confirmation.
-- All 6 fact-check records live under `docs/fact-checks/`. All six stories use placeholder grey-plate SVGs under `public/media/<slug>/`; real hand-drawn art still pending for the 3 new stories (`resnet`, `google-search`, `dynamo`).
-- Sample stories, companies, storylines, nodes and relations were stripped from `data/seed/library.json` on 2026-11-07 and no longer appear in the DB-driven site (decision 51). Only the three real stories render.
+- All 7 fact-check records live under `docs/fact-checks/`. Real hand-drawn art is still pending for `resnet`, `google-search` and `dynamo`; their current media are placeholder grey plates.
+- Sample stories, companies, storylines, nodes and relations were stripped from `data/seed/library.json` on 2026-11-07 and no longer appear in the DB-driven site (decision 51). Seven real stories are live.
+
+## Recent publication
+
+- `einstein-special-relativity` (Einstein, 1905, `journal_published`): Supabase live version 15, 23 moments, 5 facts, 18 media assets, 2 approved tags. Verified in `v_live_story`; local development also reads it.
 
 ## Built
 
@@ -79,7 +84,7 @@ Follow `docs/production-plan.md` (the only maintained launch sequence). Order:
   The pages carry a "Mockup · links to be fact-checked" badge and `src/components/FamilyTree.tsx`
   carries a DEMO CONTENT banner at the top. We will properly build the screen once there are
   enough verified relations (see decisions 15, 24; production plan section 4).
-- Short lists on Home, Issues, Companies and Map until more real stories land. Decision 51 removed samples from the DB; sparse slots are expected, and components render empty states rather than placeholders.
+- Short lists on Home, Issues, Companies and Map until more real stories land. Decision 51 removed samples from the DB; sparse slots are expected, and components render empty states rather than placeholders. The On this day tile remains empty until a real dated, sourced anniversary is curated.
 
 ## Build flags
 
@@ -105,8 +110,8 @@ messages) may still describe the audience that way.
 
 ## Model routing (to control cost)
 
-Default to **Haiku** (or the cheapest capable model in whatever family) for mechanical steps:
-builds, lints, git ops, data validation, tag inference (`prompts/tag-paper.md`), fact-check
-lookups, JSON edits, PR descriptions. Reserve **Opus / Sonnet 5.5** (or equivalent large model)
-for writing kid-level explanations, design decisions, and tricky debugging. Each `SKILL.md`
-names its own default.
+The conversion prompts and runbook are model-neutral. Route mechanical stages—source extraction, tag inference
+(`prompts/tag-paper.md`), fact-check lookup, JSON validation and SVG checks—to a low-cost capable model. Use a
+stronger model only for difficult science explanations, design decisions and tricky debugging. The CLI supports
+Anthropic and OpenAI-compatible providers through `CONVERT_MODEL_PROVIDER`; provider credentials and model names
+stay in ignored `.env`. Do not make paid model calls unless the owner has authorized that run.

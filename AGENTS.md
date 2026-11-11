@@ -21,12 +21,13 @@ The first story is "Attention Is All You Need" (Vaswani et al., 2017). It's the 
 1. **Kid-level language.** Short sentences and everyday metaphors. Every technical idea also gets its real name
    ("Grown-up words: …").
 2. **Every claim is labelled.** Exactly one of: "Illustration · numbers invented", "From the paper · model design",
-   or "Measured result" plus source trust (peer-reviewed / preprint / company-reported). Real claims link to the
+   or "Measured result" plus source trust (peer-reviewed / preprint / company-reported / journal-published without
+   established external review). Real claims link to the
    exact section. The labels live in the data and are rendered the same way everywhere.
 3. **Fact-check before publishing.** Every evidence number and every `paper`-basis tag is checked against the source.
    See `skills/fact-check/`.
-4. **The UI renders data.** No story is hard-coded in components. Content lives in JSON now and a database later;
-   media lives in files now and a CDN/S3 later.
+4. **The UI renders data.** No story is hard-coded in components. The app reads Supabase views; JSON under `data/seed/`
+   is the Git-tracked editorial backup and input for publish/import commands. Media lives in files now and may move to a CDN later.
 5. **Original work only.** Write our own explanations and drawings. Never copy a source's text, figures or branding
    (blog posts especially). Short quotes only, with attribution.
 
@@ -35,13 +36,14 @@ The first story is "Attention Is All You Need" (Vaswani et al., 2017). It's the 
 React 19 + TypeScript (strict) + Vite. Node 20.19+ / 22.12+. Python 3 for drawing tools.
 
 ```bash
-npm install
-npm run dev        # runs `npm run data` first, then Vite on :5173
-npm run data       # validate all content + tags, build public/data/search-index.json
-npm run build      # data check + typecheck + production build to dist/
+npm ci
+npm run dev        # Vite on :5173; the app reads Supabase views
+npm run build      # TypeScript + production build to dist/
 npm run lint       # oxlint
-npm run prerender  # render every route to dist/<route>/index.html (needs a prior `npm run build`)
-npm run check:prerender  # fail if any route lacks its own title / description / og:title / og:description / og:type
+npm run prerender  # render DB-enumerated routes to dist/<route>/index.html (needs build + Supabase env)
+npm run check:prerender
+npm run check:hydration
+npm run convert -- <arXiv-id-or-URL> [--kind paper|blog] [--trust preprint|peer_reviewed|journal_published]
 npm run draw       # regenerate the Attention paper's comic SVGs (tools/draw_attention.py)
 ```
 
@@ -62,7 +64,8 @@ docs/
 skills/                   playbooks any agent can follow (open SKILL.md format); start with skills/convert-paper
 design/                   exported mockups (PNG + standalone HTML) and the review brief: design/README.md
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
-public/data/              content: site.json, tags.json, library.json (editorial layer, samples), papers/<slug>.json (search-index.json is generated)
+data/seed/                Git-tracked editorial backup: site.json, tags.json, library.json, papers/<slug>.json
+data/intake/              ignored, resumable conversion checkpoints and drafts
 public/media/<slug>/      standalone animated SVGs (moving to a CDN later)
 supabase/                 schema migrations (decisions 34, 48, 49) and README; applied with `npm run apply:migration`
 src/
@@ -72,9 +75,10 @@ src/
   blocks/                 one component per content block type (lead, story, comic, facts)
   components/             MediaView (svg/image/video), Rich (safe captions), TagShelf, Masthead, motion
   lib/                    library.ts (stories, issues, graph helpers), routes.ts (all links), feed.ts (feed order), tags.ts (search), motion.ts, mediaBase.ts
-  data/                   fetch-json.ts (cached JSON fetch), load.ts (archive/edition), source.ts + source-supabase.ts (file vs Supabase; decision 48)
+  data/                   load.ts and source.ts (Supabase view reads; decision 51), initial-snapshot.ts (prerender hydration)
   styles/edition.css      the newspaper look
-scripts/build-index.ts    content validator + search index builder
+scripts/convert.ts        staged, resumable paper/blog conversion and preview preparation
+scripts/convert/model.ts  provider-neutral, per-stage model routing (Anthropic or OpenAI-compatible)
 scripts/publish-to-supabase.ts  seed + atomic publish for one story (service-role key; decisions 42, 48)
 tools/                    media_kit.py (drawing kit) + draw_attention.py (per-paper drawings)
 ```
@@ -87,12 +91,13 @@ tools/                    media_kit.py (drawing kit) + draw_attention.py (per-pa
   constraints; our readable key is `slug` (stories) or `key` (tags, moments). URLs use the slug: `/papers/<slug>`.
 - Stories carry no issue, volume or date of ours (decision 31). Issues and volumes are collections of published stories
   and the only place our dates appear.
-- `public/data/site.json` lists papers. `papers/<slug>.json` = metadata + `summary` + `tags` + ordered `blocks`.
+- `data/seed/site.json` and `data/seed/papers/<slug>.json` are the Git backup and publish inputs; the browser does not read them.
+  Paper JSON = metadata + `summary` + `tags` + ordered `blocks`.
 - Block types: `lead`, `story`, `comic`, `facts` (see `src/types.ts`). Adding one means: a type, a component in
   `src/blocks/`, and a registry entry.
 - Media entry = `{type: svg|image|video, src, width, height, alt}`, with `src` relative to `mediaBaseUrl`.
-- `npm run data` turns each paper into **moments** (comic strips, chapters, facts) for the front page and feed.
-- Tags come from a shared vocabulary (`public/data/tags.json`) with 13 facets, parent tags and aliases.
+- The publisher extracts **moments** (comic strips, chapters, facts) into Supabase rows for the front page, feed and search.
+- Tags come from the shared vocabulary in `data/seed/tags.json` and its Supabase views, with 13 facets, parent tags and aliases.
 
 Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 

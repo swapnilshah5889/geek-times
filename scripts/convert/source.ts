@@ -39,9 +39,9 @@ interface ExtractedHtml {
   anchors: string[];
 }
 
-/** Resolve supported arXiv identifiers and URLs; all other inputs must be public HTTP(S) URLs. */
-export async function fetchSource(input: string): Promise<ExtractedSource> {
-  const normalized = normalizeInput(input);
+/** Resolve arXiv identifiers, company URLs, and explicitly classified paper URLs. */
+export async function fetchSource(input: string, kindOverride?: ExtractedSource['kind']): Promise<ExtractedSource> {
+  const normalized = normalizeInput(input, kindOverride);
   const deadline = Date.now() + TOTAL_REQUEST_DEADLINE_MS;
   const response = await requestHtml(normalized.fetchUrl, deadline);
   const contentType = String(response.headers['content-type'] ?? '').split(';', 1)[0].trim().toLowerCase();
@@ -73,12 +73,13 @@ interface NormalizedInput {
   fetchUrl: URL;
 }
 
-function normalizeInput(input: string): NormalizedInput {
+function normalizeInput(input: string, kindOverride?: ExtractedSource['kind']): NormalizedInput {
   const value = input.trim();
   if (!value) throw new Error('Provide an arXiv id, arXiv URL, or blog URL.');
 
   const arxivId = extractArxivId(value);
   if (arxivId) {
+    if (kindOverride === 'blog') throw new Error('An arXiv source is a paper; --kind blog is not allowed.');
     return {
       kind: 'paper',
       sourceUrl: `https://arxiv.org/abs/${arxivId}`,
@@ -93,8 +94,9 @@ function normalizeInput(input: string): NormalizedInput {
     throw new Error(`Unrecognized source “${value}”. Use an arXiv id such as 2402.00001 or an absolute HTTPS blog URL.`);
   }
   validateUrl(url);
+  const kind = kindOverride ?? 'blog';
   return {
-    kind: 'blog',
+    kind,
     sourceUrl: url.href,
     fetchUrl: url,
   };
@@ -381,6 +383,13 @@ function extractHtml(html: string): ExtractedHtml {
         if (/^h[1-6]$/.test(name)) {
           const id = tagAttrs(token).get('id') ?? '';
           activeHeading = { tag: name, id, text: '' };
+        } else if (name === 'a') {
+          const attrs = tagAttrs(token);
+          const id = attrs.get('id') ?? attrs.get('name') ?? '';
+          if (id) {
+            anchors.push(id);
+            if (activeHeading && !activeHeading.id) activeHeading.id = id;
+          }
         }
         if (block.has(name) && ignoredStack.length === 0) out.push('\n');
       } else {

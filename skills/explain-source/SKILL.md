@@ -3,7 +3,7 @@ name: explain-source
 description: Turn a research paper or a company engineering blog post into a Geeky Times story (plain-language summary, picture story, comic strips, evidence cards) that a new reader can follow. Use when adding any new story.
 ---
 
-> **Default model:** **large** (Opus 5.5 / Sonnet 5.5 / top-tier equivalent) — writing kid-level prose is the hard part. Drop to a smaller model once the hard part is drafted.
+> **Model choice:** provider-neutral. Start with a low-cost capable model and escalate only when a difficult science explanation needs a second pass.
 
 # Explain a source as a Geeky Times story
 
@@ -19,7 +19,7 @@ The reference example is `data/seed/papers/attention-is-all-you-need.json`. Matc
   - how it works, in 4–6 steps
   - the evidence, with exact numbers and their section anchors
   - who wrote it, where, and when
-- Note the trust level: peer-reviewed, preprint, or company-reported (a company blog's own numbers). Mark peer-reviewed only after checking an authoritative proceedings or journal record; a title page or model inference alone is not enough. If uncertain, use preprint.
+- Note the trust level: `peer_reviewed`, `preprint`, `company_reported` (a company's own post), or `journal_published` for a journal paper that was not externally peer-reviewed. Mark `peer_reviewed` only when external review is supported by an authoritative venue record. Do not relabel a journal-published paper as a preprint just because its review status differs.
 
 ## 2. Find the one everyday example
 

@@ -13,6 +13,7 @@ const TRUST: Record<Trust, string> = {
   peer_reviewed: 'peer-reviewed',
   preprint: 'preprint',
   company_reported: 'company-reported',
+  journal_published: 'journal-published · not externally peer-reviewed',
 };
 
 const CLAIM_OF_PROVENANCE: Record<Provenance, ClaimKind> = {

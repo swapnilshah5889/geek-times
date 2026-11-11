@@ -12,7 +12,7 @@ export const roleLabel: Record<StoryRole, string> = {
 };
 
 export const trustLabel = (t?: LibraryStory['trust']) =>
-  t === 'peer_reviewed' ? 'Peer-reviewed paper' : t === 'company_reported' ? 'Company-reported' : t === 'preprint' ? 'Preprint' : '';
+  t === 'peer_reviewed' ? 'Peer-reviewed paper' : t === 'company_reported' ? 'Company-reported' : t === 'preprint' ? 'Preprint' : t === 'journal_published' ? 'Journal-published paper' : '';
 
 export const storyById = (lib: Library, id: string): LibraryStory | undefined => lib.stories.find(s => s.id === id);
 export const storiesOf = (lib: Library, ids: string[]): LibraryStory[] =>

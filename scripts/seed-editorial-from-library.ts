@@ -21,7 +21,7 @@ interface LibStoryline { id: string; title: string; sample?: boolean; steps?: { 
 interface LibField { id: string; label: string; color?: string; cluster?: unknown }
 interface LibNode { id: string; title: string; authors?: string; year?: number; field?: string; type?: string; x?: number; y?: number; story?: string; sample?: boolean }
 interface LibRelation { from: string; to: string; kind: string; note?: string; cited?: boolean; sample?: boolean }
-interface LibFront { lead: string; aside: string[]; more: string[]; topics: { field: string; label: string; stories: string[] }[]; real: string[]; storylines: string[]; vault: string; onThisDay: { year: string; text: string; story: string } }
+interface LibFront { lead: string; aside: string[]; more: string[]; topics: { field: string; label: string; stories: string[] }[]; real: string[]; storylines: string[]; vault: string; onThisDay: { year: string; text: string; story: string } | null }
 interface Library {
   stories: LibStory[]; volumes: LibVolume[]; issues: LibIssue[]; companies: LibCompany[];
   storylines: LibStoryline[]; fields: LibField[]; nodes: LibNode[]; relations: LibRelation[]; front: LibFront;

@@ -27,7 +27,7 @@ type Trust = NonNullable<LibraryStory['trust']>;
 type MomentKind = 'lead' | 'hook' | 'chapter' | 'strip_panel' | 'fact';
 
 const SEED = join(import.meta.dirname, '..', 'data', 'seed');
-const TRUSTS: readonly Trust[] = ['peer_reviewed', 'preprint', 'company_reported'];
+const TRUSTS: readonly Trust[] = ['peer_reviewed', 'preprint', 'company_reported', 'journal_published'];
 const ROLES: readonly StoryRole[] = ['lead', 'feature', 'brief', 'vault', 'real_world'];
 const CLAIMS: readonly ClaimKind[] = ['illustration', 'model_design', 'measured_result'];
 const BASES: readonly TagBasis[] = ['paper', 'background', 'editorial'];
