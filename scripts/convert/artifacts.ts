@@ -3,9 +3,26 @@ import { spawnSync } from 'node:child_process';
 import { link, lstat, mkdir, open, realpath, rename, rm, unlink } from 'node:fs/promises';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 
+/**
+ * Ignored staging root for newly generated media. New conversions never write into public/media/; they land under
+ * data/intake/<slug>/media/ (a mirror of the public/media layout) until the Supabase Storage publish step uploads them.
+ */
+export const MEDIA_STAGING_ROOT = 'data/intake';
+
+/**
+ * Maps the model-facing path public/media/<slug>/<name>.svg to its staged location
+ * data/intake/<slug>/media/<slug>/<name>.svg. Keeping the layout identical means the staged key equals the story src.
+ */
+export function stagedRelativePath(slug: string, relativePath: string): string {
+  validateSlug(slug);
+  const prefix = 'public/media/' + slug + '/';
+  if (!relativePath.startsWith(prefix)) throw new Error('Media path must be under ' + prefix + ': ' + relativePath);
+  return MEDIA_STAGING_ROOT + '/' + slug + '/media/' + relativePath.slice('public/media/'.length);
+}
+
 /** A generated SVG and the media metadata that will be referenced by a story document. */
 export interface SvgArtifactInput {
-  /** Repository-relative path. Must be public/media/<slug>/<safe-name>.svg. */
+  /** Model-facing path. Must be public/media/<slug>/<safe-name>.svg; it is written to the staging path (see stagedRelativePath). */
   relativePath: string;
   svg: string;
   alt: string;
@@ -113,8 +130,9 @@ function validateMediaPath(relativePath: string, slug: string): string {
       !/^[a-z0-9][a-z0-9_-]*\.svg$/.test(filename)) {
     throw new Error('Media path must use safe lowercase directories and a simple .svg filename: ' + relativePath);
   }
-  const absolutePath = resolve(REPO_ROOT, relativePath);
-  const mediaRoot = resolve(REPO_ROOT, prefix);
+  // Writes go to the ignored staging root, never to public/media/.
+  const absolutePath = resolve(REPO_ROOT, stagedRelativePath(slug, relativePath));
+  const mediaRoot = resolve(REPO_ROOT, MEDIA_STAGING_ROOT, slug, 'media');
   if (!absolutePath.startsWith(mediaRoot + sep)) {
     throw new Error('Media path escapes its story directory: ' + relativePath);
   }
@@ -210,7 +228,7 @@ export async function writeSvgArtifacts(
       throw new Error(artifact.relativePath + ': SVG <title> must match the supplied alt text after whitespace normalization.');
     }
     return {
-      relativePath: artifact.relativePath, absolutePath, alt,
+      relativePath: stagedRelativePath(slug, artifact.relativePath), absolutePath, alt,
       width: artifact.width, height: artifact.height, bytes, title, viewBox,
     };
   });

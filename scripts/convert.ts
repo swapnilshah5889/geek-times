@@ -1,5 +1,11 @@
 // Prepare a paper/blog story and publish it to Supabase as preview. This script never approves a story.
 // Generated SVG markup is validated by scripts/convert/artifacts.ts; generated Python is never executed.
+//
+// Media destination (design note): new SVGs are staged only, at data/intake/<slug>/media/<slug>/... (ignored by Git),
+// never public/media/. The eventual publish step should read approved SVGs from that staging folder, upload each one
+// to Supabase Storage with the same key as its story src (<slug>/<name>.svg) through scripts/media-storage.ts, verify
+// the public URLs, and then skip any public/media/ copy. Existing public/media/<slug>/ files are the recovery copy and
+// are removed only after that upload is verified. This conversion script does not perform the upload itself.
 
 import { createHash, randomUUID } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
@@ -9,7 +15,7 @@ import { createClient } from '@supabase/supabase-js';
 import type { Library, LibraryStory, StoryDoc, TagVocabulary } from '../src/types.ts';
 import { fetchSource, type ExtractedSource } from './convert/source.ts';
 import { completeModel } from './convert/model.ts';
-import { writeSvgArtifacts, type SvgArtifactInput } from './convert/artifacts.ts';
+import { MEDIA_STAGING_ROOT, stagedRelativePath, writeSvgArtifacts, type SvgArtifactInput } from './convert/artifacts.ts';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const SEED = join(ROOT, 'data', 'seed');
@@ -158,6 +164,7 @@ function mediaRequirements(doc: StoryDoc): ArtRequirement[] {
       if (typeof item.alt !== 'string' || !item.alt.trim()) fail(`SVG ${src} needs non-empty alt text.`);
       if (!Number.isInteger(item.width) || !Number.isInteger(item.height)) fail(`SVG ${src} needs integer width and height.`);
       const prior = refs.get(src);
+      // Model-facing path (prompt contract). It is written to data/intake/<slug>/media/ by installOrConfirmArt.
       const next = { relativePath: `public/media/${src}`, width: item.width as number, height: item.height as number, alt: item.alt };
       if (prior && JSON.stringify(prior) !== JSON.stringify(next)) {
         fail(`Media path ${src} is reused with different dimensions or alt text. Use a unique path for a different scene, or identical metadata for the same art.`);
@@ -296,7 +303,8 @@ async function publishReviewedPreview(slug: string): Promise<void> {
 async function installOrConfirmArt(slug: string, artifacts: SvgArtifactInput[]): Promise<number> {
   let present = 0;
   for (const artifact of artifacts) {
-    const path = join(ROOT, artifact.relativePath);
+    // Idempotency is checked against the staged file; public/media/ is never read or written by conversion.
+    const path = join(ROOT, stagedRelativePath(slug, artifact.relativePath));
     try {
       const current = await readFile(path, 'utf8');
       if (current !== artifact.svg) fail(`Generated media already exists with different contents: ${artifact.relativePath}. Review it manually before replacing anything.`);
@@ -538,7 +546,7 @@ async function main(): Promise<void> {
     console.log(`Draft ready for review: ${slug}`);
     console.log(`  story: ${storyPath.replace(ROOT + '/', '')}`);
     console.log(`  fact-check draft: ${ledgerPath.replace(ROOT + '/', '')}`);
-    console.log(`  media: ${writtenCount} validated SVG files`);
+    console.log(`  media: ${writtenCount} validated SVG files (staged, not published): ${MEDIA_STAGING_ROOT}/${slug}/media/`);
     if (tagProposalPath) console.log(`  new tag proposals (not approved): ${tagProposalPath.replace(ROOT + '/', '')}`);
     console.log('Review the source ledger and art. Set only accepted existing-vocabulary tags to status="approved" in the story JSON.');
     console.log(`  then publish for local review: npm run convert -- --publish-preview ${slug}`);
