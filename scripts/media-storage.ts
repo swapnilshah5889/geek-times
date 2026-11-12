@@ -39,6 +39,7 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const MEDIA_DIR = join(ROOT, 'backups', 'media');
+const SITE_ASSET_KEYS = ['brand/social-card.png'];
 const BUCKET = (process.env.SUPABASE_MEDIA_BUCKET ?? '').trim() || 'story-media';
 const LIST_PAGE = 1000;
 const READ_PAGE = 1000;
@@ -252,11 +253,13 @@ function printInventory(inv: Inventory, byKey: Map<string, string>): void {
   const bySlug = new Map<string, number>(inv.storySlugs.map(s => [s, 0]));
   for (const slugs of inv.refs.values()) for (const s of slugs) bySlug.set(s, (bySlug.get(s) ?? 0) + 1);
   const samples = [...byKey.keys()].filter(isSampleKey).length;
-  const unreferenced = [...byKey.keys()].filter(k => !isSampleKey(k) && !inv.refs.has(k)).length;
+  const siteAssets = SITE_ASSET_KEYS.filter(k => byKey.has(k)).length;
+  const unreferenced = [...byKey.keys()].filter(k => !isSampleKey(k) && !SITE_ASSET_KEYS.includes(k) && !inv.refs.has(k)).length;
 
   console.log(`Live stories: ${inv.storySlugs.length}. Live moments with media: ${inv.liveMomentsWithMedia}. ` +
     `External URLs skipped: ${inv.external}.`);
   console.log(`Live media objects to check: ${inv.refs.size}. Inventory by story slug (media referenced):`);
+  console.log(`Required site media assets: ${siteAssets}/${SITE_ASSET_KEYS.length}.`);
   for (const [slug, n] of [...bySlug].sort((a, b) => (a[0] < b[0] ? -1 : 1))) console.log(`  ${slug}: ${n}`);
   console.log(`Excluded, not live: ${samples} file(s) under backups/media/samples/.`);
   console.log(`Local media not referenced by live content (not uploaded): ${unreferenced}.`);
@@ -294,8 +297,10 @@ async function upload(args: string[]): Promise<void> {
   printInventory(inv, byKey);
 
   const { placeholders, notLocal } = await scanLocalSvgs(inv, byKey);
-  if (notLocal.length || inv.problems.length) {
+  const missingSiteAssets = SITE_ASSET_KEYS.filter(k => !byKey.has(k));
+  if (notLocal.length || missingSiteAssets.length || inv.problems.length) {
     for (const k of notLocal) console.error(`BLOCKER referenced media not found under backups/media: ${k}`);
+    for (const k of missingSiteAssets) console.error(`BLOCKER required site asset not found under backups/media: ${k}`);
     for (const p of inv.problems) console.error(`BLOCKER ${p}`);
     die('Nothing uploaded. Fix the blockers above (live content must resolve to local files) and re-run.');
   }
@@ -312,7 +317,7 @@ async function upload(args: string[]): Promise<void> {
   }
 
   const badKeys = new Set(placeholders.map(p => p.key));
-  const uploadKeys = [...inv.refs.keys()].filter(k => !badKeys.has(k)).sort();
+  const uploadKeys = [...new Set([...inv.refs.keys(), ...SITE_ASSET_KEYS])].filter(k => !badKeys.has(k)).sort();
   const dirs = [...new Set(uploadKeys.map(k => posix.dirname(k)).map(d => (d === '.' ? '' : d)))];
   const remote = new Map<string, number>();
   for (const dir of dirs) {
@@ -349,7 +354,7 @@ async function upload(args: string[]): Promise<void> {
   }
 
   const verb = dryRun ? 'would upload' : 'uploaded';
-  console.log(`\nBucket "${BUCKET}" on ${hostOf(url)}: ${uploadKeys.length} live object(s); ${verb} ${uploaded}; ` +
+  console.log(`\nBucket "${BUCKET}" on ${hostOf(url)}: ${inv.refs.size} live story object(s) + ${SITE_ASSET_KEYS.length} site asset(s); ${verb} ${uploaded}; ` +
     `already identical by SHA-256 ${identical}.`);
   for (const p of placeholders) {
     console.error(`PLACEHOLDER not uploaded: ${p.key} (${p.reason}); stories: ${p.slugs.join(', ')}`);
@@ -373,7 +378,7 @@ async function verify(): Promise<void> {
   printInventory(inv, byKey);
   const { placeholders, notLocal } = await scanLocalSvgs(inv, byKey);
 
-  const keys = [...inv.refs.keys()].sort();
+  const keys = [...new Set([...inv.refs.keys(), ...SITE_ASSET_KEYS])].sort();
   const status = new Map<string, { ok: boolean; detail: string; acao: string | null }>();
   for (let i = 0; i < keys.length; i += CONCURRENCY) {
     await Promise.all(keys.slice(i, i + CONCURRENCY).map(async key => {
@@ -390,14 +395,16 @@ async function verify(): Promise<void> {
   const noCors = keys.filter(k => status.get(k)!.ok && status.get(k)!.acao !== '*');
   const present = keys.length - missing.length;
 
-  console.log(`Bucket "${BUCKET}" on ${hostOf(url)}: ${keys.length} live object(s); present ${present}; ` +
-    `missing ${missing.length}; without ACAO "*" ${noCors.length}.`);
+  console.log(`Bucket "${BUCKET}" on ${hostOf(url)}: ${inv.refs.size} story object(s) + ${SITE_ASSET_KEYS.length} site asset(s); ` +
+    `present ${present}; missing ${missing.length}; without ACAO "*" ${noCors.length}.`);
   for (const key of missing) {
-    console.error(`BLOCKER MISSING ${key} (${status.get(key)!.detail}); stories: ${[...inv.refs.get(key)!].join(', ')}`);
+    const refs = inv.refs.get(key);
+    console.error(`BLOCKER MISSING ${key} (${status.get(key)!.detail}); ${refs ? `stories: ${[...refs].join(', ')}` : 'site asset'}`);
   }
   for (const key of noCors) {
     const acao = status.get(key)!.acao ?? 'absent';
-    console.error(`BLOCKER NO CORS ${key} (Access-Control-Allow-Origin: ${acao}); stories: ${[...inv.refs.get(key)!].join(', ')}`);
+    const refs = inv.refs.get(key);
+    console.error(`BLOCKER NO CORS ${key} (Access-Control-Allow-Origin: ${acao}); ${refs ? `stories: ${[...refs].join(', ')}` : 'site asset'}`);
   }
   for (const p of placeholders) {
     console.error(`BLOCKER PLACEHOLDER ${p.key} (${p.reason}); stories: ${p.slugs.join(', ')}`);
@@ -408,7 +415,7 @@ async function verify(): Promise<void> {
   }
 
   if (missing.length || noCors.length || placeholders.length || inv.problems.length) process.exit(1);
-  console.log('All live media is present in the bucket, readable cross-origin (ACAO "*"), and is not placeholder art.');
+  console.log('All live story media and required site assets are present in the bucket and readable cross-origin (ACAO "*").');
 }
 
 // --- entry ----------------------------------------------------------------------------------

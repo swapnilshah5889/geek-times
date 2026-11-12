@@ -9,6 +9,7 @@ import { MediaBaseContext } from '../lib/mediaBase';
 import { SourceTrustContext, sourceOf } from '../lib/source';
 import { SourceKindContext } from '../lib/claimLabel';
 import { useHead } from '../components/head';
+import { shareCardUrl } from '../lib/mediaBase';
 
 export function PaperPage({ edition, archive }: { edition: Edition; archive: Archive }) {
   const { site, doc, vocab } = edition;
@@ -16,10 +17,11 @@ export function PaperPage({ edition, archive }: { edition: Edition; archive: Arc
   // A blog's trust is in its own block; a paper's comes from its library entry (peer-reviewed, preprint).
   const trust = doc.kind === 'blog' ? doc.blog.trust : archive.library.stories.find(s => s.id === doc.slug)?.trust;
 
-  // No og:image: the lead art is SVG, which social platforms do not render as a preview (raster OG is a later batch).
   useHead({
     title: `${doc.pageTitle} — ${site.name}`,
     description: doc.summary,
+    image: shareCardUrl(edition.mediaBaseUrl),
+    imageAlt: 'An open newspaper sends a red spark into connected symbols for life, mathematics, and space.',
     type: 'article',
   });
 

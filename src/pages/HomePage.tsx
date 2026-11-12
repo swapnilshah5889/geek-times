@@ -8,7 +8,7 @@ import { MotionButton, MotionGroup } from '../components/motion';
 import { StoryArt } from '../components/library';
 import { mediaBaseFor, type Archive } from '../data/load';
 import { headlineOf, latestIssue, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
-import { MediaBaseContext } from '../lib/mediaBase';
+import { MediaBaseContext, shareCardUrl } from '../lib/mediaBase';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
 import { useTodayLabel } from '../lib/format';
@@ -299,13 +299,15 @@ function Vault({ archive }: { archive: Archive }) {
 export function HomePage({ archive }: { archive: Archive }) {
   const today = useTodayLabel();
   const { site } = archive;
+  const mediaBase = useMemo(() => mediaBaseFor(site), [site]);
   // The home page keeps the site's own title (it is the generic one by design); the description says what the site is.
   useHead({
     title: `${site.name} — ${site.motto}`,
     description: `${site.tagline}. Research papers and engineering posts, explained for anyone.`,
+    image: shareCardUrl(mediaBase),
+    imageAlt: 'An open newspaper sends a red spark into connected symbols for life, mathematics, and space.',
     type: 'website',
   });
-  const mediaBase = useMemo(() => mediaBaseFor(site), [site]);
 
   return (
     <MediaBaseContext.Provider value={mediaBase}>

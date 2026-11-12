@@ -57,7 +57,7 @@ These are useful, but are not required for the owner's personal-use V1 unless th
 - Add new original illustrations for stories when ready. A real story may use a truthful text-only/empty-art treatment; grey placeholder plates are not allowed in V1.
 - Make `/issues` and `/companies` proper archive pages or redirect them to canonical detail routes; current index routes can duplicate their first detail page.
 - Add the dev-only admin page, stronger automated test suite, CI, and automated/manual accessibility sweep beyond the focused fixes above.
-- Add social share cards, sitemap/structured metadata, newsletter, custom domain, analytics, legal pages, and public-launch operations.
+- Add per-story social-card art, sitemap/structured metadata, newsletter, custom domain, analytics, legal pages, and public-launch operations. V1 has a generic illustrated card for shared links.
 
 ## Non-goals for this V1
 
