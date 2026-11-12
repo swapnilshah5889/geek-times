@@ -28,7 +28,7 @@
 //           Exits 1 on a missing object, a missing CORS header, a placeholder SVG, or a live-content problem.
 //
 // Usage (see docs/handoffs/claude-v1-cloud-only-merge-gate.md for the npm wiring):
-//   node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/media-storage.ts upload [--dry-run] [--force]
+//   node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/media-storage.ts upload [--dry-run] [--force] [--preview]
 //   node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/media-storage.ts verify
 
 import { createHash } from 'node:crypto';
@@ -168,10 +168,15 @@ interface Inventory {
 }
 
 /** Reads live content through the publishable key only (the views are the public contract). */
-async function liveInventory(publishableKey: string): Promise<Inventory> {
+async function liveInventory(publishableKey: string, includePreview = false): Promise<Inventory> {
   const client = makeClient(publishableKey);
   const stories = await readAll(client, 'v_live_story', 'story_slug, document, library_entry');
   const moments = await readAll(client, 'v_live_moment', 'story_slug, media_path');
+  if (includePreview) {
+    // --preview: also upload art for stories published as preview, so they render in local dev before approval.
+    stories.push(...await readAll(client, 'v_preview_story', 'story_slug, document, library_entry'));
+    moments.push(...await readAll(client, 'v_preview_moment', 'story_slug, media_path'));
+  }
 
   const inv: Inventory = {
     storySlugs: stories.map(r => String(r.story_slug)).sort(),
@@ -286,13 +291,14 @@ async function listRemoteDir(client: SupabaseClient, dir: string): Promise<Map<s
 async function upload(args: string[]): Promise<void> {
   const dryRun = args.includes('--dry-run');
   const force = args.includes('--force');
+  const preview = args.includes('--preview');
   const url = projectUrl();
   const serviceKey = env('SUPABASE_SERVICE_ROLE_KEY');
   if (!serviceKey) die('SUPABASE_SERVICE_ROLE_KEY is not set. Server-side only; add it to .env (see .env.example).');
   const publishableKey = env('VITE_SUPABASE_PUBLISHABLE_KEY');
   if (!publishableKey) die('VITE_SUPABASE_PUBLISHABLE_KEY is not set (needed to read the live inventory). See .env.example.');
 
-  const inv = await liveInventory(publishableKey);
+  const inv = await liveInventory(publishableKey, preview);
   const byKey = await loadLocal();
   printInventory(inv, byKey);
 
@@ -423,4 +429,4 @@ async function verify(): Promise<void> {
 const [mode, ...rest] = process.argv.slice(2);
 if (mode === 'upload') await upload(rest);
 else if (mode === 'verify') await verify();
-else die('Usage: media-storage.ts <upload [--dry-run] [--force] | verify>');
+else die('Usage: media-storage.ts <upload [--dry-run] [--force] [--preview] | verify>');

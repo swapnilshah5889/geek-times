@@ -32,6 +32,8 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 
 ## Recent publication
 
+- `cassandra` (Lakshman & Malik, LADIS 2009, `peer_reviewed` per the LADIS CFP; ACM DL record unconfirmed): Supabase **preview** version 16 on branch `cassandra-storyline`, 30 moments, 6 facts, 30 media (uploaded with `npm run media:upload -- --preview`), 11 owner-approved new tags. First story of the planned Cassandra storyline. Not live; family-tree relations (Dynamo/Bigtable → Cassandra) are in the seed but reach Supabase only on the next `seed:editorial`.
+
 - `einstein-special-relativity` (Einstein, 1905, `journal_published`): Supabase live version 15, 23 moments, 5 facts, 18 media assets, 2 approved tags. Verified in `v_live_story`; local development also reads it.
 
 ## Built

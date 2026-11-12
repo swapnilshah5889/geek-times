@@ -1428,6 +1428,89 @@
       "id": "everyday/neighbors",
       "facet": "everyday",
       "label": "Neighbors and mail"
+    },
+    {
+      "id": "technique/cassandra",
+      "facet": "technique",
+      "label": "Cassandra",
+      "aliases": [
+        "Apache Cassandra"
+      ]
+    },
+    {
+      "id": "concept/column-family",
+      "facet": "concept",
+      "label": "Column families",
+      "aliases": [
+        "super columns",
+        "wide-column store"
+      ]
+    },
+    {
+      "id": "concept/commit-log",
+      "facet": "concept",
+      "label": "Commit logs",
+      "aliases": [
+        "write-ahead log",
+        "journal"
+      ]
+    },
+    {
+      "id": "concept/compaction",
+      "facet": "concept",
+      "label": "Compaction",
+      "aliases": [
+        "merging data files"
+      ]
+    },
+    {
+      "id": "concept/bloom-filter",
+      "facet": "concept",
+      "label": "Bloom filters"
+    },
+    {
+      "id": "concept/failure-detection",
+      "facet": "concept",
+      "label": "Failure detection",
+      "aliases": [
+        "phi accrual failure detector",
+        "heartbeats"
+      ]
+    },
+    {
+      "id": "use/message-search",
+      "facet": "use",
+      "label": "Message search",
+      "aliases": [
+        "inbox search"
+      ]
+    },
+    {
+      "id": "organization/facebook",
+      "facet": "organization",
+      "label": "Facebook",
+      "aliases": [
+        "Meta"
+      ]
+    },
+    {
+      "id": "author/prashant-malik",
+      "facet": "author",
+      "label": "Prashant Malik"
+    },
+    {
+      "id": "venue/ladis",
+      "facet": "venue",
+      "label": "LADIS",
+      "aliases": [
+        "Workshop on Large Scale Distributed Systems and Middleware"
+      ]
+    },
+    {
+      "id": "venue/ladis-2009",
+      "facet": "venue",
+      "label": "LADIS 2009",
+      "parent": "venue/ladis"
     }
   ]
 }
