@@ -1,0 +1,714 @@
+{
+  "schemaVersion": 2,
+  "slug": "google-search",
+  "pageTitle": "The web's biggest popularity vote",
+  "desk": "Computer science / Search and the web",
+  "paper": {
+    "title": "The Anatomy of a Large-Scale Hypertextual Web Search Engine",
+    "authors": "Sergey Brin and Lawrence Page",
+    "year": 1998,
+    "url": "http://infolab.stanford.edu/~backrub/google.html"
+  },
+  "summary": "By 1997 the web had too many pages to sort by hand, and keyword matching returned a lot of junk. This paper describes Google, a prototype search engine that ranks pages by who links to them (PageRank) and answers searches from a big word-to-pages index.",
+  "hook": {
+    "sticker": "Wait, what?",
+    "teaser": "How can a computer tell which web page is the best one, when it can't read minds?",
+    "cta": "Count the votes",
+    "readMinutes": 3,
+    "stat": {
+      "figure": "24 million",
+      "text": "pages in the prototype"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "google-search/lead/pile.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A huge pile of web pages with one tiny gold page buried inside. Below: So many pages, so few good ones."
+        },
+        "tag": "Junk!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "google-search/lead/votes.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Small page circles with arrows pointing at one big circle in the middle. Below: Pages point at the pages they trust."
+        },
+        "tag": "Votes!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/information-retrieval",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Information retrieval",
+        "aliases": [
+          "IR",
+          "finding documents"
+        ],
+        "description": "Finding the documents that answer a question."
+      }
+    },
+    {
+      "tag": "concept/pagerank",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html#pr",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "PageRank",
+        "aliases": [
+          "page rank",
+          "link ranking"
+        ],
+        "description": "A score for how important a page is, based on who links to it."
+      }
+    },
+    {
+      "tag": "concept/link-analysis",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html#pr",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Link analysis",
+        "aliases": [
+          "hyperlink analysis",
+          "citation graph"
+        ],
+        "description": "Using the links between pages to learn about them."
+      }
+    },
+    {
+      "tag": "concept/hyperlink-graph",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html#pr",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Hyperlink graph",
+        "aliases": [
+          "link graph",
+          "web graph"
+        ],
+        "description": "The web seen as pages (dots) joined by links (lines)."
+      }
+    },
+    {
+      "tag": "concept/anchor-text",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html#anchor",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Anchor text",
+        "aliases": [
+          "link text"
+        ],
+        "description": "The clickable words of a link."
+      }
+    },
+    {
+      "tag": "concept/inverted-index",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Inverted index",
+        "aliases": [
+          "search index",
+          "word-to-pages index"
+        ],
+        "description": "A list that says, for each word, which documents contain it."
+      }
+    },
+    {
+      "tag": "concept/random-surfer",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html#pr",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Random surfer",
+        "parent": "concept/pagerank",
+        "aliases": [
+          "random walk"
+        ],
+        "description": "An imaginary web user who keeps clicking links; used to explain PageRank."
+      }
+    },
+    {
+      "tag": "technique/web-crawler",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Web crawler",
+        "aliases": [
+          "spider",
+          "bot",
+          "crawling"
+        ],
+        "description": "A program that visits web pages and copies them for later use."
+      }
+    },
+    {
+      "tag": "task/web-search",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Web search",
+        "aliases": [
+          "search engine",
+          "searching the web"
+        ],
+        "description": "Finding web pages that answer what someone typed."
+      }
+    },
+    {
+      "tag": "use/search-engines",
+      "relevance": 0.8,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Search engines",
+        "aliases": [
+          "Google Search",
+          "web search engines"
+        ],
+        "description": "Sites you type a question into to find web pages."
+      }
+    },
+    {
+      "tag": "organization/stanford-university",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Stanford University",
+        "aliases": [
+          "Stanford"
+        ]
+      }
+    },
+    {
+      "tag": "organization/google",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "author/sergey-brin",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Sergey Brin"
+      }
+    },
+    {
+      "tag": "author/lawrence-page",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "http://infolab.stanford.edu/~backrub/google.html",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Lawrence Page",
+        "aliases": [
+          "Larry Page"
+        ]
+      }
+    },
+    {
+      "tag": "venue/www7-1998",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "WWW7 (1998)",
+        "parent": "venue/world-wide-web-conference",
+        "aliases": [
+          "Seventh International World Wide Web Conference",
+          "WWW 1998"
+        ]
+      }
+    },
+    {
+      "tag": "everyday/finding-things",
+      "relevance": 0.9,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Finding things",
+        "aliases": [
+          "googling",
+          "looking things up"
+        ]
+      }
+    },
+    {
+      "tag": "everyday/the-internet",
+      "relevance": 0.8,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "The internet",
+        "aliases": [
+          "websites",
+          "the web"
+        ]
+      }
+    },
+    {
+      "tag": "everyday/smart-computers",
+      "relevance": 0.4,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Computer science / Picture story",
+      "headline": {
+        "text": "The web's biggest",
+        "accent": "popularity vote."
+      },
+      "deck": "The web had millions of pages and no good way to sort them. Two students had an idea: a page matters if other pages point to it.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Too many pages",
+            "caption": "<b>Fig. 1.</b> Plenty of pages match your words. Most of them are not the one you want.",
+            "media": {
+              "type": "svg",
+              "src": "google-search/lead/pile.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A huge pile of web pages with one tiny gold page buried inside. Below: So many pages, so few good ones."
+            }
+          },
+          {
+            "label": "Links are votes",
+            "caption": "<b>Fig. 2.</b> When many pages point at one page, that page is probably worth a look.",
+            "media": {
+              "type": "svg",
+              "src": "google-search/lead/votes.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Small page circles with arrows pointing at one big circle in the middle. Below: Pages point at the pages they trust."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Computer science / A picture story in four parts",
+      "title": "How a search engine picks what to show",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Too many pages, too few good ones",
+          "provenance": "illustration",
+          "caption": "Imagine a library where new books arrive every minute and nobody sorts the shelves. In 1997, search engines could find pages that held your words, but a lot of what they found was junk. People only look at the first few results, so the best pages had to come first.",
+          "media": {
+            "type": "svg",
+            "src": "google-search/story/01-too-many.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Messy shelves overflowing with pages. Below: shelves that nobody sorted."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "A link is a vote",
+          "provenance": "illustration",
+          "caption": "When one page links to another, it is a little like a vote. A vote from a well-liked page counts for more, and a page that links to many pages splits its vote between them. The paper calls the score <b>PageRank</b>. Pages with votes from many places, or from a few important places, rise to the top.",
+          "media": {
+            "type": "svg",
+            "src": "google-search/story/02-link-is-a-vote.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Arrows from several pages lead to one page. The arrow from the biggest page is the thickest. Below: big votes and small votes."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Walk, file, look up",
+          "provenance": "illustration",
+          "caption": "Think of a librarian. First she walks the web and brings back a copy of every page. Then she writes a giant index, like the one at the back of a book: for each word, which pages have it. When you search, she finds the pages that have all your words and ranks them by how well the words match and how high their PageRank is. The paper's names are <b>crawler</b>, <b>repository</b> and <b>inverted index</b>.",
+          "media": {
+            "type": "svg",
+            "src": "google-search/story/03-walk-file-lookup.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Three boxes in a row joined by arrows: crawl, index, answer. Below: fetch it, file it, look it up."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "A first test, with honest limits",
+          "provenance": "evidence",
+          "caption": "The authors searched for “bill clinton.” Many of their top results were pages from the White House's own site, and none were broken links. They say this is largely because those pages have a high PageRank. They are careful, though: they did not run a full study with users, so this is their own experience, not proof. They also report a working prototype with at least <b>24 million</b> pages. <a href=\"http://infolab.stanford.edu/~backrub/google.html\">See the paper's results section ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "google-search/story/04-first-test.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A short list of search results with a bar beside each. Below: 24 million pages, one first test."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Computer science / Under the hood / A comic in five strips",
+      "title": "How the search engine actually works",
+      "deck": "Read each strip from left to right. We follow one search, from a web of links to a list of results.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. Where a caption names a number or a part such as <b>PageRank</b> or <b>inverted index</b>, those are the paper's own. The paper's numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "The web is a web of friends",
+          "kicker": "How pages link to each other",
+          "provenance": "illustration",
+          "grownUpWords": "hyperlinks, backlinks and the citation (link) graph",
+          "panels": [
+            {
+              "caption": "Picture each web page as a kid at school. A page can <b>point</b> to another page with a link, like saying “go meet my friend.”",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/01a-pages-as-kids.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Four kids standing apart, one pointing to another with an arrow."
+              }
+            },
+            {
+              "caption": "When lots of kids point at the same kid, that kid is probably worth meeting. The authors treated links like citations in a science paper. They built maps with as many as <b>518 million</b> links.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/01b-everybody-points.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Many arrows from small circles all pointing at one big circle."
+              }
+            },
+            {
+              "caption": "But a pointing finger from a famous kid should count <b>more</b> than one from a kid nobody knows. Not every link is worth the same.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/01c-famous-kid.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One thick arrow from a big circle and one thin arrow from a small circle, both pointing at a page."
+              }
+            }
+          ]
+        },
+        {
+          "title": "A popularity vote that keeps updating",
+          "kicker": "How PageRank works",
+          "provenance": "model_design",
+          "grownUpWords": "PageRank, damping factor and the random surfer",
+          "panels": [
+            {
+              "caption": "Every page hands out its score to the pages it links to, shared out equally. In our made-up example, a page with 4 links gives each one a <b>quarter</b> of its vote.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/02a-share-the-vote.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A page with four arrows leaving it, each labelled with a quarter."
+              }
+            },
+            {
+              "caption": "Pages that get votes from high-scoring pages score higher, and then pass on more. The paper says you can find the scores with a simple <b>repeating calculation</b>. Do it again and the votes shift again.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/02b-again-and-again.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two circular arrows around a small group of pages."
+              }
+            },
+            {
+              "caption": "The paper pictures a <b>random surfer</b> who keeps clicking links and sometimes gets bored and jumps to a random page. A setting called the <b>damping factor</b>, <b>d</b>, is usually set to <b>0.85</b>.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/02c-bored-surfer.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tiny surfer clicks from page to page, then jumps to a faraway page."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The librarian who walks the web",
+          "kicker": "How pages are collected",
+          "provenance": "model_design",
+          "grownUpWords": "URLserver, web crawlers, storeserver and repository",
+          "panels": [
+            {
+              "caption": "A <b>web crawler</b> is like a librarian who walks the web and brings back a copy of each page. A helper called the URLserver hands out the list of addresses to visit.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/03a-address-list.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A librarian holding a list of web addresses."
+              }
+            },
+            {
+              "caption": "Google usually ran about <b>3</b> crawlers, each keeping around 300 connections open at once. At its fastest, the paper says it fetched over <b>100 pages a second</b> with four crawlers.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/03b-many-librarians.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three librarians each holding many threads that lead to different web pages."
+              }
+            },
+            {
+              "caption": "A <b>storeserver</b> squeezes each page smaller and files it in the <b>repository</b> with an ID number, a <b>docID</b>. The repository keeps the full page.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/03c-the-shelf.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A page is squeezed, given a number tag, and placed on a shelf."
+              }
+            }
+          ]
+        },
+        {
+          "title": "A book index for the whole web",
+          "kicker": "How words are looked up fast",
+          "provenance": "model_design",
+          "grownUpWords": "hits, the forward index and the inverted index",
+          "panels": [
+            {
+              "caption": "The <b>indexer</b> reads each stored page and writes down every word with where it appeared, roughly how big the letters were, and whether it was capitalized. The paper calls each note a <b>hit</b>.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/04a-write-down-words.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A page with highlighted words and small notes beside each."
+              }
+            },
+            {
+              "caption": "Then the <b>sorter</b> flips the lists. Instead of “this page has these words,” we get “this word is on these pages.” It is like the index at the back of a book. The paper calls it the <b>inverted index</b>.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/04b-flip-it.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A table flipping over, turning page-to-words into word-to-pages."
+              }
+            },
+            {
+              "caption": "Hit lists take up most of the space, so each hit is packed into just <b>two bytes</b>. Words in a title, a web address or in link text get special treatment.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/04c-two-bytes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tiny two-box package labelled hit."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Answering one search",
+          "kicker": "What happens after you press Enter",
+          "provenance": "model_design",
+          "grownUpWords": "query evaluation, doclists and the IR score combined with PageRank",
+          "panels": [
+            {
+              "caption": "You type “bill clinton.” The searcher turns each word into an ID number and looks up each word's list of pages in the inverted index.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/05a-type-words.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A search box with two words and two page lists coming out."
+              }
+            },
+            {
+              "caption": "It scans the lists for pages that have <b>all</b> your words. Each match gets a score from where the words appear (title, link text, large letters, close together) combined with the page's <b>PageRank</b>.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/05b-find-and-score.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three pages each with a score bar made of two parts."
+              }
+            },
+            {
+              "caption": "The best-scoring pages are shown first. In the paper, most searches took <b>1 to 10 seconds</b>, mostly waiting on disks. Repeating “al gore” took just <b>0.06 seconds</b> once data was cached.",
+              "media": {
+                "type": "svg",
+                "src": "google-search/comic/05c-top-results.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A ranked results list with a stopwatch beside it."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "24 million",
+          "claim": "measured_result",
+          "text": "web pages in the prototype's full-text and link database. The authors say it had “at least” that many.",
+          "source": {
+            "label": "Paper, Abstract and §5.1 Table 1",
+            "url": "http://infolab.stanford.edu/~backrub/google.html"
+          },
+          "media": {
+            "type": "svg",
+            "src": "google-search/facts/pages.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "518 million",
+          "claim": "measured_result",
+          "text": "links in the maps the authors built to work out PageRank (“as many as”). PageRank is the score from the link vote.",
+          "source": {
+            "label": "Paper §2.1 (PageRank)",
+            "url": "http://infolab.stanford.edu/~backrub/google.html#pr"
+          },
+          "media": {
+            "type": "svg",
+            "src": "google-search/facts/links.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "0.85",
+          "claim": "model_design",
+          "text": "is the usual setting of the damping factor, d, in the PageRank formula.",
+          "source": {
+            "label": "Paper §2.1.1 (PageRank)",
+            "url": "http://infolab.stanford.edu/~backrub/google.html#pr"
+          },
+          "media": {
+            "type": "svg",
+            "src": "google-search/facts/damping.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "2 bytes",
+          "claim": "model_design",
+          "text": "hold one hit: a word's position, letter size and capitalization. Hit lists take up most of the index's space.",
+          "source": {
+            "label": "Paper §4.2.5 (Hit lists)",
+            "url": "http://infolab.stanford.edu/~backrub/google.html#hits"
+          },
+          "media": {
+            "type": "svg",
+            "src": "google-search/facts/bytes.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "147.8 → 53.5 GB",
+          "claim": "measured_result",
+          "text": "The fetched pages added up to 147.8 GB. Squeezed and stored in the repository, they took 53.5 GB.",
+          "source": {
+            "label": "Paper §5.1 Table 1",
+            "url": "http://infolab.stanford.edu/~backrub/google.html"
+          },
+          "media": {
+            "type": "svg",
+            "src": "google-search/facts/storage.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "1–10 seconds",
+          "claim": "measured_result",
+          "text": "was how long most searches took in the prototype. The paper says disk reading was most of that time.",
+          "source": {
+            "label": "Paper §5.3 (Search performance)",
+            "url": "http://infolab.stanford.edu/~backrub/google.html"
+          },
+          "media": {
+            "type": "svg",
+            "src": "google-search/facts/seconds.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

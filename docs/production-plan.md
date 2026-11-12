@@ -1,195 +1,71 @@
 # Production plan
 
-Where The Geeky Times stands, what a review of the code found, and every step left before a public launch.
-Written 2026-11-04 on `feature/convert-scaling-paper`. Keep it current: tick items as they land and move findings into
-"Fixed" when they are resolved. Background: `AGENTS.md`, `docs/decisions.md`, `docs/roadmap.md`.
+Current launch sequence for The Geeky Times. Updated 2026-11-11 to make the owner's V1 merge bar explicit. `docs/STATE.md` is the current implementation snapshot; this file is the authoritative order of remaining work. Decisions live in `docs/decisions.md`.
 
-## 1. Review (2026-11-04)
+## V1 definition
 
-Scope: everything on `main` plus this branch (the second story, the convert-paper runbook, approved tags, the key
-decision). Checked by reading the code and by running the site at 1440px and 375px.
+V1 means the owner can use the site to read and explore personally curated stories, with Supabase as the source of truth for all story and editorial data and Supabase Storage serving story media. Git-tracked `data/seed/*.json` remains an import/backup source only; the frontend must not fetch or import it. No sample, demo, mockup, unverified, or placeholder records, copy, or art may be presented as real content. Hide a section or show an honest empty state until real sourced content exists. Original teaching illustrations may use invented numbers only when clearly stamped `Illustration · numbers invented`, per the product's trust model.
 
-### Bugs to fix first
+Prerendered HTML currently embeds a JSON snapshot built from Supabase to hydrate the first paint. This is a generated bootstrap/cache, not a seed-file read or source of truth. After startup, Supabase view reads are authoritative. Keep this unless the owner explicitly requires every first paint to make a live request.
 
-None open. B1–B4 are resolved (see "Fixed" at the end); the Codex review's small fixes are under "Fix now" in section 3.
+## V1 merge gate — complete before merging `v1` into `main`
 
-### Gaps against our own rules
+| Gate | Status | Acceptance evidence |
+|---|---|---|
+| Frontend story/editorial data comes only from Supabase views; seed JSON is not imported/fetched by browser code | **Implemented; re-audit** | Source audit or a small guard confirms no runtime file-backed loader; browser network shows Supabase reads and no local JSON data requests. |
+| No fabricated/sample/placeholder content is visible | **Pending audit and cleanup** | Audit every route in local and live modes. No sample stories/companies/issues, demo graph nodes or unverified relations, placeholder art, fake dates, disabled newsletter signup, "Out next Friday", or `[Company name]`/`[year]` copy. Hide unsupported modules or show a truthful empty state. Genuine preview drafts may appear only in the local preview mode. Explicitly stamped teaching illustrations remain allowed. |
+| Cloud media | **Uploaded and locally verified; deployed verification pending** | 174 live assets uploaded to the public `story-media` bucket; `media:verify` found 174/174 present with `Access-Control-Allow-Origin: *`; `site_settings.media_base_url` points to Storage. All seven story routes requested their expected Storage objects at 1280px and 375px with zero failures, errors, or overflow. Confirm again on the deployed Vercel site. |
+| Keep media backup out of runtime | **Moved to `backups/media/`; build exclusion verified locally** | Recovery copy stays tracked in Git but is outside `public/`, so Vite does not serve/copy it. `npm run build` output contains no media or backup directory; `media:verify` passes against 174/174 objects, and upload dry-run inventories the backup. Confirm no frontend import or URL points there in the final source audit. The media upload tool reads this folder for recovery uploads. Keep `data/seed/` in Git as the editorial import/recovery copy; the app must not read it. |
+| Database/schema acceptance on the V1 project | **Needs recorded verification** | Migrations are applied in order; intended live stories are present; public views expose only live/non-sample content; no orphan or unintended anon-readable rows. Never print secrets. |
+| Publish-to-read flow without a site rebuild | **Implemented by design; verify end to end** | Publish/approve one story using the normal workflow; after reload it appears in home and search and its direct URL loads, without a code change or site rebuild. Preview remains hidden from the live deployment. |
+| Backup and restore | **Pending** | Export cloud data and media, restore into a clean non-production target, and reconcile restored records/assets against the Git seed. Do not run destructive restore steps against the owner's live project. |
+| Deployment configuration | **Needs verification** | Vercel has the correct Supabase URL and publishable key, builds and deep-link fallback work, and a preview deploy can read live data and cloud media. Vercel currently tracks `main`; do not change that or deploy to production as part of this gate without the owner's direction. |
+| Accessibility fixes from the page sweep | **Pending** | Home/feed/search have one `<h1>`; issue/company card heading levels are sequential; mobile header, pause, and issue TOC controls meet the 44px target without a visible layout redesign. |
+| Repository and documentation cleanup | **Pending final audit** | Inventory plans, handoffs, docs, scripts, assets, and config. Keep canonical instructions/status (`AGENTS.md`, `STATE.md`, this plan), decisions, schema docs, conversion/fact-check runbooks, migrations, and Git backups (`data/seed/`, `backups/media/`). Remove only superseded duplicate plans, stale/generated files, dead scripts, and unused sample/placeholder assets after confirming no code or workflow references them. Update surviving docs to current Supabase/Storage paths and mark historical handoffs as historical; do not erase decision or fact-check evidence. `rg`/build should show no stale runtime paths or references to removed files. |
+| Final release checks | **Pending for merge** | `npx tsc -b`, `npm run lint`, `npm run build`, `npm run prerender`, `npm run check:prerender`, `npm run check:hydration`; route smoke check at 1280px and 375px with no console errors or horizontal overflow. |
+| Documentation matches the shipped behavior | **This update in progress** | `STATE.md`, this plan, and the Claude handoff agree on runtime source, media, backup, deployment, and intentional gaps. |
 
-- **Unverified graph shown to readers.** The roadmap said the family tree and map ship with *verified* relations only.
-  They are built and labelled "to be fact-checked", but every link is still unreviewed.
-- **Sample content would ship.** Eleven sample stories, sample companies, sample issues and placeholders such as
-  `[Company name]` and `[publish date]` render on the live pages. Fine for design review; not for launch.
-- **Data-model diagram is stale.** Board 6 on the canvas still shows `id` where decision 30 says `key`.
-- **New tags have no hierarchy.** The 24 new tags dropped their cross-facet parents, so "Biophysics" isn't grouped under
-  anything yet.
-- **`hook` is unused.** Both stories carry a cover hook that no page shows.
+Do not merge to `main` until the gates above have evidence and the owner chooses to release. Work stays on `v1`; no feature branch and no direct write to `main`.
 
-### Engineering risks
+## Merge sequence
 
-- **No tests and no CI.** Only `npm run data`, `tsc`, `oxlint` and `vite build`, run by hand. Nothing stops a broken
-  push from merging.
-- **No share previews.** It is a client-rendered SPA with one generic `<title>` and no Open Graph tags. Links shared
-  on social apps show no headline or picture, which hurts the virality goal most.
-- **Hosting fallback.** Paths like `/papers/<slug>` need the host to serve `index.html`. Not configured anywhere yet.
-- **Every page loads the whole archive** (site, tags, search index, library). Fine at 2 papers, slow at hundreds.
-- **Media from another host.** SVGs are fetched and inlined; a CDN must send CORS headers or the art falls back to
-  `<img>` and stops being pausable.
-- **Dead code.** The `front.ts` file name no longer matches what it holds (the feed order). The old bento CSS is gone.
-- **Accessibility unverified.** Built to the rules (labels, focus rings, list view for the map), but never run through
-  a screen reader or an automated checker. Focus outlines on SVG map nodes may not show in every browser.
+1. Complete the no-fabrication content audit; hide or remove unsupported sample, placeholder, and unverified content from every route.
+2. Finish media checks: prove browser requests use Storage, `backups/media/` is excluded from runtime output, conversion publishing uploads staged art, and recovery copies remain intact.
+3. Record database/schema/RLS acceptance and prove publish → home/search/story works without a rebuild; complete a non-production data restore and reconcile it against `data/seed/`.
+4. Finish repository cleanup from the gate above. Remove obsolete docs/assets/scripts only after checking references; preserve canonical docs, decision history, fact-checks, migrations, seeds, and media backups.
+5. Verify Vercel preview configuration, build, deep links, Supabase reads, and Storage media. Do not switch production from `main` as part of this step.
+6. Close the listed accessibility findings, then run all release gates and the 1280px/375px route sweep. Reconcile `STATE.md`, this plan, and `AGENTS.md` with the evidence.
+7. Present the evidence and remaining limitations to the owner. The owner decides whether and when to merge `v1` into `main`.
 
-### What is solid, and what is only intended
+## Implemented foundations
 
-- Content is data: stories, library, tags and media paths are JSON. The build checks tags, hooks and library references.
-  It does **not** yet check the trust rules (fact claim kind, sources, anchors, alt text, duplicate ids).
-- Trust labels are right on the front page and comic strips. **Not yet** on story fact cards, the feed or evidence chapters,
-  which are the first thing to fix (section 3, "Fix now").
-- Two real stories from different fields prove the model isn't AI-only.
-- Tool-neutral knowledge (`AGENTS.md`, `docs/`, `skills/`) lets any model resume the work.
-- No horizontal overflow at 375px on every page checked.
+- **Supabase-only runtime (decision 51):** frontend reads site settings, vocabulary, live story documents, library entries, moments, search inputs, and editorial collections from public Supabase views. File mode and `public/data/` runtime reads are removed.
+- **Dynamic discovery:** home feed and search are derived from live story/moment rows. Newly published stories are included on the next page load; no app rebuild is required for the client data path.
+- **Preview/live workflow (decision 52):** preview stories use preview views in local development; the live site reads live views. CLI tools support status and approval.
+- **Normalized schema and importer (decision 49):** SQL migrations, public views/RLS, and transactional publishing with extracted rows are implemented. The target-project acceptance evidence still needs to be recorded.
+- **Prerender/hydration:** routes are enumerated from Supabase at build time; HTML embeds a Supabase-generated initial snapshot and hydrates via `hydrateRoot`. This improves initial rendering but means the first HTML is a build-time copy until the client refreshes from Supabase.
+- **Conversion workflow:** provider-neutral conversion and fact-check tooling exist; data changes are published to Supabase through the import workflow.
+- **Page coverage:** home, stories, issues, companies, map, feed and search are implemented. The current sweep checked 17 route variants at 1280px and 375px without runtime errors or horizontal overflow.
 
-## 2. Achieved
+## Remaining work after the merge gate
 
-**Product and design**
-- [x] Name: The Geeky Times. Newspaper look, cartoon illustrations, kid-level language.
-- [x] Design canvas with front page options A–D (D chosen), issue, story, company, map and data-model boards; Codex
-      review applied (revision 2); calmer covers, section heads and shadow-free tiles (revisions 3–5).
-- [x] Canvas-before-code and ask-before-branching rules recorded in `AGENTS.md`.
+These are useful, but are not required for the owner's personal-use V1 unless they become a blocker during use:
 
-**Site (React + TypeScript + Vite)**
-- [x] Front page D: lead, aside, and Keep exploring (more from the issue, snacks, topics, real world, numbers,
-      storylines, vault and on this day, back issues, newsletter placeholder).
-- [x] Story pages with five tabs, picture story, comic strips, evidence cards, family tree and tag shelf.
-- [x] Issue, company and map pages (with list view), swipe feed, search with stemming and tag filters.
-- [x] Path URLs (`/papers/<slug>`, `/issues`, `/companies`, `/map`); old `?paper=` links redirect.
-- [x] Same navigation on every page; reduced motion and a pause switch for animations.
+- Build real, sourced family-tree/map relationships. Until then, hide demo nodes and unverified links or show a truthful empty state; do not expose mockup data in V1.
+- Add more real stories and company posts; short lists are expected until then.
+- Curate an anniversary for On This Day; the tile is intentionally hidden while no sourced entry exists.
+- Add new original illustrations for stories when ready. A real story may use a truthful text-only/empty-art treatment; grey placeholder plates are not allowed in V1.
+- Make `/issues` and `/companies` proper archive pages or redirect them to canonical detail routes; current index routes can duplicate their first detail page.
+- Add the dev-only admin page, stronger automated test suite, CI, and automated/manual accessibility sweep beyond the focused fixes above.
+- Add social share cards, sitemap/structured metadata, newsletter, custom domain, analytics, legal pages, and public-launch operations.
 
-**Content and data**
-- [x] Story 1: "One word, two worlds" (Attention Is All You Need, peer-reviewed).
-- [x] Story 2: "Why a bigger deer breaks" (arXiv 2408.04070, preprint), with a fact-check record.
-- [x] 83-tag vocabulary; `library.json` editorial layer; build-time validation of every reference.
-- [x] Claim kinds on facts, and a model-design stamp.
+## Non-goals for this V1
 
-**Process**
-- [x] `skills/convert-paper` runbook plus explain, fact-check, tag, draw and publish skills.
-- [x] Database plan: content model v2, Postgres auto-increment ids, slugs as public keys, no foreign key constraints.
-      Hosting decided: Supabase (decision 34).
+- Moving the story seed out of Git. The seed is the recovery/import artifact, not a frontend data source.
+- Replacing the initial prerender snapshot with a blank screen while data loads. The snapshot is generated from the cloud database; client Supabase reads remain authoritative after startup.
+- Inventing graph evidence to make the map look complete. Demo graph data must be hidden; a warning badge does not make fabricated records acceptable for V1.
+- Merging or deploying to `main` without the owner's release decision.
 
-## 3. Remaining steps to production
+## Prior plan items superseded by the current architecture
 
-Each phase ends in something the owner can see and approve. Phases 1–2 can overlap; 3 needs 2; 5 needs everything.
-
-### Fix now (from the Codex review; small, before Phase 1)
-
-- [ ] One shared claim label on story fact cards, the feed and evidence chapters, with source trust carried into the data.
-- [ ] Unique React keys (front-page snacks across papers; map filter buttons).
-- [~] Family tree: kept as demo content by the owner's decision. The current nodes and links are placeholders for layout review; don't invent or reshuffle them. The real build lands with Phase 2 (verified relations). See `src/components/FamilyTree.tsx` banner and `docs/STATE.md` "Known gaps kept on purpose".
-- [ ] "Swipe this issue": filter the feed to the edition, or reword it.
-
-### Phase 0: Clean up what exists (small, do next)
-
-- [x] Fix B1–B4 (B1 disappeared with the edition redesign; B4 approved on the canvas).
-- [ ] Add parents for the new tags inside their own facets (for example `area/biophysics` under a new `area/physics`).
-- [ ] Redraw the data-model board for decision 30.
-- [~] Dead CSS removed (old bento tiles, hooked cover). Still to do: rename `front.ts` to what it holds (feed order).
-- [x] `docs/roadmap.md` now points here: this file is the only maintained launch sequence.
-- [ ] Redraw the data-model board again for decisions 34–37.
-
-### Phase 1: Rendering + preview path
-
-- [ ] **Rendering decision and spike (decision 36):** choose static generation, edge prerendering or server rendering, and ship one
-      prerendered story with its share preview, before any platform API work.
-- [ ] Preview deploy per pull request so the owner can review on a real URL.
-
-> **Automated tests, CI and axe checks are deferred to the pre-launch gate (decision 39).** They aren't in Phase 1 while
-> the app is pre-v1 (still showing demo tiles and reading JSON files) because they slow iteration. See the
-> "Pre-launch hardening" section below, which runs right before Phase 5.
-
-### Phase 2: Real content to replace samples
-
-- [ ] One real company engineering post (tests company-reported labels and the company page).
-- [ ] Three to five more papers across fields, through `skills/convert-paper`, so every front-page section has real
-      stories.
-- [ ] Verify family-tree and map relations with citations (`RelationEvidence`); hide unverified links from readers.
-- [ ] Real edition metadata: publish dates and at least two real past editions (no editor's note).
-- [ ] A switch that hides everything marked `sample` in production builds; remove all `[placeholder]` text.
-
-### Phase 3: Platform
-
-- [ ] Content model v2 and migration (`docs/data-model.md`).
-- [ ] **Supabase** projects: local, staging and production (decision 34). Schema per decision 30 as SQL migrations in
-      `supabase/migrations/`, applied with the Supabase CLI. Keys only in environment variables.
-- [x] Foreign keys: decided, none (decision 38). Tables join on `<thing>_id` primary-key columns; every `_id` column is indexed;
-      nested reads use SQL views, database functions or server code, not the auto-generated REST embedding.
-- [ ] Prerequisite schema before any row-level security: relation `status` with evidence, and immutable published versions
-      that own their derived rows (`published_version_id`).
-- [ ] Row-level security and a paged runtime API: **only when a runtime feature needs them** (decision 36). Not on the launch
-      path, which is static pages.
-- [ ] Import job from JSON into Supabase with the integrity checks, **required** because there are no foreign keys (decision 38):
-      transactional publish, unique, check and not-null constraints, an orphan check before every publish, orphan monitoring
-      with alerts, and tests that every import and export reference remaps.
-- [ ] Media on a CDN with CORS (Supabase Storage or S3: decide); set `mediaBaseUrl` per environment.
-
-**Backup deliverables (decisions 35 and 37)**, each with an owner and cadence:
-
-| Deliverable | What it is | Owner | When |
-|---|---|---|---|
-| Seed | `npm run seed`: files in git → empty Supabase, idempotent, upserts by slug or key | Claude / owner | on demand |
-| Export and reconciliation | `npm run export`: database changes → files; fails on lost or divergent changes | Claude, committed by owner | before every release and weekly |
-| Database dump | A native dump (may contain numeric ids) | owner | weekly |
-| Off-repo laptop copy | `npm run backup`: data, media and the dump in a dated folder, no keys | owner | weekly |
-| Restore drill | Seed an empty local Supabase, export again, diff against the files, check key relationships | Claude | before launch and each quarter |
-| Environments and secrets | Separate local, staging and production projects; keys in environment variables; recovery procedure for a paused project | owner | before staging goes live |
-
-- [ ] Converter and editorial review queue (papers and blogs, `FeedEntry` states, tag and relation review).
-- [ ] Router library and route-level code splitting.
-
-### Phase 4: Reach and virality
-
-- [ ] Per-page titles, descriptions and Open Graph / Twitter cards with the story's lead art, built on the rendering choice
-      made in Phase 1.
-- [ ] Share buttons on stories and snacks that produce those previews.
-- [ ] Sitemap, `robots.txt`, canonical URLs, structured data for articles.
-- [ ] Mobile design pass on the canvas, then build it.
-- [ ] Use the cover `hook` somewhere approved on the canvas, or remove it.
-- [ ] Newsletter with a real provider, double opt-in and unsubscribe.
-
-### Phase 4.5: Pre-launch hardening (gate before Phase 5)
-
-Runs once v1 is reached: every page reads from Supabase through the static-build path, no `sample` content ships, and the app is
-ready to host. These were originally in Phase 1 and were moved here by decision 39 so they don't slow pre-v1 iteration.
-
-- [ ] Unit tests (Vitest) for the library helpers, search, routes and the data validator.
-- [ ] End-to-end smoke tests (Playwright): every route loads at 1440px and 375px with no console errors and no
-      horizontal scroll; old links redirect.
-- [ ] Automated accessibility checks (axe) on every page, plus one manual screen-reader pass.
-- [ ] CI on every pull request: data check, typecheck, lint, tests, build. Block merging on failure.
-- [ ] When the policy migration exists: row-level security policy tests (only if a runtime feature needs RLS).
-
-### Phase 5: Launch readiness
-
-- [ ] Hosting with the SPA fallback, HTTPS, a custom domain, and security headers (CSP that allows inlined SVG styles).
-- [ ] Error tracking, privacy-friendly analytics, uptime checks.
-- [ ] Performance budget: fast first load on a mid-range phone; lazy-load below-the-fold art.
-- [ ] Legal: trademark check for the name, privacy policy, terms, cookie consent if analytics need it, and a
-      per-source copyright check (we use our own words and drawings; record each paper's licence).
-- [ ] Editorial: a corrections policy, a contact address, and an "About how we label claims" page.
-- [ ] Final review on the canvas and a launch checklist sign-off by the owner.
-
-## 4. Known gaps kept on purpose until launch
-
-These are visual-prototype scaffolding, not defects: unverified relations visible on the family tree and map, hard-coded
-sample wording on company pages ("Sample page", `[year]`), "Out next Friday" with no schedule data, and all sample
-stories, issues and companies. Each becomes a launch gate in Phase 2.
-
-## 5. Decisions waiting on the owner
-
-- Media host: Supabase Storage or S3 behind a CDN (CORS needed either way).
-- Which Supabase project is production editorial state, and when the project counts as operationally critical (decision 37).
-
-## Fixed
-
-- B1 "this week" on every back issue: the back-issues row was replaced by one "This week's edition" band (decision 32).
-- B2 wrong "Next" link on edition pages: it now links to the real next edition, and only the newest edition says "Out next Friday".
-- B4 hard ink shadows on story pages, the search box and snack art: replaced by the same hairline outlines as the tiles (canvas option A, approved). Dead bento and hooked-cover CSS removed at the same time.
-- B3 latest, previous and next depended on file order: they now come from volume and issue number (`issuesInOrder` in `src/lib/library.ts`).
+The old Phase 3a/3b checklists and the JSON-backed runtime plan are historical. They are superseded by decisions 49–53 and the V1 merge gate above. In particular, do not restart work on `VITE_DATA_SOURCE`, a file-backed frontend loader, `public/data/*.json` runtime reads, or the old story-only Supabase slice. `docs/STATE.md` records the current table/view map and known content gaps.

@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { MediaView } from '../components/MediaView';
 import { MotionGroup } from '../components/motion';
+import { ClaimStamp } from '../components/common';
 import { appUrl, mediaBaseFor, type Archive } from '../data/load';
-import { feedItems } from '../lib/front';
+import { feedItems } from '../lib/feed';
+import { claimOf, sourceKindOf } from '../lib/claimLabel';
 import { MediaBaseContext } from '../lib/mediaBase';
 import { appHref, homeHref, paperHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
@@ -26,7 +28,7 @@ function ShareButton({ title, href }: { title: string; href: string }) {
 }
 
 export function FeedPage({ archive }: { archive: Archive }) {
-  const { site, index } = archive;
+  const { site, index, library } = archive;
   const items = useMemo(() => feedItems(index), [index]);
   const [current, setCurrent] = useState(0);
   const scroller = useRef<HTMLDivElement>(null);
@@ -47,7 +49,8 @@ export function FeedPage({ archive }: { archive: Archive }) {
   return (
     <MediaBaseContext.Provider value={mediaBaseFor(site)}>
       <MotionGroup>
-        <div className="feed">
+        <main className="feed" tabIndex={-1}>
+          <h1 className="sr-only">{`${site.name} — Snacks`}</h1>
           <header className="feed-bar">
             <a href={homeHref()} className="feed-brand">{site.name}</a>
             <span className="feed-count">{Math.min(current + 1, items.length)} / {items.length}</span>
@@ -76,7 +79,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
                 <article className={`feed-card moment-${moment.kind}`} key={moment.id + paper.slug} data-index={i}>
                   <span className="label">
                     {moment.kicker} &nbsp;/&nbsp; {paper.cover.headline.text} {paper.cover.headline.accent}
-                    {moment.provenance === 'evidence' && <span className="stamp stamp-evidence">Real result</span>}
+                    <ClaimStamp claim={moment.claim ?? claimOf(moment.provenance)} trust={moment.trust} source={sourceKindOf(library, paper.slug)} />
                   </span>
                   {moment.kind === 'fact' ? (
                     <div className="feed-fact"><b>{moment.figure}</b>{moment.media && <MediaView media={moment.media} />}</div>
@@ -94,14 +97,14 @@ export function FeedPage({ archive }: { archive: Archive }) {
             })}
             <article className="feed-card feed-end" data-index={items.length}>
               <h2>You’re all caught up</h2>
-              <p>New stories are on the way. Until then, dig into the archive.</p>
+              <p>There are no more snacks right now. Browse the archive for every story.</p>
               <div className="feed-actions">
                 <a className="feed-btn feed-btn-main" href={homeHref()}>Front page</a>
                 <a className="feed-btn" href={searchHref()}>Search</a>
               </div>
             </article>
           </div>
-        </div>
+        </main>
       </MotionGroup>
     </MediaBaseContext.Provider>
   );

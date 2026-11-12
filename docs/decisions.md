@@ -297,3 +297,151 @@ supersedes them. Format: **what**, then **why**. Dates are when the decision was
       unit tests, smoke tests, axe, CI blocking merges, and RLS policy tests if RLS has landed.
     - **Rendering decision and preview deploys stay in Phase 1,** because the rendering choice shapes everything downstream
       (OG cards, hosting, Phase 3 import job) and preview deploys speed up — rather than slow down — review.
+
+40. **One long-lived `v1` branch, no PR per change.** (The owner's call.)
+    - All day-to-day work commits to `v1` and is pushed there. No per-topic feature branches, no PR per change: the review and
+      merge overhead was slowing the pre-v1 iteration more than it was catching mistakes. `main` stays protected: never commit
+      or push to it. The owner merges `v1` into `main` when they want to release.
+    - Agents stop running `git switch -c feature/...` and stop asking for a branch name, unless the owner explicitly asks for
+      another branch for an experiment or a risky change.
+    - This is a pre-v1 choice. When v1 is reached (DB-backed, no `sample` content, hosted), the pre-launch gate (Phase 4.5)
+      lands, and from the first production release onward we go back to per-feature branches and PRs with CI as that gate.
+
+40 added above; continuing on 2026-11-05.
+
+41. **Rendering: static generation (SSG) by a prerender step after `vite build`; Next.js migration later.** (The owner's call.)
+    - Pre-v1: a prerender script (`npm run prerender`) run after `npm run build` visits every known route with a
+      headless browser and writes the rendered HTML into `dist/<route>/index.html`. It is NOT chained into `npm run
+      build` yet; the Vercel build wiring is a separate deferred item. The React SPA hydrates on top. Smallest change
+      to the current Vite + React 19 stack; validates the SSG path (decision 36) end to end.
+    - Pages must carry per-page `<title>`, meta description and Open Graph / Twitter tags so the SEO and share-preview
+      goals (Phase 4) are met on the prerendered HTML.
+    - Long term: migrate to Next.js once the spike validates traffic and we want file-based routing, ISR and the
+      framework's built-in SEO tooling. The spike's route-list script carries over as the migration's smoke test.
+
+42. **Publish is atomic per story version.** (From the 2026-11-05 Codex review; refines decision 38.)
+    - **The unit:** one `PublishedVersion` together with every derived row it owns — the extracted `Moment`, `Fact`,
+      `StoryTag` rows, and any `Relation` / `RelationEvidence` rows added or changed by this version. Media and
+      source records are referenced, not re-owned.
+    - **Staging and promote:** import writes the version document and its derived rows to staging keyed by
+      `published_version_id`. The orphan check runs across the staging rows (every `_id` resolves to a non-retired
+      row, no duplicate `Moment.key` within the version, every media and source reference resolves, every tag is
+      approved). Promotion then flips `PublishedVersion.status` to `live` and updates `Story.liveVersion` inside one
+      transaction.
+    - **Failure:** staging rows are discarded; the previous live `PublishedVersion` stays authoritative; the owner
+      sees a reconciliation diff.
+    - **Reference remap on import:** references come across as `slug` or `key`, never numeric id (decisions 35 and 37).
+      The import step resolves them to the new ids on this database. Remap is tested as part of decision 38's required
+      controls.
+    - Full shape in `docs/data-model.md` → "Publish and import atomicity".
+
+43. **Claim and trust travel with moments; one shared renderer for every claim label.** (From the 2026-11-05 Codex label-correctness review; builds on decision 18 and decision 42.)
+    - `scripts/build-index.ts` no longer hard-codes `provenance: 'evidence'` on fact moments. Each `Moment` now carries
+      `claim: ClaimKind` (illustration | model_design | measured_result) and `trust?: 'peer_reviewed' | 'preprint' |
+      'company_reported'`, both read from the story's data. Old clients ignore the new optional fields, so
+      `schemaVersion` stays at 1.
+    - `src/lib/claimLabel.ts` is the single source of wording: `claimLabel(claim, trust, sourceKind)` returns
+      "Illustration · numbers invented", "From the paper · model design" / "From the post · model design · company-reported",
+      or "Measured result · <trust>". `ClaimStamp` in `src/components/common.tsx` renders it, reading the source's kind
+      from `SourceKindContext` (provided by the story page).
+    - This replaces the inlined `CLAIM_LABEL` constants and the `trustLabel(...).split(' ')[0].toLowerCase()`
+      lookups that had crept into `HomePage.tsx`; feed, front-page snacks, front-page number cards and story facts
+      all now read the same rules. "Company-reported" describes the SOURCE, never a model design turned into a
+      measurement.
+
+44. **Every sourced claim carries source trust; illustrations stay bare.** (From the 2026-11-05 Codex label closeout; tightens decision 43.)
+    - Trust describes the source's publication status; claim kind describes the assertion. They are independent, and
+      both appear on every sourced claim. The shared `claimLabel` now renders:
+      - `illustration` → `Illustration · numbers invented` (no source, no trust).
+      - `model_design` + paper + trust → `From the paper · model design · peer-reviewed` (or · preprint).
+      - `model_design` + blog + trust → `From the post · model design · company-reported`.
+      - `measured_result` + trust → `Measured result · <trust>`.
+    - Every fact now requires an explicit `claim` on its JSON row; `scripts/build-index.ts` rejects a missing claim
+      with a per-fact error. The old silent fallback ("sourced with no claim = model_design") is gone; it had let
+      the feed label a fact "From the paper · model design" while the story-page `FactsBlock` rendered no stamp.
+    - "Company-reported" names the source. It does NOT mean the company measured something itself; a company-reported
+      claim may still be design, a worked example, or a measurement, depending on the fact's `claim` kind.
+
+45. **Correction to 41: the SPA replaces the prerendered DOM; it does not hydrate.** (Supersedes one sentence of 41 only.)
+    - Entry 41 says "The React SPA hydrates on top" of the prerendered HTML. That is wrong. `src/main.tsx` calls
+      `createRoot(...).render(...)`, not `hydrateRoot`, so on mount React clears the prerendered markup and renders the
+      page again. The rest of 41 stands as written.
+    - Consequences: crawlers index the prerendered HTML. Readers see that HTML until the script runs, then React replaces
+      it, which can show a flash. The production plan already lists this under deferred client hydration.
+    - Proper hydration (`hydrateRoot`, with the data embedded so the existing markup can be reused) stays deferred to a
+      later batch (`docs/production-plan.md`, Phase 1).
+    - *Why a new entry and not a note inside 41:* the log is append-only, so the original wording stays on record and this
+      entry says what changed.
+
+46. **Story documents bump to `schemaVersion: 2`.** (Required by decision 44 making `Fact.claim` mandatory.)
+    - `src/types.ts` exports `STORY_SCHEMA_VERSION = 2`; `StoryDocBase.schemaVersion: typeof STORY_SCHEMA_VERSION`.
+    - `src/data/load.ts` rejects any story document at another version with a clear error:
+      `"story <slug> is at schemaVersion 1; required version is 2. Migrate the file to schemaVersion 2 (every fact needs a claim) or re-export it from the editor."`
+    - The three real stories (`attention-is-all-you-need`, `size-shapes-life`, `h3-hexagons`) were migrated one-line (every fact already carried an explicit `claim`).
+    - Site, tags, library and search-index versions stay at 1 — their contracts did not break.
+
+47. **Comic claim stamps: single-stamp model with reclassify + rewrite.** (From the 2026-11-05 Codex comic audit; closes the open content-model question raised in Phase 2.)
+    - A comic strip carries one `provenance` stamp. When a strip's drawing is schematic (illustration) but one or more of its panels state a claim lifted from the source, the strip's provenance moves to `model_design` and the panel captions explicitly name the source ("the post says …", "the paper's name for this is …"). The drawing stays schematic; the caption carries the honesty.
+    - A strip reclassifies to `model_design` only once a fact-check row records every claim it names. Without the row, the strip stays `illustration` AND the attributing wording is removed from the caption, so the comic never attributes an unrecorded claim to the source.
+    - **Rejected: per-panel provenance.** It would give exact labels but requires a content-model change (types + validator + `ComicBlock` renderer + every story file + search-index moments). After rewriting every strip across the three real stories, no strip needs it.
+    - Applied in this batch: H3 strips 1 and 2 reclassified to `model_design` with the caption-attribution rewrite; strip 3 stays `illustration` with the attribution dropped; `coverPanel: 1` on strip 2 so the feed moment shows the "about seven" panel. Size-shapes-life strip 1 ("Chop the cube") and chapter 2 ("Chop a cube") reclassified `model_design → illustration` because the 5× figure is our arithmetic on an invented scale (fact-check record already said so).
+    - **Deferred, blocked on a new fact-check record for `attention-is-all-you-need`:** Transformer strips 4 and 5 carry the paper's own numbers (8 heads, 6 layers) but cannot reclassify yet. New Phase 2 item records this.
+
+48. **Runtime Supabase reads for story documents + live library entries; the rest stays static for now.** (From the 2026-11-05 Codex Supabase runtime brief.)
+    - **What moves to Supabase at runtime:** the story document (`PaperDoc`) and the live library entry fields
+      (`LibraryStory`) for any story that has been published. Readers see a change on the next full page reload,
+      without `npm run build` and without a redeploy. Open-tab live updates and cache invalidation are out of scope.
+    - **What stays static for this batch:** `tags.json`, the `library.json` shell (front-page layout slots, issues,
+      companies, storylines, nodes, relations, map), `search-index.json` (feed, search, home-page moments),
+      prerendered HTML, media files. Each one is called out in STATE.md so no one claims "the site is dynamic."
+    - **Public read contract:** readers hit Supabase with the URL + publishable key only. Two reads:
+      (1) `GET published_version WHERE story_slug = <slug> AND status = 'live'` returns `{document, library_entry}`;
+      (2) `GET published_version WHERE status = 'live'` returns every live `{story_slug, library_entry}` pair, which
+      the home page overlays on `library.json`'s shell before it renders cards.
+    - **RLS is required, not deferred.** Readers have the publishable key in the browser, so row-level security is the
+      only line between them and staging rows. `published_version` has RLS enabled with one SELECT policy
+      (`status = 'live'`). `story` has SELECT allowed to anon; all writes are blocked for anon. Service-role keys
+      stay server-side (seed/publish CLI only); nothing prefixed `VITE_` holds a secret key. This refines decision 34
+      and supersedes the "RLS deferred" line in the production plan.
+    - **Atomic publish (decision 42) in Supabase:** one SQL function `publish_version(version_id)` flips the current
+      live row to `retired`, flips the new row to `live`, and updates `story.live_version_id` in one transaction. The
+      seed/publish CLI (server-side, service-role key) stages a version, runs orphan checks on the staged document,
+      then calls `publish_version`.
+    - **Data-source boundary (`src/data/source.ts`):** a small typed layer in front of `loadEdition`/`loadLibrary` that
+      chooses `file` or `supabase` by `VITE_DATA_SOURCE`. On a Supabase failure the loader surfaces an error — it never
+      silently falls back to JSON. The explicit JSON mode stays for local comparison and the design-review flow.
+    - **Decisions 36 and 41 stand as written.** They described the static build-time path. This entry is the runtime
+      addition on top, not a rewrite. The prerendered HTML continues to carry build-time content until a later batch
+      wires live data into prerender; readers see the live data as soon as React mounts.
+    - **Env vars (names only, never values in git or chat):** `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`,
+      `VITE_DATA_SOURCE` in the browser; `SUPABASE_SERVICE_ROLE_KEY` on the server for the publish CLI. `.env.example`
+      lives in the repo with the names; `.env` is gitignored.
+
+## 2026-11-06
+
+49. **Normalized V1 schema: extracted tables read through views, transactional extraction, one migration path.** (From the Phase 3b schema contract, `docs/handoffs/v1-schema-contract.md`; builds on decisions 30, 34, 38, 42 and 48.)
+    - **Shape.** A published story version stays one immutable `published_version.document` (jsonb, the `PaperDoc`). Its queryable parts move into version-owned tables with `published_version_id`: moments, facts, story tags, citations, media assets and field tags. Editorial data moves into tables too: volumes, issues, companies, storylines, fields, graph nodes, relations with their evidence, and one front-placement row. Every row is keyed by `slug` or `key`. Numeric ids stay internal, and references are plain `<thing>_id` columns with no foreign keys (decisions 30 and 38).
+    - **Transactional extraction.** The importer (`scripts/publish-to-supabase.ts`) writes a `staging` version and all of its extracted rows in one `pg` transaction, runs the orphan audit on them, and then calls `publish_version`. Any failure rolls the whole transaction back, and the previous live version stays authoritative (decision 42).
+    - **Public reads.** Anon reads only through views. Every view keeps `live`, non-sample, approved or verified rows. The raw tables get no anon grant. Two story views (`v_live_story`, `v_live_library_entry`) run as `security_invoker`, because they read only tables anon can already read. The other views run with owner rights, so their WHERE clauses are the gate. The init migration's policies on `story` and `published_version` stay in place, so the browser's current reads keep working until it moves to the views.
+    - **One migration path.** `npm run apply:migration -- <file>` is the record of record. Files are applied in filename order, one transaction each: init, then A, B and D. The Supabase CLI (`db push`) is optional and only for owners who run `supabase link`. Those owners must insert the already-applied versions into `supabase_migrations.schema_migrations` first, or `db push` would try to run them again. The steps are in `supabase/README.md`.
+    - **Still file-backed:** `site.json`, `tags.json` as the seed, `search-index.json`, prerendered HTML, media, and the `library.json` shell for front-page layout, issues, companies and the map. Runtime loaders for the new views are the next batch.
+
+50. **Hydration via `hydrateRoot` with route-specific embedded data, superseding decision 45's `createRoot` choice for prerendered routes.** (From the 2026-11-06 Codex UX brief; fixes the flash from decision 41's prerender + 45's createRoot combination.)
+    - **The rule.** `src/main.tsx` uses `hydrateRoot` for a route that has (a) prerendered HTML in `dist/<route>/index.html` AND (b) a `<script id="__initial_data__" type="application/json">` block for that route, whose `route` matches the current pathname and whose `schemaVersion` matches the compiled one. Any other case — missing snapshot, route mismatch, schema mismatch, or an unprerendered route (`?feed`, `?search`, legacy `?paper=`) — falls back to `createRoot`. This matches [React's hydration guidance](https://react.dev/reference/react-dom/client/hydrateRoot): hydration requires the first render to match the existing markup, so partial-hydration setups are refused.
+    - **What the snapshot is.** The archive and, for a paper page, the edition — the same objects `loadArchive()` / `loadEdition()` return. On a prerendered load the loader reads the snapshot synchronously instead of fetching. The snapshot is for hydration only: it is not a cache that bypasses runtime reads. In Supabase mode the runtime read **still runs after hydration**, and if it comes back different the page updates in place. A failed live read surfaces a visible error, never a silent "old snapshot presented as current."
+    - **Prerender writes the snapshot.** `scripts/prerender.ts` captures the data its headless render used (via a `window.__collect_initial_data__` hook the SPA sets while prerendering) and injects an escaped `<script id="__initial_data__" type="application/json">` into the HTML before saving. JSON is serialized with `</` replaced by `<\/` (per [OWASP JSON-in-HTML guidance](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)) so story text containing `</script>` cannot terminate the block. `U+2028` / `U+2029` are JSON-escaped too.
+    - **Snapshot schema and validation.** The snapshot carries `{ schemaVersion: 1, route: string, archive: Archive, edition?: Edition }`. `scripts/check-prerender.ts` asserts the script exists, parses as JSON, matches the route the HTML was written to, matches the compiled schema version, and does not re-serialize obviously differently (DOM mismatch sentinel values).
+    - **Hydration-mismatch audit.** All 27 prerendered routes go through a mismatch audit: anything whose render depends on `Date.now()`, animation progress, reduced-motion state, viewport state, or in-browser DOM interactions is wrapped in `suppressHydrationWarning` or moved inside `useEffect`. Lists captured in the prerender report.
+    - **Navigation stays with the custom router.** `src/App.tsx` keeps its single `route` state and the switch over `App.routeFor(pathname+search)`. Agent C adds a `popstate` listener and exports a `navigate(url)` that updates `history.pushState` plus the route state, since `pushState` does not fire `popstate` on its own (per [MDN's History API guidance](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)). Modified clicks (⌘/ctrl/shift/alt + click, middle-click, in-page hashes, anchors to other origins, `download`) stay native.
+    - **Measured by filmstrip, not paint count.** Direct-load FCP + a 10-frame screenshot sequence across the prerender → hydration transition and the front → paper transition. Animated SVGs can trigger phantom paints; the honest signal is "what does the reader see." Numbers recorded in the closeout.
+
+53. **Conversion prompts are provider-neutral, and paper/blog classification must be explicit when a URL is ambiguous.**
+    - `scripts/convert/model.ts` isolates model-provider calls; the converter supports Anthropic and OpenAI-compatible endpoints through server-only `.env` settings. Prompts and output contracts do not name a vendor.
+    - arXiv identifiers remain papers by default. A non-arXiv URL remains a blog by default; `--kind paper --trust <level>` is required to convert another paper URL, so the URL is never silently treated as an academic paper.
+    - Provider choice does not change fact-check requirements, tag approval, canvas review, preview status, or the owner’s final publish approval.
+
+54. **Add `journal_published` as a source-trust value for journal papers that were not externally peer-reviewed.**
+    - `peer_reviewed` describes external scientific review; journal publication alone is not enough. Historical accounts report that Einstein’s 1905 Annalen papers were accepted without external peer review ([historical review of peer-review practice](https://www.tandfonline.com/doi/full/10.1080/07373937.2016.1234347)).
+    - `journal_published` labels the source as journal-published without claiming external peer review. Claim kind remains independent (`model_design` or `measured_result`).
+    - The trust value is added to the story model, importer and database checks in migration `20261110120000_journal_published_trust.sql`; the UI says “journal-published · not externally peer-reviewed.”
+

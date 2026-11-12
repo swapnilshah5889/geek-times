@@ -21,12 +21,16 @@ The first story is "Attention Is All You Need" (Vaswani et al., 2017). It's the 
 1. **Kid-level language.** Short sentences and everyday metaphors. Every technical idea also gets its real name
    ("Grown-up words: …").
 2. **Every claim is labelled.** Exactly one of: "Illustration · numbers invented", "From the paper · model design",
-   or "Measured result" plus source trust (peer-reviewed / preprint / company-reported). Real claims link to the
+   or "Measured result" plus source trust (peer-reviewed / preprint / company-reported / journal-published without
+   established external review). Real claims link to the
    exact section. The labels live in the data and are rendered the same way everywhere.
 3. **Fact-check before publishing.** Every evidence number and every `paper`-basis tag is checked against the source.
    See `skills/fact-check/`.
-4. **The UI renders data.** No story is hard-coded in components. Content lives in JSON now and a database later;
-   media lives in files now and a CDN/S3 later.
+4. **The UI renders data.** No story is hard-coded in components. The app reads Supabase views; JSON under `data/seed/`
+   is the Git-tracked editorial backup and input for publish/import commands. The browser never reads the seed. Before V1,
+   all story media moves to Supabase Storage and duplicate runtime copies are removed from `public/`. No sample, demo,
+   mockup, unverified, or placeholder records/copy/art may render in any mode; show an honest empty state instead.
+   Clearly stamped teaching illustrations may use invented numbers, but never count as evidence.
 5. **Original work only.** Write our own explanations and drawings. Never copy a source's text, figures or branding
    (blog posts especially). Short quotes only, with attribution.
 
@@ -35,11 +39,14 @@ The first story is "Attention Is All You Need" (Vaswani et al., 2017). It's the 
 React 19 + TypeScript (strict) + Vite. Node 20.19+ / 22.12+. Python 3 for drawing tools.
 
 ```bash
-npm install
-npm run dev        # runs `npm run data` first, then Vite on :5173
-npm run data       # validate all content + tags, build public/data/search-index.json
-npm run build      # data check + typecheck + production build to dist/
+npm ci
+npm run dev        # Vite on :5173; the app reads Supabase views
+npm run build      # TypeScript + production build to dist/
 npm run lint       # oxlint
+npm run prerender  # render DB-enumerated routes to dist/<route>/index.html (needs build + Supabase env)
+npm run check:prerender
+npm run check:hydration
+npm run convert -- <arXiv-id-or-URL> [--kind paper|blog] [--trust preprint|peer_reviewed|journal_published]
 npm run draw       # regenerate the Attention paper's comic SVGs (tools/draw_attention.py)
 ```
 
@@ -50,26 +57,32 @@ Before you finish any change: run `npm run build` and `npm run lint`. Look at th
 
 ```
 AGENTS.md                 you are here (CLAUDE.md / GEMINI.md just point here)
+.env.example              env variable names (no values); copy to .env (gitignored) and fill locally
 docs/
   decisions.md            every product/tech decision so far, with the reason (read this second)
   product-plan.md         navigation, front page, issues & volumes, graph, blogs, search: the target product
-  data-model.md           current JSON model + target database schema (class diagram)
+  data-model.md           current Postgres model, Git seed/import shape, and runtime read path
   roadmap.md              what's done, what's next, in order
   tagging.md              tag rules
 skills/                   playbooks any agent can follow (open SKILL.md format); start with skills/convert-paper
 design/                   exported mockups (PNG + standalone HTML) and the review brief: design/README.md
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
-public/data/              content: site.json, tags.json, library.json (editorial layer, samples), papers/<slug>.json (search-index.json is generated)
-public/media/<slug>/      standalone animated SVGs (moving to a CDN later)
+data/seed/                Git-tracked editorial backup: site.json, tags.json, library.json, papers/<slug>.json
+backups/media/            Git-tracked media recovery copy; never served by the app
+data/intake/              ignored, resumable conversion checkpoints and drafts
+supabase/                 schema migrations (decisions 34, 48, 49) and README; applied with `npm run apply:migration`
 src/
   types.ts                the content model: the contract between data and UI
   App.tsx                 routes: / (front page D), /papers/<slug>, /issues, /companies, /map, ?feed, ?search
   pages/                  HomePage (bento), PaperPage, FeedPage (swipe), SearchPage
   blocks/                 one component per content block type (lead, story, comic, facts)
   components/             MediaView (svg/image/video), Rich (safe captions), TagShelf, Masthead, motion
-  lib/                    library.ts (stories, issues, graph helpers), routes.ts (all links), front.ts (feed order), tags.ts (search), motion.ts, mediaBase.ts
+  lib/                    library.ts (stories, issues, graph helpers), routes.ts (all links), feed.ts (feed order), tags.ts (search), motion.ts, mediaBase.ts
+  data/                   load.ts and source.ts (Supabase view reads; decision 51), initial-snapshot.ts (prerender hydration)
   styles/edition.css      the newspaper look
-scripts/build-index.ts    content validator + search index builder
+scripts/convert.ts        staged, resumable paper/blog conversion and preview preparation
+scripts/convert/model.ts  provider-neutral, per-stage model routing (Anthropic or OpenAI-compatible)
+scripts/publish-to-supabase.ts  seed + atomic publish for one story (service-role key; decisions 42, 48)
 tools/                    media_kit.py (drawing kit) + draw_attention.py (per-paper drawings)
 ```
 
@@ -81,21 +94,21 @@ tools/                    media_kit.py (drawing kit) + draw_attention.py (per-pa
   constraints; our readable key is `slug` (stories) or `key` (tags, moments). URLs use the slug: `/papers/<slug>`.
 - Stories carry no issue, volume or date of ours (decision 31). Issues and volumes are collections of published stories
   and the only place our dates appear.
-- `public/data/site.json` lists papers. `papers/<slug>.json` = metadata + `summary` + `tags` + ordered `blocks`.
+- `data/seed/site.json` and `data/seed/papers/<slug>.json` are the Git backup and publish inputs; the browser does not read them.
+  Paper JSON = metadata + `summary` + `tags` + ordered `blocks`.
 - Block types: `lead`, `story`, `comic`, `facts` (see `src/types.ts`). Adding one means: a type, a component in
   `src/blocks/`, and a registry entry.
 - Media entry = `{type: svg|image|video, src, width, height, alt}`, with `src` relative to `mediaBaseUrl`.
-- `npm run data` turns each paper into **moments** (comic strips, chapters, facts) for the front page and feed.
-- Tags come from a shared vocabulary (`public/data/tags.json`) with 13 facets, parent tags and aliases.
+- The publisher extracts **moments** (comic strips, chapters, facts) into Supabase rows for the front page, feed and search.
+- Tags come from the shared vocabulary in `data/seed/tags.json` and its Supabase views, with 13 facets, parent tags and aliases.
 
 Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 
 ## Working agreements
 
-- **Git:** never commit or push to `main`. Work on a `feature/<topic>` branch, push it, and open a PR. The owner
-  merges.
-  **Ask the owner before creating a new branch**, and never make several at once or stack branches; by default
-  keep working on the current feature branch.
+- **Git:** commit to the long-lived **`v1`** branch and push. No per-topic feature branches, no PR per change
+  (decision 40). Push often; the owner merges `v1` into `main` when they want to release. Never commit or push
+  directly to `main`. Only create another branch if the owner explicitly asks.
 - **Canvas before code (owner's rule):** show any visual or layout change on the design canvas first, with 1–2
   options, and build it into the app only after the owner picks one. Keep tiles calm: one illustration, real data in a
   line or two, no stacked gimmicks.
@@ -117,21 +130,15 @@ Full details: `docs/data-model.md`, `docs/tagging.md`, `README.md`.
 what's next, and the model-routing default. The paragraphs below are kept for context; `STATE.md` is the
 single source of truth for status.
 
+The app reads story and editorial data from Supabase views (decision 51); there is no file-backed frontend mode.
+`data/seed/*.json` is retained for publish/import and recovery only. The 174 live story assets are served from
+Supabase Storage; Git recovery copies live under `backups/media/`, outside Vite's public directory. The app must not
+read or serve that backup. See `docs/STATE.md` and `docs/production-plan.md`.
+
 ## Status detail (kept for background)
 
-- Everything is merged into `main` (latest: PR #9, the Supabase plan through decision 38). No feature branch is open.
-- Built: data-driven React site; front page **D**; story pages (five tabs, picture story, comic strips, evidence
-  cards, family tree, tag shelf); issue, company and map pages (with list view); swipe feed; search with tag filters;
-  path URLs (`/papers/<slug>`).
-- Real stories: "One word, two worlds" (Attention Is All You Need, peer-reviewed) and "Why a bigger deer breaks"
-  (`size-shapes-life`, arXiv 2408.04070, a preprint, the front-page lead; fact-check record in
-  `docs/fact-checks/size-shapes-life.md`). Everything else in `library.json` is `sample: true`.
-- Database plan decided, not built: Supabase (34), files in git as the full seed and backup (35, 37), static pages
-  for readers (36), no foreign keys with required integrity checks (30, 38).
-- Design source: the claude.ai canvas (copied into `design/canvas-source/`), exports in `design/exports/`. The
-  data-model board is still stale (production plan, Phase 0).
-- Next: `docs/production-plan.md` is the only maintained launch sequence. Start with "Fix now", then Phase 1
-  (tests, CI, preview deploys, rendering decision) and Phase 2 (a real company post and more papers to replace samples).
+This status detail is intentionally omitted so it cannot drift from the live snapshot. Use `docs/STATE.md` for current
+counts and `docs/production-plan.md` for the authoritative V1 merge gate and remaining work.
 
 ## Keeping this file true
 

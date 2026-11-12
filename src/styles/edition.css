@@ -3,6 +3,7 @@
 *{box-sizing:border-box}
 body{margin:0;color:var(--ink);background:var(--paper);font-family:Georgia,'Times New Roman',serif;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Ccircle cx='1' cy='1' r='.6' fill='%238f7960' opacity='.19'/%3E%3C/svg%3E")}
 main{max-width:1210px;margin:auto;padding:24px clamp(18px,4vw,60px) 44px}
+main.feed{max-width:none;margin:0;padding:0;min-height:100svh}
 .meta,.label,nav,.controls,footer{font:700 11px/1.5 'Courier New',monospace;text-transform:uppercase;letter-spacing:.095em}
 .meta,nav,footer,.controls{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .meta{border-bottom:1px solid;padding-bottom:8px}
@@ -12,6 +13,10 @@ nav{border-top:4px double;border-bottom:1px solid;padding:8px 0}nav .links{displ
 a{color:inherit;text-underline-offset:3px}
 .label,.num{color:var(--red)}
 .loading,.load-error{padding:80px 0;text-align:center;font-style:italic}
+/* The loading line waits 250ms and then fades in, so fast loads never flash it. */
+.loading{opacity:0;animation:loading-in .3s ease .25s forwards}
+@keyframes loading-in{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.loading{animation:none;opacity:1}}
 
 /* Lead */
 .lead{display:grid;grid-template-columns:.84fr 1.5fr;gap:clamp(20px,3vw,45px);padding:32px 0 28px;align-items:center}
@@ -129,3 +134,16 @@ footer{border-top:1px solid;padding-top:12px}
   .facts ul{grid-template-columns:1fr 1fr;gap:12px}.search-grid{grid-template-columns:1fr}.tag-shelf dl{grid-template-columns:1fr}.facts li{padding:9px}.facts p{font-size:15px}.facts .fig{font-size:27px}
 }
 @media(prefers-reduced-motion:reduce){.slide{transition:none}.feed-hint{animation:none!important}}
+
+/* Ambient idle motion: perpetual, subtle, and always on while the page is visible. No entrance choreography. */
+.f-lead-main h2 em{position:relative}
+.f-lead-main h2 em::after{content:"";position:absolute;left:0;right:0;bottom:-.06em;height:2px;background:var(--red);animation:ambient-accent 5s ease-in-out infinite}
+@keyframes ambient-accent{0%,100%{opacity:.45}50%{opacity:1}}
+.stamp{animation:ambient-stamp 6s ease-in-out infinite}
+@keyframes ambient-stamp{0%,100%{box-shadow:0 0 0 0 rgba(161,51,36,0)}50%{box-shadow:2px 2px 0 0 rgba(161,51,36,.16)}}
+.f-aside article{transition:transform .2s ease}
+.f-aside article:hover{transform:translateY(-1px)}
+@media(prefers-reduced-motion:reduce){
+  .f-lead-main h2 em::after,.stamp{animation:none}
+  .f-aside article,.f-aside article:hover{transition:none;transform:none}
+}

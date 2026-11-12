@@ -1,13 +1,13 @@
 ---
 name: explain-source
-description: Turn a research paper or a company engineering blog post into a Geeky Times story (plain-language summary, picture story, comic strips, evidence cards) that a school kid can follow. Use when adding any new story.
+description: Turn a research paper or a company engineering blog post into a Geeky Times story (plain-language summary, picture story, comic strips, evidence cards) that a new reader can follow. Use when adding any new story.
 ---
 
-> **Default model:** **large** (Opus 5.5 / Sonnet 5.5 / top-tier equivalent) — writing kid-level prose is the hard part. Drop to a smaller model once the hard part is drafted.
+> **Model choice:** provider-neutral. Start with a low-cost capable model and escalate only when a difficult science explanation needs a second pass.
 
 # Explain a source as a Geeky Times story
 
-The reference example is `public/data/papers/attention-is-all-you-need.json`. Match its tone, structure and honesty.
+The reference example is `data/seed/papers/attention-is-all-you-need.json`. Match its tone, structure and honesty. The app reads published stories from Supabase; seed JSON is only CLI input and recovery material.
 
 ## 1. Read and understand
 
@@ -19,7 +19,7 @@ The reference example is `public/data/papers/attention-is-all-you-need.json`. Ma
   - how it works, in 4–6 steps
   - the evidence, with exact numbers and their section anchors
   - who wrote it, where, and when
-- Note the trust level: peer-reviewed, preprint, or company-reported (a company blog's own numbers).
+- Note the trust level: `peer_reviewed`, `preprint`, `company_reported` (a company's own post), or `journal_published` for a journal paper that was not externally peer-reviewed. Mark `peer_reviewed` only when external review is supported by an authoritative venue record. Do not relabel a journal-published paper as a preprint just because its review status differs.
 
 ## 2. Find the one everyday example
 
@@ -61,6 +61,7 @@ Also set `summary` (1–2 sentences for search and the front page), `pageTitle`,
 - Never present an invented number as real. Invented numbers live only in `illustration` blocks.
 - Company blog numbers are always called company-reported ("Netflix says…").
 - Write in our own words. Quote at most one short line, with attribution. Never copy figures or text.
+- User-facing copy must not literally say “kid-friendly” or “for kids.” Show accessibility through the explanation itself.
 - Avoid hype ("revolutionary"). Say what changed and how we know.
 
 ## 5. Make the media
@@ -70,7 +71,8 @@ what the panel shows.
 
 ## 6. Check and publish
 
-1. `fact-check` every evidence number and `paper`-basis tag.
-2. Add the story to `public/data/site.json` and `public/data/library.json` (see `convert-paper` step 6), then run `npm run data` and fix every error.
-3. `npm run dev`, then look at the story, the front page tiles and the feed at 1280px and 375px.
-4. Commit on the branch the owner approved (ask before creating one) and open a PR. Never push to `main`.
+1. `fact-check` every sourced claim, evidence number, section anchor and `paper`-basis tag. Save the review ledger under `docs/fact-checks/<slug>.md`.
+2. Add the story JSON to `data/seed/papers/<slug>.json` and its editorial entry to `data/seed/library.json`. Do not add a site route registry entry; story routes are resolved from Supabase.
+3. Confirm tags and fields are owner-approved, then run `npm run publish:supabase -- <slug> --status preview`; the publisher mirrors approved tags and fields transactionally. Do not run `seed:editorial` for a per-story preview: it is a global sync reserved for separately reviewed editorial updates, after approval or through a dedicated safe workflow.
+4. Run dev with `VITE_SHOW_PREVIEW=1 npm run dev`, then look at the story, home, and feed at 1280px and 375px. Review the fact-check ledger and tags before `npm run approve -- <slug>`.
+5. Run the repo's current build, lint, prerender, metadata, and hydration checks. Do not set `VITE_SHOW_PREVIEW` in production.

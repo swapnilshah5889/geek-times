@@ -1,0 +1,1433 @@
+{
+  "schemaVersion": 1,
+  "facets": [
+    {
+      "id": "field",
+      "label": "Field",
+      "description": "The broad branch of science."
+    },
+    {
+      "id": "area",
+      "label": "Area",
+      "description": "A narrower area inside the field."
+    },
+    {
+      "id": "concept",
+      "label": "Big ideas",
+      "description": "Ideas the paper explains, introduces or depends on."
+    },
+    {
+      "id": "technique",
+      "label": "Techniques",
+      "description": "Named methods, models and tools."
+    },
+    {
+      "id": "task",
+      "label": "Job it does",
+      "description": "The problem the research is trying to solve."
+    },
+    {
+      "id": "dataset",
+      "label": "Data used",
+      "description": "Collections of examples used to train or test."
+    },
+    {
+      "id": "metric",
+      "label": "How it's scored",
+      "description": "The measurements used to judge results."
+    },
+    {
+      "id": "use",
+      "label": "Used for",
+      "description": "Where you meet this idea in real life."
+    },
+    {
+      "id": "impact",
+      "label": "Led to",
+      "description": "Later work that grew out of this paper."
+    },
+    {
+      "id": "organization",
+      "label": "Where",
+      "description": "Labs, companies and universities behind the work."
+    },
+    {
+      "id": "author",
+      "label": "Who",
+      "description": "The people who wrote the paper."
+    },
+    {
+      "id": "venue",
+      "label": "Published in",
+      "description": "The conference or journal."
+    },
+    {
+      "id": "everyday",
+      "label": "Everyday topics",
+      "description": "Everyday themes to browse by."
+    }
+  ],
+  "tags": [
+    {
+      "id": "field/computer-science",
+      "facet": "field",
+      "label": "Computer science",
+      "aliases": [
+        "CS",
+        "computing"
+      ]
+    },
+    {
+      "id": "area/artificial-intelligence",
+      "facet": "area",
+      "label": "Artificial intelligence",
+      "aliases": [
+        "AI"
+      ]
+    },
+    {
+      "id": "area/machine-learning",
+      "facet": "area",
+      "label": "Machine learning",
+      "parent": "area/artificial-intelligence",
+      "aliases": [
+        "ML"
+      ]
+    },
+    {
+      "id": "area/deep-learning",
+      "facet": "area",
+      "label": "Deep learning",
+      "parent": "area/machine-learning",
+      "aliases": [
+        "neural networks"
+      ]
+    },
+    {
+      "id": "area/natural-language-processing",
+      "facet": "area",
+      "label": "Natural language processing",
+      "parent": "area/artificial-intelligence",
+      "aliases": [
+        "NLP",
+        "computational linguistics",
+        "language AI"
+      ]
+    },
+    {
+      "id": "concept/neural-network",
+      "facet": "concept",
+      "label": "Neural networks",
+      "aliases": [
+        "neural net",
+        "artificial neural network"
+      ]
+    },
+    {
+      "id": "concept/attention",
+      "facet": "concept",
+      "label": "Attention",
+      "aliases": [
+        "attention mechanism"
+      ]
+    },
+    {
+      "id": "concept/self-attention",
+      "facet": "concept",
+      "label": "Self-attention",
+      "parent": "concept/attention",
+      "aliases": [
+        "intra-attention"
+      ]
+    },
+    {
+      "id": "concept/scaled-dot-product-attention",
+      "facet": "concept",
+      "label": "Scaled dot-product attention",
+      "parent": "concept/attention",
+      "aliases": [
+        "dot-product attention",
+        "queries keys values",
+        "QKV"
+      ]
+    },
+    {
+      "id": "concept/multi-head-attention",
+      "facet": "concept",
+      "label": "Multi-head attention",
+      "parent": "concept/attention",
+      "aliases": [
+        "attention heads"
+      ]
+    },
+    {
+      "id": "concept/masked-attention",
+      "facet": "concept",
+      "label": "Masked attention",
+      "parent": "concept/attention",
+      "aliases": [
+        "causal mask",
+        "causal attention",
+        "look-ahead mask"
+      ]
+    },
+    {
+      "id": "concept/encoder-decoder",
+      "facet": "concept",
+      "label": "Encoder–decoder",
+      "aliases": [
+        "encoder-decoder",
+        "sequence to sequence",
+        "seq2seq"
+      ]
+    },
+    {
+      "id": "concept/embeddings",
+      "facet": "concept",
+      "label": "Embeddings",
+      "aliases": [
+        "word embeddings",
+        "word vectors",
+        "token embeddings"
+      ]
+    },
+    {
+      "id": "concept/positional-encoding",
+      "facet": "concept",
+      "label": "Positional encoding",
+      "aliases": [
+        "position embeddings",
+        "word order"
+      ]
+    },
+    {
+      "id": "concept/feed-forward-network",
+      "facet": "concept",
+      "label": "Feed-forward network",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "FFN",
+        "MLP",
+        "multilayer perceptron"
+      ]
+    },
+    {
+      "id": "concept/residual-connection",
+      "facet": "concept",
+      "label": "Residual connections",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "skip connections",
+        "shortcut connections"
+      ]
+    },
+    {
+      "id": "concept/layer-normalization",
+      "facet": "concept",
+      "label": "Layer normalization",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "layer norm",
+        "LayerNorm"
+      ]
+    },
+    {
+      "id": "concept/softmax",
+      "facet": "concept",
+      "label": "Softmax",
+      "aliases": [
+        "softmax function"
+      ]
+    },
+    {
+      "id": "concept/parallel-computing",
+      "facet": "concept",
+      "label": "Parallel computing",
+      "aliases": [
+        "parallelization",
+        "GPUs",
+        "doing many things at once"
+      ]
+    },
+    {
+      "id": "concept/autoregressive-generation",
+      "facet": "concept",
+      "label": "Autoregressive generation",
+      "aliases": [
+        "autoregressive",
+        "one word at a time",
+        "next-word prediction"
+      ]
+    },
+    {
+      "id": "concept/recurrent-neural-network",
+      "facet": "concept",
+      "label": "Recurrent neural networks",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "RNN",
+        "LSTM",
+        "GRU",
+        "recurrence"
+      ]
+    },
+    {
+      "id": "concept/convolutional-neural-network",
+      "facet": "concept",
+      "label": "Convolutional neural networks",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "CNN",
+        "ConvNet",
+        "convolution"
+      ]
+    },
+    {
+      "id": "technique/transformer",
+      "facet": "technique",
+      "label": "Transformer",
+      "aliases": [
+        "transformer model",
+        "transformer architecture"
+      ]
+    },
+    {
+      "id": "technique/adam-optimizer",
+      "facet": "technique",
+      "label": "Adam optimizer",
+      "aliases": [
+        "Adam"
+      ]
+    },
+    {
+      "id": "technique/byte-pair-encoding",
+      "facet": "technique",
+      "label": "Byte-pair encoding",
+      "aliases": [
+        "BPE",
+        "subword tokenization",
+        "word pieces",
+        "tokenization"
+      ]
+    },
+    {
+      "id": "technique/label-smoothing",
+      "facet": "technique",
+      "label": "Label smoothing"
+    },
+    {
+      "id": "technique/dropout",
+      "facet": "technique",
+      "label": "Dropout",
+      "aliases": [
+        "residual dropout"
+      ]
+    },
+    {
+      "id": "technique/beam-search",
+      "facet": "technique",
+      "label": "Beam search"
+    },
+    {
+      "id": "task/sequence-transduction",
+      "facet": "task",
+      "label": "Sequence transduction",
+      "aliases": [
+        "sequence modeling",
+        "sequence to sequence"
+      ]
+    },
+    {
+      "id": "task/machine-translation",
+      "facet": "task",
+      "label": "Machine translation",
+      "parent": "task/sequence-transduction",
+      "aliases": [
+        "translation",
+        "MT",
+        "neural machine translation",
+        "NMT"
+      ]
+    },
+    {
+      "id": "task/constituency-parsing",
+      "facet": "task",
+      "label": "Constituency parsing",
+      "aliases": [
+        "parsing",
+        "syntax",
+        "grammar trees"
+      ]
+    },
+    {
+      "id": "dataset/wmt-2014-en-de",
+      "facet": "dataset",
+      "label": "WMT 2014 English–German",
+      "aliases": [
+        "WMT14 En-De",
+        "newstest2014"
+      ]
+    },
+    {
+      "id": "dataset/wmt-2014-en-fr",
+      "facet": "dataset",
+      "label": "WMT 2014 English–French",
+      "aliases": [
+        "WMT14 En-Fr"
+      ]
+    },
+    {
+      "id": "dataset/penn-treebank",
+      "facet": "dataset",
+      "label": "Penn Treebank (WSJ)",
+      "aliases": [
+        "PTB",
+        "Wall Street Journal treebank",
+        "WSJ"
+      ]
+    },
+    {
+      "id": "metric/bleu",
+      "facet": "metric",
+      "label": "BLEU score",
+      "aliases": [
+        "BLEU"
+      ]
+    },
+    {
+      "id": "metric/f1",
+      "facet": "metric",
+      "label": "F1 score",
+      "aliases": [
+        "F1",
+        "F-score"
+      ]
+    },
+    {
+      "id": "use/translation-apps",
+      "facet": "use",
+      "label": "Translation apps",
+      "aliases": [
+        "Google Translate",
+        "translators"
+      ]
+    },
+    {
+      "id": "use/chatbots",
+      "facet": "use",
+      "label": "Chatbots and AI assistants",
+      "aliases": [
+        "chatbot",
+        "AI assistant",
+        "ChatGPT"
+      ]
+    },
+    {
+      "id": "use/text-generation",
+      "facet": "use",
+      "label": "Writing text",
+      "aliases": [
+        "text generation",
+        "autocomplete"
+      ]
+    },
+    {
+      "id": "impact/large-language-models",
+      "facet": "impact",
+      "label": "Large language models",
+      "aliases": [
+        "LLM",
+        "LLMs",
+        "foundation models"
+      ]
+    },
+    {
+      "id": "impact/bert",
+      "facet": "impact",
+      "label": "BERT",
+      "parent": "impact/large-language-models"
+    },
+    {
+      "id": "impact/gpt",
+      "facet": "impact",
+      "label": "GPT models",
+      "parent": "impact/large-language-models",
+      "aliases": [
+        "GPT",
+        "ChatGPT",
+        "generative pre-trained transformer"
+      ]
+    },
+    {
+      "id": "organization/google-brain",
+      "facet": "organization",
+      "label": "Google Brain",
+      "parent": "organization/google",
+      "aliases": [
+        "Google"
+      ]
+    },
+    {
+      "id": "organization/google-research",
+      "facet": "organization",
+      "label": "Google Research",
+      "parent": "organization/google",
+      "aliases": [
+        "Google"
+      ]
+    },
+    {
+      "id": "organization/google",
+      "facet": "organization",
+      "label": "Google"
+    },
+    {
+      "id": "organization/university-of-toronto",
+      "facet": "organization",
+      "label": "University of Toronto",
+      "aliases": [
+        "U of T",
+        "UofT"
+      ]
+    },
+    {
+      "id": "author/ashish-vaswani",
+      "facet": "author",
+      "label": "Ashish Vaswani"
+    },
+    {
+      "id": "author/noam-shazeer",
+      "facet": "author",
+      "label": "Noam Shazeer"
+    },
+    {
+      "id": "author/niki-parmar",
+      "facet": "author",
+      "label": "Niki Parmar"
+    },
+    {
+      "id": "author/jakob-uszkoreit",
+      "facet": "author",
+      "label": "Jakob Uszkoreit"
+    },
+    {
+      "id": "author/llion-jones",
+      "facet": "author",
+      "label": "Llion Jones"
+    },
+    {
+      "id": "author/aidan-n-gomez",
+      "facet": "author",
+      "label": "Aidan N. Gomez",
+      "aliases": [
+        "Aidan Gomez"
+      ]
+    },
+    {
+      "id": "author/lukasz-kaiser",
+      "facet": "author",
+      "label": "Łukasz Kaiser",
+      "aliases": [
+        "Lukasz Kaiser"
+      ]
+    },
+    {
+      "id": "author/illia-polosukhin",
+      "facet": "author",
+      "label": "Illia Polosukhin"
+    },
+    {
+      "id": "venue/neurips-2017",
+      "facet": "venue",
+      "label": "NeurIPS 2017",
+      "parent": "venue/neurips",
+      "aliases": [
+        "NIPS 2017"
+      ]
+    },
+    {
+      "id": "venue/neurips",
+      "facet": "venue",
+      "label": "NeurIPS",
+      "aliases": [
+        "NIPS",
+        "Neural Information Processing Systems"
+      ]
+    },
+    {
+      "id": "everyday/language",
+      "facet": "everyday",
+      "label": "Language and words",
+      "aliases": [
+        "words",
+        "reading",
+        "talking"
+      ]
+    },
+    {
+      "id": "everyday/translation",
+      "facet": "everyday",
+      "label": "Translating languages",
+      "aliases": [
+        "other languages",
+        "German",
+        "French"
+      ]
+    },
+    {
+      "id": "everyday/smart-computers",
+      "facet": "everyday",
+      "label": "Smart computers",
+      "aliases": [
+        "robots",
+        "AI",
+        "thinking machines"
+      ]
+    },
+    {
+      "id": "field/physics",
+      "facet": "field",
+      "label": "Physics"
+    },
+    {
+      "id": "field/biology",
+      "facet": "field",
+      "label": "Biology"
+    },
+    {
+      "id": "area/physics",
+      "facet": "area",
+      "label": "Physics"
+    },
+    {
+      "id": "area/biology",
+      "facet": "area",
+      "label": "Biology"
+    },
+    {
+      "id": "area/biophysics",
+      "facet": "area",
+      "label": "Biophysics",
+      "parent": "area/physics",
+      "aliases": [
+        "biological physics"
+      ]
+    },
+    {
+      "id": "area/physics-education",
+      "facet": "area",
+      "label": "Physics education",
+      "parent": "area/physics",
+      "aliases": [
+        "teaching physics"
+      ]
+    },
+    {
+      "id": "area/evolutionary-biology",
+      "facet": "area",
+      "label": "Evolutionary biology",
+      "parent": "area/biology"
+    },
+    {
+      "id": "concept/surface-area-to-volume-ratio",
+      "facet": "concept",
+      "label": "Surface area to volume ratio",
+      "aliases": [
+        "A/V ratio",
+        "surface to volume",
+        "surface area to volume"
+      ]
+    },
+    {
+      "id": "concept/scaling-laws",
+      "facet": "concept",
+      "label": "Scaling laws",
+      "aliases": [
+        "scaling",
+        "square-cube law",
+        "size and shape"
+      ]
+    },
+    {
+      "id": "concept/diffusion",
+      "facet": "concept",
+      "label": "Diffusion",
+      "aliases": [
+        "oxygen diffusion"
+      ]
+    },
+    {
+      "id": "concept/heat-loss",
+      "facet": "concept",
+      "label": "Heat loss",
+      "aliases": [
+        "staying warm",
+        "radiative cooling"
+      ]
+    },
+    {
+      "id": "concept/load-bearing",
+      "facet": "concept",
+      "label": "Load bearing",
+      "aliases": [
+        "stress",
+        "pressure on bones"
+      ]
+    },
+    {
+      "id": "concept/wing-loading",
+      "facet": "concept",
+      "label": "Wing loading",
+      "aliases": [
+        "wing area"
+      ]
+    },
+    {
+      "id": "concept/natural-selection",
+      "facet": "concept",
+      "label": "Natural selection"
+    },
+    {
+      "id": "concept/supercapacitors",
+      "facet": "concept",
+      "label": "Supercapacitors",
+      "aliases": [
+        "batteries",
+        "graphene"
+      ]
+    },
+    {
+      "id": "technique/concept-cartoon-clicker-questions",
+      "facet": "technique",
+      "label": "Concept cartoon clicker questions",
+      "aliases": [
+        "clicker questions",
+        "concept cartoons"
+      ]
+    },
+    {
+      "id": "use/lungs-and-gills",
+      "facet": "use",
+      "label": "Lungs and gills",
+      "aliases": [
+        "breathing",
+        "respiratory system"
+      ]
+    },
+    {
+      "id": "use/aircraft-design",
+      "facet": "use",
+      "label": "Aircraft design",
+      "aliases": [
+        "aviation",
+        "airplanes"
+      ]
+    },
+    {
+      "id": "organization/university-of-maryland-eastern-shore",
+      "facet": "organization",
+      "label": "University of Maryland Eastern Shore"
+    },
+    {
+      "id": "author/kausik-s-das",
+      "facet": "author",
+      "label": "Kausik S Das",
+      "aliases": [
+        "Das"
+      ]
+    },
+    {
+      "id": "author/larry-gonick",
+      "facet": "author",
+      "label": "Larry Gonick",
+      "aliases": [
+        "Gonick"
+      ]
+    },
+    {
+      "id": "author/salem-al-mosleh",
+      "facet": "author",
+      "label": "Salem Al Mosleh",
+      "aliases": [
+        "Al Mosleh"
+      ]
+    },
+    {
+      "id": "everyday/animals",
+      "facet": "everyday",
+      "label": "Animals and their bodies",
+      "aliases": [
+        "animal bodies",
+        "deer"
+      ]
+    },
+    {
+      "id": "everyday/size-and-shape",
+      "facet": "everyday",
+      "label": "Big and small",
+      "aliases": [
+        "big and small",
+        "giants"
+      ]
+    },
+    {
+      "id": "everyday/staying-warm",
+      "facet": "everyday",
+      "label": "Staying warm",
+      "aliases": [
+        "body heat"
+      ]
+    },
+    {
+      "id": "everyday/flying",
+      "facet": "everyday",
+      "label": "Flying",
+      "aliases": [
+        "birds",
+        "wings"
+      ]
+    },
+    {
+      "id": "area/geospatial-analysis",
+      "facet": "area",
+      "label": "Geospatial analysis",
+      "aliases": [
+        "GIS",
+        "location analysis",
+        "spatial analysis"
+      ]
+    },
+    {
+      "id": "concept/spatial-index",
+      "facet": "concept",
+      "label": "Spatial index",
+      "aliases": [
+        "geospatial index"
+      ]
+    },
+    {
+      "id": "concept/hexagonal-grid",
+      "facet": "concept",
+      "label": "Hexagonal grid",
+      "parent": "concept/spatial-index",
+      "aliases": [
+        "honeycomb grid",
+        "hexagon tiling"
+      ]
+    },
+    {
+      "id": "concept/discrete-global-grid",
+      "facet": "concept",
+      "label": "Discrete global grid",
+      "parent": "concept/spatial-index",
+      "aliases": [
+        "DGGS"
+      ]
+    },
+    {
+      "id": "use/ride-hailing",
+      "facet": "use",
+      "label": "Ride-hailing apps",
+      "aliases": [
+        "ride pricing",
+        "dispatch"
+      ]
+    },
+    {
+      "id": "organization/uber",
+      "facet": "organization",
+      "label": "Uber",
+      "aliases": [
+        "Uber Engineering"
+      ]
+    },
+    {
+      "id": "author/isaac-brodsky",
+      "facet": "author",
+      "label": "Isaac Brodsky"
+    },
+    {
+      "id": "everyday/maps-and-cities",
+      "facet": "everyday",
+      "label": "Maps and cities",
+      "aliases": [
+        "maps",
+        "cities",
+        "getting a ride"
+      ]
+    },
+    {
+      "id": "area/computer-vision",
+      "facet": "area",
+      "label": "Computer vision",
+      "parent": "area/artificial-intelligence",
+      "aliases": [
+        "vision",
+        "image recognition",
+        "machine vision"
+      ]
+    },
+    {
+      "id": "concept/degradation-problem",
+      "facet": "concept",
+      "label": "Degradation problem",
+      "aliases": [
+        "deeper is worse",
+        "accuracy degradation"
+      ]
+    },
+    {
+      "id": "concept/bottleneck-block",
+      "facet": "concept",
+      "label": "Bottleneck block",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "bottleneck design",
+        "bottleneck architecture"
+      ]
+    },
+    {
+      "id": "concept/batch-normalization",
+      "facet": "concept",
+      "label": "Batch normalization",
+      "parent": "concept/neural-network",
+      "aliases": [
+        "batchnorm",
+        "BN"
+      ]
+    },
+    {
+      "id": "technique/resnet",
+      "facet": "technique",
+      "label": "ResNet",
+      "aliases": [
+        "residual network",
+        "residual networks",
+        "deep residual learning"
+      ]
+    },
+    {
+      "id": "technique/faster-r-cnn",
+      "facet": "technique",
+      "label": "Faster R-CNN",
+      "aliases": [
+        "faster rcnn"
+      ]
+    },
+    {
+      "id": "task/image-classification",
+      "facet": "task",
+      "label": "Image classification",
+      "aliases": [
+        "image recognition",
+        "photo classification"
+      ]
+    },
+    {
+      "id": "task/object-detection",
+      "facet": "task",
+      "label": "Object detection",
+      "aliases": [
+        "detecting objects"
+      ]
+    },
+    {
+      "id": "dataset/imagenet",
+      "facet": "dataset",
+      "label": "ImageNet",
+      "aliases": [
+        "ILSVRC",
+        "ImageNet 2012"
+      ]
+    },
+    {
+      "id": "dataset/cifar-10",
+      "facet": "dataset",
+      "label": "CIFAR-10",
+      "aliases": [
+        "CIFAR10"
+      ]
+    },
+    {
+      "id": "dataset/ms-coco",
+      "facet": "dataset",
+      "label": "MS COCO",
+      "aliases": [
+        "COCO",
+        "Microsoft COCO"
+      ]
+    },
+    {
+      "id": "metric/top-5-error",
+      "facet": "metric",
+      "label": "Top-5 error",
+      "aliases": [
+        "top5 error"
+      ]
+    },
+    {
+      "id": "metric/top-1-error",
+      "facet": "metric",
+      "label": "Top-1 error",
+      "aliases": [
+        "top1 error"
+      ]
+    },
+    {
+      "id": "organization/microsoft-research",
+      "facet": "organization",
+      "label": "Microsoft Research",
+      "aliases": [
+        "Microsoft",
+        "MSR"
+      ]
+    },
+    {
+      "id": "author/kaiming-he",
+      "facet": "author",
+      "label": "Kaiming He"
+    },
+    {
+      "id": "author/xiangyu-zhang",
+      "facet": "author",
+      "label": "Xiangyu Zhang"
+    },
+    {
+      "id": "author/shaoqing-ren",
+      "facet": "author",
+      "label": "Shaoqing Ren"
+    },
+    {
+      "id": "author/jian-sun",
+      "facet": "author",
+      "label": "Jian Sun"
+    },
+    {
+      "id": "venue/cvpr",
+      "facet": "venue",
+      "label": "CVPR",
+      "aliases": [
+        "Computer Vision and Pattern Recognition"
+      ]
+    },
+    {
+      "id": "venue/cvpr-2016",
+      "facet": "venue",
+      "label": "CVPR 2016",
+      "parent": "venue/cvpr"
+    },
+    {
+      "id": "everyday/seeing-pictures",
+      "facet": "everyday",
+      "label": "Seeing pictures",
+      "aliases": [
+        "photos",
+        "recognising things",
+        "vision"
+      ]
+    },
+    {
+      "id": "everyday/teamwork",
+      "facet": "everyday",
+      "label": "Teamwork",
+      "aliases": [
+        "helpers",
+        "passing it along"
+      ]
+    },
+    {
+      "id": "area/information-retrieval",
+      "facet": "area",
+      "label": "Information retrieval",
+      "aliases": [
+        "IR",
+        "finding documents"
+      ],
+      "description": "Finding the documents that answer a question."
+    },
+    {
+      "id": "concept/pagerank",
+      "facet": "concept",
+      "label": "PageRank",
+      "aliases": [
+        "page rank",
+        "link ranking"
+      ],
+      "description": "A score for how important a page is, based on who links to it."
+    },
+    {
+      "id": "concept/link-analysis",
+      "facet": "concept",
+      "label": "Link analysis",
+      "aliases": [
+        "hyperlink analysis",
+        "citation graph"
+      ],
+      "description": "Using the links between pages to learn about them."
+    },
+    {
+      "id": "concept/hyperlink-graph",
+      "facet": "concept",
+      "label": "Hyperlink graph",
+      "aliases": [
+        "link graph",
+        "web graph"
+      ],
+      "description": "The web seen as pages (dots) joined by links (lines)."
+    },
+    {
+      "id": "concept/anchor-text",
+      "facet": "concept",
+      "label": "Anchor text",
+      "aliases": [
+        "link text"
+      ],
+      "description": "The clickable words of a link."
+    },
+    {
+      "id": "concept/inverted-index",
+      "facet": "concept",
+      "label": "Inverted index",
+      "aliases": [
+        "search index",
+        "word-to-pages index"
+      ],
+      "description": "A list that says, for each word, which documents contain it."
+    },
+    {
+      "id": "concept/random-surfer",
+      "facet": "concept",
+      "label": "Random surfer",
+      "parent": "concept/pagerank",
+      "aliases": [
+        "random walk"
+      ],
+      "description": "An imaginary web user who keeps clicking links; used to explain PageRank."
+    },
+    {
+      "id": "technique/web-crawler",
+      "facet": "technique",
+      "label": "Web crawler",
+      "aliases": [
+        "spider",
+        "bot",
+        "crawling"
+      ],
+      "description": "A program that visits web pages and copies them for later use."
+    },
+    {
+      "id": "task/web-search",
+      "facet": "task",
+      "label": "Web search",
+      "aliases": [
+        "search engine",
+        "searching the web"
+      ],
+      "description": "Finding web pages that answer what someone typed."
+    },
+    {
+      "id": "use/search-engines",
+      "facet": "use",
+      "label": "Search engines",
+      "aliases": [
+        "Google Search",
+        "web search engines"
+      ],
+      "description": "Sites you type a question into to find web pages."
+    },
+    {
+      "id": "organization/stanford-university",
+      "facet": "organization",
+      "label": "Stanford University",
+      "aliases": [
+        "Stanford"
+      ]
+    },
+    {
+      "id": "author/sergey-brin",
+      "facet": "author",
+      "label": "Sergey Brin"
+    },
+    {
+      "id": "author/lawrence-page",
+      "facet": "author",
+      "label": "Lawrence Page",
+      "aliases": [
+        "Larry Page"
+      ]
+    },
+    {
+      "id": "venue/world-wide-web-conference",
+      "facet": "venue",
+      "label": "World Wide Web Conference",
+      "aliases": [
+        "WWW",
+        "The Web Conference"
+      ]
+    },
+    {
+      "id": "venue/www7-1998",
+      "facet": "venue",
+      "label": "WWW7 (1998)",
+      "parent": "venue/world-wide-web-conference",
+      "aliases": [
+        "Seventh International World Wide Web Conference",
+        "WWW 1998"
+      ]
+    },
+    {
+      "id": "everyday/finding-things",
+      "facet": "everyday",
+      "label": "Finding things",
+      "aliases": [
+        "googling",
+        "looking things up"
+      ]
+    },
+    {
+      "id": "everyday/the-internet",
+      "facet": "everyday",
+      "label": "The internet",
+      "aliases": [
+        "websites",
+        "the web"
+      ]
+    },
+    {
+      "id": "area/distributed-systems",
+      "facet": "area",
+      "label": "Distributed systems",
+      "aliases": [
+        "distributed computing"
+      ]
+    },
+    {
+      "id": "area/databases",
+      "facet": "area",
+      "label": "Databases",
+      "aliases": [
+        "data stores",
+        "storage systems"
+      ]
+    },
+    {
+      "id": "concept/key-value-store",
+      "facet": "concept",
+      "label": "Key-value stores",
+      "aliases": [
+        "key value store",
+        "kv store"
+      ]
+    },
+    {
+      "id": "concept/consistent-hashing",
+      "facet": "concept",
+      "label": "Consistent hashing"
+    },
+    {
+      "id": "concept/virtual-nodes",
+      "facet": "concept",
+      "label": "Virtual nodes",
+      "parent": "concept/consistent-hashing",
+      "aliases": [
+        "vnodes",
+        "tokens"
+      ]
+    },
+    {
+      "id": "concept/vector-clocks",
+      "facet": "concept",
+      "label": "Vector clocks",
+      "aliases": [
+        "version vectors"
+      ]
+    },
+    {
+      "id": "concept/eventual-consistency",
+      "facet": "concept",
+      "label": "Eventual consistency"
+    },
+    {
+      "id": "concept/high-availability",
+      "facet": "concept",
+      "label": "High availability",
+      "aliases": [
+        "always-on",
+        "uptime"
+      ]
+    },
+    {
+      "id": "concept/replication",
+      "facet": "concept",
+      "label": "Replication",
+      "aliases": [
+        "replicas",
+        "copies"
+      ]
+    },
+    {
+      "id": "concept/quorum",
+      "facet": "concept",
+      "label": "Quorums",
+      "aliases": [
+        "sloppy quorum",
+        "read quorum",
+        "write quorum"
+      ]
+    },
+    {
+      "id": "concept/hinted-handoff",
+      "facet": "concept",
+      "label": "Hinted handoff"
+    },
+    {
+      "id": "concept/merkle-tree",
+      "facet": "concept",
+      "label": "Merkle trees",
+      "aliases": [
+        "hash tree",
+        "anti-entropy"
+      ]
+    },
+    {
+      "id": "concept/gossip-protocol",
+      "facet": "concept",
+      "label": "Gossip protocols",
+      "aliases": [
+        "gossip"
+      ]
+    },
+    {
+      "id": "concept/conflict-resolution",
+      "facet": "concept",
+      "label": "Conflict resolution",
+      "aliases": [
+        "reconciliation",
+        "last write wins"
+      ]
+    },
+    {
+      "id": "concept/tail-latency",
+      "facet": "concept",
+      "label": "Tail latency",
+      "aliases": [
+        "99.9th percentile",
+        "percentile latency"
+      ]
+    },
+    {
+      "id": "concept/service-level-agreement",
+      "facet": "concept",
+      "label": "Service level agreements",
+      "aliases": [
+        "SLA"
+      ]
+    },
+    {
+      "id": "technique/dynamo",
+      "facet": "technique",
+      "label": "Dynamo"
+    },
+    {
+      "id": "use/shopping-carts",
+      "facet": "use",
+      "label": "Shopping carts",
+      "aliases": [
+        "online shopping carts"
+      ]
+    },
+    {
+      "id": "use/session-storage",
+      "facet": "use",
+      "label": "Session storage",
+      "aliases": [
+        "session state"
+      ]
+    },
+    {
+      "id": "organization/amazon",
+      "facet": "organization",
+      "label": "Amazon",
+      "aliases": [
+        "Amazon.com"
+      ]
+    },
+    {
+      "id": "venue/sosp",
+      "facet": "venue",
+      "label": "SOSP",
+      "aliases": [
+        "Symposium on Operating Systems Principles"
+      ]
+    },
+    {
+      "id": "venue/sosp-2007",
+      "facet": "venue",
+      "label": "SOSP 2007",
+      "parent": "venue/sosp"
+    },
+    {
+      "id": "author/giuseppe-decandia",
+      "facet": "author",
+      "label": "Giuseppe DeCandia"
+    },
+    {
+      "id": "author/deniz-hastorun",
+      "facet": "author",
+      "label": "Deniz Hastorun"
+    },
+    {
+      "id": "author/madan-jampani",
+      "facet": "author",
+      "label": "Madan Jampani"
+    },
+    {
+      "id": "author/gunavardhan-kakulapati",
+      "facet": "author",
+      "label": "Gunavardhan Kakulapati"
+    },
+    {
+      "id": "author/avinash-lakshman",
+      "facet": "author",
+      "label": "Avinash Lakshman"
+    },
+    {
+      "id": "author/alex-pilchin",
+      "facet": "author",
+      "label": "Alex Pilchin"
+    },
+    {
+      "id": "author/swaminathan-sivasubramanian",
+      "facet": "author",
+      "label": "Swaminathan Sivasubramanian"
+    },
+    {
+      "id": "author/peter-vosshall",
+      "facet": "author",
+      "label": "Peter Vosshall"
+    },
+    {
+      "id": "author/werner-vogels",
+      "facet": "author",
+      "label": "Werner Vogels"
+    },
+    {
+      "id": "everyday/online-shopping",
+      "facet": "everyday",
+      "label": "Online shopping"
+    },
+    {
+      "id": "everyday/keeping-copies-safe",
+      "facet": "everyday",
+      "label": "Keeping copies safe",
+      "aliases": [
+        "backups"
+      ]
+    },
+    {
+      "id": "everyday/neighbors",
+      "facet": "everyday",
+      "label": "Neighbors and mail"
+    }
+  ]
+}

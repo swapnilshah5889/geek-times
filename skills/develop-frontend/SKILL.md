@@ -29,11 +29,10 @@ description: Make changes to The Geeky Times React + TypeScript + Vite frontend 
 
 ## Workflow
 
-1. Branch: `feature/<topic>`.
+1. Branch: `v1` (the long-lived dev branch, decision 40). No new branch unless the owner says so.
 2. `npm run dev` (it also validates the data).
 3. Change the code. Keep the existing naming and comment style.
 4. `npm run build` and `npm run lint` must pass.
 5. Check in a browser at 1280px and 375px: no horizontal scroll, no console errors, animations running, links
    working.
-6. Commit, push the branch and open a PR. Update `AGENTS.md` / `docs/roadmap.md` if you changed direction or finished
-   an item.
+6. Commit on `v1` and push. Update `docs/STATE.md` / `AGENTS.md` / `docs/roadmap.md` if you changed direction or finished an item.

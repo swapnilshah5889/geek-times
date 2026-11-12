@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="220" viewBox="0 0 320 220" role="img" aria-labelledby="title">
+<title id="title">A wire loop moves past a stationary bar magnet.</title>
+<desc>A wire loop moves past a stationary bar magnet.</desc>
+<style>
+svg{background:#f6f0df;}
+text{font-family:Georgia,serif;}
+@keyframes loopMove {0%,15%{transform:translateX(9px)} 55%{transform:translateX(-12px)} 75%,100%{transform:translateX(9px)}}
+ .wire-motion{animation:loopMove 4s ease-in-out infinite}
+ .current{animation:currentPulse 4s ease-in-out infinite}
+ @keyframes currentPulse {0%,100%{opacity:.7} 50%{opacity:1}}
+ @media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<rect width="320" height="220" rx="12" fill="#f6f0df"/><circle cx="18" cy="18" r="1.5" fill="#27251e" opacity=".18"/><circle cx="301" cy="18" r="1.5" fill="#27251e" opacity=".18"/><circle cx="18" cy="202" r="1.5" fill="#27251e" opacity=".18"/><circle cx="301" cy="202" r="1.5" fill="#27251e" opacity=".18"/><circle cx="160.0" cy="12" r="1.5" fill="#27251e" opacity=".18"/><rect x="5" y="5" width="310" height="210" rx="10" fill="none" stroke="#27251e" stroke-width="2"/><text x="160.0" y="28" text-anchor="middle" font-family="Courier New" font-size="15" fill="#a13324">WIRE MOVES</text><g class="wire-motion"><g class="loop" fill="none" stroke="#377675" stroke-width="2.16">
+ <ellipse cx="185.6" cy="114.4" rx="35.2" ry="50.6"/>
+ </g></g><g class="magnet" stroke="#27251e" stroke-width="1.426" stroke-linejoin="round">
+ <rect x="64.28" y="103.86000000000001" width="28.52" height="21.08" rx="3.1" fill="#a13324"/>
+ <rect x="92.8" y="103.86000000000001" width="28.52" height="21.08" rx="3.1" fill="#82acad"/>
+ <path d="M 92.8 105.10000000000001 v 18.599999999999998" stroke="#27251e" stroke-width="0.992"/>
+ </g><g class="current" stroke="#a13324" stroke-width="1.8199999999999998" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M176.5 74.80000000000001 h16.099999999999998 M187.7 71.30000000000001 l4.199999999999999 3.5 l-4.199999999999999 3.5" fill="none"/>
+ <circle cx="173.7" cy="74.80000000000001" r="1.75" fill="#a13324" stroke="none"/>
+ </g><path d="M272.0 176.0 L224.0 176.0 M233.0 172.0 L224.0 176.0 L233.0 180.0" fill="none" stroke="#a13324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

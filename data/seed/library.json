@@ -1,0 +1,694 @@
+{
+  "schemaVersion": 1,
+  "fields": [
+    {
+      "id": "ai",
+      "label": "AI & computers",
+      "color": "#377675",
+      "cluster": {
+        "cx": 250,
+        "cy": 220,
+        "rx": 210,
+        "ry": 160,
+        "labelX": 90,
+        "labelY": 86
+      }
+    },
+    {
+      "id": "bio",
+      "label": "Biology & medicine",
+      "color": "#4f7a66",
+      "cluster": {
+        "cx": 590,
+        "cy": 190,
+        "rx": 170,
+        "ry": 130,
+        "labelX": 500,
+        "labelY": 76
+      }
+    },
+    {
+      "id": "space",
+      "label": "Space",
+      "color": "#5d6aa1",
+      "cluster": {
+        "cx": 230,
+        "cy": 470,
+        "rx": 170,
+        "ry": 105,
+        "labelX": 100,
+        "labelY": 410
+      }
+    },
+    {
+      "id": "physics",
+      "label": "Physics",
+      "color": "#c86f3f",
+      "cluster": {
+        "cx": 600,
+        "cy": 460,
+        "rx": 160,
+        "ry": 110,
+        "labelX": 520,
+        "labelY": 368
+      }
+    },
+    {
+      "id": "sw",
+      "label": "Software & systems",
+      "color": "#c3b2d8",
+      "cluster": {
+        "cx": 620,
+        "cy": 460,
+        "rx": 120,
+        "ry": 80,
+        "labelX": 620,
+        "labelY": 390
+      }
+    }
+  ],
+  "volumes": [
+    {
+      "id": "1",
+      "title": "November 2026",
+      "kind": "regular"
+    },
+    {
+      "id": "0",
+      "title": "Launch specials",
+      "kind": "special"
+    }
+  ],
+  "stories": [
+    {
+      "id": "attention-is-all-you-need",
+      "real": true,
+      "headline": "One word,",
+      "accent": "two worlds.",
+      "dek": "Translation machines used to read words one after another. This paper showed a new design, the Transformer, that lets every word look at every other word at once. It became the base of today’s AI chatbots.",
+      "desk": "AI & language",
+      "fields": [
+        "ai"
+      ],
+      "role": "lead",
+      "kind": "paper",
+      "title": "Attention Is All You Need",
+      "authors": "Vaswani and colleagues",
+      "year": 2017,
+      "trust": "peer_reviewed",
+      "minutes": 12,
+      "note": "comic + facts",
+      "sample": false
+    },
+    {
+      "id": "size-shapes-life",
+      "real": true,
+      "headline": "Why a bigger deer",
+      "accent": "breaks.",
+      "dek": "If a deer grew five times bigger in every direction, it would weigh 125 times more. Its leg bones would get only 25 times thicker. That is why big animals are built differently from small ones.",
+      "desk": "Biology & physics",
+      "fields": [
+        "bio",
+        "physics"
+      ],
+      "role": "lead",
+      "kind": "paper",
+      "title": "Integrating Evolutionary Biology into Physics Classroom",
+      "authors": "Das, Gonick and Al Mosleh",
+      "year": 2024,
+      "trust": "preprint",
+      "minutes": 10,
+      "note": "comic + facts",
+      "sample": false
+    },
+    {
+      "id": "h3-hexagons",
+      "real": true,
+      "sample": false,
+      "headline": "A world covered in",
+      "accent": "honeycomb.",
+      "dek": "A ride app has to find a nearby car fast. Uber’s H3 grid covers the world with nesting hexagons.",
+      "desk": "Real world  /  Maps & rides",
+      "fields": [
+        "sw"
+      ],
+      "role": "real_world",
+      "kind": "blog",
+      "title": "H3: Uber’s Hexagonal Hierarchical Spatial Index",
+      "authors": "Uber Engineering",
+      "year": 2018,
+      "trust": "company_reported",
+      "minutes": 4
+    },
+    {
+      "id": "resnet",
+      "real": true,
+      "sample": false,
+      "headline": "Don’t start over.",
+      "accent": "Just fix it.",
+      "dek": "A photo-reading machine got worse when it was given more layers. A small shortcut, a copy of the picture added back at the end of each block, fixed that, and let networks grow past a hundred layers.",
+      "desk": "AI & vision",
+      "fields": [
+        "ai"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": "He and colleagues",
+      "year": 2016,
+      "minutes": 10,
+      "note": "comic + facts",
+      "trust": "preprint"
+    },
+    {
+      "id": "google-search",
+      "real": true,
+      "sample": false,
+      "kind": "paper",
+      "role": "lead",
+      "fields": [
+        "sw"
+      ],
+      "headline": "The web’s biggest",
+      "accent": "popularity vote.",
+      "dek": "The web had millions of pages and no good way to sort them. Two students at Stanford had an idea: a page matters if other pages point to it. This paper describes the search engine they built around it.",
+      "desk": "Computer science / Search and the web",
+      "title": "The Anatomy of a Large-Scale Hypertextual Web Search Engine",
+      "authors": "Sergey Brin, Lawrence Page",
+      "year": 1998,
+      "minutes": 10,
+      "note": "comic + facts",
+      "trust": "preprint"
+    },
+    {
+      "id": "dynamo",
+      "real": true,
+      "sample": false,
+      "headline": "The cart that",
+      "accent": "never disappears.",
+      "dek": "A machine breaks while you shop, and your cart is still there. Amazon’s Dynamo keeps copies on a ring of servers and merges them when they disagree.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Dynamo: Amazon’s Highly Available Key-value Store",
+      "authors": "DeCandia and colleagues",
+      "year": 2007,
+      "minutes": 4,
+      "trust": "preprint"
+    },
+    {
+      "id": "einstein-special-relativity",
+      "sample": false,
+      "real": true,
+      "headline": "When clocks disagree, whose time is it?",
+      "accent": "whose time is it?",
+      "dek": "Einstein starts with a magnet-and-wire puzzle, then asks how distant clocks can share a time.",
+      "desk": "Physics",
+      "fields": [
+        "physics"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "On the Electrodynamics of Moving Bodies",
+      "authors": "Albert Einstein",
+      "year": 1905,
+      "trust": "journal_published",
+      "minutes": 3
+    }
+  ],
+  "front": {
+    "lead": "size-shapes-life",
+    "aside": [],
+    "more": [
+      "attention-is-all-you-need"
+    ],
+    "topics": [
+      {
+        "field": "ai",
+        "label": "AI & computers",
+        "stories": [
+          "attention-is-all-you-need"
+        ]
+      },
+      {
+        "field": "bio",
+        "label": "Your body & medicine",
+        "stories": [
+          "size-shapes-life"
+        ]
+      }
+    ],
+    "real": [
+      "h3-hexagons"
+    ],
+    "storylines": [
+      "machines-read"
+    ],
+    "vault": "",
+    "onThisDay": null
+  },
+  "issues": [
+    {
+      "id": "002",
+      "volume": "1",
+      "number": "002",
+      "title": "Why size matters",
+      "color": "#a2c2a7",
+      "published": "Friday, [publish date]",
+      "stories": [
+        "size-shapes-life"
+      ],
+      "covers": "size-shapes-life",
+      "sample": false
+    },
+    {
+      "id": "001",
+      "volume": "1",
+      "number": "001",
+      "title": "How machines learned to read",
+      "color": "#82acad",
+      "published": "Friday, [publish date]",
+      "stories": [
+        "attention-is-all-you-need"
+      ],
+      "covers": "attention-is-all-you-need",
+      "sample": false
+    }
+  ],
+  "companies": [
+    {
+      "id": "uber",
+      "name": "Uber Engineering",
+      "sector": "Maps & rides",
+      "blurb": "Our picture-first explainers of Uber's engineering posts. Claims come from Uber’s own writeups, each labelled with what kind of claim it is.",
+      "postsFollowed": 1,
+      "posts": [
+        "h3-hexagons"
+      ],
+      "builtOn": [],
+      "coming": []
+    }
+  ],
+  "storylines": [
+    {
+      "id": "machines-read",
+      "title": "How machines learned to read",
+      "sample": false,
+      "steps": [
+        {
+          "year": "1997",
+          "label": "LSTM memory cells"
+        },
+        {
+          "year": "2014",
+          "label": "Sequence to sequence"
+        },
+        {
+          "year": "2014",
+          "label": "First attention"
+        },
+        {
+          "year": "2017",
+          "label": "The Transformer",
+          "current": true
+        },
+        {
+          "year": "2018 →",
+          "label": "BERT, GPT and chatbots"
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "lstm",
+      "title": "Long short-term memory",
+      "authors": "Hochreiter & Schmidhuber",
+      "year": 1997,
+      "field": "ai",
+      "type": "paper",
+      "x": 120,
+      "y": 230
+    },
+    {
+      "id": "seq2seq",
+      "title": "Sequence to sequence learning",
+      "authors": "Sutskever and colleagues",
+      "year": 2014,
+      "field": "ai",
+      "type": "paper",
+      "x": 185,
+      "y": 205
+    },
+    {
+      "id": "bahdanau",
+      "title": "Translation that learns to align",
+      "authors": "Bahdanau and colleagues",
+      "year": 2014,
+      "field": "ai",
+      "type": "paper",
+      "x": 250,
+      "y": 215,
+      "blurb": "The first translation system to let each word “look back” at the words that mattered. The Transformer kept that idea and dropped the slow word-by-word reading."
+    },
+    {
+      "id": "transformer",
+      "title": "Attention Is All You Need",
+      "authors": "Vaswani and colleagues",
+      "year": 2017,
+      "field": "ai",
+      "type": "paper",
+      "x": 320,
+      "y": 220,
+      "story": "attention-is-all-you-need",
+      "short": "The Transformer"
+    },
+    {
+      "id": "bert",
+      "title": "BERT",
+      "authors": "Devlin and colleagues",
+      "year": 2018,
+      "field": "ai",
+      "type": "paper",
+      "x": 400,
+      "y": 170
+    },
+    {
+      "id": "gpt3",
+      "title": "GPT-3",
+      "authors": "Brown and colleagues",
+      "year": 2020,
+      "field": "ai",
+      "type": "paper",
+      "x": 240,
+      "y": 150
+    },
+    {
+      "id": "vit",
+      "title": "Vision Transformer",
+      "authors": "Dosovitskiy and colleagues",
+      "year": 2020,
+      "field": "ai",
+      "type": "paper",
+      "x": 170,
+      "y": 300
+    },
+    {
+      "id": "resnet",
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": "He and colleagues",
+      "year": 2016,
+      "field": "ai",
+      "type": "paper",
+      "x": 300,
+      "y": 300,
+      "short": "ResNet",
+      "story": "resnet",
+      "blurb": "Made very deep photo-reading networks trainable by letting each block learn only a small fix on top of its input. The Transformer’s residual links use the same idea."
+    },
+    {
+      "id": "alphafold",
+      "title": "AlphaFold",
+      "authors": "Jumper and colleagues",
+      "year": 2021,
+      "field": "ai",
+      "type": "paper",
+      "x": 440,
+      "y": 240
+    },
+    {
+      "id": "blog-social",
+      "title": "How a social network decides what you see first",
+      "authors": "[Company name] Engineering",
+      "year": 0,
+      "field": "ai",
+      "type": "blog",
+      "x": 425,
+      "y": 300,
+      "short": "Social feed post"
+    },
+    {
+      "id": "penicillin",
+      "title": "Penicillin",
+      "authors": "Fleming",
+      "year": 1929,
+      "field": "bio",
+      "type": "paper",
+      "x": 520,
+      "y": 160
+    },
+    {
+      "id": "crispr",
+      "title": "CRISPR–Cas9",
+      "authors": "Jinek and colleagues",
+      "year": 2012,
+      "field": "bio",
+      "type": "paper",
+      "x": 580,
+      "y": 200
+    },
+    {
+      "id": "dna",
+      "title": "Molecular structure of nucleic acids",
+      "authors": "Watson & Crick",
+      "year": 1953,
+      "field": "bio",
+      "type": "paper",
+      "x": 650,
+      "y": 170
+    },
+    {
+      "id": "genome",
+      "title": "Initial sequencing of the human genome",
+      "authors": "International Human Genome Sequencing Consortium",
+      "year": 2001,
+      "field": "bio",
+      "type": "paper",
+      "x": 600,
+      "y": 260
+    },
+    {
+      "id": "einstein",
+      "title": "The field equations of gravitation",
+      "authors": "Einstein",
+      "year": 1915,
+      "field": "space",
+      "type": "paper",
+      "x": 170,
+      "y": 470
+    },
+    {
+      "id": "ligo",
+      "title": "Gravitational waves",
+      "authors": "LIGO and Virgo",
+      "year": 2016,
+      "field": "space",
+      "type": "paper",
+      "x": 240,
+      "y": 450
+    },
+    {
+      "id": "hubble",
+      "title": "A relation between distance and velocity among nebulae",
+      "authors": "Hubble",
+      "year": 1929,
+      "field": "space",
+      "type": "paper",
+      "x": 300,
+      "y": 500
+    },
+    {
+      "id": "weinberg",
+      "title": "A model of leptons",
+      "authors": "Weinberg",
+      "year": 1967,
+      "field": "physics",
+      "type": "paper",
+      "x": 560,
+      "y": 450
+    },
+    {
+      "id": "higgs",
+      "title": "Higgs boson",
+      "authors": "ATLAS and CMS",
+      "year": 2012,
+      "field": "physics",
+      "type": "paper",
+      "x": 620,
+      "y": 430
+    },
+    {
+      "id": "thompson",
+      "title": "On Growth and Form",
+      "authors": "D’Arcy Thompson",
+      "year": 1917,
+      "field": "bio",
+      "type": "paper",
+      "x": 470,
+      "y": 240
+    },
+    {
+      "id": "haldane",
+      "title": "On Being the Right Size",
+      "authors": "Haldane",
+      "year": 1926,
+      "field": "bio",
+      "type": "paper",
+      "x": 530,
+      "y": 295
+    },
+    {
+      "id": "scaling",
+      "title": "Integrating Evolutionary Biology into Physics Classroom",
+      "short": "Why size matters",
+      "authors": "Das, Gonick and Al Mosleh",
+      "year": 2024,
+      "field": "bio",
+      "type": "paper",
+      "x": 690,
+      "y": 275,
+      "story": "size-shapes-life"
+    },
+    {
+      "id": "google-search",
+      "title": "The Anatomy of a Large-Scale Hypertextual Web Search Engine",
+      "short": "Google & PageRank",
+      "authors": "Brin and Page",
+      "year": 1998,
+      "field": "sw",
+      "type": "paper",
+      "story": "google-search",
+      "x": 680,
+      "y": 470,
+      "blurb": "Ranks web pages by who links to them, and answers searches from a word-to-pages index. The first detailed public description of a large web search engine, by its own account."
+    },
+    {
+      "id": "dynamo",
+      "title": "Dynamo: Amazon’s Highly Available Key-value Store",
+      "authors": "DeCandia and colleagues",
+      "year": 2007,
+      "field": "sw",
+      "type": "paper",
+      "x": 680,
+      "y": 490,
+      "story": "dynamo",
+      "short": "Amazon’s Dynamo",
+      "blurb": "Amazon’s shopping-cart store. Copies of each cart sit on a ring of servers, and when copies disagree the cart code merges them so an added item is never lost."
+    },
+    {
+      "id": "chord",
+      "title": "Chord: a scalable peer-to-peer lookup service",
+      "authors": "Stoica and colleagues",
+      "year": 2001,
+      "field": "sw",
+      "type": "paper",
+      "x": 590,
+      "y": 505
+    },
+    {
+      "id": "karger-hashing",
+      "title": "Consistent hashing and random trees",
+      "authors": "Karger and colleagues",
+      "year": 1997,
+      "field": "sw",
+      "type": "paper",
+      "x": 545,
+      "y": 480
+    }
+  ],
+  "relations": [
+    {
+      "from": "lstm",
+      "to": "seq2seq",
+      "kind": "uses_method",
+      "note": "Sequence-to-sequence translators are built from LSTM memory cells."
+    },
+    {
+      "from": "seq2seq",
+      "to": "bahdanau",
+      "kind": "improves_on",
+      "note": "Added a way for the translator to look back at the words that matter."
+    },
+    {
+      "from": "bahdanau",
+      "to": "transformer",
+      "kind": "builds_on",
+      "note": "Kept the “look back” idea and dropped word-by-word reading.",
+      "cited": true
+    },
+    {
+      "from": "resnet",
+      "to": "transformer",
+      "kind": "uses_method",
+      "note": "Shortcut connections keep deep stacks trainable."
+    },
+    {
+      "from": "transformer",
+      "to": "bert",
+      "kind": "uses_method",
+      "note": "BERT is a stack of Transformer readers."
+    },
+    {
+      "from": "transformer",
+      "to": "gpt3",
+      "kind": "uses_method",
+      "note": "GPT-3 is a very large Transformer."
+    },
+    {
+      "from": "transformer",
+      "to": "vit",
+      "kind": "uses_method",
+      "note": "The Vision Transformer reads pictures cut into patches."
+    },
+    {
+      "from": "transformer",
+      "to": "alphafold",
+      "kind": "uses_method",
+      "note": "Attention helps the model weigh which parts of a protein matter.",
+      "crossField": true
+    },
+    {
+      "from": "einstein",
+      "to": "ligo",
+      "kind": "builds_on",
+      "note": "Gravitational waves were predicted by general relativity."
+    },
+    {
+      "from": "weinberg",
+      "to": "higgs",
+      "kind": "builds_on",
+      "note": "The Higgs particle is part of the Standard Model’s plan."
+    },
+    {
+      "from": "thompson",
+      "to": "scaling",
+      "kind": "builds_on",
+      "note": "The paper builds on Thompson’s idea that physics shapes how bodies grow.",
+      "cited": true
+    },
+    {
+      "from": "haldane",
+      "to": "scaling",
+      "kind": "builds_on",
+      "note": "The paper uses Haldane’s examples of how size limits bodies.",
+      "cited": true
+    },
+    {
+      "from": "karger-hashing",
+      "to": "dynamo",
+      "kind": "uses_method",
+      "note": "Dynamo places carts and machines on a ring using consistent hashing.",
+      "cited": true
+    },
+    {
+      "from": "chord",
+      "to": "dynamo",
+      "kind": "builds_on",
+      "note": "Dynamo uses a ring like Chord’s but lets every machine know where each cart lives, so there are no extra hops.",
+      "cited": true
+    }
+  ]
+}

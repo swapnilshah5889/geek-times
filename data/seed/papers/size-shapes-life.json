@@ -1,0 +1,586 @@
+{
+  "schemaVersion": 2,
+  "slug": "size-shapes-life",
+  "pageTitle": "Why a bigger deer breaks",
+  "summary": "If a deer grew five times bigger in every direction, it would weigh 125 times more but its leg bones would get only 25 times thicker. This paper shows how that one rule of size shapes lungs, guts, legs, eating habits and even bird flight.",
+  "hook": {
+    "sticker": "Wait, what?",
+    "teaser": "Why can’t a deer just grow five times bigger?",
+    "cta": "See why giants break",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "125 vs 25",
+      "text": "weight vs leg bone"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "size-shapes-life/lead/deer.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A small deer next to a deer five times bigger whose thin legs are cracking under its weight. Below: make a deer 5 times bigger and it weighs 125 times more, but its leg bones get only 25 times thicker."
+        },
+        "tag": "Crack!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "size-shapes-life/lead/cube.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "One big cube chopped into 125 little cubes. The outside surface gets 5 times bigger while the total amount of stuff stays the same."
+        },
+        "tag": "Chop!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/physics",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#abstract1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "field/biology",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#abstract1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/biophysics",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#abstract1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/physics-education",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#abstract1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/evolutionary-biology",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S3",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/surface-area-to-volume-ratio",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S2",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/scaling-laws",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/diffusion",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S3.SS1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/heat-loss",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S3.SS3",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/load-bearing",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S3.SS4",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/wing-loading",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S4.SS1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/natural-selection",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/supercapacitors",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S4.SS2",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/concept-cartoon-clicker-questions",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#abstract1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "use/lungs-and-gills",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S3.SS1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "use/aircraft-design",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070#S4.SS1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/university-of-maryland-eastern-shore",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "author/kausik-s-das",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "author/larry-gonick",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "author/salem-al-mosleh",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://arxiv.org/html/2408.04070",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/animals",
+      "relevance": 0.8,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/size-and-shape",
+      "relevance": 0.9,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/staying-warm",
+      "relevance": 0.4,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/flying",
+      "relevance": 0.4,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    }
+  ],
+  "desk": "Biology & physics",
+  "paper": {
+    "title": "Integrating Evolutionary Biology into Physics Classroom: Scaling, Dimension, Form and Function",
+    "authors": "Das, Gonick and Al Mosleh",
+    "year": 2024,
+    "url": "https://arxiv.org/html/2408.04070"
+  },
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Biology & physics / Picture story",
+      "headline": {
+        "text": "Why a bigger deer",
+        "accent": "breaks."
+      },
+      "deck": "Make a deer five times bigger in every direction and it gets 125 times heavier. Why do its legs give way?",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "The deer",
+            "caption": "<b>Fig. 1.</b> A deer five times bigger is 125 times heavier, but its leg bones are only 25 times thicker.",
+            "media": {
+              "type": "svg",
+              "src": "size-shapes-life/lead/deer.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A small deer next to a deer five times bigger whose thin legs are cracking under its weight. Below: make a deer 5 times bigger and it weighs 125 times more, but its leg bones get only 25 times thicker."
+            }
+          },
+          {
+            "label": "The cube",
+            "caption": "<b>Fig. 2.</b> Chop one cube into 125 little ones: the stuff stays the same, the outside grows 5 times.",
+            "media": {
+              "type": "svg",
+              "src": "size-shapes-life/lead/cube.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "One big cube chopped into 125 little cubes. The outside surface gets 5 times bigger while the total amount of stuff stays the same."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "The big idea ↓",
+      "kicker": "Science desk / A picture story in four parts",
+      "title": "Why size changes everything",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Why not just make everything bigger?",
+          "provenance": "model_design",
+          "caption": "Say a deer grew five times bigger in every direction: five times taller, longer and wider. Is it five times stronger? Not quite. Its weight grows 5 × 5 × 5 = 125 times, but the slice across its leg bones grows only 5 × 5 = 25 times. Each bit of bone now carries five times more load.",
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/story/01-too-big.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A small deer and a deer five times bigger stand side by side. The big one is not five times stronger, only five times taller."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Chop a cube",
+          "provenance": "illustration",
+          "caption": "Cut one big cube into 125 little cubes. You still have the same amount of stuff, but now there are lots of new faces. In this made-up cube, the outside grows 5 times bigger while the inside stays the same. So the smaller something is, the more outside it has for its inside.",
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/story/02-the-chop.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A big cube is chopped into 125 little cubes, and every little cube has its own outside."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Fold it, coil it, thicken it",
+          "provenance": "model_design",
+          "caption": "A tiny rotifer breathes through its skin. Make it twice as wide and its body needs 8 times more air, but its skin grows only 4 times. So bigger animals add outside: lungs and gills with many folds, and long guts with folded walls. Their legs get thicker too, like an elephant’s.",
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/story/03-the-fixes.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Three fixes bodies use: thick legs, folded lungs and a long folded gut."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Birds follow the rule",
+          "provenance": "evidence",
+          "caption": "Flying has a size rule too. Weight per wing area is called wing loading. The authors lined up 14 real bird species from a data table: the more weight per wing, the faster the bird cruises. A kittiwake (0.41 kg) and a dove prion (0.20 kg) have almost the same wing loading, and almost the same speed: 10.1 and 9.9 metres per second.",
+          "source": {
+            "label": "Paper §IV.1, Table 1 and Fig. 12",
+            "url": "https://arxiv.org/html/2408.04070#S4.F12"
+          },
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/story/04-birds.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A chart of 14 bird species: birds with more weight per wing area cruise faster, along a straight line."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Science desk / Under the hood / A comic in four strips",
+      "title": "How size changes everything",
+      "deck": "Read each strip from left to right. The pictures move, like little GIFs. We start with a cube, then meet a deer, a rotifer and a mouse.",
+      "howTo": "Drawings are <b>made up</b> to explain the idea. The numbers come from simple arithmetic or from the paper, and the box at the end says which.",
+      "strips": [
+        {
+          "title": "Chop the cube",
+          "kicker": "Why small things have lots of outside",
+          "provenance": "illustration",
+          "grownUpWords": "surface area to volume ratio",
+          "panels": [
+            {
+              "caption": "Take one big cube. Its faces are the <b>outside</b>. The stuff in the middle is the <b>inside</b>.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/01a-one-cube.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One big cube. Its faces are the outside, and the stuff in the middle is the inside."
+              }
+            },
+            {
+              "caption": "Now <b>slice</b> it into five pieces each way. That makes 125 little cubes.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/01b-chop.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Red dashed cut lines show a big cube being chopped into five slices each way."
+              }
+            },
+            {
+              "caption": "Same stuff inside. But every little cube has its own faces, so there is <b>5 times more outside</b>.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/01c-many-cubes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Many little cubes together: the same amount of stuff, five times more outside."
+              }
+            }
+          ],
+          "coverPanel": 2
+        },
+        {
+          "title": "The deer that got too big",
+          "kicker": "Why weight beats bones",
+          "provenance": "model_design",
+          "grownUpWords": "scaling, cross-section, pressure",
+          "panels": [
+            {
+              "caption": "Grow a deer <b>5 times bigger</b> in every direction: taller, longer and wider.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/02a-two-deer.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A small deer and a deer five times bigger in every direction."
+              }
+            },
+            {
+              "caption": "Its weight is <b>5 × 5 × 5 = 125</b> times more. The slice across its leg bone is only <b>5 × 5 = 25</b> times bigger.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/02b-125-vs-25.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Weight grows like a cube of blocks, 125 of them. The leg bone slice grows like a flat square, only 25 of them."
+              }
+            },
+            {
+              "caption": "Each bit of bone now holds <b>5 times</b> more weight. <b>Crack!</b> Big animals need thicker legs, like elephants.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/02c-crack.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The big deer’s thin legs buckle and crack under its weight."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Breathing through skin",
+          "kicker": "Why big animals need folds",
+          "provenance": "model_design",
+          "grownUpWords": "diffusion, surface area",
+          "panels": [
+            {
+              "caption": "A tiny rotifer breathes <b>straight through its skin</b>. For its size, that is enough air.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/03a-rotifer.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tiny rotifer breathes air straight through its skin; little oxygen dots drift in."
+              }
+            },
+            {
+              "caption": "Make it <b>twice as wide</b>: its body needs 8 times more air, but its skin is only 4 times bigger.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/03b-too-big.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "If a rotifer were twice as wide, its body would need 8 times more air but its skin would grow only 4 times."
+              }
+            },
+            {
+              "caption": "So bigger animals grow <b>folded surfaces</b>: branching lungs, comb-like gills and a long, folded gut.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/03c-folds.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Big animals grow folded surfaces: branching lungs, comb-like gills and a coiled, folded gut."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Why tiny animals snack all day",
+          "kicker": "Heat leaves through the outside",
+          "provenance": "illustration",
+          "grownUpWords": "heat loss, metabolic rate",
+          "panels": [
+            {
+              "caption": "A warm body loses heat through its <b>outside</b>. A mouse has lots of outside for its size. An elephant has much less.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/04a-heat.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A mouse with many heat waves rising off it, next to an elephant with only a few."
+              }
+            },
+            {
+              "caption": "So small animals, like mice and hummingbirds, need <b>rich, high-calorie food</b> again and again, such as nuts and sugary nectar.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/04b-snacks.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The mouse nibbles seeds and a hummingbird sips sugary nectar: small animals eat rich food again and again."
+              }
+            },
+            {
+              "caption": "Big animals lose less heat for their size, so an elephant can live on <b>leaves</b>, and a huge blue whale on tiny <b>krill</b>.",
+              "media": {
+                "type": "svg",
+                "src": "size-shapes-life/comic/04c-big-eaters.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "An elephant eats low-calorie leaves while a huge blue whale eats tiny krill: big bodies lose less heat for their size."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Numbers, with sources",
+      "facts": [
+        {
+          "figure": "5×",
+          "claim": "illustration",
+          "text": "Chop a cube into 125 little cubes and the outside gets 5 times bigger. (Our arithmetic: the paper’s Fig. 2 caption says 125 times, which looks like a slip.)",
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/facts/chop.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A big cube next to many little cubes."
+          }
+        },
+        {
+          "figure": "125 vs 25",
+          "claim": "model_design",
+          "text": "How much heavier a deer is when it grows 5 times bigger, versus how much bigger the slice across its leg bone gets.",
+          "source": {
+            "label": "Paper §III.4, Fig. 11",
+            "url": "https://arxiv.org/html/2408.04070#S3.F11"
+          },
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/facts/deer.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A deer with thick leg bones marked 25 and a heavy body marked 125."
+          }
+        },
+        {
+          "figure": "1,250 Calories",
+          "claim": "model_design",
+          "text": "The paper’s estimate of the heat a person loses in a day to cooler surroundings, for 2 square metres of skin at body temperature 305 K in a 300 K room.",
+          "source": {
+            "label": "Paper §III.3",
+            "url": "https://arxiv.org/html/2408.04070#S3.SS3"
+          },
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/facts/heat.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A flame for the heat the body gives off."
+          }
+        },
+        {
+          "figure": "4× → 2×",
+          "claim": "model_design",
+          "text": "If one bird has 4 times the wing loading of another, it should cruise twice as fast.",
+          "source": {
+            "label": "Paper §IV.1, Eq. 8",
+            "url": "https://arxiv.org/html/2408.04070#S4.E8"
+          },
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/facts/wings.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A small bird with small wings and a big bird with big wings."
+          }
+        },
+        {
+          "figure": "0.50",
+          "claim": "measured_result",
+          "text": "The slope of the line through 14 real bird species, matching the physics prediction of one half.",
+          "source": {
+            "label": "Paper §IV.1, Fig. 12",
+            "url": "https://arxiv.org/html/2408.04070#S4.F12"
+          },
+          "media": {
+            "type": "svg",
+            "src": "size-shapes-life/facts/line.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A line through fourteen dots, sloping up at one half."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -24,7 +24,7 @@ Search**. Field names (AI, Biology…) appear inside Explore and Topics, not in 
 - Every claim shows exactly one of:
   - **Illustration · numbers invented**
   - **From the paper · model design** (how it's built, e.g. 8 heads)
-  - **Measured result**, followed by its source trust: peer-reviewed / preprint / company-reported
+  - **Measured result**, followed by its source trust: peer-reviewed / preprint / company-reported / journal-published without external peer review
 - Terms like peer-reviewed, company-reported, storyline and family tree get a one-line explanation the first time they
   appear (a tooltip or an inline sentence, like the family-tree detail panel).
 - Story tabs: **The big idea · How it works · Family tree** ("papers before and after this one") **· Evidence ·

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Kicker } from '../components/common';
+import { Kicker, SourceByline } from '../components/common';
 import { pad } from '../lib/format';
 import { MediaView } from '../components/MediaView';
 import { MotionButton, MotionGroup } from '../components/motion';
@@ -51,7 +51,7 @@ export function LeadBlock({ block }: { block: LeadData }) {
         <Kicker text={block.kicker} />
         <h1>{block.headline.text}<br /><em>{block.headline.accent}</em></h1>
         <p className="deck">{block.deck}</p>
-        <div className="byline"><b>The paper</b> · {doc.paper.title}<i>{doc.paper.authors}, {doc.paper.year}</i></div>
+        <SourceByline doc={doc} />
       </div>
       <MotionGroup><Slideshow slideshow={block.slideshow} /></MotionGroup>
     </section>

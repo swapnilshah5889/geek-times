@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="215" viewBox="0 0 440 215" role="img" aria-labelledby="title">
+<title id="title">A magnet and a conductor shown in two relative-motion setups, with matching current arrows.</title>
+<desc>A magnet and a conductor shown in two relative-motion setups, with matching current arrows.</desc>
+<style>
+svg{background:#f6f0df;}
+text{font-family:Georgia,serif;}
+@keyframes magnetPass {0%,10%{transform:translateX(-5px)} 35%{transform:translateX(13px)} 48%,100%{transform:translateX(-5px)}}
+ @keyframes loopPass {0%,48%{transform:translateX(0)} 72%{transform:translateX(-14px)} 88%,100%{transform:translateX(0)}}
+ @keyframes currentPulse {0%,100%{opacity:.72} 40%,70%{opacity:1}}
+ .move-left{animation:magnetPass 4.8s ease-in-out infinite}
+ .move-right{animation:loopPass 4.8s ease-in-out infinite}
+ .current{animation:currentPulse 4.8s ease-in-out infinite}
+ @media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<rect width="440" height="215" rx="12" fill="#f6f0df"/><circle cx="18" cy="18" r="1.5" fill="#27251e" opacity=".18"/><circle cx="421" cy="18" r="1.5" fill="#27251e" opacity=".18"/><circle cx="18" cy="197" r="1.5" fill="#27251e" opacity=".18"/><circle cx="421" cy="197" r="1.5" fill="#27251e" opacity=".18"/><circle cx="220.0" cy="12" r="1.5" fill="#27251e" opacity=".18"/><rect x="5" y="5" width="430" height="205" rx="10" fill="none" stroke="#27251e" stroke-width="2"/><text x="110.0" y="30" text-anchor="middle" font-family="Courier New" font-size="17" fill="#a13324">MAGNET MOVES</text><text x="330.0" y="30" text-anchor="middle" font-family="Courier New" font-size="17" fill="#a13324">WIRE MOVES</text><path d="M220.0 40 v122.54999999999998" stroke="#27251e" stroke-width="1.5" stroke-dasharray="3 5" opacity=".4"/><g class="loop" fill="none" stroke="#377675" stroke-width="3">
+ <ellipse cx="140.8" cy="124.69999999999999" rx="28.6" ry="40.85"/>
+ </g><g class="current" stroke="#a13324" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M127.80000000000001 86.0 h23.0 M143.8 81.0 l6.0 5.0 l-6.0 5.0" fill="none"/>
+ <circle cx="123.80000000000001" cy="86.0" r="2.5" fill="#a13324" stroke="none"/>
+ </g><g class="move-left"><g class="magnet" stroke="#27251e" stroke-width="1.7249999999999999" stroke-linejoin="round">
+ <rect x="35.900000000000006" y="111.94999999999999" width="34.5" height="25.5" rx="3.75" fill="#a13324"/>
+ <rect x="70.4" y="111.94999999999999" width="34.5" height="25.5" rx="3.75" fill="#82acad"/>
+ <path d="M 70.4 113.44999999999999 v 22.5" stroke="#27251e" stroke-width="1.2000000000000002"/>
+ </g></g><path d="M52.8 172.0 L96.8 172.0 M87.8 176.0 L96.8 172.0 L87.8 168.0" fill="none" stroke="#a13324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g class="magnet" stroke="#27251e" stroke-width="1.7249999999999999" stroke-linejoin="round">
+ <rect x="247.10000000000002" y="111.94999999999999" width="34.5" height="25.5" rx="3.75" fill="#a13324"/>
+ <rect x="281.6" y="111.94999999999999" width="34.5" height="25.5" rx="3.75" fill="#82acad"/>
+ <path d="M 281.6 113.44999999999999 v 22.5" stroke="#27251e" stroke-width="1.2000000000000002"/>
+ </g><g class="move-right"><g class="loop" fill="none" stroke="#377675" stroke-width="3">
+ <ellipse cx="365.2" cy="124.69999999999999" rx="28.6" ry="40.85"/>
+ </g></g><g class="current" stroke="#a13324" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M352.2 86.0 h23.0 M368.2 81.0 l6.0 5.0 l-6.0 5.0" fill="none"/>
+ <circle cx="348.2" cy="86.0" r="2.5" fill="#a13324" stroke="none"/>
+ </g><path d="M391.6 172.0 L343.2 172.0 M352.2 168.0 L343.2 172.0 L352.2 176.0" fill="none" stroke="#a13324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g><circle cx="220.0" cy="124.69999999999999" r="12.6" fill="#f0e3c6" stroke="#27251e" stroke-width="2"/><text x="220.0" y="130.1" text-anchor="middle" font-family="Georgia" font-size="16.2" fill="#a13324">?</text></g>
+<text x="220" y="201" text-anchor="middle" font-family="Courier New" font-size="17" fill="#a13324">SAME CURRENT. WHY DIFFERENT?</text>
+</svg>

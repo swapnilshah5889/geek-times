@@ -1,6 +1,6 @@
 import { useEffect, useMemo, type ReactNode } from 'react';
 import { mediaBaseFor, type Archive } from '../data/load';
-import { todayLabel } from '../lib/format';
+import { useTodayLabel } from '../lib/format';
 import { MediaBaseContext } from '../lib/mediaBase';
 import { appHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
@@ -12,17 +12,18 @@ export function SitePage({ archive, title, active, meta, motion = true, children
   archive: Archive; title: string; active?: NavSection; meta?: [string, string]; motion?: boolean; children: ReactNode;
 }) {
   const { site } = archive;
+  const today = useTodayLabel();
   const base = useMemo(() => mediaBaseFor(site), [site]);
-  useEffect(() => { document.title = `${site.name} — ${title}`; window.scrollTo(0, 0); }, [site, title]);
+  useEffect(() => { document.title = `${site.name} — ${title}`; }, [site, title]);
   return (
     <MediaBaseContext.Provider value={base}>
       <MotionGroup>
         <main className="site-main">
-          <Masthead site={site} active={active} meta={meta ?? [todayLabel(), '']} edition={!meta} />
+          <Masthead site={site} active={active} meta={meta ?? [today, '']} edition={!meta} />
           {motion && <div className="f-motion"><MotionButton noun="animations" /></div>}
           {children}
           <footer>
-            <span>{site.name} &nbsp; ✦ &nbsp; {site.motto}</span>
+            <span>{`${site.name}   ✦   ${site.motto}`}</span>
             <span className="foot-links"><a href={appHref('issues')}>Editions</a><a href={searchHref()}>The archive →</a></span>
           </footer>
         </main>

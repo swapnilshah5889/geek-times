@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340" role="img" aria-labelledby="title">
+<title id="title">Side-by-side magnet-moving and wire-moving setups show matching current arrows, with a question mark between them.</title>
+<desc>Side-by-side magnet-moving and wire-moving setups show matching current arrows, with a question mark between them.</desc>
+<style>
+svg{background:#f6f0df;}
+text{font-family:Georgia,serif;}
+@keyframes magnetPass {0%,10%{transform:translateX(-5px)} 35%{transform:translateX(30px)} 48%,100%{transform:translateX(-5px)}}
+ @keyframes loopPass {0%,48%{transform:translateX(0)} 72%{transform:translateX(-28px)} 88%,100%{transform:translateX(0)}}
+ @keyframes currentPulse {0%,100%{opacity:.72} 40%,70%{opacity:1}}
+ .move-left{animation:magnetPass 4.8s ease-in-out infinite}
+ .move-right{animation:loopPass 4.8s ease-in-out infinite}
+ .current{animation:currentPulse 4.8s ease-in-out infinite}
+ @media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<rect width="600" height="340" rx="12" fill="#f6f0df"/><circle cx="18" cy="18" r="1.5" fill="#27251e" opacity=".18"/><circle cx="581" cy="18" r="1.5" fill="#27251e" opacity=".18"/><circle cx="18" cy="322" r="1.5" fill="#27251e" opacity=".18"/><circle cx="581" cy="322" r="1.5" fill="#27251e" opacity=".18"/><circle cx="300.0" cy="12" r="1.5" fill="#27251e" opacity=".18"/><rect x="5" y="5" width="590" height="330" rx="10" fill="none" stroke="#27251e" stroke-width="2"/><text x="150.0" y="38" text-anchor="middle" font-family="Courier New" font-size="19" fill="#a13324">MAGNET MOVES</text><text x="450.0" y="38" text-anchor="middle" font-family="Courier New" font-size="19" fill="#a13324">WIRE MOVES</text><path d="M300.0 48 v193.79999999999998" stroke="#27251e" stroke-width="1.5" stroke-dasharray="3 5" opacity=".4"/><g class="loop" fill="none" stroke="#377675" stroke-width="3">
+ <ellipse cx="192.0" cy="197.2" rx="39.0" ry="64.6"/>
+ </g><g class="current" stroke="#a13324" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M179.0 136.0 h23.0 M195.0 131.0 l6.0 5.0 l-6.0 5.0" fill="none"/>
+ <circle cx="175.0" cy="136.0" r="2.5" fill="#a13324" stroke="none"/>
+ </g><g class="move-left"><g class="magnet" stroke="#27251e" stroke-width="2.3" stroke-linejoin="round">
+ <rect x="50.0" y="180.2" width="46.0" height="34" rx="5" fill="#a13324"/>
+ <rect x="96.0" y="180.2" width="46.0" height="34" rx="5" fill="#82acad"/>
+ <path d="M 96.0 182.2 v 30" stroke="#27251e" stroke-width="1.6"/>
+ </g></g><path d="M72.0 272.0 L132.0 272.0 M123.0 276.0 L132.0 272.0 L123.0 268.0" fill="none" stroke="#a13324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g class="magnet" stroke="#27251e" stroke-width="2.3" stroke-linejoin="round">
+ <rect x="338.0" y="180.2" width="46.0" height="34" rx="5" fill="#a13324"/>
+ <rect x="384.0" y="180.2" width="46.0" height="34" rx="5" fill="#82acad"/>
+ <path d="M 384.0 182.2 v 30" stroke="#27251e" stroke-width="1.6"/>
+ </g><g class="move-right"><g class="loop" fill="none" stroke="#377675" stroke-width="3">
+ <ellipse cx="498.0" cy="197.2" rx="39.0" ry="64.6"/>
+ </g></g><g class="current" stroke="#a13324" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M485.0 136.0 h23.0 M501.0 131.0 l6.0 5.0 l-6.0 5.0" fill="none"/>
+ <circle cx="481.0" cy="136.0" r="2.5" fill="#a13324" stroke="none"/>
+ </g><path d="M534.0 272.0 L468.0 272.0 M477.0 268.0 L468.0 272.0 L477.0 276.0" fill="none" stroke="#a13324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g><circle cx="300.0" cy="197.2" r="12.6" fill="#f0e3c6" stroke="#27251e" stroke-width="2"/><text x="300.0" y="202.6" text-anchor="middle" font-family="Georgia" font-size="16.2" fill="#a13324">?</text></g>
+<text x="300" y="325" text-anchor="middle" font-family="Courier New" font-size="24" fill="#a13324">SAME CURRENT. WHY DIFFERENT?</text>
+</svg>

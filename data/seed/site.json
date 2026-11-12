@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "name": "The Geeky Times",
+  "motto": "Research, in pictures.",
+  "tagline": "An independent illustrated science edition",
+  "navLabel": "✦   The illustrated paper",
+  "mediaBaseUrl": "media/",
+  "defaultPaper": "attention-is-all-you-need",
+  "papers": [
+    {
+      "slug": "attention-is-all-you-need",
+      "title": "Attention Is All You Need",
+      "dataUrl": "data/papers/attention-is-all-you-need.json"
+    },
+    {
+      "slug": "size-shapes-life",
+      "title": "Integrating Evolutionary Biology into Physics Classroom",
+      "dataUrl": "data/papers/size-shapes-life.json"
+    },
+    {
+      "slug": "h3-hexagons",
+      "title": "H3: honeycomb for the map",
+      "dataUrl": "data/papers/h3-hexagons.json"
+    }
+  ]
+}

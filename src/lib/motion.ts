@@ -1,18 +1,20 @@
-import { createContext, useContext, useEffect, useState, type RefObject } from 'react';
+import { createContext, useContext, useEffect, useState, useSyncExternalStore, type RefObject } from 'react';
 
 // Media moves only while it is on screen and its section is not paused.
 // Readers who ask for reduced motion start paused (each SVG also turns its own animations off).
 
-const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const reducedQuery = () => typeof window === 'undefined' ? null : window.matchMedia('(prefers-reduced-motion: reduce)');
+
+const subscribeReduced = (onChange: () => void) => {
+  const query = reducedQuery();
+  if (!query) return () => {};
+  query.addEventListener('change', onChange);
+  return () => query.removeEventListener('change', onChange);
+};
+const getReduced = () => reducedQuery()?.matches ?? false;
 
 export function useReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(reducedQuery.matches);
-  useEffect(() => {
-    const onChange = () => setReduced(reducedQuery.matches);
-    reducedQuery.addEventListener('change', onChange);
-    return () => reducedQuery.removeEventListener('change', onChange);
-  }, []);
-  return reduced;
+  return useSyncExternalStore(subscribeReduced, getReduced, () => false);
 }
 
 export interface MotionState {

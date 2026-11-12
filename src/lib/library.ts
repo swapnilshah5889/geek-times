@@ -12,7 +12,7 @@ export const roleLabel: Record<StoryRole, string> = {
 };
 
 export const trustLabel = (t?: LibraryStory['trust']) =>
-  t === 'peer_reviewed' ? 'Peer-reviewed paper' : t === 'company_reported' ? 'Company-reported' : t === 'preprint' ? 'Preprint' : '';
+  t === 'peer_reviewed' ? 'Peer-reviewed paper' : t === 'company_reported' ? 'Company-reported' : t === 'preprint' ? 'Preprint' : t === 'journal_published' ? 'Journal-published paper' : '';
 
 export const storyById = (lib: Library, id: string): LibraryStory | undefined => lib.stories.find(s => s.id === id);
 export const storiesOf = (lib: Library, ids: string[]): LibraryStory[] =>
@@ -20,8 +20,6 @@ export const storiesOf = (lib: Library, ids: string[]): LibraryStory[] =>
 export const fieldOf = (lib: Library, id: string): LibraryField | undefined => lib.fields.find(f => f.id === id);
 export const issueById = (lib: Library, id: string): LibraryIssue | undefined => lib.issues.find(i => i.id === id);
 export const companyById = (lib: Library, id: string): LibraryCompany | undefined => lib.companies.find(c => c.id === id);
-/** Issues are collections of already-published stories; a story can appear in more than one. */
-export const issuesWith = (lib: Library, storyId: string): LibraryIssue[] => lib.issues.filter(i => i.stories?.includes(storyId));
 export const volumeOf = (lib: Library, issue: LibraryIssue): LibraryVolume | undefined => lib.volumes.find(v => v.id === issue.volume);
 const issueNo = (i: LibraryIssue) => parseInt(i.number.replace(/\D/g, ''), 10) || 0;
 

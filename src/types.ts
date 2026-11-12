@@ -1,6 +1,18 @@
 // The content model. These shapes are the contract between the data (JSON files today, a database
 // later) and the UI. Bump schemaVersion when a change is not backwards compatible.
 
+/**
+ * The story document's schemaVersion (StoryDoc). Version 2 requires an explicit `claim` on every fact (decision 44);
+ * version 1 documents are rejected, never upgraded silently. Site, tags, library and search-index keep their own versions.
+ */
+export const STORY_SCHEMA_VERSION = 2 as const;
+
+/** The error for a story file at another schemaVersion. The validator (scripts/build-index.ts) and the page loader (src/data/load.ts) both use it. */
+export function storyVersionMessage(slug: string, found: unknown): string {
+  return `story ${slug} is at schemaVersion ${String(found)}; required version is ${STORY_SCHEMA_VERSION}. ` +
+    `Migrate the file to schemaVersion ${STORY_SCHEMA_VERSION} (every fact needs a claim) or re-export it from the editor.`;
+}
+
 export interface SiteConfig {
   schemaVersion: 1;
   name: string;
@@ -20,8 +32,39 @@ export interface PaperEntry {
   dataUrl: string;
 }
 
-export interface PaperDoc {
-  schemaVersion: 1;
+/**
+ * Where a story's facts come from. `paper` is the default (a missing `kind` means paper, so existing files are unchanged).
+ * `blog` is a company engineering post: its claims come from the company's own post, not independently checked.
+ */
+export type SourceKind = 'paper' | 'blog';
+
+/** The research paper a story explains. */
+export interface PaperSource {
+  title: string;
+  authors: string;
+  year: number;
+  url: string;
+}
+
+/** A company engineering post. Replaces `authors` with `organization` and `year` with `published`. */
+export interface BlogSource {
+  title: string;
+  /** The company or team that wrote the post, e.g. "Netflix Technology Blog". */
+  organization: string;
+  /** Publication date as YYYY-MM-DD. */
+  published: string;
+  /** The live post. */
+  url: string;
+  /** An archived copy (e.g. Wayback) of the version we checked, so evidence links survive later edits. */
+  archivedUrl?: string;
+  /** Date the archived copy was retrieved, used to record the source snapshot. */
+  retrievedOn?: string;
+  /** Always company_reported (decision 18): the claim comes from the company's own post, not independently checked. */
+  trust: 'company_reported';
+}
+
+interface StoryDocBase {
+  schemaVersion: typeof STORY_SCHEMA_VERSION;
   slug: string;
   pageTitle: string;
   /** One or two plain-language sentences; shown on the home page and in search results. */
@@ -32,13 +75,31 @@ export interface PaperDoc {
   hook?: CoverHook;
   /** The science desk the story belongs to, e.g. "Machine learning". Stories never name an issue or a date of ours. */
   desk: string;
-  paper: { title: string; authors: string; year: number; url: string };
   tags: PaperTag[];
   blocks: Block[];
 }
 
+/** A story about a research paper. `kind` may be left out: that means paper. */
+export interface PaperStoryDoc extends StoryDocBase {
+  kind?: 'paper';
+  paper: PaperSource;
+  blog?: undefined;
+}
+
+/** A story about a company engineering post. The `paper` block must not be present. */
+export interface BlogStoryDoc extends StoryDocBase {
+  kind: 'blog';
+  blog: BlogSource;
+  paper?: undefined;
+}
+
+export type StoryDoc = PaperStoryDoc | BlogStoryDoc;
+
+/** The name existing imports use (src/data/load.ts). It covers blog stories too: read it as "a story document". */
+export type PaperDoc = StoryDoc;
+
 // ---------- Tags ----------
-// Tags come from a shared vocabulary (public/data/tags.json, a `tags` table later) so the same idea has
+// Tags come from a shared vocabulary (Supabase: v_tag/v_facet; seeded from data/seed/tags.json) so the same idea has
 // one id across every paper. Each paper links to tags with a relevance score and a note on where the
 // tag comes from, just like evidence facts.
 
@@ -146,10 +207,20 @@ export interface Moment {
   media?: Media;
   /** Big number for fact cards, e.g. "512". */
   figure?: string;
+  /** Facts only: the real claim kind of the number (decision 18). Never derived from `provenance`. */
   claim?: ClaimKind;
   /** Where in the paper a fact comes from, e.g. "Paper §3.1". */
   sourceLabel?: string;
+  /**
+   * Strips and chapters: their intent. Facts mirror their claim here (measured_result is `evidence`) so older
+   * renders that read only `provenance` still show the right kind.
+   */
   provenance?: Provenance;
+  /**
+   * Trust of the parent story's source. It describes the source and
+   * never changes a claim's kind. Additive in schemaVersion 1: older renders ignore it.
+   */
+  trust?: LibraryStory['trust'];
   href: string;
 }
 
@@ -266,7 +337,8 @@ export type ClaimKind = 'illustration' | 'model_design' | 'measured_result';
 
 export interface Fact {
   figure: string;
-  claim?: ClaimKind;
+  /** Required on every fact (scripts/build-index.ts rejects a fact without one): the real claim kind (decision 18). */
+  claim: ClaimKind;
   text: RichText;
   source?: { label: string; url: string };
   media?: Media;
@@ -284,6 +356,7 @@ export interface LibraryField {
 }
 export type SampleArtKind = 'dna' | 'protein' | 'waves' | 'stairs' | 'particle' | 'mold';
 export type StoryRole = 'lead' | 'feature' | 'brief' | 'vault' | 'real_world';
+export type SourceTrust = 'peer_reviewed' | 'preprint' | 'company_reported' | 'journal_published';
 
 export interface LibraryStory {
   id: string;
@@ -300,7 +373,7 @@ export interface LibraryStory {
   title: string;
   authors: string;
   year: number;
-  trust?: 'peer_reviewed' | 'preprint' | 'company_reported';
+  trust?: SourceTrust;
   art?: SampleArtKind;
   minutes: number;
   note?: string;
@@ -327,6 +400,8 @@ export interface LibraryIssue {
 
 export interface LibraryCompany {
   id: string;
+  /** True for layout-only placeholders; dropped when VITE_HIDE_SAMPLES=1. */
+  sample?: boolean;
   name: string;
   sector: string;
   blurb: string;
@@ -345,6 +420,8 @@ export interface Storyline {
 
 export interface GraphNode {
   id: string;
+  /** True for layout-only placeholders; dropped when VITE_HIDE_SAMPLES=1. */
+  sample?: boolean;
   title: string;
   authors: string;
   year: number;
@@ -362,6 +439,8 @@ export interface GraphNode {
 export interface GraphRelation {
   from: string;
   to: string;
+  /** True for layout-only placeholders; dropped when VITE_HIDE_SAMPLES=1. */
+  sample?: boolean;
   kind: 'builds_on' | 'improves_on' | 'uses_method';
   note: string;
   cited?: boolean;
@@ -377,7 +456,7 @@ export interface Library {
     lead: string; aside: string[]; more: string[];
     topics: { field: string; label: string; stories: string[] }[];
     real: string[]; storylines: string[]; vault: string;
-    onThisDay: { year: string; text: string; story: string };
+    onThisDay: { year: string; text: string; story: string } | null;
   };
   issues: LibraryIssue[];
   companies: LibraryCompany[];

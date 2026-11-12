@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="220" viewBox="0 0 320 220" role="img" aria-labelledby="title">
+<title id="title">Two relative-motion setups sit side by side with matching current arrows.</title>
+<desc>Two relative-motion setups sit side by side with matching current arrows.</desc>
+<style>
+svg{background:#f6f0df;}
+text{font-family:Georgia,serif;}
+@keyframes magnetPass {0%,10%{transform:translateX(-5px)} 35%{transform:translateX(13px)} 48%,100%{transform:translateX(-5px)}}
+ @keyframes loopPass {0%,48%{transform:translateX(0)} 72%{transform:translateX(-14px)} 88%,100%{transform:translateX(0)}}
+ @keyframes currentPulse {0%,100%{opacity:.72} 40%,70%{opacity:1}}
+ .move-left{animation:magnetPass 4.8s ease-in-out infinite}
+ .move-right{animation:loopPass 4.8s ease-in-out infinite}
+ .current{animation:currentPulse 4.8s ease-in-out infinite}
+ @media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<rect width="320" height="220" rx="12" fill="#f6f0df"/><circle cx="18" cy="18" r="1.5" fill="#27251e" opacity=".18"/><circle cx="301" cy="18" r="1.5" fill="#27251e" opacity=".18"/><circle cx="18" cy="202" r="1.5" fill="#27251e" opacity=".18"/><circle cx="301" cy="202" r="1.5" fill="#27251e" opacity=".18"/><circle cx="160.0" cy="12" r="1.5" fill="#27251e" opacity=".18"/><rect x="5" y="5" width="310" height="210" rx="10" fill="none" stroke="#27251e" stroke-width="2"/><text x="80.0" y="30" text-anchor="middle" font-family="Courier New" font-size="15" fill="#a13324">MAGNET MOVES</text><text x="240.0" y="30" text-anchor="middle" font-family="Courier New" font-size="15" fill="#a13324">WIRE MOVES</text><path d="M160.0 40 v125.39999999999999" stroke="#27251e" stroke-width="1.5" stroke-dasharray="3 5" opacity=".4"/><g class="loop" fill="none" stroke="#377675" stroke-width="3">
+ <ellipse cx="102.4" cy="127.6" rx="20.8" ry="41.8"/>
+ </g><g class="current" stroke="#a13324" stroke-width="1.8719999999999999" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M93.04 88.0 h16.56 M104.56 84.4 l4.32 3.5999999999999996 l-4.32 3.5999999999999996" fill="none"/>
+ <circle cx="90.16000000000001" cy="88.0" r="1.7999999999999998" fill="#a13324" stroke="none"/>
+ </g><g class="move-left"><g class="magnet" stroke="#27251e" stroke-width="1.265" stroke-linejoin="round">
+ <rect x="25.900000000000002" y="118.25" width="25.3" height="18.700000000000003" rx="2.75" fill="#a13324"/>
+ <rect x="51.2" y="118.25" width="25.3" height="18.700000000000003" rx="2.75" fill="#82acad"/>
+ <path d="M 51.2 119.35 v 16.500000000000004" stroke="#27251e" stroke-width="0.8800000000000001"/>
+ </g></g><path d="M38.4 176.0 L70.4 176.0 M61.400000000000006 180.0 L70.4 176.0 L61.400000000000006 172.0" fill="none" stroke="#a13324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g class="magnet" stroke="#27251e" stroke-width="1.265" stroke-linejoin="round">
+ <rect x="179.5" y="118.25" width="25.3" height="18.700000000000003" rx="2.75" fill="#a13324"/>
+ <rect x="204.8" y="118.25" width="25.3" height="18.700000000000003" rx="2.75" fill="#82acad"/>
+ <path d="M 204.8 119.35 v 16.500000000000004" stroke="#27251e" stroke-width="0.8800000000000001"/>
+ </g><g class="move-right"><g class="loop" fill="none" stroke="#377675" stroke-width="3">
+ <ellipse cx="265.59999999999997" cy="127.6" rx="20.8" ry="41.8"/>
+ </g></g><g class="current" stroke="#a13324" stroke-width="1.8719999999999999" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M256.23999999999995 88.0 h16.56 M267.76 84.4 l4.32 3.5999999999999996 l-4.32 3.5999999999999996" fill="none"/>
+ <circle cx="253.35999999999996" cy="88.0" r="1.7999999999999998" fill="#a13324" stroke="none"/>
+ </g><path d="M284.8 176.0 L249.60000000000002 176.0 M258.6 172.0 L249.60000000000002 176.0 L258.6 180.0" fill="none" stroke="#a13324" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g><circle cx="160.0" cy="127.6" r="10.08" fill="#f0e3c6" stroke="#27251e" stroke-width="2"/><text x="160.0" y="131.92" text-anchor="middle" font-family="Georgia" font-size="12.959999999999999" fill="#a13324">?</text></g>
+<text x="160" y="206" text-anchor="middle" font-family="Courier New" font-size="15" fill="#a13324">SAME CURRENT. WHY DIFFERENT?</text>
+</svg>

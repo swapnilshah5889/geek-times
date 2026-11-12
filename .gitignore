@@ -1,6 +1,7 @@
 node_modules
 dist
 *.local
+.env
 *.log
 __pycache__/
 .DS_Store
@@ -8,3 +9,4 @@ __pycache__/
 !.vscode/extensions.json
 .idea
 public/data/search-index.json
+data/intake/
