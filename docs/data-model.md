@@ -187,8 +187,10 @@ classDiagram
 
 ### Seeding and backup (decision 35)
 
-- The files in git are the complete seed: `public/data/**` and `public/media/**`. `npm run seed` loads them into an empty
-  Supabase project, upserting by `slug` / `key`. Storage keys mirror the media paths.
+- `data/seed/**` is the Git-tracked editorial seed; `backups/media/**` is the Git-tracked recovery copy for media.
+  Neither directory is served by the app. `npm run seed` loads editorial records into an empty Supabase project,
+  upserting by `slug` / `key`; the media upload tool reads the backup and writes objects to Supabase Storage. Storage
+  keys mirror the story media paths.
 - Numeric ids are assigned by Postgres and change on every re-seed. Don't use them as external identifiers or rely on
   them across re-seeds: URLs, files, analytics and the portable seed or export use slugs and keys, and references are
   remapped on import. Database-native dumps, migration records and audit logs may keep them as internal references (decision 37).

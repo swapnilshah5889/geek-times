@@ -8,9 +8,9 @@
 // resolves src with new URL(src, base)).
 //
 // Scope rules:
-//   - Only media referenced by live content is inventoried and uploaded. public/media/samples/** is never uploaded
+//   - Only media referenced by live content is inventoried and uploaded. backups/media/samples/** is never uploaded
 //     (not live). A live row that points into samples/ is reported as a problem.
-//   - Local public/media is read-only here. Nothing is deleted.
+//   - Git-tracked backups/media is read-only here. The app never serves or reads this directory.
 //   - Placeholder art (see placeholderReason) is never uploaded and is reported.
 //
 // Hash strategy: idempotency compares SHA-256 of the local bytes with SHA-256 of the remote object. Storage's list
@@ -38,7 +38,7 @@ import { fileURLToPath } from 'node:url';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const MEDIA_DIR = join(ROOT, 'public', 'media');
+const MEDIA_DIR = join(ROOT, 'backups', 'media');
 const BUCKET = (process.env.SUPABASE_MEDIA_BUCKET ?? '').trim() || 'story-media';
 const LIST_PAGE = 1000;
 const READ_PAGE = 1000;
@@ -258,7 +258,7 @@ function printInventory(inv: Inventory, byKey: Map<string, string>): void {
     `External URLs skipped: ${inv.external}.`);
   console.log(`Live media objects to check: ${inv.refs.size}. Inventory by story slug (media referenced):`);
   for (const [slug, n] of [...bySlug].sort((a, b) => (a[0] < b[0] ? -1 : 1))) console.log(`  ${slug}: ${n}`);
-  console.log(`Excluded, not live: ${samples} file(s) under public/media/samples/.`);
+  console.log(`Excluded, not live: ${samples} file(s) under backups/media/samples/.`);
   console.log(`Local media not referenced by live content (not uploaded): ${unreferenced}.`);
 }
 
@@ -295,7 +295,7 @@ async function upload(args: string[]): Promise<void> {
 
   const { placeholders, notLocal } = await scanLocalSvgs(inv, byKey);
   if (notLocal.length || inv.problems.length) {
-    for (const k of notLocal) console.error(`BLOCKER referenced media not found under public/media: ${k}`);
+    for (const k of notLocal) console.error(`BLOCKER referenced media not found under backups/media: ${k}`);
     for (const p of inv.problems) console.error(`BLOCKER ${p}`);
     die('Nothing uploaded. Fix the blockers above (live content must resolve to local files) and re-run.');
   }
@@ -355,7 +355,7 @@ async function upload(args: string[]): Promise<void> {
     console.error(`PLACEHOLDER not uploaded: ${p.key} (${p.reason}); stories: ${p.slugs.join(', ')}`);
   }
   console.log(`Owner action: set site_settings.media_base_url to: ${mediaBaseUrl(url)}`);
-  console.log('This script does not write site_settings. Local public/media is unchanged and remains the recovery copy.');
+  console.log('This script does not write site_settings. Git-tracked backups/media remains unchanged as the recovery copy.');
   if (placeholders.length) {
     die(`${placeholders.length} live SVG(s) look like placeholder art. Replace them with real art, then re-run.`);
   }
@@ -404,7 +404,7 @@ async function verify(): Promise<void> {
   }
   for (const p of inv.problems) console.error(`BLOCKER ${p}`);
   if (notLocal.length) {
-    console.log(`Note: ${notLocal.length} referenced SVG(s) not in local public/media; placeholder check skipped for them.`);
+    console.log(`Note: ${notLocal.length} referenced SVG(s) not in backups/media; placeholder check skipped for them.`);
   }
 
   if (missing.length || noCors.length || placeholders.length || inv.problems.length) process.exit(1);

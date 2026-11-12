@@ -4,7 +4,7 @@
 // Media destination (design note): new SVGs are staged only, at data/intake/<slug>/media/<slug>/... (ignored by Git),
 // never public/media/. The eventual publish step should read approved SVGs from that staging folder, upload each one
 // to Supabase Storage with the same key as its story src (<slug>/<name>.svg) through scripts/media-storage.ts, verify
-// the public URLs, and then skip any public/media/ copy. Existing public/media/<slug>/ files are the recovery copy and
+// the public URLs, and then skip any public/media/ copy. Existing backups/media/<slug>/ files are the Git recovery copy and
 // are removed only after that upload is verified. This conversion script does not perform the upload itself.
 
 import { createHash, randomUUID } from 'node:crypto';

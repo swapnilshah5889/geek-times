@@ -68,8 +68,8 @@ skills/                   playbooks any agent can follow (open SKILL.md format);
 design/                   exported mockups (PNG + standalone HTML) and the review brief: design/README.md
 prompts/                  prompt templates used by the AI converter (tag-paper.md, …)
 data/seed/                Git-tracked editorial backup: site.json, tags.json, library.json, papers/<slug>.json
+backups/media/            Git-tracked media recovery copy; never served by the app
 data/intake/              ignored, resumable conversion checkpoints and drafts
-public/media/<slug>/      current local media source; moving live assets to Supabase Storage is a V1 merge gate
 supabase/                 schema migrations (decisions 34, 48, 49) and README; applied with `npm run apply:migration`
 src/
   types.ts                the content model: the contract between data and UI
@@ -131,8 +131,9 @@ what's next, and the model-routing default. The paragraphs below are kept for co
 single source of truth for status.
 
 The app reads story and editorial data from Supabase views (decision 51); there is no file-backed frontend mode.
-`data/seed/*.json` is retained for publish/import and recovery only. Media is still local under `public/media/` and
-must move to Supabase Storage before the owner's cloud-only V1 merge gate is complete. See `docs/production-plan.md`.
+`data/seed/*.json` is retained for publish/import and recovery only. The 174 live story assets are served from
+Supabase Storage; Git recovery copies live under `backups/media/`, outside Vite's public directory. The app must not
+read or serve that backup. See `docs/STATE.md` and `docs/production-plan.md`.
 
 ## Status detail (kept for background)
 
