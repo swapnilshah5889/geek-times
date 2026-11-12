@@ -217,6 +217,25 @@
       "year": 1905,
       "trust": "journal_published",
       "minutes": 3
+    },
+    {
+      "id": "cassandra",
+      "real": true,
+      "sample": false,
+      "headline": "The inbox that",
+      "accent": "never stops writing.",
+      "dek": "Billions of writes a day, and every message has to be searchable. Facebook’s Cassandra spreads the work around a ring of cheap machines, jots each change down fast and sorts it later.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Cassandra - A Decentralized Structured Storage System",
+      "authors": "Lakshman and Malik",
+      "year": 2009,
+      "minutes": 4,
+      "trust": "peer_reviewed"
     }
   ],
   "front": {
@@ -597,6 +616,29 @@
       "type": "paper",
       "x": 545,
       "y": 480
+    },
+    {
+      "id": "bigtable",
+      "title": "Bigtable: A Distributed Storage System for Structured Data",
+      "authors": "Chang and colleagues",
+      "year": 2006,
+      "field": "sw",
+      "type": "paper",
+      "x": 620,
+      "y": 545
+    },
+    {
+      "id": "cassandra",
+      "title": "Cassandra - A Decentralized Structured Storage System",
+      "authors": "Lakshman and Malik",
+      "year": 2009,
+      "field": "sw",
+      "type": "paper",
+      "x": 745,
+      "y": 520,
+      "story": "cassandra",
+      "short": "Facebook’s Cassandra",
+      "blurb": "Facebook’s store for Inbox Search. It borrows Dynamo’s ring of machines and Bigtable’s column families, writes fast to a log and memory, and merges sorted files later."
     }
   ],
   "relations": [
@@ -688,6 +730,20 @@
       "to": "dynamo",
       "kind": "builds_on",
       "note": "Dynamo uses a ring like Chord’s but lets every machine know where each cart lives, so there are no extra hops.",
+      "cited": true
+    },
+    {
+      "from": "dynamo",
+      "to": "cassandra",
+      "kind": "builds_on",
+      "note": "Cassandra uses a Dynamo-style ring with copies on the next machines along, but resolves conflicts by timestamp instead of vector clocks.",
+      "cited": true
+    },
+    {
+      "from": "bigtable",
+      "to": "cassandra",
+      "kind": "uses_method",
+      "note": "Cassandra groups columns into column families and compacts its data files the way Bigtable does.",
       "cited": true
     }
   ]
