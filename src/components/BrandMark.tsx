@@ -1,4 +1,4 @@
-/** The newspaper-and-spark mark, shared by the masthead, snack bar, and favicon. */
+/** The story-bubble mark, shared by the masthead, snack bar, and favicon. */
 export function BrandMark({ className }: { className?: string }) {
   return (
     <svg
@@ -8,10 +8,26 @@ export function BrandMark({ className }: { className?: string }) {
       aria-hidden="true"
       focusable="false"
     >
-      <rect x="4" y="4" width="56" height="56" rx="7" fill="#f6f0df" stroke="#27251e" strokeWidth="3" />
-      <path d="M15 17h34v34H15z" fill="#fbf3dc" stroke="#a13324" strokeWidth="2.5" />
-      <path d="M21 25h20M21 32h20M21 39h13M21 46h20" stroke="#27251e" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="m47 7 2.5 5.5L55 15l-5.5 2.5L47 23l-2.5-5.5L39 15l5.5-2.5z" fill="#a13324" />
+      <path
+        d="M9 9h46v36H30L16 56l2-11H9z"
+        fill="#f6f0df"
+        stroke="#27251e"
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <path d="M45 9h10v10z" fill="#a13324" />
+      <text
+        x="13"
+        y="39"
+        fill="#27251e"
+        fontFamily="Georgia, 'Times New Roman', serif"
+        fontSize="27"
+        fontWeight="700"
+        letterSpacing="-3.5"
+      >
+        GT
+      </text>
+      <path d="M14 42h28" stroke="#a13324" strokeWidth="2.5" />
     </svg>
   );
 }
