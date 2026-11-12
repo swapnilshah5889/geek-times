@@ -27,7 +27,10 @@ The first story is "Attention Is All You Need" (Vaswani et al., 2017). It's the 
 3. **Fact-check before publishing.** Every evidence number and every `paper`-basis tag is checked against the source.
    See `skills/fact-check/`.
 4. **The UI renders data.** No story is hard-coded in components. The app reads Supabase views; JSON under `data/seed/`
-   is the Git-tracked editorial backup and input for publish/import commands. Media lives in files now and may move to a CDN later.
+   is the Git-tracked editorial backup and input for publish/import commands. The browser never reads the seed. Before V1,
+   all story media moves to Supabase Storage and duplicate runtime copies are removed from `public/`. No sample, demo,
+   mockup, unverified, or placeholder records/copy/art may render in any mode; show an honest empty state instead.
+   Clearly stamped teaching illustrations may use invented numbers, but never count as evidence.
 5. **Original work only.** Write our own explanations and drawings. Never copy a source's text, figures or branding
    (blog posts especially). Short quotes only, with attribution.
 

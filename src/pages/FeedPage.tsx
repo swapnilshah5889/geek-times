@@ -50,6 +50,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
     <MediaBaseContext.Provider value={mediaBaseFor(site)}>
       <MotionGroup>
         <main className="feed" tabIndex={-1}>
+          <h1 className="sr-only">{`${site.name} — Snacks`}</h1>
           <header className="feed-bar">
             <a href={homeHref()} className="feed-brand">{site.name}</a>
             <span className="feed-count">{Math.min(current + 1, items.length)} / {items.length}</span>

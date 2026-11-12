@@ -93,7 +93,7 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
                   {(s.art || s.real) ? <StoryArt story={s} archive={archive} /> : <div className="is-textcard"><span className="f-company">{s.title}</span><span className="chip chip-warm">{trustLabel(s.trust)}</span></div>}
                   <div className="f-card-body">
                     <span className="label">{`${String(i + 1).padStart(2, '0')} · ${roleLabel[s.role]}${s.sample ? ' · Sample' : ''}`}</span>
-                    <h4>{`${s.headline}${s.accent ? ` ${s.accent}` : ''}`}</h4>
+                    <h3>{`${s.headline}${s.accent ? ` ${s.accent}` : ''}`}</h3>
                     {s.real && <p>{`${s.dek.split('. ')[0]}.`}</p>}
                   </div>
                 </a>

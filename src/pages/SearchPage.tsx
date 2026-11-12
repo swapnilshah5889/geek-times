@@ -34,6 +34,7 @@ export function SearchPage({ archive }: { archive: Archive }) {
 
   return (
     <main>
+      <h1 className="sr-only">{`${site.name} — Search`}</h1>
       <Masthead site={site} meta={['The archive', `${index.papers.length} stor${index.papers.length === 1 ? 'y' : 'ies'}`]} />
       <section className="search">
         <div className="label">The archive &nbsp; / &nbsp; Search every issue</div>

@@ -44,7 +44,7 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
             return (
               <a key={s.id} className="card f-post" href={paperHref(s.id)}>
                 <span className="label">{sample ? 'Blog · [year] · Sample' : `Engineering blog · ${s.year}`}</span>
-                <h4>{s.headline}</h4>
+                <h3>{s.headline}</h3>
                 <p>{s.dek}</p>
                 <span className="f-chips">
                   <span className="chip chip-warm">{trustLabel(s.trust)}</span>

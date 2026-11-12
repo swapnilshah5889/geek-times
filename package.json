@@ -18,7 +18,13 @@
     "status": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/status.ts",
     "approve": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/approve.ts",
     "apply:migration": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/apply-migration.ts",
-    "seed:editorial": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/seed-editorial-from-library.ts"
+    "seed:editorial": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/seed-editorial-from-library.ts",
+    "media:upload": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/media-storage.ts upload",
+    "media:verify": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/media-storage.ts verify",
+    "export:supabase": "node --experimental-strip-types --disable-warning=ExperimentalWarning --env-file=.env scripts/export-supabase.ts",
+    "reconcile:export": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/reconcile-export.ts",
+    "restore:drill": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/restore-drill.ts",
+    "check:runtime": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/check-runtime-sources.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",

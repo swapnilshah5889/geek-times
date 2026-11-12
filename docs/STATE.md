@@ -9,7 +9,7 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 - Everything through PR #9 (the Supabase plan) is merged into `main`. No feature branch open.
 - `main` is at `fba4323`. Work continues on `v1` (decision 40), many commits ahead.
 - **Phase 3b landed in code on `v1` (decision 49):** the normalized V1 schema is in SQL migrations (core, editorial, public views and RLS, applied in filename order after the init migration). The `v_*` views expose only live, non-sample, approved or verified rows to anon. The importer writes one version and its extracted rows in one `pg` transaction. Migration history is one path: `npm run apply:migration` (see `supabase/README.md`). Acceptance (applying A, B and D to the owner's project, importing the three real stories, orphan audit, leak check) is the lead's run and is not recorded as done here yet.
-- **Supabase-only runtime landed (decision 51):** every frontend read goes through Supabase views. File mode is gone (`VITE_DATA_SOURCE` removed, `src/data/source-file.ts` deleted). `data/seed/` holds the editorial seed (no sample content); `public/data/` is empty. The prerender walker enumerates routes from `v_live_story` / `v_issue` / `v_company` at build time via a Node Supabase client reading the publishable key.
+- **Supabase-only runtime landed (decision 51):** every frontend data read goes through Supabase views. File mode is gone (`VITE_DATA_SOURCE` removed, `src/data/source-file.ts` deleted). `data/seed/` is the Git recovery/import copy; it still contains legacy demo graph records that must never render. `public/data/` is empty. The prerender walker enumerates routes from `v_live_story` / `v_issue` / `v_company` at build time via a Node Supabase client reading the publishable key.
 - **Dynamic front page landed:** `src/data/load.ts` derives `lead`, `aside`, `more`, `topics` and `real` from live stories on mount; publishing a new paper surfaces it on the home page on the next load. Curated bits (storylines, vault, onThisDay) still come from `front_placement`.
 - **On this day is intentionally empty** until a real, dated anniversary with a source is curated. The seed now stores `null`, and the UI hides absent or placeholder entries. Supabase still holds the old sample object; sync it to `null` only after all deployed clients accept the nullable value, since older clients dereference it directly.
 - **Preview / live status gate landed (decision 52):** stories can be published as `preview` (visible only when `VITE_SHOW_PREVIEW=1` is set, i.e. local dev) and approved to `live` with `npm run approve -- <slug>`. The hosted site (no flag) only renders `live` rows. Migration `20261108120000_preview_status.sql` adds `v_preview_*` twin views, the `approve_version(slug)` RPC (service_role only), and the preview-status addition to the check constraint. `npm run status` lists every published_version row with its status.
@@ -25,8 +25,8 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 - `resnet` (He et al., CVPR 2016 / arXiv 1512.03385, peer-reviewed): added 2026-11-07; fact-check 42 rows, 38 pass. CVPR 2016 venue still needs manual confirmation.
 - `google-search` (Brin & Page, WWW7 1998, peer-reviewed): added 2026-11-07; fact-check 53 rows, 45 pass. WWW7 peer-review status needs manual confirmation.
 - `dynamo` (DeCandia et al., SOSP 2007, peer-reviewed): added 2026-11-07; fact-check 36 rows, 29 pass. SOSP 2007 peer-review status needs manual confirmation.
-- All 7 fact-check records live under `docs/fact-checks/`. Real hand-drawn art is still pending for `resnet`, `google-search` and `dynamo`; their current media are placeholder grey plates.
-- Sample stories, companies, storylines, nodes and relations were stripped from `data/seed/library.json` on 2026-11-07 and no longer appear in the DB-driven site (decision 51). Seven real stories are live.
+- All 7 fact-check records live under `docs/fact-checks/`. Real hand-drawn art is in place for every live story (84 SVGs for `resnet`/`google-search`/`dynamo` landed in commit `86f75aa`, Nov 7). No placeholder art may be visible in V1.
+- Seven real stories are live. The Git seed still contains legacy demo graph rows and a `[Company name]` graph entry; runtime views and page logic must keep these from appearing. Audit and clean the visible site before V1; do not treat a sample/demo badge as a substitute for removing fabricated data.
 
 ## Recent publication
 
@@ -60,7 +60,7 @@ Still file-backed (not read at runtime):
 
 ## Next
 
-Follow the **V1 merge gate** in `docs/production-plan.md`. Current blockers/verification items are: move `public/media/` assets to Supabase Storage; record the target-project schema/RLS/data acceptance; prove publish → home/search/story URL without a site rebuild; complete a non-production export/restore reconciliation; verify Vercel environment/build/deep-link behavior; close the page-review heading and touch-target gaps; then run the final gates. Do not merge `v1` into `main` until those checks have evidence and the owner chooses to release.
+Follow the **V1 merge gate** in `docs/production-plan.md`. Current blockers/verification items are: remove all visible sample/demo/placeholder records, copy, dates and art; move `public/media/` assets to Supabase Storage and remove local runtime copies after backup verification; record target-project schema/RLS/data acceptance; prove publish → home/search/story URL without a site rebuild; complete a non-production export/restore reconciliation; verify Vercel environment/build/deep-link behavior; close the page-review heading and touch-target gaps; then run final gates. Do not merge `v1` into `main` until those checks have evidence and the owner chooses to release.
 
 The browser review checked 17 route variants at 1280px and 375px with no site console errors or horizontal overflow. Remaining accessibility findings: home/feed/search need an `<h1>`; issue/company card headings skip a level; several mobile tap targets are under 44px.
 
@@ -75,21 +75,16 @@ The browser review checked 17 route variants at 1280px and 375px with no site co
   before launch. Details: production plan, Phase 3 backup table.
 - **Publish atomicity (decision 38):** a story version goes live in one transaction or not at all. See `docs/data-model.md`.
 
-## Known gaps kept on purpose (do not "fix")
+## Content visibility rule for V1
 
-- **Family tree / explore map** are demo content. The current nodes and links are placeholders
-  so the layout can be reviewed. Don't invent, reshuffle or "verify" links to fill the tree.
-  The pages carry a "Mockup · links to be fact-checked" badge and `src/components/FamilyTree.tsx`
-  carries a DEMO CONTENT banner at the top. We will properly build the screen once there are
-  enough verified relations (see decisions 15, 24; production plan section 4).
-- Short lists on Home, Issues, Companies and Map until more real stories land. Decision 51 removed samples from the DB; sparse slots are expected, and components render empty states rather than placeholders. The On this day tile remains empty until a real dated, sourced anniversary is curated.
+- No sample, mockup, unverified, or placeholder records, copy, dates, or art may appear on any route in local or live mode. Remove/hide demo map and family-tree records until their relations are verified. A clear empty state is acceptable; a demo badge is not a substitute for removing fabricated data.
+- Short lists are acceptable when they contain only real records. On This Day should be absent or show an honest empty state until a real, dated anniversary with a source is curated; the old sample value in Supabase must not render.
+- Original teaching illustrations may contain invented numbers only when visibly stamped `Illustration · numbers invented`.
 
 ## Build flags
 
-- `VITE_HIDE_SAMPLES=1 npm run build` hides all sample content for production. `src/data/load.ts` drops every
-  `sample: true` story, issue, storyline, company, node and relation at load time, and removes any reference to a
-  dropped id (front page slots, topics, issue lists, company posts, node story links). Unset (the default), dev and
-  the sample-heavy design review look exactly as before. Components are not changed by the flag.
+- `VITE_HIDE_SAMPLES=1 npm run build` is a defense-in-depth filter, not the V1 content rule. V1 must show no sample or
+  placeholder content in any mode; database views and page empty states must enforce that independently.
 
 ## Copy rule
 

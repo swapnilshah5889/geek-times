@@ -353,6 +353,7 @@ export function HomePage({ archive }: { archive: Archive }) {
     <MediaBaseContext.Provider value={mediaBase}>
       <MotionGroup>
         <main className="site-main">
+          <h1 className="sr-only">{`${site.name} — ${site.motto}`}</h1>
           <Masthead site={site} meta={[today, '']} edition active="front" />
           <div className="f-motion"><MotionButton noun="animations" /></div>
           <Lead archive={archive} />
