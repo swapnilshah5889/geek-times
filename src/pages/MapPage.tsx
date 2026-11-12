@@ -1,7 +1,9 @@
 import { useHead } from '../components/head';
 import { Crumbs, SitePage } from '../components/SitePage';
 import type { Archive } from '../data/load';
+import { mediaBaseFor } from '../data/load';
 import { homeHref } from '../lib/routes';
+import { shareCardUrl } from '../lib/mediaBase';
 
 // The map of ideas stays closed until its relations are verified (V1 content rule; decisions 15 and 24).
 // Until then it renders no nodes, links, counts or filters, only an honest empty state.
@@ -10,6 +12,8 @@ export function MapPage({ archive }: { archive: Archive }) {
   useHead({
     title: `The map of ideas — ${site.name}`,
     description: 'The map of ideas opens once verified relations are mapped.',
+    image: shareCardUrl(mediaBaseFor(site)),
+    imageAlt: 'An open newspaper sends a red spark into connected symbols for life, mathematics, and space.',
     type: 'website',
   });
   return (

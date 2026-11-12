@@ -2,14 +2,14 @@
 // dist/<route>/index.html, so crawlers and link previews see the page without running JavaScript.
 // Run after `vite build`: `npm run build && npm run prerender`, then `npm run check:prerender`.
 //
-// Routes come from scripts/prerender-routes.ts (generated from public/data). Query-string views (?feed, ?search)
+// Routes come from scripts/prerender-routes.ts (generated from Supabase). Query-string views (?feed, ?search)
 // are not prerendered; they are listed as deferred there and printed below.
 //
 // Inspect the generated pages through `npx vite preview`, not by opening the files directly (file:// does not
 // resolve /assets paths reliably). Use URLs with a trailing slash, e.g. http://localhost:4173/papers/resnet/: vite
 // preview returns the prerendered file only for those (and /index.html). An extensionless URL gets the SPA shell.
 //
-// Absolute URLs: none are emitted yet, but a future og:image or canonical would be affected:
+// Absolute URLs built from the local preview origin (for example app links) are affected by SITE_ORIGIN:
 //   - SITE_ORIGIN unset: the local preview origin (http://localhost:<port>) stays in the output. That makes it obvious
 //     these are local files, not production share URLs.
 //   - SITE_ORIGIN=https://... set: the local origin is replaced by it. Use this for a real release build only.

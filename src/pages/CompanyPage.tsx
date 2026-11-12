@@ -1,7 +1,9 @@
 import { useHead } from '../components/head';
 import { Crumbs, SitePage } from '../components/SitePage';
 import type { Archive } from '../data/load';
+import { mediaBaseFor } from '../data/load';
 import { companyById, storiesOf, storyById, trustLabel } from '../lib/library';
+import { shareCardUrl } from '../lib/mediaBase';
 import { appHref, companyHref, paperHref } from '../lib/routes';
 
 export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) {
@@ -10,6 +12,8 @@ export function CompanyPage({ archive, id }: { archive: Archive; id?: string }) 
   useHead({
     title: company ? `${company.name}: ${company.sector} — ${archive.site.name}` : archive.site.name,
     description: company?.blurb ?? '',
+    image: shareCardUrl(mediaBaseFor(archive.site)),
+    imageAlt: 'An open newspaper sends a red spark into connected symbols for life, mathematics, and space.',
     type: 'website',
   });
   if (!company) throw new Error(`There is no company called “${id}”.`);

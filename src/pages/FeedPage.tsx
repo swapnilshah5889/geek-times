@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { MediaView } from '../components/MediaView';
+import { BrandMark } from '../components/BrandMark';
 import { MotionGroup } from '../components/motion';
 import { ClaimStamp } from '../components/common';
 import { appUrl, mediaBaseFor, type Archive } from '../data/load';
@@ -52,7 +53,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
         <main className="feed" tabIndex={-1}>
           <h1 className="sr-only">{`${site.name} — Snacks`}</h1>
           <header className="feed-bar">
-            <a href={homeHref()} className="feed-brand">{site.name}</a>
+            <a href={homeHref()} className="feed-brand"><BrandMark className="feed-brand-mark" />{site.name}</a>
             <span className="feed-count">{Math.min(current + 1, items.length)} / {items.length}</span>
             <a href={homeHref()} className="feed-close" aria-label="Back to the front page">✕</a>
           </header>

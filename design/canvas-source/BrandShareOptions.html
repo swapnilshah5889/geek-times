@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Geeky Times — logo and share-card directions</title>
+<style>
+  :root{--paper:#f6f0df;--card:#fbf3dc;--ink:#27251e;--red:#a13324;--line:#948b77;--gold:#f3e3b5}
+  *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif}
+  main{max-width:1320px;margin:auto;padding:36px 28px 72px}h1{font-size:clamp(38px,6vw,64px);margin:0 0 8px;letter-spacing:-.05em}
+  .intro{font-size:19px;color:#5e5748;font-style:italic;margin:0 0 34px}.option{border:1px solid var(--line);border-radius:10px;background:#fff9e8;padding:24px;margin:24px 0 36px}
+  .kicker{font:700 12px 'Courier New',monospace;letter-spacing:.12em;color:var(--red);text-transform:uppercase}.option h2{font-size:34px;letter-spacing:-.04em;margin:8px 0 22px}
+  .previews{display:grid;grid-template-columns:minmax(260px,.7fr) minmax(500px,1.3fr);gap:28px;align-items:start}
+  .mock-label{font:700 11px 'Courier New',monospace;letter-spacing:.1em;text-transform:uppercase;color:#5e5748;margin:0 0 9px}
+  .navmock{height:92px;border-top:4px double var(--ink);border-bottom:1px solid var(--ink);display:flex;align-items:center;gap:16px;padding:10px 12px;font:12px 'Courier New',monospace;overflow:hidden}
+  .brand{font:700 18px Georgia,serif;letter-spacing:-.04em;white-space:nowrap}.mark{width:48px;height:48px;flex:none}
+  .navlinks{margin-left:auto;display:flex;gap:15px;white-space:nowrap}.navlinks span:last-child{color:var(--red)}
+  .share{aspect-ratio:1200/630;width:100%;overflow:hidden;position:relative;background:var(--gold);border:1px solid var(--line);padding:5.2% 6%;display:flex;align-items:center;justify-content:space-between;gap:4%;}
+  .share-copy{position:relative;z-index:1;width:55%}.share-brand{display:flex;align-items:center;gap:10px;font:700 clamp(12px,1.7vw,20px) Georgia,serif;letter-spacing:-.04em}
+  .share-tag{font:700 clamp(8px,1vw,12px) 'Courier New',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-top:9%}
+  .share h3{font-size:clamp(21px,4.2vw,52px);line-height:.98;letter-spacing:-.055em;margin:3% 0 2%;max-width:10em}
+  .share p{font-size:clamp(11px,1.65vw,20px);line-height:1.25;margin:0;color:#514a3d}
+  .art{width:40%;height:88%;flex:none}
+  .note{font-size:15px;line-height:1.45;color:#5e5748;margin:16px 0 0;max-width:80ch}
+  @media(max-width:820px){main{padding:24px 16px}.previews{grid-template-columns:1fr}.navmock{height:76px}.share{min-height:250px}.art{width:38%}.option{padding:18px}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Logo + WhatsApp preview</h1>
+  <p class="intro">Two small, newspaper-native directions. The logo sits in the site navigation; the share card gives a link an instant visual hook.</p>
+
+  <section class="option">
+    <div class="kicker">Option A · The printed mark</div><h2>Page stamp + curious spark</h2>
+    <div class="previews">
+      <div><p class="mock-label">Navigation lockup</p><div class="navmock">
+        <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="The Geeky Times page-and-spark logo"><rect x="4" y="4" width="56" height="56" rx="7" fill="#f6f0df" stroke="#27251e" stroke-width="2.5"/><path d="M16 16h32v34H16z" fill="#fbf3dc" stroke="#a13324" stroke-width="2"/><path d="M21 24h21M21 30h21M21 36h14M21 42h21" stroke="#27251e" stroke-width="2.2" stroke-linecap="round"/><path d="m46 10 2.2 4.8L53 17l-4.8 2.2L46 24l-2.2-4.8L39 17l4.8-2.2z" fill="#a13324"/></svg>
+        <span class="brand">The Geeky Times</span><span class="navlinks"><span>Front page</span><span>Explore</span><span>Real world</span><span>Search</span></span>
+      </div><p class="note">A tiny printed-page emblem with one spark: clearly a publication, with curiosity as the subject.</p></div>
+      <div><p class="mock-label">WhatsApp / social card · 1200 × 630</p><div class="share">
+        <div class="share-copy"><div class="share-brand"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="4" width="56" height="56" rx="7" fill="#f6f0df" stroke="#27251e" stroke-width="2.5"/><path d="M16 16h32v34H16z" fill="#fbf3dc" stroke="#a13324" stroke-width="2"/><path d="M21 24h21M21 30h21M21 36h14M21 42h21" stroke="#27251e" stroke-width="2.2" stroke-linecap="round"/><path d="m46 10 2.2 4.8L53 17l-4.8 2.2L46 24l-2.2-4.8L39 17l4.8-2.2z" fill="#a13324"/></svg>The Geeky Times</div><div class="share-tag">Research, in pictures</div><h3>Big ideas, made visible.</h3><p>Follow the question. See how the idea works.</p></div>
+        <svg class="art" viewBox="0 0 400 400" role="img" aria-label="An open newspaper with ideas rising from its pages"><path d="M35 104Q123 70 200 112v222q-76-41-165-10z" fill="#fff9e8" stroke="#27251e" stroke-width="5"/><path d="M365 104q-88-34-165 8v222q76-41 165-10z" fill="#fbf3dc" stroke="#27251e" stroke-width="5"/><path d="M200 112v222M61 139q52-18 102-5M61 160q52-18 102-5M61 181q52-18 102-5M239 134q50-14 100 5M239 155q50-14 100 5M239 176q50-14 100 5" fill="none" stroke="#a13324" stroke-width="5" stroke-linecap="round"/><circle cx="115" cy="80" r="21" fill="#e4ecdd" stroke="#27251e" stroke-width="4"/><path d="M115 58q-18-21 0-34 18 13 0 34M93 80q-21-18-34 0 13 18 34 0" fill="#e4ecdd" stroke="#27251e" stroke-width="4"/><path d="M270 89c-25-29-13-51 0-59 22 16 20 39 0 59z" fill="#f3e3b5" stroke="#27251e" stroke-width="4"/><circle cx="270" cy="25" r="5" fill="#a13324"/><path d="M265 18l-8-8m18 7 8-9" stroke="#a13324" stroke-width="4" stroke-linecap="round"/><path d="M205 89q19-25 40 0-21 26-40 0zm0 0h40" fill="#e9d8c2" stroke="#27251e" stroke-width="4"/><circle cx="225" cy="89" r="6" fill="#a13324"/></svg>
+      </div><p class="note">Field-neutral original art: a page, a leaf, a seed of an idea, and a tiny orbit. Headline and description stay readable in a small chat preview.</p></div>
+    </div>
+  </section>
+
+  <section class="option">
+    <div class="kicker">Option B · The idea in motion</div><h2>Open-book monogram + paths between fields</h2>
+    <div class="previews">
+      <div><p class="mock-label">Navigation lockup</p><div class="navmock">
+        <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="The Geeky Times open-book monogram"><path d="M7 15q14-5 25 3v37Q20 47 7 52zM57 15q-14-5-25 3v37q12-8 25-3z" fill="#fbf3dc" stroke="#27251e" stroke-width="3"/><path d="M15 24q7-2 13 1M15 31q7-2 13 1M36 25q7-2 13 0M36 32q7-2 13 0" stroke="#a13324" stroke-width="2.5" stroke-linecap="round"/><path d="M32 9v-5m-5 9-5-4m15 4 5-4" stroke="#a13324" stroke-width="3" stroke-linecap="round"/></svg>
+        <span class="brand">The Geeky Times</span><span class="navlinks"><span>Front page</span><span>Explore</span><span>Real world</span><span>Search</span></span>
+      </div><p class="note">A more literal open-book badge: friendly at small sizes and unmistakably about visual reading.</p></div>
+      <div><p class="mock-label">WhatsApp / social card · 1200 × 630</p><div class="share" style="background:#fbf3dc">
+        <div class="share-copy"><div class="share-brand"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M7 15q14-5 25 3v37Q20 47 7 52zM57 15q-14-5-25 3v37q12-8 25-3z" fill="#fbf3dc" stroke="#27251e" stroke-width="3"/><path d="M15 24q7-2 13 1M15 31q7-2 13 1M36 25q7-2 13 0M36 32q7-2 13 0" stroke="#a13324" stroke-width="2.5" stroke-linecap="round"/><path d="M32 9v-5m-5 9-5-4m15 4 5-4" stroke="#a13324" stroke-width="3" stroke-linecap="round"/></svg>The Geeky Times</div><div class="share-tag">An illustrated guide to ideas</div><h3>One question can change a field.</h3><p>Research stories for the curious.</p></div>
+        <svg class="art" viewBox="0 0 400 400" role="img" aria-label="An open book connected to many areas of knowledge"><path d="M37 161q75-30 163 7v181q-88-38-163-6zM363 161q-75-30-163 7v181q88-38 163-6z" fill="#fff9e8" stroke="#27251e" stroke-width="5"/><path d="M200 168v181M63 192q48-15 104 4M63 213q48-15 104 4M237 196q55-19 101-4M237 217q55-19 101-4" fill="none" stroke="#a13324" stroke-width="4" stroke-linecap="round"/><circle cx="200" cy="92" r="31" fill="#f3e3b5" stroke="#27251e" stroke-width="4"/><path d="M200 30v28m0 68v21m-62-55h27m70 0h27m-106-44 19 19m50 50 19 19m0-88-19 19m-50 50-19 19" stroke="#a13324" stroke-width="4" stroke-linecap="round"/><circle cx="200" cy="92" r="8" fill="#a13324"/><path d="M139 109q-38 0-48 42m170-42q38 0 48 42M146 54q-27-16-48 5m154-5q27-16 48 5" fill="none" stroke="#27251e" stroke-width="3" stroke-dasharray="5 7"/><circle cx="91" cy="151" r="13" fill="#e4ecdd" stroke="#27251e" stroke-width="3"/><path d="M91 138q-10-16 0-24 13 9 0 24m-13 13q-16 10-24 0 9-13 24 0" fill="#e4ecdd" stroke="#27251e" stroke-width="3"/><path d="M309 151l13 23h-26z" fill="#e9d8c2" stroke="#27251e" stroke-width="3"/><circle cx="309" cy="151" r="5" fill="#a13324"/></svg>
+      </div><p class="note">More energetic art with a visible question at the center and paths branching into nature, math, and technology.</p></div>
+    </div>
+  </section>
+  <p class="note"><b>Implementation note:</b> these are design options, not final share assets. WhatsApp needs a public, absolute raster image URL in prerendered Open Graph metadata. After a direction is chosen, create the approved logo and share image, wire the image into page metadata, then verify a real public link preview.</p>
+</main>
+</body>
+</html>

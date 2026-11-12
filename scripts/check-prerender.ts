@@ -1,8 +1,8 @@
 // Checks the prerendered pages (run after `npm run build && npm run prerender`): `npm run check:prerender`.
 // For every route in scripts/prerender-routes.ts it asserts that dist/<route>/index.html exists and carries
 // page-specific metadata: a <title> (not the generic site title, except on the home page), a description, and
-// og:title, og:description and og:type. An og:image, when present, must not be an SVG (social platforms do not
-// render SVG previews). Any failure prints one line per route and exits with code 1.
+// og:title, og:description, og:type, and a public HTTPS raster og:image with alt text. Any failure prints one
+// line per route and exits with code 1.
 // Placeholder text such as "[Company name]" and duplicate titles are reported as warnings, not failures.
 //
 // Inspect the pages through `npx vite preview`, not by opening the files directly: file:// does not resolve /assets
@@ -102,7 +102,15 @@ function checkRoute({ route, kind }: PrerenderRoute, genericTitle: string): Rout
   for (const [label, value] of required) if (!value) result.errors.push(`${label} is missing or empty`);
 
   const image = metaValue(head, 'property', 'og:image');
-  if (image && /\.svg([?#].*)?$/i.test(image)) result.errors.push(`og:image points at an SVG (${image}); omit it instead`);
+  if (!image) result.errors.push('<meta property="og:image"> is missing or empty');
+  else {
+    try {
+      const parsed = new URL(image);
+      if (parsed.protocol !== 'https:') result.errors.push(`og:image must use HTTPS (${image})`);
+    } catch { result.errors.push(`og:image must be an absolute URL (${image})`); }
+    if (/\.svg([?#].*)?$/i.test(image)) result.errors.push(`og:image points at an SVG (${image}); use a raster image`);
+    if (!metaValue(head, 'property', 'og:image:alt')) result.errors.push('<meta property="og:image:alt"> is missing or empty');
+  }
 
   for (const [label, value] of [['title', title], ['description', metaValue(head, 'name', 'description') ?? '']] as const) {
     if (PLACEHOLDER.test(value)) result.warnings.push(`${label} contains placeholder text: "${value}"`);
@@ -144,7 +152,7 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  console.log(`\nPrerender check passed: ${results.length} routes, each with its own title and description, og:title, og:description and og:type.`);
+  console.log(`\nPrerender check passed: ${results.length} routes, each with its own title, description, and public social preview metadata.`);
   console.log('Inspect with `npx vite preview` at trailing-slash URLs, e.g. /papers/resnet/ (not file:// and not extensionless URLs).');
 }
 

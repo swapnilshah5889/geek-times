@@ -14,6 +14,14 @@ Desktop mockups for The Geeky Times, exported from the design canvas on 2026-11-
 They're the agreed direction before building. The reasons behind them are in `../docs/decisions.md` and
 `../docs/product-plan.md`.
 
+## Brand mark and share preview
+
+The selected page-and-spark mark and social-card direction are recorded in
+[`canvas-source/BrandShareOptions.html`](canvas-source/BrandShareOptions.html). The page stamp is the site mark; the
+field-neutral open-newspaper illustration is the default social preview. The app renders the mark as inline SVG and
+uses it in the favicon. The PNG share art lives in `backups/media/brand/` for Git recovery and is served from
+Supabase Storage.
+
 | # | Image | What it shows |
 |---|---|---|
 | 0 | [exports/0-front-page-d.png](exports/0-front-page-d.png) | Front page layout **D** (chosen): a broadsheet above the fold, a soft bento below |

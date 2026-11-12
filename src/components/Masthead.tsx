@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { appHref, feedHref, homeHref, mapHref } from '../lib/routes';
 import { searchHref } from '../lib/tags';
 import type { SiteConfig } from '../types';
+import { BrandMark } from './BrandMark';
 
 export type NavSection = 'front' | 'issues' | 'real' | 'snacks' | 'search' | 'explore';
 
@@ -40,7 +41,7 @@ export function Masthead({ site, meta = ['', ''], links = [], active, edition }:
         <span>{site.tagline}</span>
         <span>{edition ? <a href={appHref('issues')}>Weekly edition →</a> : meta[1]}</span>
       </div>
-      <div className="mast"><a href={homeHref()} className="mast-link">{site.name}</a></div>
+      <div className="mast"><a href={homeHref()} className="mast-link"><BrandMark className="mast-mark" />{site.name}</a></div>
       <div className="motto">{site.motto}</div>
       <nav className="sitenav" aria-label="Sections">
         <span className="links">

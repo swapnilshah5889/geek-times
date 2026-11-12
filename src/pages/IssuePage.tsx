@@ -2,7 +2,8 @@ import { useHead } from '../components/head';
 import { StoryArt } from '../components/library';
 import { MediaView } from '../components/MediaView';
 import { Crumbs, SitePage } from '../components/SitePage';
-import type { Archive } from '../data/load';
+import { mediaBaseFor, type Archive } from '../data/load';
+import { shareCardUrl } from '../lib/mediaBase';
 import { byline, issueById, latestIssue, neighbours, volumeOf, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
 import { appHref, feedHref, issueHref, paperHref } from '../lib/routes';
 import type { LibraryIssue, LibraryStory } from '../types';
@@ -43,7 +44,13 @@ export function IssuePage({ archive, id }: { archive: Archive; id?: string }) {
   const { library } = archive;
   const issue = issueById(library, id ?? latestIssue(library).id);
   const head = issue ? issueHead(archive, issue) : undefined;
-  useHead({ title: head?.title ?? archive.site.name, description: head?.description ?? '', type: 'website' });
+  useHead({
+    title: head?.title ?? archive.site.name,
+    description: head?.description ?? '',
+    image: shareCardUrl(mediaBaseFor(archive.site)),
+    imageAlt: 'An open newspaper sends a red spark into connected symbols for life, mathematics, and space.',
+    type: 'website',
+  });
   if (!issue) throw new Error(`There is no issue called “${id}”.`);
   const vol = volumeOf(library, issue);
   const { prev, next } = neighbours(library, issue);
