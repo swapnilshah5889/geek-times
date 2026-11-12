@@ -57,7 +57,7 @@ export function SearchPage({ archive }: { archive: Archive }) {
         <div className="search-grid">
           <div aria-live="polite">
             <p className="label">{results.length} result{results.length === 1 ? '' : 's'}</p>
-            {results.length === 0 && <p className="empty">No stories match yet. Try a broader word, or remove a tag.</p>}
+            {results.length === 0 && <p className="empty">No stories match. Try a broader word, or remove a tag.</p>}
             <ol className="results">
               {results.map(({ entry, matched }) => (
                 <li key={entry.slug}>

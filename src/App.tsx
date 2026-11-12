@@ -3,7 +3,6 @@ import { BookLoader, LOADER_GRACE_MS, type BookLoaderPhase } from './components/
 import { loadArchive, loadEdition, loadSite, type Archive, type Edition } from './data/load';
 import { editionFromInitial, makeInitialData, routeKeyFromLocation, type InitialData } from './data/initial-snapshot';
 import { Masthead } from './components/Masthead';
-import { storyById } from './lib/library';
 import { useTodayLabel } from './lib/format';
 import { currentPath, paperHref } from './lib/routes';
 import { installInternalLinkInterceptor, markPopNavigation } from './lib/navigation';
@@ -14,7 +13,6 @@ import { HomePage } from './pages/HomePage';
 import { IssuePage } from './pages/IssuePage';
 import { MapPage } from './pages/MapPage';
 import { PaperPage } from './pages/PaperPage';
-import { SamplePage } from './pages/SamplePage';
 import { SearchPage } from './pages/SearchPage';
 
 type Route =
@@ -26,11 +24,10 @@ type Route =
 type View =
   | { page: 'home' | 'feed' | 'search' | 'map'; archive: Archive }
   | { page: 'issue' | 'company'; archive: Archive; id?: string }
-  | { page: 'paper'; edition: Edition; archive: Archive }
-  | { page: 'sample'; archive: Archive; slug: string };
+  | { page: 'paper'; edition: Edition; archive: Archive };
 
 // /                 front page (design D)
-// /papers/<slug>    one story (a real paper, or a labelled sample); old ?paper=<slug> links redirect here
+// /papers/<slug>    one story; old ?paper=<slug> links redirect here
 // /issues[/<id>]    an issue (no id: the latest)
 // /companies[/<id>] a company's explained engineering posts (no id: the first)
 // /map              the map of ideas
@@ -58,8 +55,6 @@ function currentRoute(): Route {
 async function load(route: Route): Promise<View> {
   const archive = await loadArchive();
   if (route.page === 'paper') {
-    const story = storyById(archive.library, route.slug);
-    if (story && !story.real) return { page: 'sample', archive, slug: route.slug };
     return { page: 'paper', edition: await loadEdition(route.slug), archive };
   }
   return { ...route, archive } as View;
@@ -69,8 +64,6 @@ function viewFromInitial(initial: InitialData): View {
   const route = currentRoute();
   const archive = initial.archive;
   if (route.page === 'paper') {
-    const story = storyById(archive.library, route.slug);
-    if (story && !story.real) return { page: 'sample', archive, slug: route.slug };
     const edition = editionFromInitial(initial);
     if (!edition) throw new Error(`Prerender data is missing the story “${route.slug}”.`);
     return { page: 'paper', edition, archive };
@@ -241,7 +234,6 @@ export function App({ initial }: { initial?: InitialData } = {}) {
   );
   else switch (view.page) {
     case 'paper': content = <PaperPage edition={view.edition} archive={view.archive} />; break;
-    case 'sample': content = <SamplePage archive={view.archive} slug={view.slug} />; break;
     case 'feed': content = <FeedPage archive={view.archive} />; break;
     case 'search': content = <SearchPage archive={view.archive} key={window.location.search} />; break;
     case 'issue': content = <IssuePage archive={view.archive} id={view.id} />; break;

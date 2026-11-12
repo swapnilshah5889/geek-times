@@ -97,7 +97,7 @@ export function FeedPage({ archive }: { archive: Archive }) {
             })}
             <article className="feed-card feed-end" data-index={items.length}>
               <h2>You’re all caught up</h2>
-              <p>New stories are on the way. Until then, dig into the archive.</p>
+              <p>There are no more snacks right now. Browse the archive for every story.</p>
               <div className="feed-actions">
                 <a className="feed-btn feed-btn-main" href={homeHref()}>Front page</a>
                 <a className="feed-btn" href={searchHref()}>Search</a>

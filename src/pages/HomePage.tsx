@@ -1,11 +1,11 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useMemo } from 'react';
 import { useHead } from '../components/head';
 import { Masthead } from '../components/Masthead';
 import { MediaView } from '../components/MediaView';
 import { ClaimStamp, Stamp } from '../components/common';
 import { sourceKindOf } from '../lib/claimLabel';
 import { MotionButton, MotionGroup } from '../components/motion';
-import { SampleTag, StoryArt } from '../components/library';
+import { StoryArt } from '../components/library';
 import { mediaBaseFor, type Archive } from '../data/load';
 import { headlineOf, latestIssue, realPaper, roleLabel, storiesOf, storyById, trustLabel } from '../lib/library';
 import { MediaBaseContext } from '../lib/mediaBase';
@@ -45,7 +45,8 @@ function EditionCover({ issue }: { issue: LibraryIssue }) {
 }
 
 function EditionCard({ archive }: { archive: Archive }) {
-  const { issue } = useEdition(archive);
+  const { issue, count } = useEdition(archive);
+  if (!count) return null;
   return (
     <a className="card ed-card" href={issueHref(issue.id)}>
       <EditionCover issue={issue} />
@@ -60,6 +61,7 @@ function EditionCard({ archive }: { archive: Archive }) {
 
 function EditionBand({ archive }: { archive: Archive }) {
   const { issue, count, minutes } = useEdition(archive);
+  if (!count) return null;
   return (
     <section aria-label="This week’s edition" className="card ed-band">
       <EditionCover issue={issue} />
@@ -100,7 +102,7 @@ function Lead({ archive }: { archive: Archive }) {
         {aside.map((s, i) => (
           <article key={s.id} className={i === 0 ? 'f-aside-first' : undefined}>
             {i === 0 && <a href={paperHref(s.id)} className="f-aside-art"><StoryArt story={s} archive={archive} /></a>}
-            <div className="f-tags label"><span>{`${roleLabel[s.role]} · ${s.desk}`}</span><SampleTag story={s} /></div>
+            <div className="f-tags label"><span>{`${roleLabel[s.role]} · ${s.desk}`}</span></div>
             <h3><a href={paperHref(s.id)}>{s.headline}</a></h3>
             <p>{s.dek}</p>
           </article>
@@ -117,7 +119,7 @@ function StoryCard({ story, archive, kicker }: { story: LibraryStory; archive: A
       <StoryArt story={story} archive={archive} />
       <div className="f-card-body">
         {/* One text node: adjacent text children are merged by the prerendered HTML and mismatch on hydrate (React #418). */}
-        <span className="label">{`${kicker ?? `${roleLabel[story.role]} · ${story.desk}`}${story.sample ? ' · Sample' : ''}`}</span>
+        <span className="label">{kicker ?? `${roleLabel[story.role]} · ${story.desk}`}</span>
         <h4>{headlineOf(story)}</h4>
         <p>{story.dek}</p>
       </div>
@@ -142,7 +144,6 @@ function Snacks({ archive }: { archive: Archive }) {
   const perPaper = archive.index.papers.map(p => p.moments.filter(m => m.kind === 'strip' && m.media));
   const strips = [...perPaper.map(q => q[0]), ...perPaper.map(q => q[1])].filter(Boolean).slice(0, 2);
   const fact = all.find(m => m.kind === 'fact' && m.claim === 'model_design') ?? all.find(m => m.kind === 'fact');
-  const sample = archive.library.stories.find(s => s.art);
   const count = archive.index.papers.reduce((n, p) => n + p.moments.length, 0);
   return (
     <section id="snacks" aria-labelledby="s-snacks" className="f-snacks">
@@ -166,12 +167,6 @@ function Snacks({ archive }: { archive: Archive }) {
             <span>{fact.text}</span>
           </a>
         )}
-        {sample && (
-          <a className="f-snack" href={paperHref(sample.id)}>
-            <StoryArt story={sample} archive={archive} />
-            <span><span className="label">Sample snack</span><b>{sample.headline}</b></span>
-          </a>
-        )}
       </div>
     </section>
   );
@@ -191,7 +186,7 @@ function Topics({ archive }: { archive: Archive }) {
               {shown.map(s => (
                 <a key={s.id} className="card f-mini" href={paperHref(s.id)}>
                   <StoryArt story={s} archive={archive} />
-                  <span>{headlineOf(s)}{s.sample && <small className="sample-tag">Sample</small>}</span>
+                  <span>{headlineOf(s)}</span>
                 </a>
               ))}
               <a className="f-mini f-mini-more" href={searchHref()}>
@@ -261,27 +256,6 @@ function Numbers({ archive }: { archive: Archive }) {
   );
 }
 
-function Storylines({ archive }: { archive: Archive }) {
-  const { library } = archive;
-  const lines = library.front.storylines.map(id => library.storylines.find(s => s.id === id)).filter(Boolean) as typeof library.storylines;
-  return (
-    <section aria-labelledby="s-lines" className="f-section">
-      <SectionHead id="s-lines" title="Storylines" hint="Guided paths showing how an idea grew, step by step." />
-      <div className="f-grid f-grid-2">
-        {lines.map(l => (
-          <a key={l.id} className="card f-line" href={appHref('map')}>
-            <span className="label">{`Storyline · ${l.sample ? 'Sample' : `${l.steps.length} steps`}`}</span>
-            <h4>{l.title}</h4>
-            <ol className="f-steps" style={{ gridTemplateColumns: `repeat(${l.steps.length}, minmax(0, 1fr))` }}>
-              {l.steps.map(st => <li key={st.year + st.label} className={st.current ? 'is-now' : undefined}><b>{st.year}</b>{st.label}</li>)}
-            </ol>
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Vault({ archive }: { archive: Archive }) {
   const { library } = archive;
   const vault = storyById(library, library.front.vault);
@@ -303,7 +277,7 @@ function Vault({ archive }: { archive: Archive }) {
         <a className="card f-vault-main" href={paperHref(vault.id)}>
           <StoryArt story={vault} archive={archive} />
           <div className="f-vault-body">
-            <span className="label">{`From the vault${vault.sample ? ' · Sample' : ''}`}</span>
+            <span className="label">From the vault</span>
             <h3 id="s-vault">{vault.headline}</h3>
             <p>{vault.vaultNote ?? vault.dek}</p>
             <span className="f-more">Read the classic →</span>
@@ -318,22 +292,6 @@ function Vault({ archive }: { archive: Archive }) {
           <a className="f-more" href={`${paperHref(day.story)}#tree`}>Open its family tree →</a>
         </div>
       )}
-    </section>
-  );
-}
-
-function Newsletter() {
-  const [sent, setSent] = useState(false);
-  const submit = (e: FormEvent) => { e.preventDefault(); setSent(true); };
-  return (
-    <section aria-labelledby="s-news" className="f-news">
-      <div><span className="label">Every Friday</span><h3 id="s-news">Get the weekly edition</h3><p>Big science, in pictures, in your inbox once a week.</p></div>
-      <form onSubmit={submit}>
-        <label htmlFor="news-email" className="sr-only">Email address</label>
-        <input id="news-email" type="email" placeholder="you@example.com" required disabled={sent} />
-        <button type="submit" disabled={sent}>Notify me</button>
-        <p role="status" className="f-news-note">{sent ? 'The newsletter is not live yet, so nothing was saved. Thanks for the interest!' : 'Sign-ups open soon.'}</p>
-      </form>
     </section>
   );
 }
@@ -359,17 +317,14 @@ export function HomePage({ archive }: { archive: Archive }) {
           <Lead archive={archive} />
           <div className="f-explore-head">
             <h2>Keep exploring</h2>
-            <span className="label">Sample stories are marked</span>
           </div>
           <MoreStories archive={archive} />
           <Snacks archive={archive} />
           <Topics archive={archive} />
           <RealWorld archive={archive} />
           <Numbers archive={archive} />
-          <Storylines archive={archive} />
           <Vault archive={archive} />
           <EditionBand archive={archive} />
-          <Newsletter />
           <footer>
             <span>{`${site.name}   ✦   ${site.motto}`}</span>
             <span className="foot-links"><a href={appHref('issues')}>Editions</a><a href={appHref('issues')}>Past editions</a><a href={searchHref()}>The archive →</a></span>
