@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720">
+  <rect width="1440" height="720" fill="#f6f0df"/>
+  <text x="72" y="84" fill="#27251e" font-family="Georgia,serif" font-size="46" font-weight="700">The Geeky Times · favicon directions</text>
+  <text x="74" y="124" fill="#625b4d" font-family="Georgia,serif" font-size="21" font-style="italic">Three distinct marks, shown large and at tab-icon scale. No option has been applied.</text>
+
+  <g transform="translate(60 165)">
+    <rect width="420" height="475" rx="14" fill="#fbf3dc" stroke="#948b77" stroke-width="2"/>
+    <text x="28" y="46" fill="#a13324" font-family="Courier New,monospace" font-size="17" font-weight="700" letter-spacing="2">A · THE MONOGRAM</text>
+    <rect x="52" y="75" width="180" height="180" rx="26" fill="#f6f0df" stroke="#27251e" stroke-width="7"/>
+    <text x="70" y="214" fill="#27251e" font-family="Georgia,serif" font-size="112" font-weight="700" letter-spacing="-15">GT</text>
+    <path d="m208 74 8 18 18 8-18 8-8 18-8-18-18-8 18-8z" fill="#a13324"/>
+    <text x="270" y="128" fill="#27251e" font-family="Courier New,monospace" font-size="15" font-weight="700">32 PX</text>
+    <rect x="270" y="145" width="64" height="64" rx="10" fill="#f6f0df" stroke="#27251e" stroke-width="3"/>
+    <text x="277" y="194" fill="#27251e" font-family="Georgia,serif" font-size="39" font-weight="700" letter-spacing="-6">GT</text>
+    <path d="m321 144 3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#a13324"/>
+    <text x="270" y="234" fill="#27251e" font-family="Courier New,monospace" font-size="15" font-weight="700">16 PX</text>
+    <rect x="270" y="247" width="32" height="32" rx="5" fill="#f6f0df" stroke="#27251e" stroke-width="2"/>
+    <text x="273" y="272" fill="#27251e" font-family="Georgia,serif" font-size="21" font-weight="700" letter-spacing="-4">GT</text>
+    <path d="m294 246 2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#a13324"/>
+    <text x="28" y="334" fill="#27251e" font-family="Georgia,serif" font-size="25" font-weight="700">A compact publisher’s stamp.</text>
+    <text x="28" y="373" fill="#625b4d" font-family="Georgia,serif" font-size="18">Serif “GT” carries the name; one red spark</text>
+    <text x="28" y="399" fill="#625b4d" font-family="Georgia,serif" font-size="18">adds curiosity. Strongest at 16–32 px.</text>
+  </g>
+
+  <g transform="translate(510 165)">
+    <rect width="420" height="475" rx="14" fill="#fbf3dc" stroke="#948b77" stroke-width="2"/>
+    <text x="28" y="46" fill="#a13324" font-family="Courier New,monospace" font-size="17" font-weight="700" letter-spacing="2">B · OPEN PAPER</text>
+    <rect x="52" y="75" width="180" height="180" rx="26" fill="#f6f0df" stroke="#27251e" stroke-width="7"/>
+    <path d="M82 118q36-15 60 2v92q-25-16-60-5zM202 118q-36-15-60 2v92q25-16 60-5z" fill="#fbf3dc" stroke="#27251e" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M98 145h29m-29 18h29m29-18h29m-29 18h29" stroke="#27251e" stroke-width="6" stroke-linecap="round"/>
+    <path d="m142 81 7 15 15 7-15 7-7 15-7-15-15-7 15-7z" fill="#a13324"/>
+    <text x="270" y="128" fill="#27251e" font-family="Courier New,monospace" font-size="15" font-weight="700">32 PX</text>
+    <rect x="270" y="145" width="64" height="64" rx="10" fill="#f6f0df" stroke="#27251e" stroke-width="3"/>
+    <path d="M281 167q13-6 22 1v31q-9-6-22-2zM325 167q-13-6-22 1v31q9-6 22-2z" fill="#fbf3dc" stroke="#27251e" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M288 180h9m13 0h9m-31 7h9m13 0h9" stroke="#27251e" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="m303 145 3 6 6 3-6 3-3 6-3-6-6-3 6-3z" fill="#a13324"/>
+    <text x="270" y="234" fill="#27251e" font-family="Courier New,monospace" font-size="15" font-weight="700">16 PX</text>
+    <rect x="270" y="247" width="32" height="32" rx="5" fill="#f6f0df" stroke="#27251e" stroke-width="2"/>
+    <path d="M275 261q7-3 11 1v13q-4-3-11-1zM297 261q-7-3-11 1v13q4-3 11-1z" fill="#fbf3dc" stroke="#27251e" stroke-width="1.7"/>
+    <path d="m286 248 2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#a13324"/>
+    <text x="28" y="334" fill="#27251e" font-family="Georgia,serif" font-size="25" font-weight="700">A tiny illustrated newspaper.</text>
+    <text x="28" y="373" fill="#625b4d" font-family="Georgia,serif" font-size="18">Open pages and a spark make the concept</text>
+    <text x="28" y="399" fill="#625b4d" font-family="Georgia,serif" font-size="18">immediate; page lines simplify at small sizes.</text>
+  </g>
+
+  <g transform="translate(960 165)">
+    <rect width="420" height="475" rx="14" fill="#fbf3dc" stroke="#948b77" stroke-width="2"/>
+    <text x="28" y="46" fill="#a13324" font-family="Courier New,monospace" font-size="17" font-weight="700" letter-spacing="2">C · THE SEAL</text>
+    <circle cx="142" cy="165" r="90" fill="#27251e"/>
+    <circle cx="142" cy="165" r="73" fill="none" stroke="#f6f0df" stroke-width="2" stroke-dasharray="2 8"/>
+    <path d="M103 112h78v105h-78z" fill="#f6f0df" stroke="#f6f0df" stroke-width="3"/>
+    <path d="M115 136h53m-53 14h53m-53 14h36m-36 14h53" stroke="#27251e" stroke-width="5" stroke-linecap="round"/>
+    <path d="m177 103 8 18 18 8-18 8-8 18-8-18-18-8 18-8z" fill="#a13324" stroke="#f6f0df" stroke-width="2"/>
+    <text x="270" y="128" fill="#27251e" font-family="Courier New,monospace" font-size="15" font-weight="700">32 PX</text>
+    <circle cx="302" cy="177" r="32" fill="#27251e"/>
+    <circle cx="302" cy="177" r="26" fill="none" stroke="#f6f0df" stroke-width="1.5" stroke-dasharray="1 4"/>
+    <path d="M290 163h24v30h-24z" fill="#f6f0df"/>
+    <path d="M294 170h16m-16 5h16m-16 5h11" stroke="#27251e" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="m313 158 3 6 6 3-6 3-3 6-3-6-6-3 6-3z" fill="#a13324" stroke="#f6f0df" stroke-width="1"/>
+    <text x="270" y="234" fill="#27251e" font-family="Courier New,monospace" font-size="15" font-weight="700">16 PX</text>
+    <circle cx="286" cy="263" r="16" fill="#27251e"/>
+    <path d="M281 257h11v13h-11z" fill="#f6f0df"/>
+    <path d="m291 254 2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#a13324"/>
+    <text x="28" y="334" fill="#27251e" font-family="Georgia,serif" font-size="25" font-weight="700">An old-paper edition seal.</text>
+    <text x="28" y="373" fill="#625b4d" font-family="Georgia,serif" font-size="18">Dark roundel and cream page stand apart</text>
+    <text x="28" y="399" fill="#625b4d" font-family="Georgia,serif" font-size="18">in a browser tab; boldest contrast of the set.</text>
+  </g>
+
+  <text x="72" y="690" fill="#625b4d" font-family="Courier New,monospace" font-size="14" letter-spacing="1">PALETTE: NEWSPRINT CREAM · INK · BRICK RED · ORIGINAL SHAPES · NO OPTION APPLIED</text>
+</svg>
