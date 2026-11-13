@@ -1,0 +1,645 @@
+{
+  "schemaVersion": 2,
+  "slug": "jepsen-cassandra",
+  "kind": "blog",
+  "blog": {
+    "title": "Jepsen: Cassandra",
+    "organization": "Jepsen (Kyle Kingsbury)",
+    "published": "2013-09-24",
+    "url": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
+    "trust": "company_reported"
+  },
+  "pageTitle": "Did the note survive?",
+  "desk": "Distributed systems",
+  "summary": "An outside tester, Kyle Kingsbury, ran his Jepsen tool on Apache Cassandra in 2013. He reports that its last-write-wins rule lost acknowledged writes in some tests, that counters could drift during a network split, that row isolation fell short of what DataStax's documentation said, and that the team fixed several bugs he reported.",
+  "hook": {
+    "sticker": "Stamped, then gone?",
+    "teaser": "A database said 'got it.' Was the data still there later?",
+    "cta": "Count the lost notes",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "285 of 1009",
+      "text": "acknowledged writes lost in one run"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "jepsen-cassandra/lead/tester-at-the-ring.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A person with a clipboard stands by a ring of six desks and checks off notes that were stamped received."
+        },
+        "tag": "Test it!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "jepsen-cassandra/lead/note-goes-missing.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Two hands hand over two different versions of one note. A clerk keeps the one with the later clock stamp and drops the other into a bin."
+        },
+        "tag": "Lost!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/eventual-consistency",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#counters",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/quorum",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#some-write-loses",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/conflict-resolution",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#some-write-loses",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/vector-clocks",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#some-write-loses",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/last-write-wins",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#some-write-loses",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Last-write-wins",
+        "aliases": [
+          "LWW",
+          "LWW register"
+        ]
+      }
+    },
+    {
+      "tag": "concept/linearizability",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#lightweight-transactions",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Linearizability",
+        "aliases": [
+          "linearizable consistency"
+        ]
+      }
+    },
+    {
+      "tag": "concept/lightweight-transactions",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#lightweight-transactions",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Lightweight transactions",
+        "aliases": [
+          "compare-and-set",
+          "Paxos"
+        ]
+      }
+    },
+    {
+      "tag": "technique/jepsen",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Jepsen",
+        "aliases": [
+          "Jepsen tests"
+        ]
+      }
+    },
+    {
+      "tag": "author/kyle-kingsbury",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Kyle Kingsbury",
+        "aliases": [
+          "Aphyr"
+        ]
+      }
+    },
+    {
+      "tag": "organization/datastax",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#final-thoughts",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "DataStax"
+      }
+    },
+    {
+      "tag": "everyday/keeping-copies-safe",
+      "relevance": 0.6,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / A test by an outsider / Picture story",
+      "headline": {
+        "text": "Stamped as saved. Then",
+        "accent": "gone."
+      },
+      "deck": "A database says it got your data. A tester in 2013 checked whether it was still there later.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "The tester",
+            "caption": "<b>Fig. 1.</b> An outside tester pokes at a ring of desks to see whether a note that was <b>acknowledged</b> still exists later.",
+            "media": {
+              "type": "svg",
+              "src": "jepsen-cassandra/lead/tester-at-the-ring.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A person with a clipboard stands by a ring of six desks and checks off notes that were stamped received."
+            }
+          },
+          {
+            "label": "A note goes missing",
+            "caption": "<b>Fig. 2.</b> Two clients rewrite the same note. The desk keeps only the one with the later time stamp, so one change vanishes.",
+            "media": {
+              "type": "svg",
+              "src": "jepsen-cassandra/lead/note-goes-missing.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Two hands hand over two different versions of one note. A clerk keeps the one with the later clock stamp and drops the other into a bin."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the test ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "Counting lost notes",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Does 'saved' mean saved?",
+          "provenance": "illustration",
+          "caption": "When a database says a write is done, people expect it to stay. Kyle Kingsbury (Aphyr) tested that for Apache Cassandra in 2013 with his Jepsen tests, which check what survives. His post says Cassandra keeps several copies of each piece of data on different machines and uses a pure last-write-wins rule.",
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/story/01-does-saved-mean-saved.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A person hands a note to a clerk, who stamps it received. Later the person looks in the folder and the note is not there."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "The later stamp wins",
+          "provenance": "model_design",
+          "caption": "Last-write-wins means each value carries a time stamp, and the copy with the highest stamp is kept. The post says Cassandra chose this over vector clocks for speed, because a write needs one round trip instead of two. The catch, the post says: there is no safe way to change a cell that holds a value.",
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/story/02-later-stamp-wins.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two notes about the same cell, one stamped earlier and one later. A clerk keeps the later one and drops the earlier one in a bin."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "What the post says is safe, and what is not",
+          "provenance": "model_design",
+          "caption": "The post says adding items to a CQL set was safe in its test: every write survived. Writing data that never changes is safe too. It says the risky parts are changing a cell, counters during a network split, and the row-isolation and lightweight-transaction features. It also notes that after the bugs it reported, the team fixed several.",
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/story/03-safe-and-unsafe.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A shelf with two trays. One tray called add-only holds neat stacked notes. The other, change-in-place, has notes crossed out and scribbled over."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Counting what survived",
+          "provenance": "evidence",
+          "caption": "In the post's lock test, 2000 writes were tried with QUORUM, synced clocks and a lock service. 1009 were acknowledged and 285 of those were lost, which the post calls 28%. These are one tester's runs in 2013, and the post names no exact build for each test. <a href=\"https://aphyr.com/posts/294-call-me-maybe-cassandra#some-write-loses\">See the test in the post ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/story/04-counting-survivors.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A tray of 1009 stamped notes. A hand counts them again and finds 285 gone from the tray."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "How the notes got lost",
+      "deck": "Read each strip from left to right. Our story is a desk that stamps notes, and a tester who counts them.",
+      "howTo": "The post is one tester's report on Cassandra in 2013, using its own tests. The post does not name the exact build for each test. The drawings are <b>made up</b> to explain the idea. The key numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "Two writers, one note",
+          "kicker": "Why last-write-wins loses data",
+          "provenance": "illustration",
+          "grownUpWords": "last-write-wins (LWW), timestamp, register",
+          "panels": [
+            {
+              "caption": "Two people read the same note: <b>a</b>. One adds <b>b</b>. The other adds <b>c</b>.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/01a-two-readers.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two people each hold a copy of a note with the letter a on it. One adds b, the other adds c."
+              }
+            },
+            {
+              "caption": "Both send their new note back. Each note has a clock stamp on it.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/01b-both-send.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two notes with different clock stamps fly toward one clerk's desk."
+              }
+            },
+            {
+              "caption": "The clerk keeps only the later stamp. The other change is gone, and nobody is told.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/01c-later-wins.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The clerk keeps the note with the later stamp and the other note falls in a bin. Nobody looks surprised except the sender."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Why it picked this rule",
+          "kicker": "The speed trade",
+          "provenance": "illustration",
+          "grownUpWords": "vector clocks, round trip, read-before-write",
+          "panels": [
+            {
+              "caption": "Some systems read the old value first, then write. That is <b>two trips</b>. The post says vector clocks usually need that read.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/02a-two-trips.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A runner goes to the desk to read, comes back, then goes again to write. Two arrows."
+              }
+            },
+            {
+              "caption": "The post says Cassandra skips the read and always keeps the later stamp. That is <b>one trip</b>, a big speedup.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/02b-one-trip.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A runner goes to the desk once and drops a note off. One arrow."
+              }
+            },
+            {
+              "caption": "The price, the post says: there is no safe way to change a note that already exists.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/02c-the-price.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A one-trip runner holds a price tag. On the desk lies a note with a lock and a cross over a pencil."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The test that lost notes",
+          "kicker": "The lock test",
+          "provenance": "illustration",
+          "grownUpWords": "QUORUM, linearizable, acknowledged write",
+          "panels": [
+            {
+              "caption": "The tester made it easy: clocks in perfect sync, a majority of desks asked each time (QUORUM), and a lock so nobody wrote at once.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/03a-easy-test.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tester with a clipboard sets up a ring of desks with a lock on a door and a matching row of clocks."
+              }
+            },
+            {
+              "caption": "Then he changed the same cell over and over and counted every write the cluster said it had saved.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/03b-keep-changing.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One cell on a desk with many hands taking turns changing it. A tally sheet counts stamps."
+              }
+            },
+            {
+              "caption": "The post reports 1009 writes were acknowledged and 285 of them were lost. The post calls that 28% of committed data.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/03c-count-lost.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tally sheet with 1009 stamped notes and a pile of 285 crossed out. The tester frowns."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Notes that never change",
+          "kicker": "What was safe",
+          "provenance": "illustration",
+          "grownUpWords": "immutable data, CQL set, CRDT",
+          "panels": [
+            {
+              "caption": "The post says adding items to a CQL set worked in its test. Each add gets its own slot.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/04a-set-adds.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tray where each new note gets its own slot and none touch."
+              }
+            },
+            {
+              "caption": "Every one of 2000 adds was acknowledged and every one survived.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/04b-all-survived.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A row of 2000 notes with a big tick mark across the whole row, drawn as a few small rows."
+              }
+            },
+            {
+              "caption": "The post's advice: read the rules for each operation, and build your own safe merge on wide rows if needed.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/04c-read-the-rules.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A person reading a thick rulebook beside a tray of neatly stacked notes."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Two notes at once",
+          "kicker": "The isolation test",
+          "provenance": "illustration",
+          "grownUpWords": "isolation, atomic, timestamp collision",
+          "panels": [
+            {
+              "caption": "Docs said a change to one row is isolated. The post says Cassandra can still mix two writes made at once.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/05a-mixed-writes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two writers hand in two-part notes with 1 and minus 1, and 2 and minus 2, at the same moment."
+              }
+            },
+            {
+              "caption": "When two copies have the same stamp, it picks the bigger value, cell by cell. Mixing parts: 2 from one write and minus 1 from the other.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/05b-pick-bigger.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A clerk picks one number from each note and pastes them together into a new note: 2 and minus 1."
+              }
+            },
+            {
+              "caption": "In the post's test, about 1 in 200 rows came out corrupt. The post says the cause is somewhere in the software stack: time stamps in milliseconds with three zeroes added.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/05c-one-in-200.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A clock face where the last three digits are all zeroes, next to a row of notes with one scribbled in red."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The new feature",
+          "kicker": "Lightweight transactions",
+          "provenance": "illustration",
+          "grownUpWords": "compare-and-set, Paxos, linearizable",
+          "panels": [
+            {
+              "caption": "Cassandra 2.0.0 added lightweight transactions: a change that only happens if the old value matches. The post says they were built on Paxos with four round trips per write.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/06a-compare-and-set.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A clerk checks that the old note matches before swapping in a new one, with four arrows to and from the other desks."
+              }
+            },
+            {
+              "caption": "First the tester hit deadlocks, and the team fixed it. Then it ran a slowed test at 5 transactions per second.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/06b-deadlock-fix.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A stuck door with a jam. A helper hands over a patched key."
+              }
+            },
+            {
+              "caption": "Result, on builds patched for the deadlock bugs: 829 acknowledged, 3 lost. The post says they may drop 1-5% of acknowledged writes, and that the team fixed several bugs it found.",
+              "media": {
+                "type": "svg",
+                "src": "jepsen-cassandra/comic/06c-three-lost.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tally sheet with 829 stamped notes and 3 crossed out, next to a wrench for the fixes."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / One tester's own runs, 2013",
+      "facts": [
+        {
+          "figure": "285 of 1009",
+          "claim": "measured_result",
+          "text": "acknowledged writes lost in the post's lock test. Cassandra, QUORUM, synced clocks, a lock service; 2000 writes tried. The post calls it a loss rate of 0.2824579, about 28%.",
+          "source": {
+            "label": "Post · Some Write Loses",
+            "url": "https://aphyr.com/posts/294-call-me-maybe-cassandra#some-write-loses"
+          },
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/facts/lock-test-loss.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "2000 of 2000",
+          "claim": "measured_result",
+          "text": "writes survived when the post's test added items to a CQL set. Writing in ways that never overwrite a cell was safe in this test.",
+          "source": {
+            "label": "Post · CQL and CRDTs",
+            "url": "https://aphyr.com/posts/294-call-me-maybe-cassandra#cql-and-crdts"
+          },
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/facts/set-adds.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "up to 50%",
+          "claim": "measured_result",
+          "text": "drift in Cassandra counters when the network was split for about half of the post's test run, the post says.",
+          "source": {
+            "label": "Post · Counters",
+            "url": "https://aphyr.com/posts/294-call-me-maybe-cassandra#counters"
+          },
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/facts/counter-drift.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "1 in 200",
+          "claim": "measured_result",
+          "text": "rows came out corrupt in the post's isolation test: 58 of 10000. The post traced it to time stamps with milliseconds padded to look like microseconds, somewhere in the software stack.",
+          "source": {
+            "label": "Post · Isolation",
+            "url": "https://aphyr.com/posts/294-call-me-maybe-cassandra#isolation"
+          },
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/facts/corrupt-rows.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "3 of 829",
+          "claim": "measured_result",
+          "text": "acknowledged lightweight-transaction writes were lost in a 2000-write test at a slowed rate, run on builds patched for the deadlock bugs. The post says that depending on throughput, 1-5% could be dropped.",
+          "source": {
+            "label": "Post · Lightweight Transactions",
+            "url": "https://aphyr.com/posts/294-call-me-maybe-cassandra#lightweight-transactions"
+          },
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/facts/lwt-lost.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "4",
+          "claim": "model_design",
+          "text": "round trips for each write in the lightweight-transaction design, which the post says is based on naive Paxos. The post says the performance can be improved with time.",
+          "source": {
+            "label": "Post · Lightweight Transactions",
+            "url": "https://aphyr.com/posts/294-call-me-maybe-cassandra#lightweight-transactions"
+          },
+          "media": {
+            "type": "svg",
+            "src": "jepsen-cassandra/facts/four-trips.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,639 @@
+{
+  "schemaVersion": 2,
+  "slug": "netflix-cassandra-benchmark",
+  "kind": "blog",
+  "blog": {
+    "title": "Benchmarking Cassandra Scalability on AWS — Over a million writes per second",
+    "organization": "Netflix Technology Blog",
+    "published": "2011-11-02",
+    "url": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+    "trust": "company_reported",
+    "archivedUrl": "http://web.archive.org/web/20261021060254/https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e"
+  },
+  "pageTitle": "Does the ring keep speeding up?",
+  "desk": "Distributed systems",
+  "summary": "Netflix tested whether Cassandra on Amazon’s cloud gets faster in a straight line as machines are added. The team reports 1.1 million client writes a second on a 288-machine ring, which it counts as 3.3 million with three copies of each write.",
+  "hook": {
+    "sticker": "Over a million!",
+    "teaser": "If you keep adding machines, does the database keep getting faster?",
+    "cta": "Watch the ring grow",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "1.1 million",
+      "text": "writes a second, Netflix reports"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "netflix-cassandra-benchmark/lead/many-desks.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A small ring of desks grows into a very large ring. Little senders on the edge toss notes toward the desks."
+        },
+        "tag": "Many desks!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "netflix-cassandra-benchmark/lead/straight-line.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A chart with four dots climbing along one straight line, with a small ring of desks growing under each dot."
+        },
+        "tag": "Straight line!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/high-availability",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/quorum",
+      "relevance": 0.3,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/linear-scalability",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Linear scalability",
+        "aliases": [
+          "scale-out",
+          "horizontal scaling"
+        ]
+      }
+    },
+    {
+      "tag": "concept/benchmarking",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Benchmarking",
+        "aliases": [
+          "performance testing",
+          "stress test"
+        ]
+      }
+    },
+    {
+      "tag": "concept/cloud-computing",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Cloud computing",
+        "aliases": [
+          "AWS",
+          "Amazon EC2"
+        ]
+      }
+    },
+    {
+      "tag": "organization/netflix",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Netflix"
+      }
+    },
+    {
+      "tag": "author/adrian-cockcroft",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Adrian Cockcroft"
+      }
+    },
+    {
+      "tag": "author/denis-sheahan",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Denis Sheahan"
+      }
+    },
+    {
+      "tag": "everyday/streaming-video",
+      "relevance": 0.5,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Streaming video",
+        "aliases": [
+          "watching shows online"
+        ]
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "Add a machine, get a bit",
+        "accent": "more speed."
+      },
+      "deck": "Netflix tested Cassandra on rented machines, to see whether more machines really means more speed. This is Netflix’s own benchmark.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "A very big ring",
+            "caption": "<b>Fig. 1.</b> Netflix built a Cassandra ring of 288 machines for a test, then sent writes at it.",
+            "media": {
+              "type": "svg",
+              "src": "netflix-cassandra-benchmark/lead/many-desks.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A small ring of desks grows into a very large ring. Little senders on the edge toss notes toward the desks."
+            }
+          },
+          {
+            "label": "The straight line",
+            "caption": "<b>Fig. 2.</b> The team says speed grew in a straight line as it added machines: 48, 96, 144 and 288.",
+            "media": {
+              "type": "svg",
+              "src": "netflix-cassandra-benchmark/lead/straight-line.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A chart with four dots climbing along one straight line, with a small ring of desks growing under each dot."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the test ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "Does Cassandra keep speeding up?",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Will it keep up?",
+          "provenance": "illustration",
+          "caption": "Netflix had been rolling out Cassandra for about six months, the post says. Its own clusters held from 6 to 48 machines. The team wanted to know: if we keep adding machines, does the cluster keep getting faster? And would its tools cope with that many?",
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/story/01-will-it-keep-up.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A small ring of desks with a worried engineer holding a question mark. A much bigger ring waits in the background."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Rent a giant ring for a day",
+          "provenance": "model_design",
+          "caption": "Netflix rented machines from Amazon’s cloud (AWS) only for the test. Its tools set up the ring in about an hour, with machines split evenly over three data centers called availability zones. Every write was copied three times, once per zone. Then the team sent writes from a separate crowd of client machines. Grown-up words: <b>replication</b>, <b>availability zone</b>.",
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/story/02-rent-a-ring.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A ring of desks split into three coloured groups, one per building. A crowd of senders waits outside."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Add machines, add writes",
+          "provenance": "model_design",
+          "caption": "The same test ran four times, with 48, 96, 144 and 288 machines and 10, 20, 30 and 60 clients. The team says each machine had a very similar load every time, and throughput grew in a straight line as machines were added. At the top, 60 clients sent 1.1 million writes a second.",
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/story/03-add-machines.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Four rings of growing size, each with more senders. Arrows on each ring grow longer in a steady step."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Netflix measured it itself",
+          "provenance": "evidence",
+          "caption": "This is Netflix’s own test, reported by Netflix. It ran each size once, on Cassandra 0.8.6. Because every write was kept three times, the cluster did 3.3 million writes a second in total. The team says the whole test took two hours and a few hundred dollars. <a href=\"https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e\">See the intro and Scale-Up Linearity sections in the post ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/story/04-evidence.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A big counter reading 1.1 million beside a bigger counter reading 3.3 million, with a small tag saying Netflix reports this."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How the test worked ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "How Netflix ran the test",
+      "deck": "Read each strip from left to right. We follow one Netflix test, from building the ring to the bill.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. Everything the strips say about numbers comes from Netflix’s own post. The numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "Build a ring in an hour",
+          "kicker": "Setting up",
+          "provenance": "illustration",
+          "grownUpWords": "auto-scaling group, availability zone",
+          "panels": [
+            {
+              "caption": "Netflix’s tools ask for machines with a few clicks. The post says it takes about an hour to go from nothing to a very large ring.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/01a-order.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "An engineer clicks one big button. Empty desks pop up one by one."
+              }
+            },
+            {
+              "caption": "The machines sit in three buildings. The post calls them <b>availability zones</b>, about one millisecond apart. Each building holds the same number of machines.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/01b-three-buildings.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three buildings in a row, each with the same number of desks inside."
+              }
+            },
+            {
+              "caption": "If a machine dies, the tools make a new one to replace it. The ring keeps going.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/01c-replacement.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One desk falls over with a cross on it. A new desk slides into the same spot."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Three copies of every note",
+          "kicker": "Replication",
+          "provenance": "illustration",
+          "grownUpWords": "replication factor 3, consistency level ONE",
+          "panels": [
+            {
+              "caption": "A client sends a note to any machine. That machine becomes the helper for this note.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/02a-pick-any.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A sender hands a note to one desk. The desk wears a small helper badge."
+              }
+            },
+            {
+              "caption": "The helper passes the note to the desks in charge of it, so there are <b>three copies</b>, one in each building.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/02b-three-copies.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The helper desk sends three arrows, one to a desk in each of three buildings."
+              }
+            },
+            {
+              "caption": "In this test the client gets a thumbs-up as soon as <b>one</b> desk has the note. The post says this is the fastest option.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/02c-one-thumbs-up.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One desk raises a thumbs-up sign to the sender while two others are still writing."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Why writes make a hard test",
+          "kicker": "Writes, not reads",
+          "provenance": "illustration",
+          "grownUpWords": "commit log, write-oriented benchmark",
+          "panels": [
+            {
+              "caption": "The team picked a test of <b>writes</b>. The post says writes push a data store all the way to the disks.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/03a-writes-to-disk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A note travels down through a desk and ends in a folder on a shelf."
+              }
+            },
+            {
+              "caption": "Reading can sometimes be answered from memory alone, the post says. So a read test might not push the disks as hard.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/03b-reads-from-memory.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A whiteboard answers a question without anyone opening a folder."
+              }
+            },
+            {
+              "caption": "Each machine first jots the write in a notebook (the commit log). That takes only a tiny moment, the post says.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/03c-notebook.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk quickly scribbles in a notebook. A stopwatch shows a tiny time."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Same test, bigger ring",
+          "kicker": "Four sizes",
+          "provenance": "illustration",
+          "grownUpWords": "scalability, throughput, client threads",
+          "panels": [
+            {
+              "caption": "Run it with <b>48</b> machines and 10 clients. Then 96 machines and 20 clients. Then 144 and 30.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/04a-three-sizes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three rings of growing size, with senders in growing crowds beside each."
+              }
+            },
+            {
+              "caption": "Finally, <b>288</b> machines and 60 clients. The crowd of clients grows along with the ring.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/04b-biggest.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One huge ring with a very big crowd of senders."
+              }
+            },
+            {
+              "caption": "The post says the load on each machine stayed very similar, and the speed grew in a <b>straight line</b>.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/04c-straight-line.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A chart with four dots on one straight line, and a looker saying: still even."
+              }
+            }
+          ]
+        },
+        {
+          "title": "A few hundred dollars",
+          "kicker": "Cost",
+          "provenance": "illustration",
+          "grownUpWords": "spot pricing, cloud billing",
+          "panels": [
+            {
+              "caption": "The machines existed only while the test ran. No buying, no waiting for a room to be set up, the post says.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/05a-pop-up.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Desks pop into existence for the test, then vanish like soap bubbles."
+              }
+            },
+            {
+              "caption": "The post says the whole test finished in two hours and cost a few hundred dollars.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/05b-two-hours.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A clock showing two hours beside a small pile of coins."
+              }
+            },
+            {
+              "caption": "The post also says the copying between buildings was costly. Amazon charges for traffic that crosses zones.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/05c-cross-zone.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Arrows between two buildings, each with a tiny price tag."
+              }
+            }
+          ]
+        },
+        {
+          "title": "What Netflix said next",
+          "kicker": "Next steps",
+          "provenance": "illustration",
+          "grownUpWords": "Cassandra 1.0, multi-region",
+          "panels": [
+            {
+              "caption": "The team ran only one test of each size, and says the largest cluster’s CPU was a little higher.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/06a-one-run.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A single check mark beside each ring, with a small question mark over the biggest."
+              }
+            },
+            {
+              "caption": "The post says Netflix was now working on testing Cassandra 1.0, and on tests across more than one region.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/06b-next.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A new version tag on a desk, and a second ring on a faraway map."
+              }
+            },
+            {
+              "caption": "The post ends by saying Cassandra scaled linearly far beyond the company’s current needs. That is Netflix’s own view.",
+              "media": {
+                "type": "svg",
+                "src": "netflix-cassandra-benchmark/comic/06c-takeaway.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A happy engineer pointing at a very long straight line, with a Netflix reports tag."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / Netflix’s own numbers, company reported",
+      "facts": [
+        {
+          "figure": "288",
+          "claim": "measured_result",
+          "text": "machines in the biggest test ring, 96 in each of three availability zones, as Netflix reports it. Sixty more machines acted as clients.",
+          "source": {
+            "label": "Post · intro",
+            "url": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e"
+          },
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/facts/machines.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "1.1 million",
+          "claim": "measured_result",
+          "text": "client writes a second at the top size. Because each write was copied to three zones, Netflix counts 3.3 million writes a second across the cluster.",
+          "source": {
+            "label": "Post · intro",
+            "url": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e"
+          },
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/facts/writes.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "48 to 288",
+          "claim": "measured_result",
+          "text": "machines in the four sizes tested (48, 96, 144 and 288), with 10, 20, 30 and 60 clients. The post says throughput scaled linearly.",
+          "source": {
+            "label": "Post · intro and Scale-Up Linearity",
+            "url": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e"
+          },
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/facts/sizes.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "6 to 48",
+          "claim": "measured_result",
+          "text": "machines in Netflix’s existing Cassandra clusters. The post says the team was glad to see linear scale to six times its largest.",
+          "source": {
+            "label": "Post · intro",
+            "url": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e"
+          },
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/facts/existing.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "about 11 ms",
+          "claim": "measured_result",
+          "text": "response time seen by the client, of which about 1.2 ms was network time. The post says the server side is a small fraction of a millisecond.",
+          "source": {
+            "label": "Post · Per-Instance Activity",
+            "url": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e"
+          },
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/facts/latency.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "2 hours",
+          "claim": "measured_result",
+          "text": "for the whole test, at a few hundred dollars, the post says. It took 66 minutes to get the ring ready, of which about 15 minutes was waiting for Amazon to create the machines.",
+          "source": {
+            "label": "Post · intro",
+            "url": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e"
+          },
+          "media": {
+            "type": "svg",
+            "src": "netflix-cassandra-benchmark/facts/time.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

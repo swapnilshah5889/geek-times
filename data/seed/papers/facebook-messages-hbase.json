@@ -1,0 +1,526 @@
+{
+  "schemaVersion": 2,
+  "slug": "facebook-messages-hbase",
+  "kind": "blog",
+  "blog": {
+    "title": "The Underlying Technology of Messages",
+    "organization": "Facebook Engineering",
+    "published": "2010-11-15",
+    "url": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+    "trust": "company_reported"
+  },
+  "pageTitle": "The team that open-sourced Cassandra picked something else",
+  "desk": "Distributed systems",
+  "summary": "Facebook open-sourced Cassandra in 2008. For its new Messages system, the team says it tested MySQL, Cassandra, HBase and others, then chose HBase because of MySQL's long tail and Cassandra's eventual consistency.",
+  "hook": {
+    "sticker": "Wait, what?",
+    "teaser": "The company that open-sourced Cassandra tested it for a new product and chose something else. Why?",
+    "cta": "Read the reasons",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "15 billion",
+      "text": "messages a month, Facebook says"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "facebook-messages-hbase/lead/two-piles.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A small busy desk piled with new letters next to a huge quiet warehouse of old boxes with dust on them."
+        },
+        "tag": "Two piles!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "facebook-messages-hbase/lead/the-lineup.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Three desks in a row labeled MySQL, Cassandra and HBase, with a clipboard-holding tester walking along them."
+        },
+        "tag": "Pick one!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/eventual-consistency",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/facebook",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/hbase",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "HBase",
+        "aliases": [
+          "Apache HBase"
+        ],
+        "parent": "area/databases"
+      }
+    },
+    {
+      "tag": "technique/mysql",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "MySQL",
+        "parent": "area/databases"
+      }
+    },
+    {
+      "tag": "technique/hdfs",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "HDFS",
+        "aliases": [
+          "Hadoop Distributed File System"
+        ]
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Real world / Distributed systems / Picture story",
+      "headline": {
+        "text": "Facebook open-sourced Cassandra, then picked",
+        "accent": "something else."
+      },
+      "deck": "Facebook open-sourced Cassandra. So why did it choose HBase to store its new Messages?",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Two piles of messages",
+            "caption": "<b>Fig. 1.</b> Facebook says its Messages data falls into two piles: a small, busy pile of data and a huge pile that rarely gets opened.",
+            "media": {
+              "type": "svg",
+              "src": "facebook-messages-hbase/lead/two-piles.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A small busy desk piled with new letters next to a huge quiet warehouse of old boxes with dust on them."
+            }
+          },
+          {
+            "label": "Three candidates",
+            "caption": "<b>Fig. 2.</b> The team tested several storage systems, including one its own company had open-sourced.",
+            "media": {
+              "type": "svg",
+              "src": "facebook-messages-hbase/lead/the-lineup.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Three desks in a row labeled MySQL, Cassandra and HBase, with a clipboard-holding tester walking along them."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "choice",
+      "nav": "The choice ↓",
+      "kicker": "Real world / A picture story in four parts",
+      "title": "Choosing a home for Messages",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Two piles of data",
+          "provenance": "illustration",
+          "caption": "Facebook was building a new Messages system. The team says it noticed two patterns in its data. One was a short set of time-related data that changes a lot. The other was a set that only grows and is rarely opened. Think of a busy desk and a huge quiet warehouse.",
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/story/01-two-piles.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A busy desk with a few fresh letters and a big warehouse of boxes behind it. A person at the desk rarely walks to the warehouse."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Test before you pick",
+          "provenance": "model_design",
+          "caption": "The team says it wanted an objective choice. It spent a few weeks building a test setup and tried MySQL, Cassandra, HBase and a couple of other systems. Switching was a real worry: it already had skills with MySQL and had invested in Cassandra.",
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/story/02-test-bench.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A test bench with three machines in a row and a person with a clipboard ticking boxes. A small sign says: switching is costly."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "HBase wins the test",
+          "provenance": "model_design",
+          "caption": "The team chose HBase. It says MySQL did not handle the long tail of data well. It says Cassandra's eventual consistency was hard to fit its new system, and that HBase has a simpler consistency model. It also lists features it needed, and says its teams already knew HDFS, the filesystem under HBase.",
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/story/03-choose-hbase.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two desks crossed out with red marks and a third desk with a green check. A ribbon on the third reads: simpler rules."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "A company's own account",
+          "provenance": "evidence",
+          "caption": "This is Facebook's own account, not an outside test. The post gives no benchmark numbers for the comparison. It gives usage figures: over 350 million users sending over 15 billion person-to-person messages per month. It also says it did a lot of work on HBase and sent its changes back. <a href=\"https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/\">Read the post ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/story/04-own-account.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A company badge stamped on a report page. The page has a short list of reasons but no charts, and a question mark where the numbers would go."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "The reasons ↓",
+      "kicker": "Real world / Under the hood / A comic in five strips",
+      "title": "Why HBase?",
+      "deck": "Read each strip from left to right. Our story is one team choosing one storage system.",
+      "howTo": "The reasons come from Facebook's own post, so they are the company's account. The drawings are <b>made up</b> to explain the idea.",
+      "strips": [
+        {
+          "title": "Two kinds of data",
+          "kicker": "What Facebook noticed",
+          "provenance": "illustration",
+          "grownUpWords": "volatile data, rarely accessed data, workload pattern",
+          "panels": [
+            {
+              "caption": "A busy desk. New letters land here all the time, and old ones leave. Facebook says one pattern was a short set of data that is <b>volatile</b>.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/01a-busy-desk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk with new letters landing on it and a few being swept away. A worker looks busy."
+              }
+            },
+            {
+              "caption": "A warehouse. This pile only grows, and almost nobody opens it. Facebook says the second pattern was an <b>ever-growing set that rarely gets accessed</b>.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/01b-warehouse.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A big warehouse with rows of boxes and cobwebs. One lone visitor looks tiny in the doorway."
+              }
+            },
+            {
+              "caption": "One new system had to serve both piles. So the team said it wanted an objective way to choose a store.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/01c-both-piles.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A single desk joined to a warehouse by a long hallway. A person holds a checklist."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The test lineup",
+          "kicker": "Who was in the race",
+          "provenance": "illustration",
+          "grownUpWords": "MySQL, Cassandra, HBase, test framework",
+          "panels": [
+            {
+              "caption": "The team spent a few weeks building a test setup. Then it tried clusters of <b>MySQL</b>, <b>Cassandra</b>, <b>HBase</b> and a couple of others.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/02a-test-bench.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three clusters of little desks labeled MySQL, Cassandra and HBase on a test bench, with a person taking notes."
+              }
+            },
+            {
+              "caption": "Switching was a big deal. The company's Operations and Databases teams knew MySQL well. And the company had open-sourced Cassandra and invested in it.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/02b-sticky-habits.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two workers hugging a MySQL desk and a Cassandra desk. A thought bubble shows moving boxes."
+              }
+            },
+            {
+              "caption": "Facebook says the choice meant either leaving its Cassandra work or training its operations teams on a new, large system.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/02c-two-roads.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A fork in the road. One sign says: leave Cassandra. The other says: learn a new system."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Why not MySQL?",
+          "kicker": "The long tail",
+          "provenance": "model_design",
+          "grownUpWords": "long tail of data, index growth",
+          "panels": [
+            {
+              "caption": "A small shelf is easy. You find any folder fast.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/03a-small-shelf.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tidy small shelf with a few folders. A hand pulls one out quickly."
+              }
+            },
+            {
+              "caption": "But the post says the data kept growing, and so did the indexes. Facebook says <b>performance suffered</b>.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/03b-shelf-grows.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The shelf grows into a towering wall of folders and a giant index book. The person climbs a ladder, sweating."
+              }
+            },
+            {
+              "caption": "Facebook's verdict: MySQL did not handle the <b>long tail</b> of old data well.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/03c-verdict.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A red cross over the MySQL desk. A tiny person at the bottom of a very long tail of boxes looks up."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Why not Cassandra?",
+          "kicker": "The consistency worry",
+          "provenance": "model_design",
+          "grownUpWords": "eventual consistency, consistency model",
+          "panels": [
+            {
+              "caption": "Cassandra is <b>eventually consistent</b>. Several desks may briefly hold slightly different notes about the same thing.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/04a-different-notes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three desks on a ring with slightly different notes about the same message. A little clock shows catching up."
+              }
+            },
+            {
+              "caption": "Facebook says this was a difficult pattern to <b>reconcile</b> for its new Messages system. Someone has to sort out which note is right.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/04b-reconcile.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A person with a puzzled face holding two different notes and a question mark."
+              }
+            },
+            {
+              "caption": "The post says HBase has a <b>simpler consistency model</b>. In our picture: one clear answer at a time.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/04c-simple-rules.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One desk with one clean note and a green check. A person nods."
+              }
+            }
+          ]
+        },
+        {
+          "title": "What HBase offered",
+          "kicker": "Features and friends",
+          "provenance": "model_design",
+          "grownUpWords": "auto load balancing, failover, compression, shards, HDFS, replication, checksums",
+          "panels": [
+            {
+              "caption": "The team says HBase had the most features it needed: auto load balancing and failover, compression, and several shards per server.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/05a-features.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk with a checklist of ticked boxes: balance, failover, compress, shards."
+              }
+            },
+            {
+              "caption": "Under it sits HDFS. The post says HDFS adds replication, end-to-end checksums and automatic rebalancing. Copies, honesty checks and tidying.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/05b-hdfs-folders.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A basement of folders being copied, stamped with checkmarks and slid around evenly by little arms."
+              }
+            },
+            {
+              "caption": "Facebook says its teams already knew HDFS from Hadoop, and that it sent its HBase changes back to the community.",
+              "media": {
+                "type": "svg",
+                "src": "facebook-messages-hbase/comic/05c-share-back.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A team passing a wrapped package back to a crowd of waving helpers."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / Company-reported numbers",
+      "facts": [
+        {
+          "figure": "15 billion",
+          "claim": "measured_result",
+          "text": "over 15 billion person-to-person messages per month, from over 350 million users. Facebook reports this for the Messages system.",
+          "source": {
+            "label": "Post",
+            "url": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/facts/messages-per-month.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "120 billion",
+          "claim": "measured_result",
+          "text": "over 120 billion messages per month in Facebook's chat service, which the post says has over 300 million users.",
+          "source": {
+            "label": "Post",
+            "url": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/facts/chat-volume.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "2008",
+          "claim": "model_design",
+          "text": "the year Facebook open-sourced Cassandra. The post says it was already serving traffic for Inbox Search.",
+          "source": {
+            "label": "Post",
+            "url": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/facts/cassandra-2008.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "A few weeks",
+          "claim": "model_design",
+          "text": "spent setting up a test framework to try MySQL, Cassandra, HBase and a couple of other systems.",
+          "source": {
+            "label": "Post",
+            "url": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/facts/test-weeks.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "20",
+          "claim": "model_design",
+          "text": "over 20 new infrastructure services the post says will launch with the new Messages, alongside the storage choice.",
+          "source": {
+            "label": "Post",
+            "url": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/"
+          },
+          "media": {
+            "type": "svg",
+            "src": "facebook-messages-hbase/facts/new-services.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

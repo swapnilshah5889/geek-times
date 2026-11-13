@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 2,
+  "slug": "twitter-cassandra-2010",
+  "kind": "blog",
+  "blog": {
+    "title": "Cassandra at Twitter Today",
+    "organization": "Twitter Engineering",
+    "published": "2010-07-10",
+    "url": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+    "trust": "company_reported",
+    "archivedUrl": "https://web.archive.org/web/20231205014529/https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today"
+  },
+  "pageTitle": "Why tweets stayed on MySQL",
+  "desk": "Distributed systems",
+  "summary": "In 2010 Twitter said it used Cassandra in production for places and research, was building an analytics system on it, but would not move tweet storage to it for now. The team says it was not the time for a large-scale migration, and it kept its MySQL-based storage.",
+  "hook": {
+    "sticker": "Not for tweets!",
+    "teaser": "Twitter used Cassandra. So why did it keep tweets on MySQL?",
+    "cta": "Read the decision",
+    "readMinutes": 4,
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "twitter-cassandra-2010/lead/two-shelves.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Two shelves in a Twitter office. A big shelf of tweet boxes is labeled MySQL and stays put. A new shelf beside it holds places, research and charts."
+        },
+        "tag": "Two shelves!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "twitter-cassandra-2010/lead/not-now.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A person holds a moving box beside the big shelf, then sets it down. A sign on the box says: not now."
+        },
+        "tag": "Not now!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/mysql",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "MySQL",
+        "aliases": [
+          "MySQL-based storage"
+        ]
+      }
+    },
+    {
+      "tag": "concept/data-migration",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Data migration",
+        "aliases": [
+          "large-scale migration"
+        ]
+      }
+    },
+    {
+      "tag": "use/real-time-analytics",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Real-time analytics"
+      }
+    },
+    {
+      "tag": "organization/twitter",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Twitter",
+        "aliases": [
+          "Twitter Engineering"
+        ]
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "Why tweets stayed on",
+        "accent": "MySQL."
+      },
+      "deck": "Twitter used Cassandra for other jobs but, for now, did not move tweet storage to it. The team says this was not the time for a large-scale move.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Two shelves",
+            "caption": "<b>Fig. 1.</b> Tweets stay on the old shelf. The new shelf holds other jobs.",
+            "media": {
+              "type": "svg",
+              "src": "twitter-cassandra-2010/lead/two-shelves.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Two shelves in a Twitter office. A big shelf of tweet boxes is labeled MySQL and stays put. A new shelf beside it holds places, research and charts."
+            }
+          },
+          {
+            "label": "Not now",
+            "caption": "<b>Fig. 2.</b> The team says this is not the time for a big move.",
+            "media": {
+              "type": "svg",
+              "src": "twitter-cassandra-2010/lead/not-now.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A person holds a moving box beside the big shelf, then sets it down. A sign on the box says: not now."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the post ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "Why Twitter kept tweets on MySQL",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Cassandra said hello",
+          "provenance": "illustration",
+          "caption": "In 2010 Twitter had been working with Cassandra for a year. The team says its work was done in the open, but lately it had been less involved in the community. It says that created some misunderstandings. The post then says where things stand.",
+          "media": {
+            "type": "svg",
+            "src": "twitter-cassandra-2010/story/01-misunderstandings.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A Twitter engineer at a desk with a chat bubble that has a question mark. Behind them a small Cassandra shelf and a big MySQL shelf."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Use it for other jobs",
+          "provenance": "model_design",
+          "caption": "Twitter says it already uses Cassandra in production for a bunch of things. Its geo team stores places of interest. Its research team stores data-mining results. A third system, for real-time analytics, was being built.",
+          "media": {
+            "type": "svg",
+            "src": "twitter-cassandra-2010/story/02-new-jobs.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A Cassandra shelf with three labeled folders: places, research results, analytics. A map pin, a magnifying glass and a bar chart sit on top."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Keep tweets on MySQL",
+          "provenance": "model_design",
+          "caption": "The team says it is not working on Cassandra as a store for tweets. It calls this a change in strategy. It will keep maintaining its existing MySQL-based storage. Its reason: this isn't the time for a large-scale move to a new technology.",
+          "media": {
+            "type": "svg",
+            "src": "twitter-cassandra-2010/story/03-keep-mysql.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A big shelf of tweet boxes labeled MySQL. A moving truck waits at the door, and a person waves it away."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "What the post says",
+          "provenance": "evidence",
+          "caption": "This is a short company post, so there are no speed tests or charts in it, and the reasons are the team's own. It says Cassandra work will go to new projects that could not ship without a large-scale data store, and that use will grow. <a href=\"https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today\">Read the post ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "twitter-cassandra-2010/story/04-evidence.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A single page of text with four short lines marked by check marks, next to a plain empty chart frame with no bars."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in four strips",
+      "title": "Two shelves, two jobs",
+      "deck": "Read each strip from left to right. It follows the post's own words and reasons.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The post has no numbers or tests. It is the team's own account.",
+      "strips": [
+        {
+          "title": "Where Twitter uses Cassandra",
+          "kicker": "What it does today",
+          "provenance": "illustration",
+          "grownUpWords": "production use, geo data, data mining, real-time analytics",
+          "panels": [
+            {
+              "caption": "The post says Twitter uses Cassandra in production for a bunch of things. Here are three examples.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/01a-three-jobs.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A Cassandra shelf with three signs hanging from it: places, research, analytics."
+              }
+            },
+            {
+              "caption": "The <b>geo</b> team keeps its database of places of interest there. The <b>research</b> team keeps data-mining results there, and those feed things like @toptweets and local trends.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/01b-places-research.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A map pin and a magnifying glass drop folders onto the shelf. A small speech bubble says: top tweets."
+              }
+            },
+            {
+              "caption": "The analytics, operations and infrastructure teams are building a system on Cassandra for large-scale real-time analytics, for use inside and outside Twitter.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/01c-analytics.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three people at a big screen with a live bar chart, building it together."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Tweets stay put",
+          "kicker": "What did not change",
+          "provenance": "illustration",
+          "grownUpWords": "MySQL, storage, migration",
+          "panels": [
+            {
+              "caption": "A pile of tweets lives in its existing store. The post says it is MySQL-based.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/02a-tweet-pile.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tall stack of tweet cards on a shelf labeled MySQL."
+              }
+            },
+            {
+              "caption": "Would Twitter move the pile to Cassandra? The post says: for now, no. It calls this a change in strategy.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/02b-no-move.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A robot arm with a Cassandra tag reaches for the pile. A hand holds up a stop sign."
+              }
+            },
+            {
+              "caption": "The team will continue to maintain its existing MySQL-based storage.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/02c-maintain.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A worker oils and tidies the MySQL shelf with a little wrench."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Why not move now?",
+          "kicker": "The team's reason",
+          "provenance": "model_design",
+          "grownUpWords": "large-scale migration, new technology",
+          "panels": [
+            {
+              "caption": "Moving everything is a big job, like moving a whole house.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/03a-big-move.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tiny person stares at a huge house with boxes piled up around it."
+              }
+            },
+            {
+              "caption": "The team says it believes this isn't the time to make a large-scale migration to a new technology.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/03b-not-the-time.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A calendar page and a thought bubble with a moving box crossed out."
+              }
+            },
+            {
+              "caption": "The post gives no other reason and no test results. So that is all we can say about why.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/03c-only-reason.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One sign on a door reading: this isn't the time. No other signs are there."
+              }
+            }
+          ]
+        },
+        {
+          "title": "What happens next",
+          "kicker": "Cassandra's future there",
+          "provenance": "model_design",
+          "grownUpWords": "new projects, large-scale data store",
+          "panels": [
+            {
+              "caption": "Twitter says it will aim its Cassandra work at new projects.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/04a-new-projects.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A row of new blank project boxes in front of the Cassandra shelf."
+              }
+            },
+            {
+              "caption": "It names the kind: projects it wouldn't be able to ship without a large-scale data store.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/04b-needs-big-store.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A bridge labeled new project cannot be finished until a big store plank is laid."
+              }
+            },
+            {
+              "caption": "The post ends by saying the team invests in Cassandra every day. It says Cassandra will be around a long time and its use will only grow.",
+              "media": {
+                "type": "svg",
+                "src": "twitter-cassandra-2010/comic/04c-long-time.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A small plant in a pot labeled Cassandra gets watered and has a taller shadow."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / The team's own words, no tests",
+      "facts": [
+        {
+          "figure": "Not for tweets",
+          "claim": "model_design",
+          "text": "Twitter says that for now it is not working on Cassandra as a store for tweets. It calls this a change in strategy.",
+          "source": {
+            "label": "Post · paragraph 3",
+            "url": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today"
+          },
+          "media": {
+            "type": "svg",
+            "src": "twitter-cassandra-2010/facts/not-for-tweets.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A tweet card with a cross over a Cassandra tag."
+          }
+        },
+        {
+          "figure": "MySQL",
+          "claim": "model_design",
+          "text": "The team says it will continue to maintain its existing MySQL-based storage.",
+          "source": {
+            "label": "Post · paragraph 3",
+            "url": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today"
+          },
+          "media": {
+            "type": "svg",
+            "src": "twitter-cassandra-2010/facts/mysql-stays.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A shelf labeled MySQL with a check mark."
+          }
+        },
+        {
+          "figure": "3 uses",
+          "claim": "model_design",
+          "text": "Three examples the post lists: places of interest, data-mining results, and a real-time analytics system the post says was being built.",
+          "source": {
+            "label": "Post · paragraph 2",
+            "url": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today"
+          },
+          "media": {
+            "type": "svg",
+            "src": "twitter-cassandra-2010/facts/three-uses.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A shelf with three folders: a map pin, a magnifying glass, a bar chart."
+          }
+        },
+        {
+          "figure": "Every day",
+          "claim": "model_design",
+          "text": "The post says the team invests in Cassandra every day, and that its use will only grow.",
+          "source": {
+            "label": "Post · last paragraph",
+            "url": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today"
+          },
+          "media": {
+            "type": "svg",
+            "src": "twitter-cassandra-2010/facts/every-day.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A plant in a pot with a watering can."
+          }
+        }
+      ]
+    }
+  ]
+}

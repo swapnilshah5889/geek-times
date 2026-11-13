@@ -1,0 +1,578 @@
+{
+  "schemaVersion": 2,
+  "slug": "accord",
+  "pageTitle": "A Cassandra proposal: transactions with no captain",
+  "desk": "Distributed systems",
+  "paper": {
+    "title": "CEP-15: Fast General Purpose Transactions",
+    "authors": "Elliott Smith and colleagues",
+    "year": 2021,
+    "url": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf"
+  },
+  "summary": "This is a draft proposal for Apache Cassandra. The authors want Cassandra to run transactions across many machines without a leader that orders everything. Their design, ACCORD, shrinks the group of voters when machines break and holds each new job until a set time. The paper gives arguments and proofs, and no benchmarks.",
+  "hook": {
+    "sticker": "A proposal",
+    "teaser": "Can many machines agree on an order without a captain?",
+    "cta": "See the idea",
+    "readMinutes": 4,
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "accord/lead/many-captains.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Six desks around a ring. One has a captain hat and a long line of people waiting at it, while a far-away person waves from the edge."
+        },
+        "tag": "Busy captain"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "accord/lead/no-captain.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Six desks around a ring with no hats. Three people each walk to their nearest desk, and a big clock hangs in the middle."
+        },
+        "tag": "No captain"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/quorum",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=2",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/accord",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "ACCORD",
+        "aliases": [
+          "Cassandra CEP-15",
+          "Cassandra transactions"
+        ],
+        "parent": "technique/cassandra"
+      }
+    },
+    {
+      "tag": "concept/distributed-transactions",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Distributed transactions",
+        "aliases": [
+          "general purpose transactions",
+          "cross-shard transactions"
+        ]
+      }
+    },
+    {
+      "tag": "concept/leaderless-consensus",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=2",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Leaderless consensus",
+        "aliases": [
+          "leaderless protocols"
+        ]
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "Transactions with",
+        "accent": "no captain."
+      },
+      "deck": "A draft proposal for Apache Cassandra: a way for many machines to agree on the order of jobs without one machine in charge.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Many desks, one captain",
+            "caption": "<b>Fig. 1.</b> Many systems pick one captain desk to put every change in order. That works, but the captain can get busy and far-away clients must wait.",
+            "media": {
+              "type": "svg",
+              "src": "accord/lead/many-captains.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Six desks around a ring. One has a captain hat and a long line of people waiting at it, while a far-away person waves from the edge."
+            }
+          },
+          {
+            "label": "No captain",
+            "caption": "<b>Fig. 2.</b> The paper proposes ACCORD: no captain. A nearby helper can start a job, and timestamps decide the order.",
+            "media": {
+              "type": "svg",
+              "src": "accord/lead/no-captain.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Six desks around a ring with no hats. Three people each walk to their nearest desk, and a big clock hangs in the middle."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "ACCORD: a proposed next step for Cassandra",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Big databases need to agree",
+          "provenance": "illustration",
+          "caption": "A big database keeps copies of its data in many places so it survives breakage. Then it needs those copies to agree on the order of changes. The paper says today’s databases get this with a leader, and that costs either speed at scale or weaker guarantees. Systems with no leader exist, but the paper says they have not made it into real products. Grown-up words: <b>replication</b>, <b>shards</b>, <b>leader-based</b>.",
+          "media": {
+            "type": "svg",
+            "src": "accord/story/01-agree.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Three folders on three desks hold the same page, and a question mark floats between them."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Why leaderless plans wobble",
+          "provenance": "illustration",
+          "caption": "The paper blames a weak spot. Leaderless plans have a quick path that needs lots of desks to answer. Fewer desks can break than the plan survives overall, yet the quick path stops. The paper says one such plan allows at most one broken replica before that happens. When it stops, everyone sends extra messages. Grown-up words: <b>fast path</b>, <b>slow path</b>, <b>leaderless protocol</b>.",
+          "media": {
+            "type": "svg",
+            "src": "accord/story/02-wobble.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A fast road with a closed gate beside a long winding road, and a few cars turning onto the winding one."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Shrink the voters, delay the clock",
+          "provenance": "illustration",
+          "caption": "This is a proposal in a draft paper. ACCORD, the paper’s plan for Apache Cassandra, has two tricks. First, if desks break, shrink the group whose votes count for the quick path, so it still works. Second, each desk holds new jobs in a waiting line until a set time, so, if the paper’s clock and travel-time limits hold, jobs from near and far are handled in time order with no extra messages. Grown-up words: <b>electorate</b>, <b>timestamp reorder buffer</b>, <b>clock skew</b>.",
+          "media": {
+            "type": "svg",
+            "src": "accord/story/03-two-tricks.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A small group of desks raising hands on the left, and a waiting line of envelopes ordered by a clock on the right."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Arguments, not measurements",
+          "provenance": "evidence",
+          "caption": "The paper has no benchmark. It gives reasons and proofs that its rules keep every copy in the same order, and says recovery can finish stuck jobs. Its performance claims, such as matching leader-based systems under contention and failure, are claims on paper. Real tests would still be needed. <a href=\"https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=8\">See the safety section ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "accord/story/04-no-benchmark.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A scroll of written reasoning on a desk, and next to it an empty stopwatch with no needle."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "Follow one job through ACCORD",
+      "deck": "Read each strip left to right. This is the design as the paper proposes it.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under “grown-up words” are the paper’s own. The paper has no measured results, so the box at the end lists design claims.",
+      "strips": [
+        {
+          "title": "The two-step vote",
+          "kicker": "How a job gets ordered",
+          "provenance": "illustration",
+          "grownUpWords": "PreAccept, Accept, fast path, slow path",
+          "panels": [
+            {
+              "caption": "A person gives a job to a nearby helper, called the <b>coordinator</b>. The helper asks the desks to vote on a time for the job.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/01a-ask.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A person hands an envelope to a helper, who points at three desks."
+              }
+            },
+            {
+              "caption": "If enough desks give the same answer, the job is settled in <b>one trip</b>. That is the fast path.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/01b-same-answer.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three desks hold up the same card with a clock time, and a green tick appears."
+              }
+            },
+            {
+              "caption": "If the desks disagree, there is one more round to settle. The paper says at most two trips in all.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/01c-extra-round.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Desks hold up different cards, then a second round of one shared card is held up."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Fewer voters",
+          "kicker": "Shrink the voting group",
+          "provenance": "illustration",
+          "grownUpWords": "electorate, fast-path quorum",
+          "panels": [
+            {
+              "caption": "Example from the paper: nine desks, and the group allowed to vote for the quick path starts at nine.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/02a-nine.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Nine small desks in a row, all with raised hands."
+              }
+            },
+            {
+              "caption": "When desks break, the group shrinks to seven or five, so fewer votes are needed.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/02b-shrink.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two desks crossed out and the row of raised hands is smaller, with a smaller number card."
+              }
+            },
+            {
+              "caption": "Once the most desks the plan tolerates are broken, the quick path and the normal path use the same group. No extra messages.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/02c-same-group.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The same five desks sit inside both a fast-path circle and a normal circle."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The waiting line",
+          "kicker": "Hold the job until the right time",
+          "provenance": "illustration",
+          "grownUpWords": "timestamp reorder buffer, clock skew",
+          "panels": [
+            {
+              "caption": "Two jobs start at once in two far-apart cities. Near desks see their own city’s job first.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/03a-two-cities.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two cities at the edges with an envelope each, and desks near each city holding a different envelope first."
+              }
+            },
+            {
+              "caption": "Each desk puts new jobs in a waiting line, ordered by time, and waits until a set deadline.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/03b-waiting-line.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "An envelope sits in a line of envelopes behind a rope and a small alarm clock."
+              }
+            },
+            {
+              "caption": "If the paper’s clock and travel-time limits hold, both jobs have arrived by the deadline, so every desk handles them in the same order.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/03c-same-order.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three desks each hold the same stack with job one on top of job two."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Clocks matter",
+          "kicker": "What does waiting cost?",
+          "provenance": "illustration",
+          "grownUpWords": "clock synchrony, GPS, NTP",
+          "panels": [
+            {
+              "caption": "The waiting adds a delay as big as the gap between clocks.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/04a-delay.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two clocks showing slightly different times with a tiny gap marked between them."
+              }
+            },
+            {
+              "caption": "The paper says data centers with a good time source may keep clocks within a millisecond, so the delay will likely be small next to long-distance travel.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/04b-tiny-gap.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tiny gap beside a long road crossing the ocean."
+              }
+            },
+            {
+              "caption": "Each place has its own time source, so the cost is one fixed amount, not one that grows with distance.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/04c-fixed-cost.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Several buildings each with a small clock dish on the roof and the same small weight."
+              }
+            }
+          ]
+        },
+        {
+          "title": "If the helper vanishes",
+          "kicker": "Recovery",
+          "provenance": "illustration",
+          "grownUpWords": "recovery protocol, failure detector",
+          "panels": [
+            {
+              "caption": "A helper starts a job, then disappears.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/05a-helper-gone.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "An empty chair with a half-finished envelope left on the desk."
+              }
+            },
+            {
+              "caption": "A desk that saw the job notices (the paper assumes a rough failure detector) and takes over.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/05b-takeover.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk with a worry meter pointing high steps up and picks up the envelope."
+              }
+            },
+            {
+              "caption": "It asks the others what they saw and finishes the job in the same order as before.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/05c-finish.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The desk checks notes from two neighbors and stamps the envelope done."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Changing the team",
+          "kicker": "Reconfiguration",
+          "provenance": "illustration",
+          "grownUpWords": "reconfiguring electorates, epoch",
+          "panels": [
+            {
+              "caption": "Sometimes the group of voting desks must change, for example when a desk joins.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/06a-new-desk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A new desk carries its chair toward a row of desks."
+              }
+            },
+            {
+              "caption": "The new desk must first be told every quick decision made before it joined.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/06b-catch-up.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Old desks hand a notebook to the new desk."
+              }
+            },
+            {
+              "caption": "Only then may it vote. The paper says this keeps the move from one team to the next safe.",
+              "media": {
+                "type": "svg",
+                "src": "accord/comic/06c-vote.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The new desk raises a hand beside the others with a green tick."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Claims from the paper / Design reasons, with sources",
+      "facts": [
+        {
+          "figure": "1 trip",
+          "claim": "model_design",
+          "text": "Per the paper’s design, ACCORD aims to settle a job in one round trip when it can, and at most two in the worst case. It says Caesar needs three.",
+          "source": {
+            "label": "Paper §6",
+            "url": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=11"
+          },
+          "media": {
+            "type": "svg",
+            "src": "accord/facts/trips.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "at most 1",
+          "claim": "model_design",
+          "text": "The paper says one earlier leaderless plan, Tempo, can lose at most one replica before its fast path stops working, even though it tolerates more failures overall. This is the problem ACCORD is designed to fix.",
+          "source": {
+            "label": "Paper §1",
+            "url": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1"
+          },
+          "media": {
+            "type": "svg",
+            "src": "accord/facts/one-failure.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "9 to 5",
+          "claim": "model_design",
+          "text": "In the paper’s example, nine desks can shrink the voting group to seven or five. The quick-path vote needs 7, 6 or 5 desks to match.",
+          "source": {
+            "label": "Paper §2.1.1",
+            "url": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "accord/facts/shrink-nine.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "sub-ms",
+          "claim": "model_design",
+          "text": "The paper says clock gaps in good data centers can be under a millisecond, so the extra wait it adds would likely be small next to wide-area delay. This is an argued estimate, not a test.",
+          "source": {
+            "label": "Paper §2.2.1",
+            "url": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "accord/facts/clock-gap.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "5 phases",
+          "claim": "model_design",
+          "text": "The design runs a job through PreAccept, Accept, Commit, Execute and Apply. The Accept step can be skipped on the fast path.",
+          "source": {
+            "label": "Paper §3.1",
+            "url": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=5"
+          },
+          "media": {
+            "type": "svg",
+            "src": "accord/facts/phases.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "0 tests",
+          "claim": "model_design",
+          "text": "The paper has no evaluation section. It offers arguments and proofs for safety and liveness. It is a draft whitepaper proposing the design for Apache Cassandra.",
+          "source": {
+            "label": "Paper §3.4, §4",
+            "url": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=8"
+          },
+          "media": {
+            "type": "svg",
+            "src": "accord/facts/no-benchmark.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

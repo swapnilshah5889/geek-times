@@ -32,6 +32,8 @@ Update it when direction changes or a milestone lands. Longer context lives in `
 
 ## Recent publication
 
+- **Cassandra storyline drafted (branch `cassandra-storyline`, not published):** 13 more stories (Bigtable, YCSB, Twitter 2010, Facebook Messages 2010, Hadoop Realtime SIGMOD 2011, Netflix 2011, PBS, Jepsen, Discord 2017/2023, Instagram Rocksandra, Messenger MyRocks, Accord) with fact-check ledgers, art under `backups/media/`, library entries, nodes and a `cassandra` storyline in the seed. Built with `skills/batch-storyline`. Source ledger and open owner decisions (conference trust, Jepsen trust, ~72 proposed tags): `docs/research/cassandra-timeline.md`.
+
 - `cassandra` (Lakshman & Malik, LADIS 2009, `peer_reviewed` per the LADIS CFP; ACM DL record unconfirmed): Supabase **live** version 16 (approved 2026-11-12) on branch `cassandra-storyline`, 30 moments, 6 facts, 30 media (uploaded with `npm run media:upload -- --preview`), 11 owner-approved new tags. First story of the planned Cassandra storyline. Nodes `bigtable`/`cassandra` and the two cited relations (Dynamo/Bigtable → Cassandra) were inserted directly as `verified = true` with `relation_evidence` pointing at the paper (2026-11-12), the first verified relations in the database. Do not run `seed:editorial` blindly: it wipes relations back to unverified and overwrites `front_placement` (including `onThisDay`). The `FamilyTree` component still renders only its empty state; turning it on is a canvas-first UI change.
 
 - `einstein-special-relativity` (Einstein, 1905, `journal_published`): Supabase live version 15, 23 moments, 5 facts, 18 media assets, 2 approved tags. Verified in `v_live_story`; local development also reads it.

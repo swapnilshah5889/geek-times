@@ -1,0 +1,664 @@
+{
+  "schemaVersion": 2,
+  "slug": "ycsb",
+  "pageTitle": "One fair test for every data store",
+  "desk": "Distributed systems",
+  "paper": {
+    "title": "Benchmarking Cloud Serving Systems with YCSB",
+    "authors": "Cooper and colleagues",
+    "year": 2010,
+    "url": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf"
+  },
+  "summary": "By 2010 many new cloud data stores existed and nobody could compare them fairly. Yahoo! built a shared benchmark, YCSB, with five workloads, and ran it on Cassandra, HBase, PNUTS and sharded MySQL. For Cassandra the paper reports the highest throughput in the update-heavy test and much worse range scans, in most tests on Cassandra 0.5.0 and six machines per store. It says newer versions may change the results.",
+  "hook": {
+    "sticker": "Same race!",
+    "teaser": "Four data stores, one fair test. Who is fast at what?",
+    "cta": "See the test",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "11,978",
+      "text": "operations a second, Cassandra's peak in the update-heavy test"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "ycsb/lead/many-stores.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Four different shop counters stand in a row, each with a different sign, and one shopper does not know which to pick."
+        },
+        "tag": "Which one?"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "ycsb/lead/same-race.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Four runners with different badges stand on the same track under one starting flag, with a stopwatch beside the track."
+        },
+        "tag": "Same race!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=8",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/ycsb",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "YCSB",
+        "aliases": [
+          "Yahoo! Cloud Serving Benchmark"
+        ]
+      }
+    },
+    {
+      "tag": "concept/benchmarking",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Benchmarking",
+        "aliases": [
+          "performance comparison",
+          "benchmark"
+        ]
+      }
+    },
+    {
+      "tag": "technique/hbase",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=8",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "HBase"
+      }
+    },
+    {
+      "tag": "technique/pnuts",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=8",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "PNUTS",
+        "aliases": [
+          "Yahoo! PNUTS",
+          "Sherpa"
+        ]
+      }
+    },
+    {
+      "tag": "technique/mysql",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=8",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "MySQL",
+        "aliases": [
+          "sharded MySQL"
+        ]
+      }
+    },
+    {
+      "tag": "concept/elasticity",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=10",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Elasticity",
+        "aliases": [
+          "elastic speedup",
+          "elastic scaling"
+        ]
+      }
+    },
+    {
+      "tag": "concept/eventual-consistency",
+      "relevance": 0.3,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=7",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/yahoo",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Yahoo!",
+        "aliases": [
+          "Yahoo Research"
+        ]
+      }
+    },
+    {
+      "tag": "author/brian-f-cooper",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Brian F. Cooper"
+      }
+    },
+    {
+      "tag": "venue/socc",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "SoCC",
+        "aliases": [
+          "ACM Symposium on Cloud Computing"
+        ]
+      }
+    },
+    {
+      "tag": "venue/socc-2010",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "SoCC 2010",
+        "parent": "venue/socc"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "One fair test",
+        "accent": "for every data store."
+      },
+      "deck": "New cloud data stores were popping up fast, and nobody could compare them fairly. A team at Yahoo! built a shared test, then ran it on Cassandra, HBase, PNUTS and sharded MySQL. Here is what it found about Cassandra, good and bad.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Too many choices",
+            "caption": "Fig. 1. Many new data stores appeared at once, and nobody had a shared way to compare them.",
+            "media": {
+              "type": "svg",
+              "src": "ycsb/lead/many-stores.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Four different shop counters stand in a row, each with a different sign, and one shopper does not know which to pick."
+            }
+          },
+          {
+            "label": "One shared test",
+            "caption": "Fig. 2. Yahoo! built one shared test and ran the same workloads on the stores, Cassandra among them.",
+            "media": {
+              "type": "svg",
+              "src": "ycsb/lead/same-race.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Four runners with different badges stand on the same track under one starting flag, with a stopwatch beside the track."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "How Yahoo! tested the new data stores",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Too many stores, no fair test",
+          "provenance": "illustration",
+          "caption": "Around 2010, lots of new cloud data stores appeared: Cassandra, HBase, Yahoo!’s PNUTS and many more. They made different choices, and the paper says nobody had an apples-to-apples comparison. Without one, a team could not tell which store suited its job.",
+          "media": {
+            "type": "svg",
+            "src": "ycsb/story/01-many-stores.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A shopper stands before a row of different storefronts with a question mark above their head."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "One test, many kinds of work",
+          "provenance": "illustration",
+          "caption": "The Yahoo! team built a test tool and called it YCSB. It gives the stores the same table of records and the same mixes of work (sharded MySQL cannot scan, so it skips that one). Some mixes mostly read, some mostly update, and one mostly scans a run of neighbors. The tool is open source, so anyone can add a new store or a new mix. Grown-up words: <b>benchmark</b>, <b>workload</b>.",
+          "media": {
+            "type": "svg",
+            "src": "ycsb/story/02-one-test.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "One clipboard feeds the same list of chores to four machines in a row."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Same hardware, same care",
+          "provenance": "illustration",
+          "caption": "For most tests the team ran each store on six machines, with the same disks and with replication turned off, so they could see each store on its own. Developers of Cassandra, HBase and PNUTS helped tune their own stores. The team says it tuned every system as well as it knew how. Grown-up words: <b>throughput</b>, <b>latency</b>.",
+          "media": {
+            "type": "svg",
+            "src": "ycsb/story/03-same-track.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Four identical machines sit in a row on the same shelf, each plugged into the same power strip, while a helper tightens a screw on one."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Fast at writing, slow at scanning",
+          "provenance": "evidence",
+          "caption": "In the update-heavy test, Cassandra reached the highest throughput. In the short-range scan test, the paper says Cassandra performs much worse than HBase and PNUTS, and that its scan support was new in version 0.5.0. Adding a sixth server to Cassandra took many hours under load. These are results for 2010 versions, and the paper says newer ones may change. <a href=\"https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=9\">See the paper’s results ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "ycsb/story/04-results.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two bar groups. In the first group one bar stands tallest; in the second group one bar is very short."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "Follow the test, strip by strip",
+      "deck": "Read each strip from left to right. We follow the test itself, and then what it said about Cassandra.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under “grown-up words” are the paper’s own or the usual names. All the numbers come from the paper.",
+      "strips": [
+        {
+          "title": "Why a shared test",
+          "kicker": "The problem",
+          "provenance": "illustration",
+          "grownUpWords": "benchmark, apples-to-apples comparison",
+          "panels": [
+            {
+              "caption": "Many new data stores were showing up, each built a bit differently.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/01a-many-stores.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A row of different storefronts, each with its own sign."
+              }
+            },
+            {
+              "caption": "Each store was good at something, but nobody had <b>measured</b> them the same way.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/01b-no-ruler.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A shopper holds four different rulers of different lengths next to four boxes."
+              }
+            },
+            {
+              "caption": "So Yahoo! built one test they could run on all of them.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/01c-one-test.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One clipboard with a checklist hangs in front of four boxes."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Build the test table",
+          "kicker": "What every store gets",
+          "provenance": "illustration",
+          "grownUpWords": "records, fields, Zipfian distribution",
+          "panels": [
+            {
+              "caption": "Every store holds the same kind of record: ten fields of 100 bytes each, about 1,000 bytes in all.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/02a-record.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A long card with ten small boxes in a row."
+              }
+            },
+            {
+              "caption": "The test asks for four kinds of work: <b>insert</b> a record, <b>update</b> one, <b>read</b> one, or <b>scan</b> a run of them in order.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/02b-four-chores.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Four small icons: a plus card, a pencil, an eye, and a finger sliding down a list."
+              }
+            },
+            {
+              "caption": "Some records are asked for far more than others, like a few very popular profiles. The test copies that.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/02c-popular.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A line of cards where the first few are tall and glowing and the rest are small."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Five mixes, A to E",
+          "kicker": "The workloads",
+          "provenance": "illustration",
+          "grownUpWords": "workload A–E, read-heavy, update-heavy",
+          "panels": [
+            {
+              "caption": "<b>A</b> is half reads, half updates. Think of a session store that notes recent actions.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/03a-mix-a.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A pie split half and half in two colors next to a small clock."
+              }
+            },
+            {
+              "caption": "<b>B</b> is 95 percent reads and 5 percent updates, like photo tagging. <b>C</b> is reads only. <b>D</b> reads the newest records.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/03b-mix-bcd.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three pies: one mostly one color, one all one color, one with a glowing newest card."
+              }
+            },
+            {
+              "caption": "<b>E</b> scans short runs of records, like the posts in one conversation thread, with a few inserts.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/03c-mix-e.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A finger slides down a short stack of cards labelled as one thread."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Keep it fair",
+          "kicker": "How they ran it",
+          "provenance": "illustration",
+          "grownUpWords": "replication, heap, RAID",
+          "panels": [
+            {
+              "caption": "Most tests used six machines per store, each with the same disks. The database held 120 million records, 120 GB in all.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/04a-six-machines.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Six identical machines in two rows of three, with a tall stack of cards behind them."
+              }
+            },
+            {
+              "caption": "Replication was turned off, so each store showed its own baseline. Cassandra, HBase and PNUTS developers helped tune them.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/04b-tuning.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A helper in a cap turns a dial on a machine while another stands ready."
+              }
+            },
+            {
+              "caption": "The versions were Cassandra 0.5.0 (0.6.0-beta2 for the elastic test), HBase 0.20.3 and MySQL 5.1. The paper warns that newer versions may do better.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/04c-versions.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A calendar page with a small version tag on each of four boxes."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Where Cassandra did well",
+          "kicker": "Writing",
+          "provenance": "illustration",
+          "grownUpWords": "update-heavy, sequential I/O",
+          "panels": [
+            {
+              "caption": "In workload A, Cassandra reached the highest throughput: 11978 operations a second. HBase reached 7904, sharded MySQL 7283 and PNUTS 7448.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/05a-top-bar.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Four bars side by side with the first one clearly tallest."
+              }
+            },
+            {
+              "caption": "The paper says Cassandra writes to disk in one long sequential line, so reads in that test waited less for the disk head.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/05b-notebook.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A pencil adds lines to the end of a long notebook while a small robot arm waits its turn."
+              }
+            },
+            {
+              "caption": "In read-heavy workload B it was a different picture: PNUTS and sharded MySQL answered reads faster than Cassandra or HBase.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/05c-reads-slower.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two stopwatches: one fast beside a card, one slower beside a stack of loose pages."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Where Cassandra struggled",
+          "kicker": "Scans and growing",
+          "provenance": "illustration",
+          "grownUpWords": "range scan, repartitioning",
+          "panels": [
+            {
+              "caption": "In workload E, HBase handled 1519 operations a second and PNUTS 1440. The paper says Cassandra performs much worse.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/06a-scans.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two tall bars and one very short bar beside a finger sliding down a list."
+              }
+            },
+            {
+              "caption": "The paper says scan support was relatively new in version 0.5.0 and not yet heavily optimized.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/06b-new-feature.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A small new tool with a price tag still on it sits beside a worn one."
+              }
+            },
+            {
+              "caption": "Adding a sixth server under load made Cassandra move data around. The team had to stop its test after 5.5 hours.",
+              "media": {
+                "type": "svg",
+                "src": "ycsb/comic/06c-moving-boxes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Five machines pass heavy boxes to a sixth new machine while a clock shows a long wait."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "11978",
+          "claim": "measured_result",
+          "text": "operations a second was Cassandra’s peak in workload A (half reads, half updates). The paper lists 7904 for HBase, 7283 for sharded MySQL and 7448 for PNUTS.",
+          "source": {
+            "label": "Paper §6.2",
+            "url": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=9"
+          },
+          "media": {
+            "type": "svg",
+            "src": "ycsb/facts/peak-throughput.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "Much worse",
+          "claim": "measured_result",
+          "text": "is how the paper describes Cassandra on short range scans (workload E). HBase sustained 1519 operations a second and PNUTS 1440. The paper says Cassandra’s scan support was new in version 0.5.0 and not heavily optimized.",
+          "source": {
+            "label": "Paper §6.4",
+            "url": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=9"
+          },
+          "media": {
+            "type": "svg",
+            "src": "ycsb/facts/scans.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "5.5 hours",
+          "claim": "measured_result",
+          "text": "was how long the team ran Cassandra after adding a sixth server before it had to stop the workload so data could finish moving. The paper calls the cost a known issue in version 0.5.0 and says it was being optimized. This test used 0.6.0-beta2.",
+          "source": {
+            "label": "Paper §6.7",
+            "url": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=10"
+          },
+          "media": {
+            "type": "svg",
+            "src": "ycsb/facts/elastic-hours.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "120 GB",
+          "claim": "model_design",
+          "text": "of data, as 120 million records of 1 KB, was loaded on six server machines per store in most experiments, about 20 GB each, more than fits in memory. Replication was off and no dedicated log disk was used.",
+          "source": {
+            "label": "Paper §6.1",
+            "url": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=8"
+          },
+          "media": {
+            "type": "svg",
+            "src": "ycsb/facts/setup.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "2 to 12",
+          "claim": "measured_result",
+          "text": "servers: as the team grew the cluster and the load together in the read-heavy test, read latency stayed nearly constant for Cassandra and PNUTS, but varied a lot for HBase.",
+          "source": {
+            "label": "Paper §6.6",
+            "url": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=10"
+          },
+          "media": {
+            "type": "svg",
+            "src": "ycsb/facts/scaleup.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "95 / 5",
+          "claim": "measured_result",
+          "text": "reads to updates in workload B. There, PNUTS and sharded MySQL gave lower read latency than Cassandra and HBase, while Cassandra and HBase still did better on writes. The paper says Cassandra’s extra disk reads to assemble a record dominated.",
+          "source": {
+            "label": "Paper §6.3",
+            "url": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=9"
+          },
+          "media": {
+            "type": "svg",
+            "src": "ycsb/facts/read-heavy.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -236,6 +236,253 @@
       "year": 2009,
       "minutes": 4,
       "trust": "peer_reviewed"
+    },
+    {
+      "id": "bigtable",
+      "real": true,
+      "sample": false,
+      "headline": "One giant table,",
+      "accent": "cut into pieces.",
+      "dek": "Google had data of every size, from web addresses to satellite pictures. Bigtable keeps it all in one huge sorted table, cut into pieces that live on thousands of ordinary machines.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Bigtable: A Distributed Storage System for Structured Data",
+      "authors": "Chang and colleagues",
+      "year": 2006,
+      "minutes": 4,
+      "trust": "peer_reviewed"
+    },
+    {
+      "id": "ycsb",
+      "real": true,
+      "sample": false,
+      "headline": "One fair test",
+      "accent": "for every data store.",
+      "dek": "New cloud data stores were popping up fast, and nobody could compare them fairly. A team at Yahoo! built a shared test, then ran it on Cassandra, HBase, PNUTS and sharded MySQL. Here is what it found about Cassandra, good and bad.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Benchmarking Cloud Serving Systems with YCSB",
+      "authors": "Cooper and colleagues",
+      "year": 2010,
+      "minutes": 4,
+      "trust": "peer_reviewed"
+    },
+    {
+      "id": "twitter-cassandra-2010",
+      "real": true,
+      "sample": false,
+      "headline": "Why tweets stayed on",
+      "accent": "MySQL.",
+      "dek": "Twitter used Cassandra for other jobs but, for now, did not move tweet storage to it. The team says this was not the time for a large-scale move.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "blog",
+      "title": "Cassandra at Twitter Today",
+      "authors": "Twitter Engineering",
+      "year": 2010,
+      "minutes": 4,
+      "trust": "company_reported"
+    },
+    {
+      "id": "facebook-messages-hbase",
+      "real": true,
+      "sample": false,
+      "headline": "Facebook open-sourced Cassandra, then picked",
+      "accent": "something else.",
+      "dek": "Facebook open-sourced Cassandra. So why did it choose HBase to store its new Messages?",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "blog",
+      "title": "The Underlying Technology of Messages",
+      "authors": "Facebook Engineering",
+      "year": 2010,
+      "minutes": 4,
+      "trust": "company_reported"
+    },
+    {
+      "id": "hadoop-realtime-facebook",
+      "real": true,
+      "sample": false,
+      "headline": "Two screens,",
+      "accent": "one answer.",
+      "dek": "Facebook’s new inbox had to show the same unread count on the home page and the inbox page, while messages poured in. Here is what its engineers said they needed, and why they chose HBase.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Apache Hadoop Goes Realtime at Facebook",
+      "authors": "Borthakur and colleagues",
+      "year": 2011,
+      "minutes": 4,
+      "trust": "peer_reviewed"
+    },
+    {
+      "id": "netflix-cassandra-benchmark",
+      "real": true,
+      "sample": false,
+      "headline": "Add a machine, get a bit",
+      "accent": "more speed.",
+      "dek": "Netflix tested Cassandra on rented machines, to see whether more machines really means more speed. This is Netflix’s own benchmark.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "blog",
+      "title": "Benchmarking Cassandra Scalability on AWS — Over a million writes per second",
+      "authors": "Netflix Technology Blog",
+      "year": 2011,
+      "minutes": 4,
+      "trust": "company_reported"
+    },
+    {
+      "id": "pbs",
+      "real": true,
+      "sample": false,
+      "headline": "How stale is",
+      "accent": "a stale read?",
+      "dek": "Databases like Dynamo and Cassandra keep several copies and promise they will agree \"eventually\". They never say how old an answer can be. This paper predicts it with a model, and feeds the model latency numbers from real systems.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "Probabilistically Bounded Staleness for Practical Partial Quorums",
+      "authors": "Bailis and colleagues",
+      "year": 2012,
+      "minutes": 4,
+      "trust": "journal_published"
+    },
+    {
+      "id": "jepsen-cassandra",
+      "real": true,
+      "sample": false,
+      "headline": "Stamped as saved. Then",
+      "accent": "gone.",
+      "dek": "A database says it got your data. A tester in 2013 checked whether it was still there later.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "blog",
+      "title": "Jepsen: Cassandra",
+      "authors": "Jepsen (Kyle Kingsbury)",
+      "year": 2013,
+      "minutes": 4,
+      "trust": "company_reported"
+    },
+    {
+      "id": "discord-billions",
+      "real": true,
+      "sample": false,
+      "headline": "The chat history that",
+      "accent": "kept growing.",
+      "dek": "Discord decided to keep every message forever. What does it take to store that pile, and what went wrong on the way?",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "blog",
+      "title": "How Discord Stores Billions of Messages",
+      "authors": "Discord",
+      "year": 2017,
+      "minutes": 4,
+      "trust": "company_reported"
+    },
+    {
+      "id": "instagram-rocksandra",
+      "real": true,
+      "sample": false,
+      "headline": "The janitor who",
+      "accent": "stops the line.",
+      "dek": "Instagram kept Cassandra. It changed the engine inside, so the slowest reads would stop waiting on the cleanup crew.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "blog",
+      "title": "Open-sourcing a 10x reduction in Apache Cassandra tail latency",
+      "authors": "Instagram Engineering",
+      "year": 2018,
+      "minutes": 4,
+      "trust": "company_reported"
+    },
+    {
+      "id": "messenger-myrocks",
+      "real": true,
+      "sample": false,
+      "headline": "Moving a billion chats to a",
+      "accent": "new shelf.",
+      "dek": "Messenger's messages lived in HBase. Facebook says it moved them all to MyRocks while the app stayed open.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "blog",
+      "title": "Migrating Messenger storage to optimize performance",
+      "authors": "Facebook Engineering",
+      "year": 2018,
+      "minutes": 4,
+      "trust": "company_reported"
+    },
+    {
+      "id": "accord",
+      "real": true,
+      "sample": false,
+      "headline": "Transactions with",
+      "accent": "no captain.",
+      "dek": "A draft proposal for Apache Cassandra: a way for many machines to agree on the order of jobs without one machine in charge.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "paper",
+      "title": "CEP-15: Fast General Purpose Transactions",
+      "authors": "Elliott Smith and colleagues",
+      "year": 2021,
+      "minutes": 4,
+      "trust": "preprint"
+    },
+    {
+      "id": "discord-trillions",
+      "real": true,
+      "sample": false,
+      "headline": "The big shelf that",
+      "accent": "kept falling behind.",
+      "dek": "Discord says its messages database got harder to look after as it grew. Here is why the team says it left Cassandra, and how it moved trillions of messages.",
+      "desk": "Computer science  /  Distributed systems",
+      "fields": [
+        "sw"
+      ],
+      "role": "feature",
+      "kind": "blog",
+      "title": "How Discord Stores Trillions of Messages",
+      "authors": "Discord",
+      "year": 2023,
+      "minutes": 4,
+      "trust": "company_reported"
     }
   ],
   "front": {
@@ -337,6 +584,89 @@
         {
           "year": "2018 →",
           "label": "BERT, GPT and chatbots"
+        }
+      ]
+    },
+    {
+      "id": "cassandra",
+      "title": "Cassandra, from Facebook’s inbox to today",
+      "sample": false,
+      "steps": [
+        {
+          "year": "2006",
+          "label": "Google’s Bigtable",
+          "story": "bigtable"
+        },
+        {
+          "year": "2007",
+          "label": "Amazon’s Dynamo",
+          "story": "dynamo"
+        },
+        {
+          "year": "2009",
+          "label": "Cassandra at Facebook",
+          "story": "cassandra",
+          "current": true
+        },
+        {
+          "year": "2010",
+          "label": "YCSB puts stores to the test",
+          "story": "ycsb"
+        },
+        {
+          "year": "2010",
+          "label": "Twitter keeps tweets on MySQL",
+          "story": "twitter-cassandra-2010"
+        },
+        {
+          "year": "2010",
+          "label": "Facebook Messages picks HBase",
+          "story": "facebook-messages-hbase"
+        },
+        {
+          "year": "2011",
+          "label": "HBase goes real-time",
+          "story": "hadoop-realtime-facebook"
+        },
+        {
+          "year": "2011",
+          "label": "Netflix: a million writes a second",
+          "story": "netflix-cassandra-benchmark"
+        },
+        {
+          "year": "2012",
+          "label": "How stale is “eventual”?",
+          "story": "pbs"
+        },
+        {
+          "year": "2013",
+          "label": "Jepsen tests Cassandra",
+          "story": "jepsen-cassandra"
+        },
+        {
+          "year": "2017",
+          "label": "Discord moves onto Cassandra",
+          "story": "discord-billions"
+        },
+        {
+          "year": "2018",
+          "label": "Instagram swaps the engine",
+          "story": "instagram-rocksandra"
+        },
+        {
+          "year": "2018",
+          "label": "Messenger moves to MyRocks",
+          "story": "messenger-myrocks"
+        },
+        {
+          "year": "2021",
+          "label": "Accord transactions proposed",
+          "story": "accord"
+        },
+        {
+          "year": "2023",
+          "label": "Discord moves to ScyllaDB",
+          "story": "discord-trillions"
         }
       ]
     }
@@ -625,7 +955,8 @@
       "field": "sw",
       "type": "paper",
       "x": 620,
-      "y": 545
+      "y": 545,
+      "story": "bigtable"
     },
     {
       "id": "cassandra",
@@ -639,6 +970,138 @@
       "story": "cassandra",
       "short": "Facebook’s Cassandra",
       "blurb": "Facebook’s store for Inbox Search. It borrows Dynamo’s ring of machines and Bigtable’s column families, writes fast to a log and memory, and merges sorted files later."
+    },
+    {
+      "id": "ycsb",
+      "title": "Benchmarking Cloud Serving Systems with YCSB",
+      "authors": "Cooper and colleagues",
+      "year": 2010,
+      "field": "sw",
+      "type": "paper",
+      "x": 735,
+      "y": 560,
+      "story": "ycsb"
+    },
+    {
+      "id": "twitter-cassandra-2010",
+      "title": "Cassandra at Twitter Today",
+      "authors": "Twitter Engineering",
+      "year": 2010,
+      "field": "sw",
+      "type": "blog",
+      "x": 780,
+      "y": 560,
+      "story": "twitter-cassandra-2010"
+    },
+    {
+      "id": "facebook-messages-hbase",
+      "title": "The Underlying Technology of Messages",
+      "authors": "Facebook Engineering",
+      "year": 2010,
+      "field": "sw",
+      "type": "blog",
+      "x": 600,
+      "y": 590,
+      "story": "facebook-messages-hbase"
+    },
+    {
+      "id": "hadoop-realtime-facebook",
+      "title": "Apache Hadoop Goes Realtime at Facebook",
+      "authors": "Borthakur and colleagues",
+      "year": 2011,
+      "field": "sw",
+      "type": "paper",
+      "x": 645,
+      "y": 590,
+      "story": "hadoop-realtime-facebook"
+    },
+    {
+      "id": "netflix-cassandra-benchmark",
+      "title": "Benchmarking Cassandra Scalability on AWS — Over a million writes per second",
+      "authors": "Netflix Technology Blog",
+      "year": 2011,
+      "field": "sw",
+      "type": "blog",
+      "x": 690,
+      "y": 590,
+      "story": "netflix-cassandra-benchmark"
+    },
+    {
+      "id": "pbs",
+      "title": "Probabilistically Bounded Staleness for Practical Partial Quorums",
+      "authors": "Bailis and colleagues",
+      "year": 2012,
+      "field": "sw",
+      "type": "paper",
+      "x": 735,
+      "y": 590,
+      "story": "pbs"
+    },
+    {
+      "id": "jepsen-cassandra",
+      "title": "Jepsen: Cassandra",
+      "authors": "Jepsen (Kyle Kingsbury)",
+      "year": 2013,
+      "field": "sw",
+      "type": "blog",
+      "x": 780,
+      "y": 590,
+      "story": "jepsen-cassandra"
+    },
+    {
+      "id": "discord-billions",
+      "title": "How Discord Stores Billions of Messages",
+      "authors": "Discord",
+      "year": 2017,
+      "field": "sw",
+      "type": "blog",
+      "x": 600,
+      "y": 620,
+      "story": "discord-billions"
+    },
+    {
+      "id": "instagram-rocksandra",
+      "title": "Open-sourcing a 10x reduction in Apache Cassandra tail latency",
+      "authors": "Instagram Engineering",
+      "year": 2018,
+      "field": "sw",
+      "type": "blog",
+      "x": 645,
+      "y": 620,
+      "story": "instagram-rocksandra"
+    },
+    {
+      "id": "messenger-myrocks",
+      "title": "Migrating Messenger storage to optimize performance",
+      "authors": "Facebook Engineering",
+      "year": 2018,
+      "field": "sw",
+      "type": "blog",
+      "x": 690,
+      "y": 620,
+      "story": "messenger-myrocks"
+    },
+    {
+      "id": "accord",
+      "title": "CEP-15: Fast General Purpose Transactions",
+      "authors": "Elliott Smith and colleagues",
+      "year": 2021,
+      "field": "sw",
+      "type": "paper",
+      "x": 735,
+      "y": 620,
+      "story": "accord"
+    },
+    {
+      "id": "discord-trillions",
+      "title": "How Discord Stores Trillions of Messages",
+      "authors": "Discord",
+      "year": 2023,
+      "field": "sw",
+      "type": "blog",
+      "x": 780,
+      "y": 620,
+      "story": "discord-trillions"
     }
   ],
   "relations": [

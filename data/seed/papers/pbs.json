@@ -1,0 +1,720 @@
+{
+  "schemaVersion": 2,
+  "slug": "pbs",
+  "pageTitle": "How stale is a stale read?",
+  "desk": "Distributed systems",
+  "paper": {
+    "title": "Probabilistically Bounded Staleness for Practical Partial Quorums",
+    "authors": "Bailis and colleagues",
+    "year": 2012,
+    "url": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf"
+  },
+  "summary": "Stores like Dynamo and Cassandra keep copies of your data on several machines and answer fast by asking only some of them. They promise the copies will agree \"eventually\", but never say how old a read can be. This paper gives a way to predict it: how likely a read is fresh, and how long to wait. The authors check it against Cassandra and feed it real latency numbers from LinkedIn and Yammer.",
+  "hook": {
+    "sticker": "How old is old?",
+    "teaser": "\"Eventually\" is not a number. Can you predict how stale a read is?",
+    "cta": "Meet the odds",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "1.85 ms",
+      "text": "vs 45.5 ms: predicted wait for 99.9% fresh reads, SSD vs disk"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "pbs/lead/old-note.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A reader at a desk holds up a note marked old, while a fresher note is still travelling toward the desk on a conveyor belt."
+        },
+        "tag": "Old note!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "pbs/lead/odds-dial.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Three desks around a ring, and a big dial in front of them pointing near the top of a scale marked from unlikely to likely."
+        },
+        "tag": "How likely?"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/eventual-consistency",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/quorum",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=2",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/dynamo",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=3",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=7",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/tail-latency",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=9",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/staleness",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Staleness",
+        "aliases": [
+          "stale reads",
+          "data freshness"
+        ]
+      }
+    },
+    {
+      "tag": "technique/pbs",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=2",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Probabilistically bounded staleness",
+        "aliases": [
+          "PBS",
+          "t-visibility",
+          "k-staleness"
+        ]
+      }
+    },
+    {
+      "tag": "concept/monte-carlo-simulation",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=7",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Monte Carlo simulation",
+        "aliases": [
+          "random sampling simulation"
+        ]
+      }
+    },
+    {
+      "tag": "technique/riak",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=3",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Riak",
+        "aliases": [
+          "Basho Riak"
+        ]
+      }
+    },
+    {
+      "tag": "technique/voldemort",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=3",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Voldemort",
+        "aliases": [
+          "Project Voldemort"
+        ]
+      }
+    },
+    {
+      "tag": "organization/linkedin",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=8",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "LinkedIn"
+      }
+    },
+    {
+      "tag": "organization/yammer",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=8",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Yammer"
+      }
+    },
+    {
+      "tag": "organization/uc-berkeley",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "UC Berkeley",
+        "aliases": [
+          "University of California, Berkeley"
+        ]
+      }
+    },
+    {
+      "tag": "author/peter-bailis",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "Peter Bailis"
+      }
+    },
+    {
+      "tag": "venue/vldb",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "VLDB",
+        "aliases": [
+          "Very Large Data Bases",
+          "PVLDB"
+        ]
+      }
+    },
+    {
+      "tag": "venue/vldb-2012",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "ai",
+      "status": "proposed",
+      "proposed": {
+        "label": "VLDB 2012",
+        "parent": "venue/vldb"
+      }
+    },
+    {
+      "tag": "everyday/keeping-copies-safe",
+      "relevance": 0.5,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/teamwork",
+      "relevance": 0.4,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "How stale is",
+        "accent": "a stale read?"
+      },
+      "deck": "Databases like Dynamo and Cassandra keep several copies and promise they will agree \"eventually\". They never say how old an answer can be. This paper predicts it with a model, and feeds the model latency numbers from real systems.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Fresh or old?",
+            "caption": "<b>Fig. 1.</b> A new note is still on its way to the desk. A reader who asks that desk right now gets the old note.",
+            "media": {
+              "type": "svg",
+              "src": "pbs/lead/old-note.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A reader at a desk holds up a note marked old, while a fresher note is still travelling toward the desk on a conveyor belt."
+            }
+          },
+          {
+            "label": "Odds, not promises",
+            "caption": "<b>Fig. 2.</b> The paper does not just say \"eventually\". It works out how likely a fresh answer is, and how long to wait for it.",
+            "media": {
+              "type": "svg",
+              "src": "pbs/lead/odds-dial.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Three desks around a ring, and a big dial in front of them pointing near the top of a scale marked from unlikely to likely."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "How old can an \"eventual\" answer be?",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Fast answers, but how fresh?",
+          "provenance": "illustration",
+          "caption": "Systems like Dynamo and Cassandra keep copies of each item on a few machines. To be quick, they answer after hearing from only some of them. The paper says these systems promise only that the latest version will show up \"eventually\", if no new writes come, with no limit on how old a read can be. Many operators use them anyway, and until now the reason was mostly anecdotal. Grown-up words: <b>partial quorum</b>, <b>eventual consistency</b>, <b>staleness</b>.",
+          "media": {
+            "type": "svg",
+            "src": "pbs/story/01-fast-or-fresh.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A reader asks one of three desks and gets a note quickly, while a stopwatch beside the desks shows the note is slightly old."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Give the odds, not a promise",
+          "provenance": "illustration",
+          "caption": "The authors call their idea <b>probabilistically bounded staleness</b>, or PBS. It answers two plain questions. How old can a read be, counted in versions? And how long after a write finishes can you trust a read, counted in time? The paper says PBS does not change how these stores work. It is a way to look at them, predict them and tune them. Grown-up words: <b>k-staleness</b>, <b>t-visibility</b>.",
+          "media": {
+            "type": "svg",
+            "src": "pbs/story/02-odds-not-promises.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two dials side by side: one labelled versions old, one labelled time to wait, each with a needle pointing at a likely zone."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Four delays decide who wins the race",
+          "provenance": "illustration",
+          "caption": "In these stores, a write travels to every copy, but it counts as done after just W of them reply. A read asks every copy but takes the first R answers. The read is stale only when those first answers come from desks the write has not reached yet. So the delay of four trips matters: the write going out, the reply back, the read going out, and the answer back. The authors call this the <b>WARS</b> model. For versions, they give a formula. For time, they replay many random delays in a simulation. Grown-up words: <b>Monte Carlo simulation</b>, <b>replica</b>.",
+          "media": {
+            "type": "svg",
+            "src": "pbs/story/03-four-delays.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A write note and a read question race along four labelled paths between a coordinator desk and a replica desk."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Checked on Cassandra, fed with real latencies",
+          "provenance": "evidence",
+          "caption": "The authors modified Cassandra on three servers and compared what they measured with what the model predicted. The average error (root-mean-square) in the predicted chance of a fresh read was 0.28%. Then they fed the model latency numbers that LinkedIn (its Voldemort store, on spinning disks and on SSDs) and Yammer (its Riak store) gave them. They also built a pretend wide-area case themselves. Those are fitted models, not live Cassandra traffic. The paper reports, for example, that with SSDs the wait for 99.9% fresh reads was 1.85 ms, against 45.5 ms with disks. <a href=\"https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=9\">See Section 5.6 ↗</a> and <a href=\"https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=11\">Table 4 ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "pbs/story/04-three-traces.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Three curves climb toward the top of a chart at different speeds: one very fast, one medium, one slow with a long tail."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "Follow one note and one reader",
+      "deck": "Read each strip from left to right. Our note says \"Pizza at 6\". Then it changes to \"Pizza at 7\". Watch who hears the news first.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under \"grown-up words\" are the paper's own or the usual names for them. The paper's real numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "Three copies",
+          "kicker": "Why there are copies",
+          "provenance": "illustration",
+          "grownUpWords": "replication, replica, N",
+          "panels": [
+            {
+              "caption": "Three desks each keep a copy of the same note: <b>Pizza at 6</b>. Copies keep the note safe if one desk breaks.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/01a-three-copies.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three desks in a row, each with the same note pinned to it."
+              }
+            },
+            {
+              "caption": "The paper calls the number of copies <b>N</b>. Here N is 3. The paper says the number of copies is low in practice, typically between one and three.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/01b-n-is-three.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A big number 3 floats above three desks, with a small bracket around them."
+              }
+            },
+            {
+              "caption": "A new note arrives: <b>Pizza at 7</b>. The helper in front sends it to all three desks at once.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/01c-new-note.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A helper holds up a new note and three arrows carry copies toward the three desks."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Done after one yes",
+          "kicker": "When a write counts as finished",
+          "provenance": "illustration",
+          "grownUpWords": "write quorum W, acknowledgment, coordinator",
+          "panels": [
+            {
+              "caption": "Each desk writes the new note and says \"got it\". The first reply comes from the closest desk.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/02a-first-yes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The nearest desk pins the new note and a speech bubble reads got it."
+              }
+            },
+            {
+              "caption": "With <b>W = 1</b>, one \"got it\" is enough. The helper tells the writer: all done!",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/02b-w-is-one.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The helper gives a thumbs up to the writer, with a small 1 on a ticket."
+              }
+            },
+            {
+              "caption": "The other two desks have not heard yet. The note is still on its way to them.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/02c-others-late.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two desks still hold the old note while two arrows with the new note travel slowly toward them."
+              }
+            }
+          ]
+        },
+        {
+          "title": "A reader asks one desk",
+          "kicker": "How a read goes stale",
+          "provenance": "illustration",
+          "grownUpWords": "read quorum R, partial quorum, stale read",
+          "panels": [
+            {
+              "caption": "A reader walks up and asks a question. With <b>R = 1</b>, the helper takes the very first answer.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/03a-ask-one.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A reader asks a question at the helper, and one arrow goes to a single desk."
+              }
+            },
+            {
+              "caption": "If that desk is one that has not heard yet, the reader hears <b>Pizza at 6</b>. That is a stale read.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/03b-stale-desk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk with the old note speaks to the reader, who looks puzzled."
+              }
+            },
+            {
+              "caption": "If it is the desk that heard first, the reader hears <b>Pizza at 7</b>. Same question, luckier desk.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/03c-fresh-desk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk with the new note speaks to the reader, who smiles."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Ask more desks, wait longer",
+          "kicker": "The trade",
+          "provenance": "illustration",
+          "grownUpWords": "strict quorum, R + W > N, latency",
+          "panels": [
+            {
+              "caption": "Ask enough desks and at least one has the news. The rule is <b>R + W bigger than N</b>. The paper calls that a strict quorum.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/04a-overlap.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two overlapping circles around desks, with one desk inside both circles."
+              }
+            },
+            {
+              "caption": "But asking more desks means waiting for slower ones. Fewer desks is quicker, and that is a partial quorum.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/04b-wait-for-slow.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A reader waits with a stopwatch while one slow desk at the back is still walking over."
+              }
+            },
+            {
+              "caption": "The paper says Cassandra's default is <b>N = 3, R = 1, W = 1</b>. Riak's default is R = 2 and W = 2.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/04c-defaults.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two signs side by side: one with three desks and the numbers 1 and 1, one with three desks and the numbers 2 and 2."
+              }
+            }
+          ]
+        },
+        {
+          "title": "A race, then time helps",
+          "kicker": "Why waiting makes it fresher",
+          "provenance": "illustration",
+          "grownUpWords": "t-visibility, WARS model, anti-entropy",
+          "panels": [
+            {
+              "caption": "A read is stale if its question reaches desks <b>before</b> the new note does. It is a race between two messengers.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/05a-race.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two runners race toward a desk: one carries a question, the other carries a new note."
+              }
+            },
+            {
+              "caption": "Meanwhile the new note keeps spreading to the other desks, even after the writer was told it is done.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/05b-spreading.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The new note passes from desk to desk along the row until every desk has it."
+              }
+            },
+            {
+              "caption": "So a reader who waits a bit is more likely to be fresh. The paper calls this wait <b>t</b>, and asks how big t must be for 99.9% fresh reads.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/05c-waiting.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A chart with a rising line, and a marker near the top labelled almost always fresh."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Replay the race a million times",
+          "kicker": "How the paper predicts it",
+          "provenance": "illustration",
+          "grownUpWords": "Monte Carlo simulation, latency distribution",
+          "panels": [
+            {
+              "caption": "Get real trip times: the authors profiled Cassandra, and two companies shared their production latencies. Some trips are quick, a few are very slow.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/06a-measure-trips.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A ruler measures the time of messenger trips between desks, with a few very long ones."
+              }
+            },
+            {
+              "caption": "Then replay the race many times, picking trip times at random from curves fitted to the real ones. Count how often the reader is fresh.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/06b-replay.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Many small race tracks in a grid, each with a tally mark for fresh or old."
+              }
+            },
+            {
+              "caption": "The authors ran this against Cassandra and the counts matched what Cassandra did. Then they tried other settings on paper.",
+              "media": {
+                "type": "svg",
+                "src": "pbs/comic/06c-check-cassandra.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A paper chart with a predicted line sits next to a measured line, and the two lie almost on top of each other."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "1.85 ms",
+          "claim": "model_design",
+          "text": "is how long the paper's model predicts you wait for a 99.9% chance of a fresh read, fitted to latency data LinkedIn gave the authors for its Voldemort store on SSDs. With LinkedIn's spinning-disk data it is 45.5 ms. The writes are quicker and steadier on SSDs.",
+          "source": {
+            "label": "Paper §1.2 and Table 4",
+            "url": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=2"
+          },
+          "media": {
+            "type": "svg",
+            "src": "pbs/facts/ssd-vs-disk.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "43.9%",
+          "claim": "model_design",
+          "text": "was the model's predicted chance of a fresh read right after a write finished, using the Voldemort spinning-disk data. With the SSD data it was 97.4%, rising above 99.999% after five milliseconds.",
+          "source": {
+            "label": "Paper §5.6",
+            "url": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=9"
+          },
+          "media": {
+            "type": "svg",
+            "src": "pbs/facts/first-read.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "1364 ms",
+          "claim": "model_design",
+          "text": "is the model's predicted wait for 99.9% fresh reads with R=1, W=1, fitted to latency data Yammer gave the authors for its Riak store, where a few writes are very slow. Setting R=2 brings it down to 202 ms.",
+          "source": {
+            "label": "Paper §5.6",
+            "url": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=9"
+          },
+          "media": {
+            "type": "svg",
+            "src": "pbs/facts/yammer-tail.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "0.28%",
+          "claim": "measured_result",
+          "text": "was the average error between the model's predicted chance of a fresh read and what the authors measured on Cassandra, on three servers.",
+          "source": {
+            "label": "Paper §5.1",
+            "url": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=7"
+          },
+          "media": {
+            "type": "svg",
+            "src": "pbs/facts/cassandra-check.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "81.1%",
+          "claim": "model_design",
+          "text": "lower combined read and write latency at the 99.9th percentile (230 down to 43.3 ms, against the fastest strict quorum) is what the paper's model predicts for Yammer's Riak data, in return for a 202 ms window where a read may be stale.",
+          "source": {
+            "label": "Paper §1.2",
+            "url": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=2"
+          },
+          "media": {
+            "type": "svg",
+            "src": "pbs/facts/latency-win.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "N=3, R=W=1",
+          "claim": "model_design",
+          "text": "is Cassandra's default, the paper says. Riak defaults to N=3, R=W=2. The paper notes that most of the practitioner accounts it found never mention staleness.",
+          "source": {
+            "label": "Paper §2.3",
+            "url": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=3"
+          },
+          "media": {
+            "type": "svg",
+            "src": "pbs/facts/defaults.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}
