@@ -195,7 +195,10 @@ export async function loadArchive(): Promise<Archive> {
   for (const [slug, rows] of momentRowsByStory) {
     momentsByStory.set(slug, momentsFromRows(kindBySlug.get(slug) ?? 'paper', rows, slug));
   }
-  const papers = liveStories.map(s => buildSearchEntry(s, momentsByStory));
+  // Newest published first, so home tiles (snacks, numbers) and the front page follow what was added last.
+  const publishedAt = new Map(liveStories.map(s => [s.story_slug, Date.parse(s.version_created_at ?? '') || 0]));
+  const byPublished = (a: string, b: string) => (publishedAt.get(b) ?? 0) - (publishedAt.get(a) ?? 0);
+  const papers = liveStories.map(s => buildSearchEntry(s, momentsByStory)).sort((a, b) => byPublished(a.slug, b.slug));
   const index: SearchIndex = { schemaVersion: 1, featured: site.defaultPaper, papers };
 
   // --- Library (live-entry overlay for the story content; editorial tables supply issues, companies, map, front) ---
@@ -203,7 +206,7 @@ export async function loadArchive(): Promise<Archive> {
   const library: Library = {
     schemaVersion: 1,
     fields, volumes, stories,
-    front: deriveFront(stories, fields, site, front),
+    front: deriveFront(stories, fields, front, publishedAt),
     issues, companies, storylines, nodes, relations,
   };
 
@@ -216,24 +219,29 @@ export async function loadArchive(): Promise<Archive> {
  * taken from the DB-stored `front_placement` row as-is.
  *
  * Rules:
- *  - `lead`: site.defaultPaper if that slug is live; else the newest story.
- *  - `aside`: up to 3 other stories, newest first.
- *  - `more`: the rest of the stories, newest first.
+ * "Newest" means most recently published by us (the live version's created_at), not the source's own year;
+ * ties fall back to the source year.
+ *  - `lead`: the newest story. Nothing is pinned.
+ *  - `aside`: the next 3 stories.
+ *  - `more`: the next MORE_LIMIT stories (two rows of three); the rest stay reachable through topics and search.
  *  - `topics`: one row per field that has at least one live story in it, newest-first within each row.
- *  - `real`: every story (they are all real; the view filters samples out).
+ *  - `real`: the newest company blog posts, at most REAL_LIMIT (one row).
  */
+const MORE_LIMIT = 6;
+const REAL_LIMIT = 3;
+
 function deriveFront(
   stories: LibraryStory[],
   fields: Library['fields'],
-  site: SiteConfig,
   stored: Library['front'],
+  publishedAt: Map<string, number>,
 ): Library['front'] {
-  const byNewest = stories.slice().sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
-  const slugs = new Set(byNewest.map(s => s.id));
-  const lead = slugs.has(site.defaultPaper) ? site.defaultPaper : (byNewest[0]?.id ?? '');
-  const rest = byNewest.filter(s => s.id !== lead).map(s => s.id);
+  const byNewest = stories.slice().sort((a, b) =>
+    ((publishedAt.get(b.id) ?? 0) - (publishedAt.get(a.id) ?? 0)) || ((b.year ?? 0) - (a.year ?? 0)));
+  const lead = byNewest[0]?.id ?? '';
+  const rest = byNewest.slice(1).map(s => s.id);
   const aside = rest.slice(0, 3);
-  const more = rest.slice(3);
+  const more = rest.slice(3, 3 + MORE_LIMIT);
 
   const labelByField = new Map(fields.map(f => [f.id, f.label]));
   const groupsByField = new Map<string, string[]>();
@@ -252,7 +260,7 @@ function deriveFront(
     aside,
     more,
     topics,
-    real: byNewest.map(s => s.id),
+    real: byNewest.filter(s => s.kind === 'blog').slice(0, REAL_LIMIT).map(s => s.id),
     storylines: stored.storylines,
     vault: stored.vault,
     onThisDay: stored.onThisDay,
