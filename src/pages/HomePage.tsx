@@ -132,7 +132,7 @@ function MoreStories({ archive }: { archive: Archive }) {
   const stories = storiesOf(library, library.front.more);
   return (
     <section aria-labelledby="s-more" className="f-section">
-      <SectionHead id="s-more" title="More top stories" />
+      <SectionHead id="s-more" title="More top stories" link={{ href: appHref('?search'), label: 'All stories →' }} />
       <div className="f-grid f-grid-3">{stories.map(s => <StoryCard key={s.id} story={s} archive={archive} />)}</div>
     </section>
   );

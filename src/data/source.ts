@@ -78,6 +78,8 @@ interface LiveStoryRow {
   document: unknown;
   library_entry: unknown;
   trust?: LibraryStory['trust'] | null;
+  /** When this live version was published (published_version.created_at). Drives "newest" on the front page. */
+  version_created_at?: string | null;
 }
 
 interface LiveLibraryEntryRow { story_slug: string; library_entry: unknown }
@@ -174,7 +176,7 @@ export async function readLiveStoryBySlug(slug: string): Promise<PaperDoc> {
 
 /** All live stories (full rows) in one fetch. Validates each document's schemaVersion. */
 export const readLiveStories = () => once(VIEW_BY_KIND.story, async (): Promise<LiveStoryRow[]> => {
-  const rows = await selectAll<LiveStoryRow>(VIEW_BY_KIND.story, 'story_slug, schema_version, document, library_entry, trust');
+  const rows = await selectAll<LiveStoryRow>(VIEW_BY_KIND.story, 'story_slug, schema_version, document, library_entry, trust, version_created_at');
   for (const row of rows) {
     const doc = row.document as { schemaVersion?: unknown } | null;
     if (!doc || typeof doc !== 'object') throw new Error(`Story “${row.story_slug}” in Supabase has no document.`);
