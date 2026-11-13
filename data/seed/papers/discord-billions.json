@@ -114,7 +114,7 @@
       "basis": "paper",
       "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Discord"
       }
@@ -125,23 +125,23 @@
       "basis": "paper",
       "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Stanislav Vishnevskiy"
       }
     },
     {
-      "tag": "use/chat-history",
+      "tag": "use/chat-messaging",
       "relevance": 0.9,
       "basis": "paper",
       "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
-        "label": "Chat history",
+        "label": "Chat messaging",
         "aliases": [
-          "message storage",
-          "chat messages"
+          "chat history",
+          "chat apps"
         ]
       }
     },
@@ -151,7 +151,7 @@
       "basis": "paper",
       "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Tombstones",
         "aliases": [
@@ -165,7 +165,7 @@
       "basis": "paper",
       "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Garbage collection",
         "aliases": [

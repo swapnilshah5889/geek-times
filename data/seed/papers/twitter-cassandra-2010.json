@@ -80,7 +80,7 @@
       "basis": "paper",
       "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "MySQL",
         "aliases": [
@@ -94,7 +94,7 @@
       "basis": "paper",
       "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Data migration",
         "aliases": [
@@ -108,7 +108,7 @@
       "basis": "paper",
       "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Real-time analytics"
       }
@@ -119,7 +119,7 @@
       "basis": "paper",
       "evidence": "https://blog.twitter.com/engineering/en_us/a/2010/cassandra-at-twitter-today",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Twitter",
         "aliases": [

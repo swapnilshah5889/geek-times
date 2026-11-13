@@ -81,7 +81,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "YCSB",
         "aliases": [
@@ -95,7 +95,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Benchmarking",
         "aliases": [
@@ -110,7 +110,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=8",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "HBase"
       }
@@ -121,7 +121,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=8",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "PNUTS",
         "aliases": [
@@ -136,7 +136,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=8",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "MySQL",
         "aliases": [
@@ -150,7 +150,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=10",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Elasticity",
         "aliases": [
@@ -173,7 +173,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Yahoo!",
         "aliases": [
@@ -187,7 +187,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Brian F. Cooper"
       }
@@ -198,7 +198,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "SoCC",
         "aliases": [
@@ -212,7 +212,7 @@
       "basis": "paper",
       "evidence": "https://courses.cs.duke.edu/fall13/cps296.4/838-CloudPapers/ycsb.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "SoCC 2010",
         "parent": "venue/socc"

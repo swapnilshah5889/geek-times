@@ -83,7 +83,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "ScyllaDB",
         "aliases": [
@@ -97,7 +97,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Hot partition",
         "aliases": [
@@ -111,7 +111,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Garbage collection",
         "aliases": [
@@ -158,7 +158,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Request coalescing",
         "aliases": [
@@ -172,7 +172,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Data migration",
         "aliases": [
@@ -186,7 +186,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Rust",
         "aliases": [
@@ -200,7 +200,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Chat messaging",
         "aliases": [
@@ -214,7 +214,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Discord"
       }
@@ -225,7 +225,7 @@
       "basis": "paper",
       "source": "editor",
       "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Bo Ingram"
       }
@@ -235,7 +235,7 @@
       "relevance": 0.8,
       "basis": "editorial",
       "source": "editor",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Chatting online"
       }

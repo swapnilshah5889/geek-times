@@ -93,9 +93,9 @@
       "basis": "paper",
       "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
-        "label": "ACCORD",
+        "label": "Accord",
         "aliases": [
           "Cassandra CEP-15",
           "Cassandra transactions"
@@ -109,7 +109,7 @@
       "basis": "paper",
       "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Distributed transactions",
         "aliases": [
@@ -124,7 +124,7 @@
       "basis": "paper",
       "evidence": "https://cwiki.apache.org/confluence/download/attachments/188744725/Accord.pdf#page=2",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Leaderless consensus",
         "aliases": [

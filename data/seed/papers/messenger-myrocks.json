@@ -106,7 +106,7 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
       "source": "editor",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "MyRocks",
         "aliases": [
@@ -120,7 +120,7 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
       "source": "editor",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "HBase",
         "aliases": [
@@ -134,7 +134,7 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
       "source": "editor",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Data migration",
         "aliases": [
@@ -149,7 +149,7 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
       "source": "editor",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Flash storage",
         "aliases": [
@@ -164,7 +164,7 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
       "source": "editor",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Xiang Li"
       }
@@ -175,7 +175,7 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
       "source": "editor",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Thomas Georgiou"
       }

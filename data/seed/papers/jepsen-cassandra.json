@@ -115,7 +115,7 @@
       "basis": "paper",
       "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#some-write-loses",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Last-write-wins",
         "aliases": [
@@ -130,7 +130,7 @@
       "basis": "paper",
       "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#lightweight-transactions",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Linearizability",
         "aliases": [
@@ -144,7 +144,7 @@
       "basis": "paper",
       "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#lightweight-transactions",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Lightweight transactions",
         "aliases": [
@@ -159,7 +159,7 @@
       "basis": "paper",
       "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Jepsen",
         "aliases": [
@@ -173,7 +173,7 @@
       "basis": "paper",
       "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Kyle Kingsbury",
         "aliases": [
@@ -187,7 +187,7 @@
       "basis": "paper",
       "evidence": "https://aphyr.com/posts/294-call-me-maybe-cassandra#final-thoughts",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "DataStax"
       }

@@ -1511,6 +1511,523 @@
       "facet": "venue",
       "label": "LADIS 2009",
       "parent": "venue/ladis"
+    },
+    {
+      "id": "concept/distributed-transactions",
+      "facet": "concept",
+      "label": "Distributed transactions",
+      "aliases": [
+        "general purpose transactions",
+        "cross-shard transactions"
+      ]
+    },
+    {
+      "id": "concept/leaderless-consensus",
+      "facet": "concept",
+      "label": "Leaderless consensus",
+      "aliases": [
+        "leaderless protocols"
+      ]
+    },
+    {
+      "id": "technique/bigtable",
+      "facet": "technique",
+      "label": "Bigtable",
+      "aliases": [
+        "Google Bigtable"
+      ]
+    },
+    {
+      "id": "concept/sstable",
+      "facet": "concept",
+      "label": "SSTables",
+      "aliases": [
+        "sorted string table",
+        "immutable sorted files"
+      ]
+    },
+    {
+      "id": "concept/memtable",
+      "facet": "concept",
+      "label": "Memtables",
+      "aliases": [
+        "in-memory sorted buffer"
+      ]
+    },
+    {
+      "id": "concept/tablet",
+      "facet": "concept",
+      "label": "Tablets",
+      "aliases": [
+        "row ranges",
+        "table shards"
+      ]
+    },
+    {
+      "id": "author/fay-chang",
+      "facet": "author",
+      "label": "Fay Chang"
+    },
+    {
+      "id": "venue/osdi",
+      "facet": "venue",
+      "label": "OSDI",
+      "aliases": [
+        "USENIX Symposium on Operating Systems Design and Implementation"
+      ]
+    },
+    {
+      "id": "concept/storage-engine",
+      "facet": "concept",
+      "label": "Storage engine"
+    },
+    {
+      "id": "organization/discord",
+      "facet": "organization",
+      "label": "Discord"
+    },
+    {
+      "id": "author/stanislav-vishnevskiy",
+      "facet": "author",
+      "label": "Stanislav Vishnevskiy"
+    },
+    {
+      "id": "use/chat-messaging",
+      "facet": "use",
+      "label": "Chat messaging",
+      "aliases": [
+        "chat history",
+        "chat apps"
+      ]
+    },
+    {
+      "id": "concept/tombstone",
+      "facet": "concept",
+      "label": "Tombstones",
+      "aliases": [
+        "delete markers"
+      ]
+    },
+    {
+      "id": "concept/garbage-collection",
+      "facet": "concept",
+      "label": "Garbage collection",
+      "aliases": [
+        "GC",
+        "stop-the-world pause"
+      ]
+    },
+    {
+      "id": "technique/scylladb",
+      "facet": "technique",
+      "label": "ScyllaDB",
+      "aliases": [
+        "Scylla"
+      ]
+    },
+    {
+      "id": "concept/hot-partition",
+      "facet": "concept",
+      "label": "Hot partition",
+      "aliases": [
+        "hotspot"
+      ]
+    },
+    {
+      "id": "concept/request-coalescing",
+      "facet": "concept",
+      "label": "Request coalescing",
+      "aliases": [
+        "request collapsing"
+      ]
+    },
+    {
+      "id": "concept/data-migration",
+      "facet": "concept",
+      "label": "Data migration",
+      "aliases": [
+        "database migration"
+      ]
+    },
+    {
+      "id": "technique/rust",
+      "facet": "technique",
+      "label": "Rust",
+      "aliases": [
+        "Rust language"
+      ]
+    },
+    {
+      "id": "author/bo-ingram",
+      "facet": "author",
+      "label": "Bo Ingram"
+    },
+    {
+      "id": "everyday/chatting-online",
+      "facet": "everyday",
+      "label": "Chatting online"
+    },
+    {
+      "id": "technique/hbase",
+      "facet": "technique",
+      "label": "HBase",
+      "aliases": [
+        "Apache HBase"
+      ]
+    },
+    {
+      "id": "technique/mysql",
+      "facet": "technique",
+      "label": "MySQL"
+    },
+    {
+      "id": "technique/hdfs",
+      "facet": "technique",
+      "label": "HDFS",
+      "aliases": [
+        "Hadoop Distributed File System"
+      ]
+    },
+    {
+      "id": "concept/strong-consistency",
+      "facet": "concept",
+      "label": "Strong consistency",
+      "aliases": [
+        "consistency within a data center"
+      ]
+    },
+    {
+      "id": "use/facebook-messages",
+      "facet": "use",
+      "label": "Facebook Messages",
+      "aliases": [
+        "Messages",
+        "social inbox"
+      ]
+    },
+    {
+      "id": "author/dhruba-borthakur",
+      "facet": "author",
+      "label": "Dhruba Borthakur"
+    },
+    {
+      "id": "venue/sigmod",
+      "facet": "venue",
+      "label": "SIGMOD",
+      "aliases": [
+        "ACM SIGMOD"
+      ]
+    },
+    {
+      "id": "organization/instagram",
+      "facet": "organization",
+      "label": "Instagram"
+    },
+    {
+      "id": "technique/rocksdb",
+      "facet": "technique",
+      "label": "RocksDB",
+      "aliases": [
+        "Rocksandra"
+      ]
+    },
+    {
+      "id": "author/dikang-gu",
+      "facet": "author",
+      "label": "Dikang Gu"
+    },
+    {
+      "id": "concept/last-write-wins",
+      "facet": "concept",
+      "label": "Last-write-wins",
+      "aliases": [
+        "LWW",
+        "LWW register"
+      ]
+    },
+    {
+      "id": "concept/linearizability",
+      "facet": "concept",
+      "label": "Linearizability",
+      "aliases": [
+        "linearizable consistency"
+      ]
+    },
+    {
+      "id": "concept/lightweight-transactions",
+      "facet": "concept",
+      "label": "Lightweight transactions",
+      "aliases": [
+        "compare-and-set",
+        "Paxos"
+      ]
+    },
+    {
+      "id": "technique/jepsen",
+      "facet": "technique",
+      "label": "Jepsen",
+      "aliases": [
+        "Jepsen tests"
+      ]
+    },
+    {
+      "id": "author/kyle-kingsbury",
+      "facet": "author",
+      "label": "Kyle Kingsbury",
+      "aliases": [
+        "Aphyr"
+      ]
+    },
+    {
+      "id": "organization/datastax",
+      "facet": "organization",
+      "label": "DataStax"
+    },
+    {
+      "id": "technique/myrocks",
+      "facet": "technique",
+      "label": "MyRocks",
+      "aliases": [
+        "RocksDB on MySQL"
+      ]
+    },
+    {
+      "id": "concept/flash-storage",
+      "facet": "concept",
+      "label": "Flash storage",
+      "aliases": [
+        "SSD",
+        "solid-state drives"
+      ]
+    },
+    {
+      "id": "author/xiang-li",
+      "facet": "author",
+      "label": "Xiang Li"
+    },
+    {
+      "id": "author/thomas-georgiou",
+      "facet": "author",
+      "label": "Thomas Georgiou"
+    },
+    {
+      "id": "concept/linear-scalability",
+      "facet": "concept",
+      "label": "Linear scalability",
+      "aliases": [
+        "scale-out",
+        "horizontal scaling"
+      ]
+    },
+    {
+      "id": "concept/benchmarking",
+      "facet": "concept",
+      "label": "Benchmarking",
+      "aliases": [
+        "performance testing",
+        "stress test"
+      ]
+    },
+    {
+      "id": "concept/cloud-computing",
+      "facet": "concept",
+      "label": "Cloud computing",
+      "aliases": [
+        "AWS",
+        "Amazon EC2"
+      ]
+    },
+    {
+      "id": "organization/netflix",
+      "facet": "organization",
+      "label": "Netflix"
+    },
+    {
+      "id": "author/adrian-cockcroft",
+      "facet": "author",
+      "label": "Adrian Cockcroft"
+    },
+    {
+      "id": "author/denis-sheahan",
+      "facet": "author",
+      "label": "Denis Sheahan"
+    },
+    {
+      "id": "everyday/streaming-video",
+      "facet": "everyday",
+      "label": "Streaming video",
+      "aliases": [
+        "watching shows online"
+      ]
+    },
+    {
+      "id": "concept/staleness",
+      "facet": "concept",
+      "label": "Staleness",
+      "aliases": [
+        "stale reads",
+        "data freshness"
+      ]
+    },
+    {
+      "id": "technique/pbs",
+      "facet": "technique",
+      "label": "Probabilistically bounded staleness",
+      "aliases": [
+        "PBS",
+        "t-visibility",
+        "k-staleness"
+      ]
+    },
+    {
+      "id": "concept/monte-carlo-simulation",
+      "facet": "concept",
+      "label": "Monte Carlo simulation",
+      "aliases": [
+        "random sampling simulation"
+      ]
+    },
+    {
+      "id": "technique/riak",
+      "facet": "technique",
+      "label": "Riak",
+      "aliases": [
+        "Basho Riak"
+      ]
+    },
+    {
+      "id": "technique/voldemort",
+      "facet": "technique",
+      "label": "Voldemort",
+      "aliases": [
+        "Project Voldemort"
+      ]
+    },
+    {
+      "id": "organization/linkedin",
+      "facet": "organization",
+      "label": "LinkedIn"
+    },
+    {
+      "id": "organization/yammer",
+      "facet": "organization",
+      "label": "Yammer"
+    },
+    {
+      "id": "organization/uc-berkeley",
+      "facet": "organization",
+      "label": "UC Berkeley",
+      "aliases": [
+        "University of California, Berkeley"
+      ]
+    },
+    {
+      "id": "author/peter-bailis",
+      "facet": "author",
+      "label": "Peter Bailis"
+    },
+    {
+      "id": "venue/vldb",
+      "facet": "venue",
+      "label": "VLDB",
+      "aliases": [
+        "Very Large Data Bases",
+        "PVLDB"
+      ]
+    },
+    {
+      "id": "use/real-time-analytics",
+      "facet": "use",
+      "label": "Real-time analytics"
+    },
+    {
+      "id": "organization/twitter",
+      "facet": "organization",
+      "label": "Twitter",
+      "aliases": [
+        "Twitter Engineering"
+      ]
+    },
+    {
+      "id": "technique/ycsb",
+      "facet": "technique",
+      "label": "YCSB",
+      "aliases": [
+        "Yahoo! Cloud Serving Benchmark"
+      ]
+    },
+    {
+      "id": "technique/pnuts",
+      "facet": "technique",
+      "label": "PNUTS",
+      "aliases": [
+        "Yahoo! PNUTS",
+        "Sherpa"
+      ]
+    },
+    {
+      "id": "concept/elasticity",
+      "facet": "concept",
+      "label": "Elasticity",
+      "aliases": [
+        "elastic speedup",
+        "elastic scaling"
+      ]
+    },
+    {
+      "id": "organization/yahoo",
+      "facet": "organization",
+      "label": "Yahoo!",
+      "aliases": [
+        "Yahoo Research"
+      ]
+    },
+    {
+      "id": "author/brian-f-cooper",
+      "facet": "author",
+      "label": "Brian F. Cooper"
+    },
+    {
+      "id": "venue/socc",
+      "facet": "venue",
+      "label": "SoCC",
+      "aliases": [
+        "ACM Symposium on Cloud Computing"
+      ]
+    },
+    {
+      "id": "technique/accord",
+      "facet": "technique",
+      "label": "Accord",
+      "parent": "technique/cassandra",
+      "aliases": [
+        "Cassandra CEP-15",
+        "Cassandra transactions"
+      ]
+    },
+    {
+      "id": "venue/osdi-2006",
+      "facet": "venue",
+      "label": "OSDI 2006",
+      "parent": "venue/osdi"
+    },
+    {
+      "id": "venue/sigmod-2011",
+      "facet": "venue",
+      "label": "SIGMOD 2011",
+      "parent": "venue/sigmod"
+    },
+    {
+      "id": "venue/vldb-2012",
+      "facet": "venue",
+      "label": "VLDB 2012",
+      "parent": "venue/vldb"
+    },
+    {
+      "id": "venue/socc-2010",
+      "facet": "venue",
+      "label": "SoCC 2010",
+      "parent": "venue/socc"
     }
   ]
 }

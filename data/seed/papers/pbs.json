@@ -121,7 +121,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Staleness",
         "aliases": [
@@ -136,7 +136,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=2",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Probabilistically bounded staleness",
         "aliases": [
@@ -152,7 +152,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=7",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Monte Carlo simulation",
         "aliases": [
@@ -166,7 +166,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=3",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Riak",
         "aliases": [
@@ -180,7 +180,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=3",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Voldemort",
         "aliases": [
@@ -194,7 +194,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=8",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "LinkedIn"
       }
@@ -205,7 +205,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=8",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Yammer"
       }
@@ -216,7 +216,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "UC Berkeley",
         "aliases": [
@@ -230,7 +230,7 @@
       "basis": "paper",
       "evidence": "https://vldb.org/pvldb/vol5/p776_peterbailis_vldb2012.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Peter Bailis"
       }
@@ -240,7 +240,7 @@
       "relevance": 0.4,
       "basis": "background",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "VLDB",
         "aliases": [
@@ -254,7 +254,7 @@
       "relevance": 0.4,
       "basis": "background",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "VLDB 2012",
         "parent": "venue/vldb"

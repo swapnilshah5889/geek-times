@@ -73,7 +73,7 @@
       "basis": "paper",
       "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "HBase",
         "aliases": [
@@ -87,7 +87,7 @@
       "basis": "paper",
       "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=4",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "HDFS",
         "aliases": [
@@ -110,7 +110,7 @@
       "basis": "paper",
       "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=3",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Strong consistency",
         "aliases": [
@@ -164,7 +164,7 @@
       "basis": "paper",
       "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Facebook Messages",
         "aliases": [
@@ -187,7 +187,7 @@
       "basis": "paper",
       "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Dhruba Borthakur"
       }
@@ -198,7 +198,7 @@
       "basis": "paper",
       "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "SIGMOD",
         "aliases": [
@@ -212,7 +212,7 @@
       "basis": "paper",
       "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "SIGMOD 2011",
         "parent": "venue/sigmod"

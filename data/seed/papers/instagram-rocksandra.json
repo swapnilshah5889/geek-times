@@ -108,7 +108,7 @@
       "basis": "paper",
       "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Instagram"
       }
@@ -119,7 +119,7 @@
       "basis": "paper",
       "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "RocksDB",
         "aliases": [
@@ -133,7 +133,7 @@
       "basis": "paper",
       "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Garbage collection",
         "aliases": [
@@ -148,7 +148,7 @@
       "basis": "paper",
       "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Storage engine",
         "aliases": [
@@ -162,7 +162,7 @@
       "basis": "paper",
       "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#:~:text=Dikang%20Gu%20is%20an%20infrastructure%20engineer",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Dikang Gu"
       }

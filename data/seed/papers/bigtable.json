@@ -136,7 +136,7 @@
       "basis": "paper",
       "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Bigtable",
         "aliases": [
@@ -150,7 +150,7 @@
       "basis": "paper",
       "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=3",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "SSTables",
         "aliases": [
@@ -165,7 +165,7 @@
       "basis": "paper",
       "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=6",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Memtables",
         "aliases": [
@@ -179,7 +179,7 @@
       "basis": "paper",
       "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=2",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Tablets",
         "aliases": [
@@ -194,7 +194,7 @@
       "basis": "paper",
       "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Fay Chang"
       }
@@ -204,7 +204,7 @@
       "relevance": 0.4,
       "basis": "background",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "OSDI",
         "aliases": [
@@ -217,7 +217,7 @@
       "relevance": 0.4,
       "basis": "background",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "OSDI 2006",
         "parent": "venue/osdi"

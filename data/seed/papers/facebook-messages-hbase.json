@@ -99,13 +99,12 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "HBase",
         "aliases": [
           "Apache HBase"
-        ],
-        "parent": "area/databases"
+        ]
       }
     },
     {
@@ -114,10 +113,9 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
-        "label": "MySQL",
-        "parent": "area/databases"
+        "label": "MySQL"
       }
     },
     {
@@ -126,7 +124,7 @@
       "basis": "paper",
       "evidence": "https://engineering.fb.com/2010/11/15/core-infra/the-underlying-technology-of-messages/",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "HDFS",
         "aliases": [

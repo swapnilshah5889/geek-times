@@ -297,6 +297,39 @@
         "label": "LADIS 2009",
         "parent": "venue/ladis"
       }
+    },
+    {
+      "tag": "concept/memtable",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Memtables"
+      }
+    },
+    {
+      "tag": "concept/sstable",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "SSTables"
+      }
+    },
+    {
+      "tag": "concept/storage-engine",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Storage engine"
+      }
     }
   ],
   "blocks": [

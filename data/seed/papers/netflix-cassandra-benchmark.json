@@ -108,7 +108,7 @@
       "basis": "paper",
       "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Linear scalability",
         "aliases": [
@@ -123,7 +123,7 @@
       "basis": "paper",
       "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Benchmarking",
         "aliases": [
@@ -138,7 +138,7 @@
       "basis": "paper",
       "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Cloud computing",
         "aliases": [
@@ -153,7 +153,7 @@
       "basis": "paper",
       "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Netflix"
       }
@@ -164,7 +164,7 @@
       "basis": "paper",
       "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Adrian Cockcroft"
       }
@@ -175,7 +175,7 @@
       "basis": "paper",
       "evidence": "https://netflixtechblog.com/benchmarking-cassandra-scalability-on-aws-over-a-million-writes-per-second-39f45f066c9e",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Denis Sheahan"
       }
@@ -185,7 +185,7 @@
       "relevance": 0.5,
       "basis": "editorial",
       "source": "ai",
-      "status": "proposed",
+      "status": "approved",
       "proposed": {
         "label": "Streaming video",
         "aliases": [
