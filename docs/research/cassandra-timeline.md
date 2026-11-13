@@ -6,13 +6,13 @@ says how the source relates to Cassandra, using only the source's own words.
 
 | Year | Slug | Source | Kind | Trust (suggested) | Angle |
 |---|---|---|---|---|---|
-| 2006 | `bigtable` | Bigtable: A Distributed Storage System for Structured Data (Chang et al., OSDI '06) | paper | peer_reviewed? (venue printed) | Ancestor: column families, commit log → memtable → SSTables, compaction, Bloom filters. Never mentions Cassandra |
+| 2006 | `bigtable` | Bigtable: A Distributed Storage System for Structured Data (Chang et al., OSDI '06) | paper | preprint (owner call 2026-11-13, as Dynamo) | Ancestor: column families, commit log → memtable → SSTables, compaction, Bloom filters. Never mentions Cassandra |
 | 2007 | `dynamo` | Dynamo (DeCandia et al., SOSP 2007), **live** | paper | preprint (owner's conservative call) | Ancestor: the ring, replication, gossip |
 | 2009 | `cassandra` | Cassandra - A Decentralized Structured Storage System (Lakshman & Malik, LADIS 2009), **live** | paper | peer_reviewed (LADIS CFP) | The origin |
-| 2010 | `ycsb` | Benchmarking Cloud Serving Systems with YCSB (Cooper et al., SoCC '10) | paper | peer_reviewed? (venue printed) | Measured: Cassandra 0.5.0 vs HBase, PNUTS, sharded MySQL |
+| 2010 | `ycsb` | Benchmarking Cloud Serving Systems with YCSB (Cooper et al., SoCC '10) | paper | preprint (owner call 2026-11-13, as Dynamo) | Measured: Cassandra 0.5.0 vs HBase, PNUTS, sharded MySQL |
 | 2010 | `twitter-cassandra-2010` | Cassandra at Twitter Today (Twitter Engineering, 10 Jul 2010; read from Wayback) | blog | company_reported | Kept tweets on MySQL; Cassandra for places, research, analytics |
 | 2010 | `facebook-messages-hbase` | The Underlying Technology of Messages (Muthukkaruppan, Facebook, 15 Nov 2010) | blog | company_reported | Left: chose HBase; Cassandra's eventual consistency "difficult" for Messages |
-| 2011 | `hadoop-realtime-facebook` | Apache Hadoop Goes Realtime at Facebook (Borthakur et al., SIGMOD '11) | paper | peer_reviewed? (venue printed) | Left: one abstract sentence names Cassandra; requirements give the reasons |
+| 2011 | `hadoop-realtime-facebook` | Apache Hadoop Goes Realtime at Facebook (Borthakur et al., SIGMOD '11) | paper | preprint (owner call 2026-11-13, as Dynamo) | Left: one abstract sentence names Cassandra; requirements give the reasons |
 | 2011 | `netflix-cassandra-benchmark` | Benchmarking Cassandra Scalability on AWS — Over a million writes per second (Netflix, 2 Nov 2011) | blog | company_reported | Adopted: linear scaling test |
 | 2012 | `pbs` | Probabilistically Bounded Staleness for Practical Partial Quorums (Bailis et al., PVLDB 5(8)) | paper | journal_published | Measured: how stale eventual reads are |
 | 2013 | `jepsen-cassandra` | Jepsen: Cassandra (Kingsbury, 24 Sep 2013) | blog | needs owner call (independent tester) | Measured: lost acknowledged writes, counters, LWT issues |
@@ -24,8 +24,8 @@ says how the source relates to Cassandra, using only the source's own words.
 
 ## Owner decisions
 
-- **Conference trust.** Bigtable, YCSB and the SIGMOD paper print their venue but not a refereeing statement. Dynamo,
-  in the same position, was labelled `preprint`. Choose one rule for all four (`peer_reviewed` or the conservative label).
+- **Conference trust (decided 2026-11-13).** Bigtable, YCSB and the SIGMOD paper print their venue but not a refereeing
+  statement; the owner chose `preprint`, matching Dynamo. Flip to `peer_reviewed` once a venue record is confirmed.
 - **Jepsen.** The schema has no "independent" trust value. The draft uses `company_reported` (self-published blog).
 - **Accord.** `preprint` (draft whitepaper). The year 2021 comes from PDF metadata, not printed text.
 

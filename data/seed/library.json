@@ -254,7 +254,7 @@
       "authors": "Chang and colleagues",
       "year": 2006,
       "minutes": 4,
-      "trust": "peer_reviewed"
+      "trust": "preprint"
     },
     {
       "id": "ycsb",
@@ -273,7 +273,7 @@
       "authors": "Cooper and colleagues",
       "year": 2010,
       "minutes": 4,
-      "trust": "peer_reviewed"
+      "trust": "preprint"
     },
     {
       "id": "twitter-cassandra-2010",
@@ -330,7 +330,7 @@
       "authors": "Borthakur and colleagues",
       "year": 2011,
       "minutes": 4,
-      "trust": "peer_reviewed"
+      "trust": "preprint"
     },
     {
       "id": "netflix-cassandra-benchmark",
