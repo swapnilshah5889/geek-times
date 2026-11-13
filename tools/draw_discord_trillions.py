@@ -405,7 +405,7 @@ icon('estimate', 'Estimated move time from three months to nine days', body + fa
 body = truck(50, 30, .6) + f'<path d="M96 28h50M100 18h40M104 38h36" {S(2.5)} opacity=".5"/>'
 icon('speed', 'A fast truck, 3.2 million messages per second', body + facts_foot('3.2 million', 'messages / second'))
 
-body = f'<g transform="translate(34 4)">' + shelf(0, 0, 30, 30, 2) + '</g>' + arrow('M76 20H98', False) + shelf(106, 10, 20, 20, 1)
+body = f'<g transform="translate(34 4)">' + shelf(0, 0, 30, 30, 2) + '</g>' + arrow('M76 20H98', False) + shelf(104, 8, 40, 24, 1)
 icon('machines', 'From 177 to 72 machines, each holding more', body + facts_foot('177 to 72', '9 TB each, was 4'))
 
 
