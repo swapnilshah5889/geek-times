@@ -1,0 +1,620 @@
+{
+  "schemaVersion": 2,
+  "slug": "instagram-rocksandra",
+  "kind": "blog",
+  "blog": {
+    "title": "Open-sourcing a 10x reduction in Apache Cassandra tail latency",
+    "organization": "Instagram Engineering",
+    "published": "2018-03-05",
+    "url": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+    "trust": "company_reported",
+    "archivedUrl": "https://web.archive.org/web/20190403015202/https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589?gi=ec2643f1aee4"
+  },
+  "pageTitle": "The janitor who stops the line",
+  "desk": "Distributed systems",
+  "summary": "Instagram kept Cassandra but changed what is inside each machine. The team says Cassandra's Java storage engine made the cleanup crew, the garbage collector, freeze servers and slow the slowest reads. So it built Rocksandra, a storage engine in C++ on top of RocksDB. In one production cluster, Instagram reports the slowest-reads time (P99) fell from 60 ms to 20 ms.",
+  "hook": {
+    "sticker": "Same database, new engine",
+    "teaser": "What if the slow reads come from the cleanup crew, not the database?",
+    "cta": "Meet the janitor",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "60 → 20 ms",
+      "text": "P99 read latency, one production cluster"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "instagram-rocksandra/lead/pause-the-line.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A busy counter with a long line of people. A janitor in the middle of the counter holds up a stop sign, and every person in line waits."
+        },
+        "tag": "Freeze!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "instagram-rocksandra/lead/swap-the-engine.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A machine with its cover open. A hand lifts out an old engine and slots in a new one, while the rest of the machine stays put."
+        },
+        "tag": "Swap!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/tail-latency",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/compaction",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/facebook",
+      "relevance": 0.3,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/instagram",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Instagram"
+      }
+    },
+    {
+      "tag": "technique/rocksdb",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "RocksDB",
+        "aliases": [
+          "Rocksandra"
+        ]
+      }
+    },
+    {
+      "tag": "concept/garbage-collection",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Garbage collection",
+        "aliases": [
+          "GC",
+          "JVM garbage collector"
+        ]
+      }
+    },
+    {
+      "tag": "concept/storage-engine",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Storage engine",
+        "aliases": [
+          "pluggable storage engine"
+        ]
+      }
+    },
+    {
+      "tag": "author/dikang-gu",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#:~:text=Dikang%20Gu%20is%20an%20infrastructure%20engineer",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Dikang Gu"
+      }
+    },
+    {
+      "tag": "everyday/the-internet",
+      "relevance": 0.4,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "The janitor who",
+        "accent": "stops the line."
+      },
+      "deck": "Instagram kept Cassandra. It changed the engine inside, so the slowest reads would stop waiting on the cleanup crew.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "The line freezes",
+            "caption": "<b>Fig. 1.</b> Instagram says its Cassandra servers sometimes stop serving requests while a Java cleanup crew works. Everyone in line waits.",
+            "media": {
+              "type": "svg",
+              "src": "instagram-rocksandra/lead/pause-the-line.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A busy counter with a long line of people. A janitor in the middle of the counter holds up a stop sign, and every person in line waits."
+            }
+          },
+          {
+            "label": "Swap the engine",
+            "caption": "<b>Fig. 2.</b> The team kept Cassandra as it was and swapped the engine for one built on RocksDB, written in C++.",
+            "media": {
+              "type": "svg",
+              "src": "instagram-rocksandra/lead/swap-the-engine.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A machine with its cover open. A hand lifts out an old engine and slots in a new one, while the rest of the machine stays put."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the post ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "Swapping the engine inside Cassandra",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "The slowest reads",
+          "provenance": "evidence",
+          "caption": "Instagram says it uses Cassandra as a general key-value store, and most requests come from people using the app right now. It watches the P99 read time, which is the time that 99 out of 100 reads beat. In one production cluster, the post says the average read took 5 ms, while the P99 wandered between 25 ms and 60 ms. The team found the Java garbage collector was a big cause of the spikes.",
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/story/01-slow-tail.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A row of runners crossing a finish line, most close together. One runner far behind is stopped by a janitor holding a stop sign."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Keep the database, swap the engine",
+          "provenance": "model_design",
+          "caption": "The team says Cassandra's Java storage engine creates lots of objects, and that puts work on the garbage collector. It chose to replace that engine with one written in C++. It did not want to build one from scratch, so it built on RocksDB, an open source embedded database for key-value data. The post calls the result Rocksandra.",
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/story/02-swap-engine.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A machine labeled Cassandra with an old engine lifted out and a new engine labeled RocksDB ready to go in."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Fit the new engine in",
+          "provenance": "model_design",
+          "caption": "Cassandra had no plug-in slot for engines, so the team drew a new engine interface and put the new engine behind it. It also had to translate Cassandra's richer tables into RocksDB's plain keys and values. And it rebuilt streaming, the way machines hand data to each other when one joins or leaves the cluster.",
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/story/03-fit-engine.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A new engine sits behind a small doorway frame. A translator hands the engine plain labeled boxes made from a table."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "60 down to 20",
+          "provenance": "evidence",
+          "caption": "Instagram reports the new engine is in several of its production clusters. In one of them, P99 read latency dropped from 60 ms to 20 ms, and GC stalls fell from 2.5% to 0.3%. The post calls the stall drop a 10X reduction. The separate 10X throughput figure comes from a three-machine test on AWS at a P99 of 2 ms. These are the company's own numbers. <a href=\"https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#a1f4\">See Performance metrics in the post ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/story/04-evidence.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two pairs of bars. The first pair shows a tall bar labeled 60 and a shorter bar labeled 20. The second pair shows a small bar labeled 2.5 percent and a tiny bar labeled 0.3 percent."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "Why a cleanup crew slows the line",
+      "deck": "Read each strip from left to right. Our story is one read request waiting in line.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under “grown-up words” are the post's own or the usual names for them. The post's numbers are in the evidence box at the end, and they are Instagram's own.",
+      "strips": [
+        {
+          "title": "Why the slowest reads matter",
+          "kicker": "The tail",
+          "provenance": "illustration",
+          "grownUpWords": "P99 latency, tail latency",
+          "panels": [
+            {
+              "caption": "Most reads are quick. Picture a line of people at a counter, all served fast.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/01a-quick-line.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A counter with a short line of people. Each gets a parcel quickly and smiles."
+              }
+            },
+            {
+              "caption": "But a few wait much longer. Those are the slowest ones in the line.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/01b-slow-few.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A line of people with three at the back looking at their watches and frowning."
+              }
+            },
+            {
+              "caption": "<b>P99</b> is the wait that 99 out of 100 people beat. Instagram watches it closely, because app users are waiting live.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/01c-p99-mark.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A line of people with a flag after the 99th person, labeled P99. One person stands behind the flag."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The cleanup crew",
+          "kicker": "Garbage collection",
+          "provenance": "model_design",
+          "grownUpWords": "garbage collection (GC), JVM, stop-the-world, GC stall",
+          "panels": [
+            {
+              "caption": "Java programs leave lots of little objects lying around. Think of scraps of paper on the floor.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/02a-scraps.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A messy floor covered in scraps of paper around a busy desk."
+              }
+            },
+            {
+              "caption": "A janitor clears them. While the janitor works, the post says the server stops serving requests. That is a stop-the-world pause.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/02b-janitor-stops.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A janitor sweeping the floor, holding a stop sign. A request waits at the desk with its hand up."
+              }
+            },
+            {
+              "caption": "Instagram measures how much time that takes, and calls it the GC stall percentage. It saw it reach as much as 2.5% at busy times.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/02c-stall-meter.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A clock with a thin slice shaded in, next to a meter pointing to a small mark."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Swap the engine",
+          "kicker": "The idea",
+          "provenance": "model_design",
+          "grownUpWords": "storage engine, memtable, compaction, RocksDB, C++",
+          "panels": [
+            {
+              "caption": "The storage engine is the part that keeps the data. The team says the Java one made lots of scraps.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/03a-old-engine.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A machine with an old engine in the middle, dropping scraps of paper from the bottom."
+              }
+            },
+            {
+              "caption": "Instagram chose to write a new engine in C++ instead, to cut the load on the Java janitor.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/03b-new-engine.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A shiny new engine on a workbench with a C++ label, while the janitor watches from far away."
+              }
+            },
+            {
+              "caption": "It built the new one on RocksDB, an open source key-value database, so it did not start from nothing.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/03c-rocksdb-base.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A new engine sitting on a sturdy block labeled RocksDB."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Three hard parts",
+          "kicker": "The challenges",
+          "provenance": "model_design",
+          "grownUpWords": "pluggable storage engine, data model, streaming",
+          "panels": [
+            {
+              "caption": "First: the old engine was glued to the rest of Cassandra. The team drew a small doorway, a new engine interface, to plug into.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/04a-glued.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "An old engine glued into a machine, next to a new engine with a doorway frame."
+              }
+            },
+            {
+              "caption": "Second: Cassandra has rich tables, but RocksDB only knows keys and values. The team wrote rules to translate between them.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/04b-translate.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A table with columns on the left and a row of labeled plain boxes on the right, with a translator in between."
+              }
+            },
+            {
+              "caption": "Third: streaming, when a machine joins and others hand it data. The team now builds temporary files, then loads them into RocksDB in one go.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/04c-streaming.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Several files stacked on a cart rolling toward a desk, where a worker loads them in at once."
+              }
+            }
+          ]
+        },
+        {
+          "title": "A test on rented machines",
+          "kicker": "The benchmark",
+          "provenance": "evidence",
+          "grownUpWords": "benchmark, throughput, NDBench, AWS",
+          "panels": [
+            {
+              "caption": "Instagram also tried it in a public cloud. It set up three machines on AWS.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/05a-three-machines.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three desks in a row in a cloud-shaped room."
+              }
+            },
+            {
+              "caption": "It filled them with data and ran a test tool called NDBench against the old Cassandra and Rocksandra.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/05b-load-test.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A worker pours boxes into three desks while a clipboard checks the results."
+              }
+            },
+            {
+              "caption": "The post says at about the same P99 read time of 2 ms, Rocksandra served 10X the reads each second. It also says the tail times for reads and writes were lower and steadier.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/05c-more-reads.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two lines of people. A short line moves slowly at the old desk, a long line moves fast at the new desk."
+              }
+            }
+          ]
+        },
+        {
+          "title": "What comes next",
+          "kicker": "Sharing it",
+          "provenance": "illustration",
+          "grownUpWords": "open source, pluggable storage engine",
+          "panels": [
+            {
+              "caption": "Instagram open-sourced the code and the benchmark tool so others can try it and say how it goes for them.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/06a-share-code.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A box of code being handed over a fence to waiting neighbors."
+              }
+            },
+            {
+              "caption": "Not everything works yet. The team says it is adding more Cassandra features, like secondary indexes and repair.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/06b-more-features.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A checklist with a few items ticked and a few still empty."
+              }
+            },
+            {
+              "caption": "It also wants to add a plug-in slot for engines to Apache Cassandra itself, and share the work back.",
+              "media": {
+                "type": "svg",
+                "src": "instagram-rocksandra/comic/06c-plug-slot.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A machine with an empty slot on its side, and a hand holding a plug-in engine ready to slide in."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / Instagram's own numbers",
+      "facts": [
+        {
+          "figure": "60 → 20 ms",
+          "claim": "measured_result",
+          "text": "P99 read latency in one production cluster, as Instagram reports it. The post does not say how many clusters it rolled out to beyond “several.”",
+          "source": {
+            "label": "Post · Performance metrics",
+            "url": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#a1f4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/facts/p99-drop.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "2.5% → 0.3%",
+          "claim": "measured_result",
+          "text": "GC stall time on that same cluster. The post calls this a 10X reduction.",
+          "source": {
+            "label": "Post · Performance metrics",
+            "url": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#a1f4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/facts/gc-stall.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "5 ms, 25 to 60 ms",
+          "claim": "measured_result",
+          "text": "Average read time and the P99 range on the client side of one production cluster, as the post’s Motivation graph caption gives them.",
+          "source": {
+            "label": "Post · Motivation",
+            "url": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#d01d"
+          },
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/facts/before-numbers.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "10X",
+          "claim": "measured_result",
+          "text": "higher read throughput in a three-machine AWS test at similar P99 read latency of 2 ms: 300K reads a second for Rocksandra, 30K for Cassandra 3.0. It is a benchmark, not production.",
+          "source": {
+            "label": "Post · Performance metrics",
+            "url": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#a1f4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/facts/throughput.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "250M rows",
+          "claim": "measured_result",
+          "text": "of 6KB each were loaded in that AWS test, about 500GB on each of three servers, with 128 readers and 128 writers.",
+          "source": {
+            "label": "Post · Performance metrics",
+            "url": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#a1f4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/facts/benchmark-setup.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "About a year",
+          "claim": "model_design",
+          "text": "of development and testing before the first version reached production clusters, the post says.",
+          "source": {
+            "label": "Post · Performance metrics",
+            "url": "https://instagram-engineering.com/open-sourcing-a-10x-reduction-in-apache-cassandra-tail-latency-d64f86b43589#a1f4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "instagram-rocksandra/facts/year-of-work.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

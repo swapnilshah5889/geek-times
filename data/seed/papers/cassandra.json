@@ -1,0 +1,777 @@
+{
+  "schemaVersion": 2,
+  "slug": "cassandra",
+  "pageTitle": "The inbox that never stops writing",
+  "desk": "Distributed systems",
+  "paper": {
+    "title": "Cassandra - A Decentralized Structured Storage System",
+    "authors": "Lakshman and Malik",
+    "year": 2009,
+    "url": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf"
+  },
+  "summary": "Facebook needed people to be able to search their own inboxes while billions of writes poured in every day. Cassandra keeps copies of the data on a ring of cheap machines, writes every change fast into a notebook and a whiteboard, and tidies it into sorted files later. Machines gossip to notice when a neighbor goes quiet. The paper says it has no single point of failure.",
+  "hook": {
+    "sticker": "Billions a day!",
+    "teaser": "Messages pour in nonstop. How do you keep them all searchable?",
+    "cta": "Follow one message",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "50+ TB",
+      "text": "on 150 machines"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "cassandra/lead/flood.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A flood of envelopes pours toward one small filing cabinet that is about to burst."
+        },
+        "tag": "Flood!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "cassandra/lead/ring-of-desks.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Six calm desks sit around a ring. Each catches some envelopes and writes them in a notebook."
+        },
+        "tag": "Sorted!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/consistent-hashing",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=2",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=3",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/quorum",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=2",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/high-availability",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/eventual-consistency",
+      "relevance": 0.6,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/gossip-protocol",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=3",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/dynamo",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=2",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "author/avinash-lakshman",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/keeping-copies-safe",
+      "relevance": 0.8,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/finding-things",
+      "relevance": 0.8,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/neighbors",
+      "relevance": 0.5,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Cassandra",
+        "aliases": [
+          "Apache Cassandra"
+        ]
+      }
+    },
+    {
+      "tag": "concept/column-family",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=2",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Column families",
+        "aliases": [
+          "super columns",
+          "wide-column store"
+        ]
+      }
+    },
+    {
+      "tag": "concept/commit-log",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Commit logs",
+        "aliases": [
+          "write-ahead log",
+          "journal"
+        ]
+      }
+    },
+    {
+      "tag": "concept/compaction",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=5",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Compaction",
+        "aliases": [
+          "merging data files"
+        ]
+      }
+    },
+    {
+      "tag": "concept/bloom-filter",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Bloom filters"
+      }
+    },
+    {
+      "tag": "concept/failure-detection",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=3",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Failure detection",
+        "aliases": [
+          "phi accrual failure detector",
+          "heartbeats"
+        ]
+      }
+    },
+    {
+      "tag": "use/message-search",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Message search",
+        "aliases": [
+          "inbox search"
+        ]
+      }
+    },
+    {
+      "tag": "organization/facebook",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Facebook",
+        "aliases": [
+          "Meta"
+        ]
+      }
+    },
+    {
+      "tag": "author/prashant-malik",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Prashant Malik"
+      }
+    },
+    {
+      "tag": "venue/ladis",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "LADIS",
+        "aliases": [
+          "Workshop on Large Scale Distributed Systems and Middleware"
+        ]
+      }
+    },
+    {
+      "tag": "venue/ladis-2009",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "LADIS 2009",
+        "parent": "venue/ladis"
+      }
+    },
+    {
+      "tag": "concept/memtable",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Memtables"
+      }
+    },
+    {
+      "tag": "concept/sstable",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "SSTables"
+      }
+    },
+    {
+      "tag": "concept/storage-engine",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Storage engine"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "The inbox that",
+        "accent": "never stops writing."
+      },
+      "deck": "Billions of writes a day, and every message has to be searchable. Facebook built a store where cheap machines share the work and, the paper says, there is no single point of failure.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "The flood",
+            "caption": "<b>Fig. 1.</b> One filing cabinet cannot keep up when billions of writes arrive every day.",
+            "media": {
+              "type": "svg",
+              "src": "cassandra/lead/flood.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A flood of envelopes pours toward one small filing cabinet that is about to burst."
+            }
+          },
+          {
+            "label": "Many calm desks",
+            "caption": "<b>Fig. 2.</b> Spread the work around a ring of ordinary machines. Each one jots new messages down fast and sorts them later.",
+            "media": {
+              "type": "svg",
+              "src": "cassandra/lead/ring-of-desks.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Six calm desks sit around a ring. Each catches some envelopes and writes them in a notebook."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "How Facebook kept every inbox searchable",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "A flood of messages",
+          "provenance": "illustration",
+          "caption": "Facebook wanted you to search your own inbox. That meant billions of writes every day, for hundreds of millions of people, in data centers far apart. With that many machines, some are always broken. The store had to keep working anyway.",
+          "media": {
+            "type": "svg",
+            "src": "cassandra/story/01-flood.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Envelopes stream from many phones toward a row of machines; one machine has a crack."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Borrow from two famous designs",
+          "provenance": "illustration",
+          "caption": "Cassandra spreads data over a ring of machines, an idea Amazon’s Dynamo also uses (the paper borrows Dynamo’s “preference list” name): every key lands on a spot on a circle, and copies go to the next machines along. It took the table shape from Google’s Bigtable: one row per person, with columns grouped into families. Any machine can take a request, and the paper says there is no single point of failure. Grown-up words: <b>consistent hashing</b>, <b>column families</b>.",
+          "media": {
+            "type": "svg",
+            "src": "cassandra/story/02-two-ideas.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A ring of houses on the left and a tidy table of rows on the right join together into one machine."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Jot first, sort later",
+          "provenance": "illustration",
+          "caption": "A new message is first written at the end of a notebook, which is very fast, and then put on a whiteboard in memory. When the whiteboard fills up, it is copied to a sorted file and wiped. Later, small files are merged into bigger ones. Machines gossip to keep track of who is awake. Grown-up words: <b>commit log</b>, <b>compaction</b>, <b>gossip</b>.",
+          "media": {
+            "type": "svg",
+            "src": "cassandra/story/03-jot-then-sort.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "An envelope goes into a notebook, then onto a whiteboard, then into a neat stack of sorted files."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Searches in milliseconds",
+          "provenance": "evidence",
+          "caption": "The paper reports Inbox Search running on a 150-machine cluster holding more than 50 terabytes, split between east and west coast data centers. The middle search took about 16 to 18 milliseconds, and the slowest reported one about 44. Those are the paper’s own production numbers, not an outside test. <a href=\"https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=5\">See the paper’s table ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "cassandra/story/04-search-speed.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two bars show the middle search time, about 16 and 18 milliseconds, with small marks for the fastest and slowest searches."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "Follow one message through Cassandra",
+      "deck": "Read each strip from left to right. Our message is a short note: “Pizza on Friday?” Watch where it goes.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under “grown-up words” are the paper’s own or the usual names for them. The paper’s numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "Find the right desk",
+          "kicker": "Where data lives",
+          "provenance": "illustration",
+          "grownUpWords": "consistent hashing, coordinator, replication factor N",
+          "panels": [
+            {
+              "caption": "Each person’s inbox has a key. The key becomes a spot on a big <b>circle</b> of machines.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/01a-key-to-spot.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A key tag drops onto a spot on a ring of desks."
+              }
+            },
+            {
+              "caption": "Walk clockwise to the first desk. That desk is in <b>charge</b> of this key.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/01b-walk-clockwise.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "An arrow walks clockwise from the spot to the nearest desk, which wears a small badge."
+              }
+            },
+            {
+              "caption": "In the simplest setup, that desk sends copies to the next desks along, so there are <b>N</b> copies in all. Copies can even sit in another data center.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/01c-copies.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The badge desk passes copies to two neighbors; one neighbor sits in a building far away."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Jot it in the notebook",
+          "kicker": "Why writing is fast",
+          "provenance": "illustration",
+          "grownUpWords": "commit log and in-memory table (memtable)",
+          "panels": [
+            {
+              "caption": "First, the note is added to the <b>end</b> of a notebook on its own disk. Writing at the end is quick, and it survives a crash.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/02a-notebook.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A pencil adds a line at the bottom of a long notebook."
+              }
+            },
+            {
+              "caption": "Only after that, the note goes on a <b>whiteboard</b> in memory, where it is easy to find.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/02b-whiteboard.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The same note is pinned to a whiteboard next to the notebook."
+              }
+            },
+            {
+              "caption": "When the whiteboard is full, it is copied into a <b>sorted file</b> and wiped clean. Files are never changed after that.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/02c-flush.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The whiteboard pours its notes into a neat folder; the board is now blank."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The doorman who says “not here”",
+          "kicker": "How reading stays quick",
+          "provenance": "illustration",
+          "grownUpWords": "Bloom filter and index",
+          "panels": [
+            {
+              "caption": "To read, check the whiteboard first. It always has the newest notes.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/03a-check-board.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A magnifying glass looks over the whiteboard."
+              }
+            },
+            {
+              "caption": "Not there? Look in the files, <b>newest first</b>. But opening every file is slow.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/03b-many-files.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A row of folders, newest at the front, with a tired word buddy in front of them."
+              }
+            },
+            {
+              "caption": "Each file has a tiny <b>doorman</b>. He can say “definitely not in here” without opening it, so many files are skipped.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/03c-doorman.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A small doorman in front of a folder holds up a hand; the search skips to the next folder."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Tidy up the files",
+          "kicker": "What happens to all those files",
+          "provenance": "illustration",
+          "grownUpWords": "compaction (a merge sort of data files)",
+          "panels": [
+            {
+              "caption": "Every full whiteboard makes a new file. Soon there are <b>lots</b> of small files.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/04a-pile.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A messy pile of small folders."
+              }
+            },
+            {
+              "caption": "In the background, files of a <b>similar size</b> are merged into one, still in sorted order.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/04b-merge.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two similar folders zip together into one bigger folder."
+              }
+            },
+            {
+              "caption": "Fewer files means fewer places to look. The merging is heavy work, so it runs in the background.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/04c-tidy.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One big neat folder stands where the pile was, with a broom beside it."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Is my neighbor asleep?",
+          "kicker": "Noticing broken machines",
+          "provenance": "illustration",
+          "grownUpWords": "gossip (Scuttlebutt) and the Φ accrual failure detector",
+          "panels": [
+            {
+              "caption": "Machines <b>gossip</b>: they keep passing news to each other about who is in the group.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/05a-gossip.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Desks pass small notes to each other around the ring."
+              }
+            },
+            {
+              "caption": "Each machine watches how long it has been since it heard from a neighbor. Instead of a yes or no, it keeps a <b>worry meter</b>.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/05b-worry-meter.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk watches a silent neighbor while a meter needle slowly rises."
+              }
+            },
+            {
+              "caption": "Each step up the meter makes a wrong guess about <b>ten times</b> less likely. Past a set level, the neighbor is treated as down.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/05c-threshold.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The meter needle passes a red line and the silent desk is marked with a sleeping cap."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Search your inbox",
+          "kicker": "How Inbox Search used it",
+          "provenance": "illustration",
+          "grownUpWords": "row key, super columns, columns",
+          "panels": [
+            {
+              "caption": "Your user id is the <b>row</b>. Under each word, like “pizza”, sit the ids of the messages that contain it.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/06a-word-drawers.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A cabinet with drawers labelled with words; the pizza drawer holds message cards."
+              }
+            },
+            {
+              "caption": "A second family does the same for <b>people</b>: under each friend sit the messages you swapped with them.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/06b-people-drawers.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A second cabinet with drawers labelled with friends’ faces."
+              }
+            },
+            {
+              "caption": "When you click the search box, Cassandra quietly <b>warms up</b> your index, so the answer is likely ready when you finish typing.",
+              "media": {
+                "type": "svg",
+                "src": "cassandra/comic/06c-warm-up.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A cursor clicks a search box while a cabinet slides its drawers forward, ready."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "50+ TB",
+          "claim": "measured_result",
+          "text": "of Inbox Search data sat on a 150-machine cluster split between east and west coast data centers, as the paper reports it.",
+          "source": {
+            "label": "Paper §6.1",
+            "url": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=5"
+          },
+          "media": {
+            "type": "svg",
+            "src": "cassandra/facts/terabytes.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "15.69 ms",
+          "claim": "measured_result",
+          "text": "was the median time to search messages with one person. Term search took 18.27 ms at the median and 44.41 ms at the slowest reported.",
+          "source": {
+            "label": "Paper §6.1",
+            "url": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=5"
+          },
+          "media": {
+            "type": "svg",
+            "src": "cassandra/facts/search-ms.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "~15 s",
+          "claim": "measured_result",
+          "text": "was the average time to spot a failed machine in a 100-machine test with the worry meter set to 5. An older kind of detector they tried took on the order of two minutes.",
+          "source": {
+            "label": "Paper §6",
+            "url": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=5"
+          },
+          "media": {
+            "type": "svg",
+            "src": "cassandra/facts/detect-15s.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "7 TB",
+          "claim": "measured_result",
+          "text": "of inbox data for over 100 million users was indexed from MySQL and loaded into Cassandra before Inbox Search launched.",
+          "source": {
+            "label": "Paper §6",
+            "url": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=5"
+          },
+          "media": {
+            "type": "svg",
+            "src": "cassandra/facts/seven-tb.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "40 MB/s",
+          "claim": "measured_result",
+          "text": "is how fast one machine could hand its data to a new machine joining the ring, from the team’s operating experience.",
+          "source": {
+            "label": "Paper §5.5",
+            "url": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "cassandra/facts/handover.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "128 MB",
+          "claim": "model_design",
+          "text": "is the commit-log (“notebook”) size at which the team found that starting a fresh one works well; the size is configurable. Old notebooks are deleted once everything in them is safely in files.",
+          "source": {
+            "label": "Paper §5.7",
+            "url": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf#page=4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "cassandra/facts/notebook-128mb.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

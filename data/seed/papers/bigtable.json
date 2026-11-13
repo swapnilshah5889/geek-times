@@ -1,0 +1,669 @@
+{
+  "schemaVersion": 2,
+  "slug": "bigtable",
+  "pageTitle": "One giant table, cut into pieces",
+  "desk": "Distributed systems",
+  "paper": {
+    "title": "Bigtable: A Distributed Storage System for Structured Data",
+    "authors": "Chang and colleagues",
+    "year": 2006,
+    "url": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf"
+  },
+  "summary": "Google had data of very different sizes and needed one place to keep it. Bigtable is a giant sorted table, found by row, column and time, cut into pieces called tablets that live on thousands of ordinary machines. Each write goes to a notebook and a whiteboard, then into sorted folders that are zipped together later. The paper describes its own design and Google’s use of it.",
+  "hook": {
+    "sticker": "One huge table!",
+    "teaser": "How do you keep one table when it is too big for any machine?",
+    "cta": "Follow one write",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "24,500",
+      "text": "tablet servers in August 2006"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "bigtable/lead/giant-table.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A huge sheet of paper with rows in alphabetical order, columns grouped under labels, and a few boxes holding stacked older copies."
+        },
+        "tag": "Sorted!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "bigtable/lead/tablets-on-desks.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "One long sorted table cut into pieces by scissors; each piece is carried to a different desk in a long row of desks, and one small manager desk points."
+        },
+        "tag": "Cut up!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/key-value-store",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/column-family",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=2",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/commit-log",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=6",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/compaction",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=6",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/bloom-filter",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=7",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/high-availability",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/finding-things",
+      "relevance": 0.7,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/google",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/bigtable",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Bigtable",
+        "aliases": [
+          "Google Bigtable"
+        ]
+      }
+    },
+    {
+      "tag": "concept/sstable",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=3",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "SSTables",
+        "aliases": [
+          "sorted string table",
+          "immutable sorted files"
+        ]
+      }
+    },
+    {
+      "tag": "concept/memtable",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=6",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Memtables",
+        "aliases": [
+          "in-memory sorted buffer"
+        ]
+      }
+    },
+    {
+      "tag": "concept/tablet",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=2",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Tablets",
+        "aliases": [
+          "row ranges",
+          "table shards"
+        ]
+      }
+    },
+    {
+      "tag": "author/fay-chang",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Fay Chang"
+      }
+    },
+    {
+      "tag": "venue/osdi",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "OSDI",
+        "aliases": [
+          "USENIX Symposium on Operating Systems Design and Implementation"
+        ]
+      }
+    },
+    {
+      "tag": "venue/osdi-2006",
+      "relevance": 0.4,
+      "basis": "background",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "OSDI 2006",
+        "parent": "venue/osdi"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "One giant table,",
+        "accent": "cut into pieces."
+      },
+      "deck": "Google had data of every size, from web addresses to satellite pictures. Bigtable keeps it all in one huge sorted table, cut into pieces that live on thousands of ordinary machines.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "One sorted table",
+            "caption": "<b>Fig. 1.</b> Rows are kept in order, like a dictionary. Every box in the table is found by a row, a column and a time.",
+            "media": {
+              "type": "svg",
+              "src": "bigtable/lead/giant-table.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A huge sheet of paper with rows in alphabetical order, columns grouped under labels, and a few boxes holding stacked older copies."
+            }
+          },
+          {
+            "label": "Pieces on many desks",
+            "caption": "<b>Fig. 2.</b> The table is cut into row ranges. Each piece sits on one machine, and a lightly busy manager hands out the pieces.",
+            "media": {
+              "type": "svg",
+              "src": "bigtable/lead/tablets-on-desks.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "One long sorted table cut into pieces by scissors; each piece is carried to a different desk in a long row of desks, and one small manager desk points."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "How Google stored a table too big for one machine",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Data of every size",
+          "provenance": "illustration",
+          "caption": "Many Google projects needed a place to keep structured data. The paper says more than sixty products used Bigtable, from web indexing to Google Earth. Some wanted fast answers for people waiting; others wanted to chew through huge piles in the background. The goal was petabytes spread over thousands of ordinary machines.",
+          "media": {
+            "type": "svg",
+            "src": "bigtable/story/01-every-size.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A small web address tag, a web page and a satellite picture of different sizes all flow toward one big storage shelf."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "A sorted map, cut into tablets",
+          "provenance": "illustration",
+          "caption": "Bigtable is not a full relational database. It is a sorted map: each value is found by a row name, a column name and a time. Rows are kept in alphabetical order, so neighbors in the list are kept together, and reading a short range of rows is efficient. The table is cut into row ranges called tablets, each about 100 to 200 MB by default, and each tablet is served by one machine at a time. Grown-up words: <b>column families</b>, <b>tablets</b>.",
+          "media": {
+            "type": "svg",
+            "src": "bigtable/story/02-sorted-map.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A long sorted sheet is cut into three pieces; each piece lands on its own desk."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Notebook, whiteboard, folders",
+          "provenance": "illustration",
+          "caption": "A new write goes at the end of a notebook on disk, then onto a sorted whiteboard in memory. When the whiteboard is full, it is saved as a sorted, never-edited folder and a fresh whiteboard starts. Folders pile up, so the machine zips a few together in the background. A read looks at the whiteboard and all the folders together, and a doorman can say “not in this folder” without opening it. Grown-up words: <b>commit log</b>, <b>memtable</b>, <b>SSTable</b>, <b>compaction</b>, <b>Bloom filter</b>.",
+          "media": {
+            "type": "svg",
+            "src": "bigtable/story/03-notebook-whiteboard-folders.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "An envelope goes into a notebook, then onto a whiteboard, then into a stack of folders where a doorman checks one folder."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "Thousands of servers in production",
+          "provenance": "evidence",
+          "caption": "The paper says that as of August 2006 there were 388 non-test Bigtable clusters with about 24,500 tablet servers in total. One group of 14 busy clusters, with 8069 tablet servers, saw more than 1.2 million requests per second. These are Google’s own reported numbers. <a href=\"https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=10\">See Section 8 ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "bigtable/story/04-clusters.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A big grid of small server boxes, with one group of them highlighted and a counter above it."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "Follow one write through Bigtable",
+      "deck": "Read each strip from left to right. Our write is one small note about a web page. Watch where it goes.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under “grown-up words” are the paper’s own. The paper’s numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "One sorted table",
+          "kicker": "The data model",
+          "provenance": "illustration",
+          "grownUpWords": "row key, column family, timestamp",
+          "panels": [
+            {
+              "caption": "Every box in the table has an address: a <b>row</b> name, a <b>column</b> name and a <b>time</b>.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/01a-address.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A grid with a row label on the left, a column label on top and a clock tag pointing at one box."
+              }
+            },
+            {
+              "caption": "Rows stay in <b>alphabetical</b> order. The paper flips web addresses around, so pages from one site sit side by side.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/01b-sorted-rows.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Rows of web addresses written backwards sit in alphabetical order, with two rows from the same site next to each other."
+              }
+            },
+            {
+              "caption": "Each box can keep older versions, newest first. The paper’s page table keeps the last three.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/01c-versions.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One box with three stacked sheets, the top one newest, each with a clock tag."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Cut it into pieces",
+          "kicker": "Tablets",
+          "provenance": "illustration",
+          "grownUpWords": "tablet, tablet server, master",
+          "panels": [
+            {
+              "caption": "As the table grows, it is cut into row ranges called <b>tablets</b>, roughly 100 to 200 MB each.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/02a-cut.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Scissors cut a long sorted table into several pieces."
+              }
+            },
+            {
+              "caption": "Each tablet is served by <b>one</b> machine at a time. A machine holds many tablets.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/02b-one-desk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Several small pieces sit on one desk with a nameplate."
+              }
+            },
+            {
+              "caption": "A <b>master</b> hands tablets to machines, but people ask the machines directly. So the master stays lightly busy.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/02c-master.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A small manager desk points pieces toward desks while a customer walks straight to a desk."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Jot, then pin",
+          "kicker": "The first steps of a write",
+          "provenance": "illustration",
+          "grownUpWords": "commit log, memtable",
+          "panels": [
+            {
+              "caption": "First, the write goes at the <b>end of a notebook</b>. The notebook is what lets a machine rebuild after a crash.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/03a-notebook.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A pencil adds a line at the bottom of a long notebook."
+              }
+            },
+            {
+              "caption": "Then it goes on a sorted <b>whiteboard</b> in memory.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/03b-whiteboard.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The same note is pinned in order on a whiteboard beside the notebook."
+              }
+            },
+            {
+              "caption": "One notebook is shared by all tablets on the machine, so the machine writes one place, not many.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/03c-one-notebook.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three small pieces on a desk all send notes into the same single notebook."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The whiteboard fills up",
+          "kicker": "Minor compaction",
+          "provenance": "illustration",
+          "grownUpWords": "minor compaction, SSTable",
+          "panels": [
+            {
+              "caption": "When the whiteboard reaches a limit, it is <b>frozen</b>, and a fresh whiteboard takes new writes.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/04a-freeze.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A full whiteboard gets a snowflake tag while a clean whiteboard stands beside it."
+              }
+            },
+            {
+              "caption": "The frozen one is copied out as a sorted file that is never edited again. Call it a <b>folder</b>.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/04b-folder.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A sorted whiteboard is copied into a neat closed folder on a shelf."
+              }
+            },
+            {
+              "caption": "Reads and writes keep going meanwhile. Now fewer notebook lines must be replayed after a crash.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/04c-keep-going.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A customer is served at the clean whiteboard while the folder is filed away behind."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Zip the folders",
+          "kicker": "Merging compaction",
+          "provenance": "illustration",
+          "grownUpWords": "merging compaction, major compaction",
+          "panels": [
+            {
+              "caption": "Every freeze makes another folder. Too many folders means slow reads.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/05a-pile.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tall wobbly pile of folders on a shelf."
+              }
+            },
+            {
+              "caption": "So, in the background, a few folders are <b>zipped</b> into one new folder, and the old ones are thrown away.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/05b-zip.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three folders slide into a zipper that outputs one larger folder."
+              }
+            },
+            {
+              "caption": "Zipping <b>all</b> of them is a major compaction. Deleted notes are finally gone for good.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/05c-all-zipped.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One single folder on the shelf, and a crossed-out note in the bin."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Reading, and a crash",
+          "kicker": "Reads and recovery",
+          "provenance": "illustration",
+          "grownUpWords": "merged view, Bloom filter, redo points",
+          "panels": [
+            {
+              "caption": "A read looks at the whiteboard and the folders together, as one merged view. All are sorted, so this is quick.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/06a-merged-view.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A magnifying glass looks over a whiteboard and several folders lined up as one list."
+              }
+            },
+            {
+              "caption": "A <b>doorman</b> can say “this folder might have it” or “not here.” That saves trips to the disk.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/06b-doorman.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A doorman at a folder door shakes his head at one folder and nods at another."
+              }
+            },
+            {
+              "caption": "If a machine dies, another machine replays the notebook to rebuild the whiteboard.",
+              "media": {
+                "type": "svg",
+                "src": "bigtable/comic/06c-rebuild.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A second desk reads a notebook and rewrites a fresh whiteboard."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "24,500",
+          "claim": "measured_result",
+          "text": "tablet servers ran in 388 non-test Bigtable clusters as of August 2006, as the paper reports it.",
+          "source": {
+            "label": "Paper §8",
+            "url": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=10"
+          },
+          "media": {
+            "type": "svg",
+            "src": "bigtable/facts/servers.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "1.2 million",
+          "claim": "measured_result",
+          "text": "requests per second were seen across one group of 14 busy clusters with 8069 tablet servers.",
+          "source": {
+            "label": "Paper §8",
+            "url": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=10"
+          },
+          "media": {
+            "type": "svg",
+            "src": "bigtable/facts/requests.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "100-200 MB",
+          "claim": "model_design",
+          "text": "is the default size of each tablet, the row range that moves between servers.",
+          "source": {
+            "label": "Paper §5",
+            "url": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "bigtable/facts/tablet-size.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "10-to-1",
+          "claim": "measured_result",
+          "text": "space reduction in one experiment storing web page contents, helped by keeping pages from one host next to each other. Typical Gzip gets 3-to-1 or 4-to-1.",
+          "source": {
+            "label": "Paper §6",
+            "url": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=7"
+          },
+          "media": {
+            "type": "svg",
+            "src": "bigtable/facts/compress.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "~200 TB",
+          "claim": "measured_result",
+          "text": "is the size of Google Analytics’ raw click table, with one row for each end-user session.",
+          "source": {
+            "label": "Paper §8.1",
+            "url": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=10"
+          },
+          "media": {
+            "type": "svg",
+            "src": "bigtable/facts/click-table.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "0.0047%",
+          "claim": "measured_result",
+          "text": "of server hours had some data unavailable because the lock service Chubby was down or unreachable, across 14 clusters.",
+          "source": {
+            "label": "Paper §4",
+            "url": "https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf#page=4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "bigtable/facts/chubby.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

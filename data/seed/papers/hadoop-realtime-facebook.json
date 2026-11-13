@@ -1,0 +1,678 @@
+{
+  "schemaVersion": 2,
+  "slug": "hadoop-realtime-facebook",
+  "pageTitle": "Two screens, one answer",
+  "desk": "Distributed systems",
+  "paper": {
+    "title": "Apache Hadoop Goes Realtime at Facebook",
+    "authors": "Borthakur and colleagues",
+    "year": 2011,
+    "url": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf"
+  },
+  "summary": "Facebook’s new Messages needed the unread count and the inbox to agree, while taking in huge numbers of writes. This paper lists the storage needs, in no particular order, including strong consistency within a data center and high write throughput, and explains why Facebook chose HBase on Hadoop. Its abstract names Cassandra and Voldemort as systems it chose HBase over.",
+  "hook": {
+    "sticker": "Same answer!",
+    "teaser": "Two screens show your unread messages. How do you make them always agree?",
+    "cta": "Read the needs list",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "500 million",
+      "text": "people to serve at launch"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "hadoop-realtime-facebook/lead/two-screens.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "Two phone screens side by side. One shows a bell with the number 3, the other shows an inbox list with three bold rows."
+        },
+        "tag": "Mismatch?"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "hadoop-realtime-facebook/lead/one-home.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "One person with a phone points to a single building full of machine racks, labelled home."
+        },
+        "tag": "One home!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/hbase",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "HBase",
+        "aliases": [
+          "Apache HBase"
+        ]
+      }
+    },
+    {
+      "tag": "technique/hdfs",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=4",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "HDFS",
+        "aliases": [
+          "Hadoop Distributed File System",
+          "Apache Hadoop"
+        ]
+      }
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 0.3,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/strong-consistency",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=3",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Strong consistency",
+        "aliases": [
+          "consistency within a data center"
+        ]
+      }
+    },
+    {
+      "tag": "concept/high-availability",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=3",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=6",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/commit-log",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=7",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/compaction",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=7",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/bloom-filter",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=7",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "use/facebook-messages",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Facebook Messages",
+        "aliases": [
+          "Messages",
+          "social inbox"
+        ]
+      }
+    },
+    {
+      "tag": "organization/facebook",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "author/dhruba-borthakur",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Dhruba Borthakur"
+      }
+    },
+    {
+      "tag": "venue/sigmod",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "SIGMOD",
+        "aliases": [
+          "ACM SIGMOD"
+        ]
+      }
+    },
+    {
+      "tag": "venue/sigmod-2011",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "SIGMOD 2011",
+        "parent": "venue/sigmod"
+      }
+    },
+    {
+      "tag": "everyday/keeping-copies-safe",
+      "relevance": 0.7,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/finding-things",
+      "relevance": 0.5,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "Two screens,",
+        "accent": "one answer."
+      },
+      "deck": "Facebook’s new inbox had to show the same unread count on the home page and the inbox page, while messages poured in. Here is what its engineers said they needed, and why they chose HBase.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Two screens",
+            "caption": "<b>Fig. 1.</b> The home page says three unread messages. The inbox page must show the same three. The paper says this need comes from what users expect.",
+            "media": {
+              "type": "svg",
+              "src": "hadoop-realtime-facebook/lead/two-screens.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "Two phone screens side by side. One shows a bell with the number 3, the other shows an inbox list with three bold rows."
+            }
+          },
+          {
+            "label": "One home",
+            "caption": "<b>Fig. 2.</b> Each person is served from one data center, so strong consistency inside that one data center is enough.",
+            "media": {
+              "type": "svg",
+              "src": "hadoop-realtime-facebook/lead/one-home.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "One person with a phone points to a single building full of machine racks, labelled home."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the research ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "Why Facebook picked HBase for Messages",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Messages that never stop",
+          "provenance": "illustration",
+          "caption": "Facebook Messages brought messages, email, chat and SMS into one inbox. The paper says it had to work for more than 500 million people right after launch. Millions of messages and billions of chat messages came in every day, and one message could be written several times. The older answer, many MySQL machines, was good at reading but typically weak at heavy random writing.",
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/story/01-never-stop.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Envelopes from phones, laptops and speech bubbles pour toward a row of small database cabinets."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Write the needs down first",
+          "provenance": "illustration",
+          "caption": "Before picking a tool, the team listed what the storage had to do. The list has eight items, in no particular order. Two matter most here: take in a huge number of writes, and be <b>strongly consistent</b> inside a data center. Why? The unread count and the inbox page must agree with each other. The list also names things the team did <i>not</i> need, like surviving a network split inside one data center. Grown-up words: <b>strong consistency</b>, <b>write throughput</b>.",
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/story/02-needs-list.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A clipboard with a checklist. Two items are circled in red. A small crossed-out box sits below as a not-needed item."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "HBase on top of HDFS",
+          "provenance": "illustration",
+          "caption": "The team chose Hadoop’s file system (HDFS) with HBase on top. HBase already gave a highly consistent store that writes fast: a note goes in a notebook, then on a whiteboard, then into sorted folders. HDFS keeps copies. The team then fixed gaps itself, such as the single boss machine in HDFS. The abstract says Facebook chose this over other systems such as Apache Cassandra and Voldemort. It never compares them one by one; its reasons are the needs list and the points above. Grown-up words: <b>HBase</b>, <b>HDFS</b>, <b>commit log</b>.",
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/story/03-hbase-on-hdfs.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A notebook, a whiteboard and a stack of folders sit on a shelf. A shelf below holds three copies of each folder."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "A slow write, fixed",
+          "provenance": "evidence",
+          "caption": "After launching to employees, the team saw very high write delays. A bad habit in the file-merging step kept re-copying a big file with tiny ones. After the fix, the paper says put latency fell from 25 milliseconds to 3 milliseconds. It also says that merging big files weekly instead of daily cut network traffic by 40%. These are the team’s own reports. <a href=\"https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=7\">See the paper’s §5.3.1 ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/story/04-latency.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two bars side by side: a tall bar marked 25 and a short bar marked 3, with a small arrow pointing down between them."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "Follow one message into HBase",
+      "deck": "Read each strip from left to right. We follow a new message and ask what the storage must do.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under “grown-up words” are the paper’s own or the usual names. The paper’s numbers are in the evidence box at the end.",
+      "strips": [
+        {
+          "title": "Two screens must agree",
+          "kicker": "Why consistency",
+          "provenance": "illustration",
+          "grownUpWords": "strong consistency, consistent view",
+          "panels": [
+            {
+              "caption": "The home page shows a bell with <b>unread</b> messages. The inbox page lists the messages.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/01a-two-screens.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A phone shows a bell with a number badge, next to a phone showing an inbox list."
+              }
+            },
+            {
+              "caption": "If the bell says one thing and the list says another, it feels <b>broken</b>.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/01b-mismatch.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The bell shows a 3 and the list below it shows only two rows, with a frowning face."
+              }
+            },
+            {
+              "caption": "The team says this kind of user expectation drove its need for <b>strong consistency</b>: the two screens give the same answer.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/01c-agree.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Bell and list both show three, with a smiling face between them."
+              }
+            }
+          ]
+        },
+        {
+          "title": "One home data center",
+          "kicker": "Where a person lives",
+          "provenance": "illustration",
+          "grownUpWords": "data center, federation",
+          "panels": [
+            {
+              "caption": "A <b>data center</b> is a big building full of machines.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/02a-building.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A big building with rows of tiny machine racks inside."
+              }
+            },
+            {
+              "caption": "Each person’s messages are served from <b>one</b> data center. The paper says Messages was easy to split up this way.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/02b-sticky.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A person icon with a string tied to one of two buildings."
+              }
+            },
+            {
+              "caption": "So the machines in that building only need to agree with each other. The paper says agreeing across the whole world is practically impossible.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/02c-agree-inside.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Machines inside one building nod together; a far-away building across a globe is drawn in grey."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Write, write, write",
+          "kicker": "High write throughput",
+          "provenance": "illustration",
+          "grownUpWords": "write throughput, denormalization",
+          "panels": [
+            {
+              "caption": "Every message is <b>saved</b>. Nothing is deleted unless the person does it.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/03a-save-all.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Envelopes drop into a mailbox that keeps getting taller."
+              }
+            },
+            {
+              "caption": "One message may be written <b>several times</b>, so each person’s view of the thread is ready.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/03b-copies.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One envelope splits into three copies, each flying to a different person’s folder."
+              }
+            },
+            {
+              "caption": "The old setup, the paper says, slows down for random writes as tables grow. The new one needed to <b>keep up</b>.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/03c-keep-up.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A slow snail-like cabinet on the left; a fast runner with a notebook on the right."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Notebook, whiteboard, folders",
+          "kicker": "HBase writes",
+          "provenance": "illustration",
+          "grownUpWords": "commit log (HLog), MemStore, HFile, compaction, Bloom filter",
+          "panels": [
+            {
+              "caption": "A new write is first added to a <b>notebook</b>, so it can be recovered after a crash.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/04a-notebook.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A pencil writes a new line at the bottom of a notebook."
+              }
+            },
+            {
+              "caption": "It then goes on a <b>whiteboard</b> in memory. When the board fills, its notes are copied into a sorted <b>folder</b>.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/04b-whiteboard-folder.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A full whiteboard sends a stack of cards into a new folder."
+              }
+            },
+            {
+              "caption": "Folders pile up, so they are <b>zipped</b> together now and then. A doorman at each folder says “not here” to skip needless looks.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/04c-zip-doorman.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Several folders squeeze into one larger folder; a small doorman stands at a folder door shaking his head."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Three copies, everyone says yes",
+          "kicker": "Keeping copies safe",
+          "provenance": "illustration",
+          "grownUpWords": "HDFS, replication, checksum",
+          "panels": [
+            {
+              "caption": "HDFS keeps <b>copies</b> of every block. A write goes down a line of machines.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/05a-pipeline.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A block passes along a line of three machines."
+              }
+            },
+            {
+              "caption": "HBase waits until <b>every</b> copy says “got it”. If one copy fails to write, it starts a fresh notebook right away.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/05b-all-ack.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three machines each raise a thumbs-up flag; a fourth machine with a red cross is skipped."
+              }
+            },
+            {
+              "caption": "When a block is read, a <b>checksum</b> is checked. A damaged copy is thrown away; other copies remain.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/05c-checksum.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A magnifying glass checks a block; a torn block goes in a bin while two good blocks stay."
+              }
+            }
+          ]
+        },
+        {
+          "title": "When the boss is away",
+          "kicker": "High availability",
+          "provenance": "illustration",
+          "grownUpWords": "NameNode, AvatarNode, ZooKeeper, failover",
+          "panels": [
+            {
+              "caption": "HDFS has one <b>boss</b> machine that knows where every block is. If it stops, the cluster stops.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/06a-boss.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One desk labelled boss holds a big map; arrows go from it to many machines."
+              }
+            },
+            {
+              "caption": "The team added a <b>standby</b> boss that listens to the same diary and keeps up.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/06b-standby.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two bosses at two desks; the second one reads along over the first one’s shoulder."
+              }
+            },
+            {
+              "caption": "If the first one fails, a signpost kept in a shared service points everyone to the new boss. The paper says this takes <b>well under a minute</b>.",
+              "media": {
+                "type": "svg",
+                "src": "hadoop-realtime-facebook/comic/06c-signpost.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A signpost swings its arrow from one desk to the other desk while a stopwatch is shown."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the paper / Real numbers, with sources",
+      "facts": [
+        {
+          "figure": "500 million",
+          "claim": "model_design",
+          "text": "people was the number Facebook Messages had to be ready to serve right after launch, with strict uptime needs and many petabytes of data.",
+          "source": {
+            "label": "Paper §1",
+            "url": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=1"
+          },
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/facts/people.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "8 needs",
+          "claim": "model_design",
+          "text": "made up the storage needs list, in no particular order. Two are high write throughput and strong consistency within a data center.",
+          "source": {
+            "label": "Paper §3",
+            "url": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=3"
+          },
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/facts/needs.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "25 → 3 ms",
+          "claim": "measured_result",
+          "text": "is how far put latency dropped after the team fixed a file-merging habit, as the paper reports it.",
+          "source": {
+            "label": "Paper §5.3.1",
+            "url": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=7"
+          },
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/facts/put-latency.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "40%",
+          "claim": "measured_result",
+          "text": "less network traffic came from merging big files every week instead of every day.",
+          "source": {
+            "label": "Paper §6.9",
+            "url": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=9"
+          },
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/facts/network-io.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "10 → thousands",
+          "claim": "measured_result",
+          "text": "is how far Facebook’s HBase use grew in about a year: from a small 10-machine test cluster to many clusters running thousands of machines.",
+          "source": {
+            "label": "Paper §6",
+            "url": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=7"
+          },
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/facts/cluster-growth.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "20 min",
+          "claim": "measured_result",
+          "text": "is how long failover could take with the standard backup boss, the paper says. The team’s hot standby can take over in well under a minute.",
+          "source": {
+            "label": "Paper §4.1",
+            "url": "https://borthakur.com/ftp/RealtimeHadoopSigmod2011.pdf#page=4"
+          },
+          "media": {
+            "type": "svg",
+            "src": "hadoop-realtime-facebook/facts/failover.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

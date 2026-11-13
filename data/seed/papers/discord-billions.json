@@ -1,0 +1,620 @@
+{
+  "schemaVersion": 2,
+  "slug": "discord-billions",
+  "kind": "blog",
+  "blog": {
+    "title": "How Discord Stores Billions of Messages",
+    "organization": "Discord",
+    "published": "2017-01-13",
+    "url": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+    "trust": "company_reported"
+  },
+  "pageTitle": "The chat history that kept growing",
+  "desk": "Distributed systems",
+  "summary": "Discord says its messages outgrew MongoDB around 100 million. This story follows why it chose Cassandra, then the problems it reports: oversized partitions, edit and delete races, tombstones, and a six-month surprise.",
+  "hook": {
+    "sticker": "Too many messages!",
+    "teaser": "A chat app promises to keep every message forever. What happens when the pile outgrows the first database?",
+    "cta": "Follow the pile",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "100 million",
+      "text": "stored messages when MongoDB struggled"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "discord-billions/lead/message-flood.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A tall pile of chat bubbles drops onto a small whiteboard that is already full. A worried desk worker looks up at it."
+        },
+        "tag": "The pile!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "discord-billions/lead/ring-of-desks.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A ring of desks, each with a notebook, a whiteboard and a folder. A new bubble lands on one desk while a worker nearby waves."
+        },
+        "tag": "The ring!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/eventual-consistency",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/compaction",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.4,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/the-internet",
+      "relevance": 0.6,
+      "basis": "editorial",
+      "source": "ai",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/discord",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Discord"
+      }
+    },
+    {
+      "tag": "author/stanislav-vishnevskiy",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Stanislav Vishnevskiy"
+      }
+    },
+    {
+      "tag": "use/chat-messaging",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Chat messaging",
+        "aliases": [
+          "chat history",
+          "chat apps"
+        ]
+      }
+    },
+    {
+      "tag": "concept/tombstone",
+      "relevance": 0.8,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Tombstones",
+        "aliases": [
+          "delete markers"
+        ]
+      }
+    },
+    {
+      "tag": "concept/garbage-collection",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://discord.com/blog/how-discord-stores-billions-of-messages",
+      "source": "ai",
+      "status": "approved",
+      "proposed": {
+        "label": "Garbage collection",
+        "aliases": [
+          "GC",
+          "stop-the-world pause"
+        ]
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "The chat history that",
+        "accent": "kept growing."
+      },
+      "deck": "Discord decided to keep every message forever. What does it take to store that pile, and what went wrong on the way?",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "The pile",
+            "caption": "<b>Fig. 1.</b> Discord says it stores all chat history forever, so the pile only grows. By about 100 million messages, its first database struggled.",
+            "media": {
+              "type": "svg",
+              "src": "discord-billions/lead/message-flood.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A tall pile of chat bubbles drops onto a small whiteboard that is already full. A worried desk worker looks up at it."
+            }
+          },
+          {
+            "label": "The ring of desks",
+            "caption": "<b>Fig. 2.</b> Discord moved messages to Cassandra, which spreads data over many machines. Think of a ring of desks that can take on one more desk.",
+            "media": {
+              "type": "svg",
+              "src": "discord-billions/lead/ring-of-desks.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A ring of desks, each with a notebook, a whiteboard and a folder. A new bubble lands on one desk while a worker nearby waves."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "discord-story",
+      "nav": "Inside the move ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "From one database to a ring of desks",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "The whiteboard filled up",
+          "provenance": "model_design",
+          "caption": "Discord started on MongoDB, one database for everything. Around November 2015 it reached <b>100 million</b> stored messages. The team says the data and the index could no longer fit in RAM, and speed became unpredictable. Think of a whiteboard that is too small for the notes.",
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/story/01-whiteboard-full.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A small whiteboard crammed with notes, some falling off the edge. A worker holds a stack of extra notes and frowns."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Pick a database that grows by adding desks",
+          "provenance": "model_design",
+          "caption": "Discord wrote down what it needed: grow without reshuffling data by hand, heal itself, need little upkeep, and give steady speed. The post says Cassandra was the only database that met all of its requirements.",
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/story/02-checklist.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A checklist pinned to a wall with ticks for growing, healing, low upkeep and steady speed. A ring of desks sits beside it."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Cut the folders into ten-day slices",
+          "provenance": "model_design",
+          "caption": "Each channel's messages first lived in one big folder, and folders grew past <b>100MB</b>. Discord says that put heavy pressure on Cassandra and kept data from spreading around. So it started a new folder for about <b>10 days</b> of messages. It also later learned some rough edges: edits and deletes can collide, and deletes leave markers called tombstones.",
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/story/03-ten-day-folders.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "One long folder is cut into several short folders, each labeled with a calendar strip. A worker points at the newest one."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "What Discord reports",
+          "provenance": "evidence",
+          "caption": "Discord reports writes under 1 millisecond and reads under 5 milliseconds in a week of testing. It also reports a surprise six months after launch: one channel with millions of deleted messages made Cassandra stall. These are the company's own numbers, not an outside test. <a href=\"https://discord.com/blog/how-discord-stores-billions-of-messages#:~:text=The%20Big%20Surprise\">See The Big Surprise in the post ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/story/04-evidence.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A stopwatch showing a quick tick beside a worry meter that swings high. A stack of delete markers sits on a desk."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it went ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "What Discord ran into",
+      "deck": "Read each strip from left to right. This is one team's account of its own move, in its own words.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The names under “grown-up words” are the usual names for them. Discord's numbers are in the evidence box at the end, and they are company-reported.",
+      "strips": [
+        {
+          "title": "Why leave MongoDB?",
+          "kicker": "The first problem",
+          "provenance": "model_design",
+          "grownUpWords": "RAM, index, latency",
+          "panels": [
+            {
+              "caption": "Discord's first version stored everything in MongoDB. That was good for building fast.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/01a-mongo-start.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A single whiteboard on a wall with a few neat notes. A worker smiles and sticks one more on."
+              }
+            },
+            {
+              "caption": "By about <b>100 million</b> messages, the team says the data and the index no longer fit in RAM.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/01b-board-full.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A whiteboard covered edge to edge with notes. A worker holds one more note with nowhere to put it."
+              }
+            },
+            {
+              "caption": "Speed became unpredictable. Discord decided it was time to move to a database that suited the job.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/01c-unpredictable.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A worry meter swings between low and high. A worker shrugs at a packing box labeled new database."
+              }
+            }
+          ]
+        },
+        {
+          "title": "What the new database must do",
+          "kicker": "The shopping list",
+          "provenance": "model_design",
+          "grownUpWords": "linear scalability, automatic failover, predictable performance",
+          "panels": [
+            {
+              "caption": "Discord wrote a list. First: grow by adding machines, with no hand-moving of data.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/02a-add-desks.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A ring of desks with one new desk being wheeled in. Arrows show the ring stretching to include it."
+              }
+            },
+            {
+              "caption": "Next: heal itself, need little upkeep, and keep a steady response time without a helper cache.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/02b-self-heal.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One desk goes dark and its neighbors cover for it. A worker sleeps in a chair, happy."
+              }
+            },
+            {
+              "caption": "Discord says Cassandra was the only database that met every item on its list.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/02c-all-ticks.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A checklist with every box ticked and a ring of desks stamped with a green tick."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Folders that got too big",
+          "kicker": "The partition problem",
+          "provenance": "model_design",
+          "grownUpWords": "partition, partition key, bucket",
+          "panels": [
+            {
+              "caption": "In Cassandra, a channel's messages sit together in one folder, called a <b>partition</b>.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/03a-one-folder.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk with one folder labeled with a channel name, stuffed with message slips."
+              }
+            },
+            {
+              "caption": "Discord saw warnings about folders over <b>100MB</b>. A channel can grow for years, and a big folder cannot be spread around the ring.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/03b-fat-folder.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A very fat folder that will not fit through a door to the next desk. A worker pulls at it."
+              }
+            },
+            {
+              "caption": "The fix: a new folder about every <b>10 days</b>. Finding recent messages means opening the newest folders first.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/03c-ten-day-slices.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Several slim folders on a shelf, each with a calendar tab. A worker reaches for the newest one."
+              }
+            }
+          ]
+        },
+        {
+          "title": "An edit meets a delete",
+          "kicker": "The race",
+          "provenance": "model_design",
+          "grownUpWords": "upsert, last write wins, eventual consistency",
+          "panels": [
+            {
+              "caption": "One person edits a message. At the same moment, another person deletes it.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/04a-edit-delete.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two workers at two desks reach for the same message slip. One holds a pen, one holds scissors."
+              }
+            },
+            {
+              "caption": "Cassandra treats every write as a small update of one column. So the row was left with only a few pieces and the rest missing.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/04b-half-slip.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A message slip with most of it blank. Only the name tab and a few words remain."
+              }
+            },
+            {
+              "caption": "Discord's fix: treat a row missing its required author as broken, and delete it.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/04c-clean-up.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A worker spots a half-empty slip, shakes his head and drops it in a bin."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Twelve empty notes for nothing",
+          "kicker": "The tombstone waste",
+          "provenance": "model_design",
+          "grownUpWords": "tombstone, null, upsert",
+          "panels": [
+            {
+              "caption": "In Cassandra a delete does not erase at once. It leaves a small marker, a <b>tombstone</b>, so other machines hear about it.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/05a-marker.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A worker puts a tiny cross-marked flag on a message slip instead of tearing it up."
+              }
+            },
+            {
+              "caption": "Writing an empty value leaves the same marker. Discord's message form has <b>16</b> boxes, and the average message fills only <b>4</b>.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/05b-empty-boxes.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A form with sixteen boxes. Four are filled, twelve are blank with tiny flags on them."
+              }
+            },
+            {
+              "caption": "So most of the time Discord was leaving <b>12</b> markers for no reason. The fix was simple: write only the boxes that have a value.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/05c-only-filled.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A worker fills in only four boxes and leaves the rest bare, with no flags. A tidy desk."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The big surprise",
+          "kicker": "Six months later",
+          "provenance": "model_design",
+          "grownUpWords": "tombstone, garbage collection, repair",
+          "panels": [
+            {
+              "caption": "Six months after the switch, Cassandra went unresponsive. It kept pausing for about <b>10 seconds</b> at a time while cleaning up memory.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/06a-long-pause.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk worker frozen mid-step with a big clock beside him and a heap of paper scraps piling up."
+              }
+            },
+            {
+              "caption": "The cause: a channel where millions of messages had been deleted, leaving one. Loading it meant wading through millions of markers.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/06b-marker-heap.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A huge heap of tiny flags with one lonely message slip at the bottom. A worker digs through the heap."
+              }
+            },
+            {
+              "caption": "Discord shortened how long markers live, from <b>10 days</b> to <b>2 days</b>, and tracked empty folders so it skips them.",
+              "media": {
+                "type": "svg",
+                "src": "discord-billions/comic/06c-skip-empty.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A worker with a stamp marking an empty folder skip. A shorter calendar strip sits beside a smaller heap."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / Company-reported numbers",
+      "facts": [
+        {
+          "figure": "100 million",
+          "claim": "measured_result",
+          "text": "stored messages around November 2015, when Discord says the data and index no longer fit in RAM. Company-reported.",
+          "source": {
+            "label": "Post · What we were doing",
+            "url": "https://discord.com/blog/how-discord-stores-billions-of-messages#:~:text=What%20we%20were%20doing"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/facts/messages-100m.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A whiteboard stuffed with notes and a tiny label reading full."
+          }
+        },
+        {
+          "figure": "100MB",
+          "claim": "measured_result",
+          "text": "partition size at which Discord saw warnings in its logs while importing existing messages into Cassandra. Company-reported.",
+          "source": {
+            "label": "Post · Data Modeling",
+            "url": "https://discord.com/blog/how-discord-stores-billions-of-messages#:~:text=Data%20Modeling"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/facts/partition-100mb.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A fat folder with a warning triangle on it."
+          }
+        },
+        {
+          "figure": "10 days",
+          "claim": "model_design",
+          "text": "of messages per bucket, chosen so that even the largest channels stay under 100MB.",
+          "source": {
+            "label": "Post · Data Modeling",
+            "url": "https://discord.com/blog/how-discord-stores-billions-of-messages#:~:text=Data%20Modeling"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/facts/ten-day-bucket.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A slim folder with a ten-day calendar strip on its tab."
+          }
+        },
+        {
+          "figure": "12 of 16",
+          "claim": "measured_result",
+          "text": "columns that were written as tombstones for no reason most of the time: the schema has 16 columns and the average message sets only 4. Company-reported.",
+          "source": {
+            "label": "Post · Eventual Consistency",
+            "url": "https://discord.com/blog/how-discord-stores-billions-of-messages#:~:text=Eventual%20Consistency"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/facts/empty-boxes.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A form with sixteen boxes, twelve of them blank with tiny flags."
+          }
+        },
+        {
+          "figure": "10 days to 2",
+          "claim": "model_design",
+          "text": "Discord lowered how long tombstones live, because it runs Cassandra repairs every night on the message cluster.",
+          "source": {
+            "label": "Post · The Big Surprise",
+            "url": "https://discord.com/blog/how-discord-stores-billions-of-messages#:~:text=The%20Big%20Surprise"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/facts/tombstone-life.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A short calendar strip beside a long one with an arrow between them."
+          }
+        },
+        {
+          "figure": "12 nodes",
+          "claim": "measured_result",
+          "text": "in the message cluster, with a replica factor of 3 at the time of the post. Discord also reports nearly 1TB of compressed data per node. Company-reported.",
+          "source": {
+            "label": "Post · The Future and Near term",
+            "url": "https://discord.com/blog/how-discord-stores-billions-of-messages#:~:text=12%20node%20cluster"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-billions/facts/twelve-desks.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A ring of twelve desks, each with a small stack of folders."
+          }
+        }
+      ]
+    }
+  ]
+}

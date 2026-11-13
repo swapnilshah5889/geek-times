@@ -1,0 +1,686 @@
+{
+  "schemaVersion": 2,
+  "slug": "discord-trillions",
+  "kind": "blog",
+  "blog": {
+    "title": "How Discord Stores Trillions of Messages",
+    "organization": "Discord",
+    "published": "2023-03-06",
+    "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+    "trust": "company_reported"
+  },
+  "pageTitle": "The shelf that kept falling behind",
+  "desk": "Distributed systems",
+  "summary": "Discord says its messages database grew from 12 Cassandra machines to 177 and became hard to keep calm: busy spots, slow tidying and long pauses. Discord reports it moved to ScyllaDB in May 2022 and now runs 72 machines.",
+  "hook": {
+    "sticker": "Wait, what?",
+    "teaser": "Why would a company move trillions of messages off a database it had used for years?",
+    "cta": "Follow the big move",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "177 to 72",
+      "text": "database machines, as Discord reports"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "discord-trillions/lead/pile-up.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A row of many desks on a ring, each with a tall stack of folders and a tired worker. One desk has a flashing red lamp."
+        },
+        "tag": "Piling up!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "discord-trillions/lead/smaller-room.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A smaller ring of desks, each with a big shelf of folders and a calm worker. A crowd of empty desks fades out behind them."
+        },
+        "tag": "Calmer!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 0.9,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 1,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/cassandra",
+      "relevance": 0.9,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/scylladb",
+      "relevance": 1,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "ScyllaDB",
+        "aliases": [
+          "Scylla"
+        ]
+      }
+    },
+    {
+      "tag": "concept/hot-partition",
+      "relevance": 0.9,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "Hot partition",
+        "aliases": [
+          "hotspot"
+        ]
+      }
+    },
+    {
+      "tag": "concept/garbage-collection",
+      "relevance": 0.7,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "Garbage collection",
+        "aliases": [
+          "GC",
+          "GC pause"
+        ]
+      }
+    },
+    {
+      "tag": "concept/compaction",
+      "relevance": 0.7,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/tail-latency",
+      "relevance": 0.8,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/quorum",
+      "relevance": 0.4,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/consistent-hashing",
+      "relevance": 0.4,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/request-coalescing",
+      "relevance": 0.8,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "Request coalescing",
+        "aliases": [
+          "request collapsing"
+        ]
+      }
+    },
+    {
+      "tag": "concept/data-migration",
+      "relevance": 0.9,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "Data migration",
+        "aliases": [
+          "database migration"
+        ]
+      }
+    },
+    {
+      "tag": "technique/rust",
+      "relevance": 0.5,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "Rust",
+        "aliases": [
+          "Rust language"
+        ]
+      }
+    },
+    {
+      "tag": "use/chat-messaging",
+      "relevance": 0.8,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "Chat messaging",
+        "aliases": [
+          "messaging apps"
+        ]
+      }
+    },
+    {
+      "tag": "organization/discord",
+      "relevance": 0.7,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "Discord"
+      }
+    },
+    {
+      "tag": "author/bo-ingram",
+      "relevance": 0.5,
+      "basis": "paper",
+      "source": "editor",
+      "evidence": "https://discord.com/blog/how-discord-stores-trillions-of-messages",
+      "status": "approved",
+      "proposed": {
+        "label": "Bo Ingram"
+      }
+    },
+    {
+      "tag": "everyday/chatting-online",
+      "relevance": 0.8,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved",
+      "proposed": {
+        "label": "Chatting online"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Picture story",
+      "headline": {
+        "text": "The big shelf that",
+        "accent": "kept falling behind."
+      },
+      "deck": "Discord says its messages database got harder to look after as it grew. Here is why the team says it left Cassandra, and how it moved trillions of messages.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Piling up",
+            "caption": "<b>Fig. 1.</b> Discord says its messages database grew from 12 machines in 2017 to 177 at the start of 2022. More machines meant more work to keep them calm.",
+            "media": {
+              "type": "svg",
+              "src": "discord-trillions/lead/pile-up.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A row of many desks on a ring, each with a tall stack of folders and a tired worker. One desk has a flashing red lamp."
+            }
+          },
+          {
+            "label": "A smaller room",
+            "caption": "<b>Fig. 2.</b> After moving to a new database, Discord reports it runs its messages database on 72 machines. Each one holds more.",
+            "media": {
+              "type": "svg",
+              "src": "discord-trillions/lead/smaller-room.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A smaller ring of desks, each with a big shelf of folders and a calm worker. A crowd of empty desks fades out behind them."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "dispatch",
+      "nav": "Inside the post ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "Why Discord left Cassandra",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "A shelf that needed constant care",
+          "provenance": "illustration",
+          "caption": "Discord says its messages ran on a Cassandra database. In 2017 that was 12 machines holding billions of messages. At the start of 2022 it was 177 machines holding trillions. The team says people were often paged, speed was hard to predict, and some tidying jobs got too costly to run. Grown-up words: <b>nodes</b>, <b>on-call</b>.",
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/story/01-pile-up.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Many desks around a ring, each buried in folders. A worker holds a pager that is beeping, and one desk has a red lamp."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Three sore spots, two changes",
+          "provenance": "model_design",
+          "caption": "Discord names three sore spots. Some chat rooms get far more traffic than others, which makes one busy spot. Tidying up falls behind. And the Java engine sometimes pauses to clean its memory. The team says it chose ScyllaDB, a Cassandra-compatible database with no such cleaner, and also built a front desk to calm the traffic. Grown-up words: <b>hot partition</b>, <b>compaction</b>, <b>garbage collection</b>.",
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/story/02-two-moves.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Three red warning signs on one side: a crowded desk, a messy pile, and a clock stuck. Two arrows lead to a new desk and a front counter."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "A front desk, then a fast mover",
+          "provenance": "model_design",
+          "caption": "The front desk is a Rust service. If many people ask for the same row at once, it asks the database one time and shares the answer. Requests for one channel go to the same desk, so sharing works better. Then came the move. The team says its first tool gave a three-month estimate. A new mover, built in Rust in an afternoon on its data-service library, gave nine days. Grown-up words: <b>request coalescing</b>, <b>data services</b>, <b>dual-write</b>.",
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/story/03-front-desk-and-move.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A front counter hands one folder to a crowd of people in a line. Behind it, a truck moves boxes from an old shelf to a new one."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "What Discord says it saw",
+          "provenance": "evidence",
+          "caption": "Discord switched over in May 2022. It reports 72 machines instead of 177, with 9 terabytes per machine instead of about 4. It says fetching old messages went from 40 to 125 milliseconds to 15 at the slow end, and saving a message from 5 to 70 milliseconds to a steady 5. These are Discord's own numbers about its own system, not an outside test. <a href=\"https://discord.com/blog/how-discord-stores-trillions-of-messages\">See \"Several Months Later\" in the post ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/story/04-before-after.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two columns of bars. A tall column of many small boxes labeled before, and a short column of fewer, bigger boxes labeled after."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "machine",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "The messages move, step by step",
+      "deck": "Read each strip from left to right. These pictures follow Discord's own account of why it moved, and how.",
+      "howTo": "The drawings are <b>made up</b> to explain the idea. The reasons come from Discord's post, and the numbers are in the evidence box at the end. Everything about ScyllaDB here is Discord's report only.",
+      "strips": [
+        {
+          "title": "One room gets all the visitors",
+          "kicker": "Why a spot gets hot",
+          "provenance": "illustration",
+          "grownUpWords": "partition, hot partition, quorum, replica",
+          "panels": [
+            {
+              "caption": "Discord files messages by channel and by a window of time. All messages for one channel and window sit together, with copies on three machines.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/01a-one-drawer.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A filing cabinet with one labeled drawer for a chat room and a time window. Three copies of the drawer sit on three desks."
+              }
+            },
+            {
+              "caption": "A small group of friends sends very few messages. A huge server sends far more. The drawer for the huge server gets <b>very busy</b>.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/01b-busy-drawer.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tiny drawer with two folders next to a huge drawer overflowing with folders and a long line of people."
+              }
+            },
+            {
+              "caption": "Discord says one busy drawer slowed the whole database. Reads and writes wait for several machines to agree, so a slow machine holds up the queries that use it.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/01c-everyone-waits.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three desks in a row. The middle desk is sweating under a pile, and a line of people behind it all tap their feet."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Tidying falls behind",
+          "kicker": "The gossip dance",
+          "provenance": "illustration",
+          "grownUpWords": "compaction, hinted handoff",
+          "panels": [
+            {
+              "caption": "New notes are written fast, but they pile up in many small files. Every so often the machine must merge them into tidy ones. This is <b>compaction</b>.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/02a-small-piles.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Many small folders on a desk, zipping together into one neat folder."
+              }
+            },
+            {
+              "caption": "Discord says its machines kept falling behind on tidying. Reads got slower, and the delay spread to other work.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/02b-behind.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A worker with a tall messy stack, a clock, and a line of impatient people waiting."
+              }
+            },
+            {
+              "caption": "So the team did a \"gossip dance\": pull a machine out to tidy in peace, put it back to catch up, repeat until the pile was gone.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/02c-dance.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A desk walking out of the ring, then walking back in, with a little dance step and a shrinking pile."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The cleaner that stops the show",
+          "kicker": "Garbage collection",
+          "provenance": "illustration",
+          "grownUpWords": "garbage collection, JVM, GC pause",
+          "panels": [
+            {
+              "caption": "Cassandra is written in Java. Java has a built-in cleaner that sweeps up memory the program no longer needs.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/03a-sweeper.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tiny sweeper robot tidying a whiteboard while a worker writes on it."
+              }
+            },
+            {
+              "caption": "While the cleaner works, the program can freeze for a moment. Discord says these pauses caused speed spikes and took a lot of tuning.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/03b-freeze.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "The worker freezes mid-sentence with a snowflake on them, while the sweeper robot sweeps. A line of people waits."
+              }
+            },
+            {
+              "caption": "At worst, the team says, the pauses came back to back and a person had to restart the machine by hand. Discord says ScyllaDB is written in C++, which has no such cleaner.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/03c-reboot.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A person gently pressing a big restart button on a sleepy desk. Beside it a new desk has no sweeper robot."
+              }
+            }
+          ]
+        },
+        {
+          "title": "A front desk for the crowd",
+          "kicker": "Data services",
+          "provenance": "illustration",
+          "grownUpWords": "request coalescing, consistent hashing, routing key",
+          "panels": [
+            {
+              "caption": "Discord put a Rust service between the app and the database. It has one doorway for each kind of question.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/04a-front-desk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A front counter between a crowd and a back room of shelves. The counter has labeled doorways."
+              }
+            },
+            {
+              "caption": "When many people ask for the same row at once, the first request wakes a helper. The others simply join in and wait. The database is asked <b>one time</b>.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/04b-one-helper.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "One helper walks to the shelf and comes back. Many people with outstretched hands all receive a copy of the same note."
+              }
+            },
+            {
+              "caption": "Requests for one channel are sent to the same front desk, so the sharing works even better. The team says traffic spikes, such as a big @everyone message, now hit the database much less.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/04c-same-desk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Arrows from many people with the same channel badge all point to one counter, which calmly serves them."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Moving a whole library",
+          "kicker": "The migration",
+          "provenance": "illustration",
+          "grownUpWords": "dual-write, migrator, token range, checkpoint",
+          "panels": [
+            {
+              "caption": "The team needed to move trillions of messages with no downtime. First step: write new messages to both the old and the new database.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/05a-write-both.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A person dropping a note into two boxes at once, an old box and a new box."
+              }
+            },
+            {
+              "caption": "The first moving tool estimated three months. The team then built its own in Rust, in an afternoon. It remembers its place with small checkpoints.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/05b-new-mover.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A slow cart labeled months next to a fast truck labeled days, with a small notebook of check marks in the truck."
+              }
+            },
+            {
+              "caption": "The fast mover meant they could skip a tricky two-step plan and switch everything at once. Discord says the new tool ran at up to 3.2 million messages a second.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/05c-truck-runs.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A truck racing down a road carrying boxes to a new shelf, with a speed gauge near the top."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Stuck on the very last bit",
+          "kicker": "Finish and switch",
+          "provenance": "illustration",
+          "grownUpWords": "tombstone, validation, cutover",
+          "panels": [
+            {
+              "caption": "After several days the move looked done, but it stuck just short of the end. Discord says the last few ranges held huge piles of deleted-message markers that were never cleaned up.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/06a-stuck.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A progress bar nearly full, stopped at the end, with a tall pile of grey markers blocking the last step."
+              }
+            },
+            {
+              "caption": "Tidy up that last pile, and seconds later the move was complete. A small share of reads went to both databases to compare their answers.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/06b-compare.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two readers each read a note from different shelves, and a checker compares the two notes and nods."
+              }
+            },
+            {
+              "caption": "The team says the new database handled full traffic while Cassandra struggled. In May 2022 they switched it on and ate cake.",
+              "media": {
+                "type": "svg",
+                "src": "discord-trillions/comic/06c-cake.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A big switch flipped to the new shelf, a happy team around a cake, and the old shelf sitting quiet."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / Company-reported numbers",
+      "facts": [
+        {
+          "figure": "12 to 177",
+          "claim": "measured_result",
+          "text": "Cassandra machines for messages, from 2017 to the start of 2022, as Discord reports it. By then they held trillions of messages.",
+          "source": {
+            "label": "Post · Our Cassandra Troubles",
+            "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/facts/nodes.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "3 months to 9 days",
+          "claim": "measured_result",
+          "text": "The team's estimated time to move the data: first with ScyllaDB's Spark tool, then with Discord's own Rust mover.",
+          "source": {
+            "label": "Post · A Very Big Migration",
+            "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/facts/estimate.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "3.2 million",
+          "claim": "measured_result",
+          "text": "messages per second, the top speed Discord says its mover reached.",
+          "source": {
+            "label": "Post · A Very Big Migration",
+            "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/facts/speed.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "177 to 72",
+          "claim": "measured_result",
+          "text": "machines after the switch in May 2022, as Discord reports it. Each new machine holds 9 TB, up from an average of 4 TB on Cassandra.",
+          "source": {
+            "label": "Post · Several Months Later",
+            "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/facts/machines.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "40-125 to 15 ms",
+          "claim": "measured_result",
+          "text": "p99 time to fetch old messages. p99 means 99 out of 100 requests were at least this quick. The post gives 40 to 125 ms on Cassandra and 15 ms on ScyllaDB.",
+          "source": {
+            "label": "Post · Several Months Later",
+            "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/facts/fetch-p99.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        },
+        {
+          "figure": "5-70 to 5 ms",
+          "claim": "measured_result",
+          "text": "p99 time to save a message, from a range of 5 to 70 ms on Cassandra to a steady 5 ms on ScyllaDB, as Discord reports it.",
+          "source": {
+            "label": "Post · Several Months Later",
+            "url": "https://discord.com/blog/how-discord-stores-trillions-of-messages"
+          },
+          "media": {
+            "type": "svg",
+            "src": "discord-trillions/facts/insert-p99.svg",
+            "width": 160,
+            "height": 100,
+            "alt": ""
+          }
+        }
+      ]
+    }
+  ]
+}

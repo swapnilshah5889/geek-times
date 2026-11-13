@@ -1,0 +1,626 @@
+{
+  "schemaVersion": 2,
+  "slug": "messenger-myrocks",
+  "kind": "blog",
+  "blog": {
+    "title": "Migrating Messenger storage to optimize performance",
+    "organization": "Facebook Engineering",
+    "published": "2018-06-26",
+    "url": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+    "trust": "company_reported"
+  },
+  "pageTitle": "Moving a billion chats to a new shelf",
+  "desk": "Distributed systems",
+  "summary": "Facebook says it moved Messenger's stored messages from HBase to MyRocks, a MySQL-based database, without downtime. The company reports it needed 90 percent less storage and read latency is 50 times lower.",
+  "hook": {
+    "sticker": "Wait, what?",
+    "teaser": "How do you move a billion chat histories to a new database while people keep chatting?",
+    "cta": "Watch the big move",
+    "readMinutes": 4,
+    "stat": {
+      "figure": "90%",
+      "text": "less storage, as Facebook reports"
+    },
+    "frames": [
+      {
+        "media": {
+          "type": "svg",
+          "src": "messenger-myrocks/lead/old-shelf-new-shelf.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A big wooden shelf of notebooks with six copies of each stacked behind it, next to a smaller shiny shelf with three copies. A tiny arrow carries one folder across."
+        },
+        "tag": "New shelf!"
+      },
+      {
+        "media": {
+          "type": "svg",
+          "src": "messenger-myrocks/lead/ninety-percent.svg",
+          "width": 600,
+          "height": 340,
+          "alt": "A tall stack of boxes shrinks down to a short stack, with a small tag that says 90 percent less."
+        },
+        "tag": "90% less!"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "tag": "field/computer-science",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "area/distributed-systems",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "area/databases",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "concept/replication",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "use/message-search",
+      "relevance": 0.6,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "organization/facebook",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "everyday/keeping-copies-safe",
+      "relevance": 0.6,
+      "basis": "editorial",
+      "source": "editor",
+      "status": "approved"
+    },
+    {
+      "tag": "technique/myrocks",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved",
+      "proposed": {
+        "label": "MyRocks",
+        "aliases": [
+          "RocksDB on MySQL"
+        ]
+      }
+    },
+    {
+      "tag": "technique/hbase",
+      "relevance": 0.9,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved",
+      "proposed": {
+        "label": "HBase",
+        "aliases": [
+          "Apache HBase"
+        ]
+      }
+    },
+    {
+      "tag": "concept/data-migration",
+      "relevance": 1,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved",
+      "proposed": {
+        "label": "Data migration",
+        "aliases": [
+          "moving data",
+          "live migration"
+        ]
+      }
+    },
+    {
+      "tag": "concept/flash-storage",
+      "relevance": 0.7,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved",
+      "proposed": {
+        "label": "Flash storage",
+        "aliases": [
+          "SSD",
+          "solid-state drives"
+        ]
+      }
+    },
+    {
+      "tag": "author/xiang-li",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved",
+      "proposed": {
+        "label": "Xiang Li"
+      }
+    },
+    {
+      "tag": "author/thomas-georgiou",
+      "relevance": 0.5,
+      "basis": "paper",
+      "evidence": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/",
+      "source": "editor",
+      "status": "approved",
+      "proposed": {
+        "label": "Thomas Georgiou"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "id": "lead",
+      "kicker": "Distributed systems / Storage / Picture story",
+      "headline": {
+        "text": "Moving a billion chats to a",
+        "accent": "new shelf."
+      },
+      "deck": "Messenger's messages lived in HBase. Facebook says it moved them all to MyRocks while the app stayed open.",
+      "slideshow": {
+        "intervalMs": 5500,
+        "slides": [
+          {
+            "label": "Old shelf, new shelf",
+            "caption": "<b>Fig. 1.</b> Old shelf with many copies, new shelf with fewer. One folder at a time crosses over.",
+            "media": {
+              "type": "svg",
+              "src": "messenger-myrocks/lead/old-shelf-new-shelf.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A big wooden shelf of notebooks with six copies of each stacked behind it, next to a smaller shiny shelf with three copies. A tiny arrow carries one folder across."
+            }
+          },
+          {
+            "label": "Ninety percent less",
+            "caption": "<b>Fig. 2.</b> Facebook reports that it needed 90 percent less storage after the move.",
+            "media": {
+              "type": "svg",
+              "src": "messenger-myrocks/lead/ninety-percent.svg",
+              "width": 600,
+              "height": 340,
+              "alt": "A tall stack of boxes shrinks down to a short stack, with a small tag that says 90 percent less."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "story",
+      "id": "story",
+      "nav": "The big move ↓",
+      "kicker": "Distributed systems / A picture story in four parts",
+      "title": "Moving Messenger's shelves",
+      "chapters": [
+        {
+          "part": "The problem",
+          "title": "Moving a whole library while it is open",
+          "provenance": "illustration",
+          "caption": "Messenger started as something like email: messages waited in your inbox. Today it is a live chat system, and Facebook says more than a billion people use it. The team wanted to move all the stored messages to a new kind of database. But the app could not close for the day. And some businesses keep chats open all day and night.",
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/story/01-open-library.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A busy library where readers keep walking in and out while movers carry boxes of books to a new building across the road."
+          }
+        },
+        {
+          "part": "The idea",
+          "title": "Swap the shelves, not the readers",
+          "provenance": "model_design",
+          "caption": "The post says the team had used HBase since 2010. It moved the messages to MyRocks, Facebook's own database that puts RocksDB inside MySQL. It also moved from spinning disks to flash storage. The team says MySQL's way of making copies fits how its data centers already run, so it could keep fewer copies.",
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/story/02-swap-shelves.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "An old slow shelf with spinning wheels beside a new shelf with a lightning bolt. A librarian points at the new shelf."
+          }
+        },
+        {
+          "part": "The solution",
+          "title": "Two ways to move people",
+          "provenance": "model_design",
+          "caption": "Most accounts went the normal way: a quiet moment, copy everything, check nothing changed, then write to both systems and compare. Busy accounts, like big business bots, went the buffered way. The team copied a snapshot into a holding area, and new messages waited in a queue called Iris. Then the new system caught up.",
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/story/03-two-lanes.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "Two lanes into a new building. A short lane with a quiet door for most people, and a long lane with a waiting room where a line of messages queues up."
+          }
+        },
+        {
+          "part": "The evidence",
+          "title": "What Facebook says it got",
+          "provenance": "evidence",
+          "caption": "Facebook reports that all accounts moved: 99.9 percent in two weeks by the normal way, the rest two weeks later. It says storage use fell by 90 percent without data loss, and read latency is now 50 times lower. These are the company's own numbers, not tested by anyone else. <a href=\"https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/#:~:text=Benefits%20of%20the%20new%20system\">See \"Benefits of the new system\" ↗</a>",
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/story/04-evidence.svg",
+            "width": 440,
+            "height": 215,
+            "alt": "A scoreboard with three plain boards: 90 percent less storage, six copies down to three, and reads 50 times faster, each with a small drawing."
+          }
+        }
+      ]
+    },
+    {
+      "type": "comic",
+      "id": "comic",
+      "nav": "How it works ↓",
+      "kicker": "Distributed systems / Under the hood / A comic in six strips",
+      "title": "How the move worked",
+      "deck": "Read each strip from left to right. The pictures are drawn to explain the idea.",
+      "howTo": "Each strip says what the post claims. All numbers are the company's own reports. The drawings are <b>made up</b> to explain.",
+      "strips": [
+        {
+          "title": "Why move at all?",
+          "kicker": "Old shelf, new shelf",
+          "provenance": "model_design",
+          "grownUpWords": "HBase, MyRocks, key-value store, MySQL storage engine",
+          "panels": [
+            {
+              "caption": "Messenger's messages lived in <b>HBase</b>, a big shelf for notes. The post says it served the team well from 2010.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/01a-old-shelf.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A big wooden shelf full of folders with a worn label that says since 2010."
+              }
+            },
+            {
+              "caption": "The post says HBase work is bound by disk reads. The team says that made some features hard, like searching messages on a phone.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/01b-busy-disk.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A tired librarian runs back and forth between shelves with a long queue of folders. A speech bubble says: too slow to search."
+              }
+            },
+            {
+              "caption": "So the team chose <b>MyRocks</b>: a new shelf built into MySQL. The post says phone message search then became possible.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/01c-new-shelf.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A neat new shelf with a lightning bolt. A phone beside it shows a magnifying glass finding a message."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Flash and fewer copies",
+          "kicker": "Where the savings come from",
+          "provenance": "model_design",
+          "grownUpWords": "flash storage, replication factor, compression, Zstandard",
+          "panels": [
+            {
+              "caption": "The old shelves sat on spinning disks. The new ones sit on <b>flash</b>, which has no moving parts.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/02a-flash.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A spinning disk crossed out on the left, a small flat flash card with a sparkle on the right."
+              }
+            },
+            {
+              "caption": "The post says the new design was smaller on disk. A squeezing method called <b>Zstandard</b> saved even more space.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/02b-squeeze.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A folder gets squeezed by a clamp into a thin folder, with a small zip on it."
+              }
+            },
+            {
+              "caption": "And the team says it could keep <b>three</b> copies of the data instead of <b>six</b>. In total, the post says storage use fell by 90 percent.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/02c-three-copies.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Six stacked folders on the left, three on the right, with a happy accountant holding a clipboard."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The normal way",
+          "kicker": "One account at a time",
+          "provenance": "model_design",
+          "grownUpWords": "state machine, double-writing, validation, revert plan",
+          "panels": [
+            {
+              "caption": "Each account is in one of a few states: not moved, double-writing, or done. While it moves, nobody may write to it.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/03a-states.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Three signs on a path: Not moved, Both shelves, Done. A small figure walks along it carrying a folder."
+              }
+            },
+            {
+              "caption": "The team copies the history, then checks whether anything new arrived. If it did, the move fails, the copy is wiped, and a later job tries again.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/03b-check-again.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A librarian compares a counter before and after copying. The numbers differ, and the librarian shakes a head and sweeps the new copy away."
+              }
+            },
+            {
+              "caption": "In double-writing, every new message goes to both shelves, and the team compares them. If something is wrong, the account can roll back.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/03c-compare.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two shelves side by side, a folder going into each, and a magnifying glass comparing them. A big undo arrow sits below."
+              }
+            }
+          ]
+        },
+        {
+          "title": "The buffered way",
+          "kicker": "When the door never closes",
+          "provenance": "model_design",
+          "grownUpWords": "buffer tier, Iris, queue, snapshot",
+          "panels": [
+            {
+              "caption": "Some accounts, like a business bot, get messages all the time. There is no quiet moment to move them.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/04a-no-quiet.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A bot at a desk with a never-ending stream of letters flowing in. A clock has no quiet hour."
+              }
+            },
+            {
+              "caption": "So the team takes a <b>snapshot</b> at a cutoff time and copies it into a holding room first. The post says that copy takes about a tenth of the migration time.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/04b-snapshot.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A camera flashes at a pile of folders. The photo goes into a holding room."
+              }
+            },
+            {
+              "caption": "Meanwhile new messages wait in a queue called <b>Iris</b>. The post says it can hold them for weeks. Then the new system catches up.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/04c-queue.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A long line of letters waits in a tube marked Iris. A new shelf at the end takes them one by one."
+              }
+            }
+          ]
+        },
+        {
+          "title": "Finishing the job",
+          "kicker": "Counting everyone",
+          "provenance": "model_design",
+          "grownUpWords": "accounting job, Bistro, revert plan",
+          "panels": [
+            {
+              "caption": "A tool called Bistro, another Facebook open source project, schedules the jobs. It can also slow them down if something looks wrong.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/05a-scheduler.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A traffic officer with a dial that goes from slow to fast, directing small trucks of folders."
+              }
+            },
+            {
+              "caption": "Then new accounts are made only on the new system, and writing to HBase stops, one cluster at a time.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/05b-stop-writing.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A row of old shelves with the lights going off one by one. New accounts walk to the new shelf."
+              }
+            },
+            {
+              "caption": "Last, an <b>accounting job</b> checks that no account was left behind. Then the old system went offline.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/05c-accounting.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A librarian ticks a long checklist. The old building has a closed sign on the door."
+              }
+            }
+          ]
+        },
+        {
+          "title": "What changed for people",
+          "kicker": "Faster scrolling, new search",
+          "provenance": "model_design",
+          "grownUpWords": "latency, search, resilience",
+          "panels": [
+            {
+              "caption": "The post says reading is now much faster. Scrolling back through old messages feels quicker.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/06a-scroll.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A phone with a scrolling chat and little speed lines. A happy user thumbs up."
+              }
+            },
+            {
+              "caption": "The team says it also made switching to another data center much faster, with no people doing manual steps.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/06b-switch.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "Two buildings joined by a bridge. A big switch flips by itself while a worker sips tea."
+              }
+            },
+            {
+              "caption": "It also let Messenger reuse Facebook's search system built on MySQL, so searching old chats works on the phone too.",
+              "media": {
+                "type": "svg",
+                "src": "messenger-myrocks/comic/06c-search.svg",
+                "width": 320,
+                "height": 220,
+                "alt": "A phone with a search box and a magnifying glass finding one message in a long chat."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "id": "evidence",
+      "kicker": "Evidence from the post / Company-reported, not independently checked",
+      "facts": [
+        {
+          "figure": "90 percent",
+          "claim": "measured_result",
+          "text": "less storage used, which the post says made flash practical. Company-reported.",
+          "source": {
+            "label": "Post · Benefits of the new system",
+            "url": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/#:~:text=reduced%20storage%20consumption%20by%2090%20percent"
+          },
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/facts/storage-90.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A tall stack of boxes next to a very short stack."
+          }
+        },
+        {
+          "figure": "6 to 3",
+          "claim": "measured_result",
+          "text": "copies of the data kept. The post says this was possible thanks to differences between HBase and MyRocks.",
+          "source": {
+            "label": "Post · Benefits of the new system",
+            "url": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/#:~:text=reduce%20the%20replication%20factor%20from%20six%20to%20three"
+          },
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/facts/copies.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "Six folders in a stack, an arrow, and three folders."
+          }
+        },
+        {
+          "figure": "50x",
+          "claim": "measured_result",
+          "text": "lower read latency than the previous system, as the post reports.",
+          "source": {
+            "label": "Post · Benefits of the new system",
+            "url": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/#:~:text=Read%20latency%20is%20now%2050%20times%20lower"
+          },
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/facts/read-50x.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A slow snail beside a fast rabbit, with a stopwatch."
+          }
+        },
+        {
+          "figure": "99.9%",
+          "claim": "measured_result",
+          "text": "of accounts moved by the normal flow in two weeks. The rest used the buffered flow two weeks after.",
+          "source": {
+            "label": "Post · Benefits of the new system",
+            "url": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/#:~:text=we%20migrated%2099.9%20percent%20of%20accounts"
+          },
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/facts/accounts.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A big crowd walking through a wide door and a few people through a small side door."
+          }
+        },
+        {
+          "figure": "10%",
+          "claim": "model_design",
+          "text": "of the migration time is what the post says copying a snapshot to the buffer usually takes.",
+          "source": {
+            "label": "Post · Buffered migration flow",
+            "url": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/#:~:text=usually%20takes%20about%2010%20percent"
+          },
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/facts/snapshot.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A camera and a small slice of a pie chart."
+          }
+        },
+        {
+          "figure": "2010",
+          "claim": "model_design",
+          "text": "the year the post says HBase became Messenger's database.",
+          "source": {
+            "label": "Post · Handling the challenge of migrating at scale",
+            "url": "https://engineering.fb.com/2018/06/26/core-infra/migrating-messenger-storage-to-optimize-performance/#:~:text=HBase%20had%20been%20our%20database%20since%202010"
+          },
+          "media": {
+            "type": "svg",
+            "src": "messenger-myrocks/facts/since-2010.svg",
+            "width": 160,
+            "height": 100,
+            "alt": "A worn shelf with a small calendar page."
+          }
+        }
+      ]
+    }
+  ]
+}
