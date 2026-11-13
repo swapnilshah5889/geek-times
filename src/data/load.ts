@@ -224,11 +224,13 @@ export async function loadArchive(): Promise<Archive> {
  *  - `lead`: the newest story. Nothing is pinned.
  *  - `aside`: the next 3 stories.
  *  - `more`: the next MORE_LIMIT stories (two rows of three); the rest stay reachable through topics and search.
- *  - `topics`: one row per field that has at least one live story in it, newest-first within each row.
+ *  - `topics`: one row per field with live stories, newest first, at most TOPIC_LIMIT (two rows of four with the
+ *    "+N more" tile); the rest are counted on that tile.
  *  - `real`: the newest company blog posts, at most REAL_LIMIT (one row).
  */
 const MORE_LIMIT = 6;
 const REAL_LIMIT = 3;
+const TOPIC_LIMIT = 7;
 
 function deriveFront(
   stories: LibraryStory[],
@@ -253,7 +255,7 @@ function deriveFront(
   }
   const topics = fields
     .filter(f => groupsByField.has(f.id))
-    .map(f => ({ field: f.id, label: labelByField.get(f.id) ?? f.id, stories: groupsByField.get(f.id)! }));
+    .map(f => ({ field: f.id, label: labelByField.get(f.id) ?? f.id, stories: groupsByField.get(f.id)!.slice(0, TOPIC_LIMIT) }));
 
   return {
     lead,

@@ -101,9 +101,13 @@ a.f-more:hover{text-decoration:underline}
   .f-aside{border-left:0;padding-left:0}
   .f-grid-3,.f-grid-4,.f-grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.f-grid-5{grid-template-columns:repeat(3,minmax(0,1fr))}
   .f-snack-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* At most three rows per section: two columns here. */
+  .f-cap-topic>.f-mini:not(.f-mini-more):nth-child(n+6){display:none}
 }
 @media(max-width:620px){
   .site-main{padding:16px}
+  /* At most three rows per section: one column here. */
+  .f-cap-more>:nth-child(n+4),.f-cap-topic>.f-mini:not(.f-mini-more):nth-child(n+3){display:none}
   .f-grid-2,.f-grid-3,.f-grid-4{grid-template-columns:1fr}.f-grid-5{grid-template-columns:repeat(2,minmax(0,1fr))}
   .f-vault-main{grid-template-columns:1fr}
   .f-steps{grid-template-columns:1fr!important}

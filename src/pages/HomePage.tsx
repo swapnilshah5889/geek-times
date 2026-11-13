@@ -133,7 +133,7 @@ function MoreStories({ archive }: { archive: Archive }) {
   return (
     <section aria-labelledby="s-more" className="f-section">
       <SectionHead id="s-more" title="More top stories" link={{ href: appHref('?search'), label: 'All stories →' }} />
-      <div className="f-grid f-grid-3">{stories.map(s => <StoryCard key={s.id} story={s} archive={archive} />)}</div>
+      <div className="f-grid f-grid-3 f-cap-more">{stories.map(s => <StoryCard key={s.id} story={s} archive={archive} />)}</div>
     </section>
   );
 }
@@ -182,7 +182,7 @@ function Topics({ archive }: { archive: Archive }) {
         return (
           <div key={row.field} className="f-topic-row">
             <SectionHead id={`t-${row.field}`} title={row.label} link={{ href: searchHref(), label: 'See all →' }} />
-            <div className="f-grid f-grid-4">
+            <div className="f-grid f-grid-4 f-cap-topic">
               {shown.map(s => (
                 <a key={s.id} className="card f-mini" href={paperHref(s.id)}>
                   <StoryArt story={s} archive={archive} />
@@ -241,7 +241,7 @@ function Numbers({ archive }: { archive: Archive }) {
   return (
     <section aria-labelledby="s-numbers" className="f-section">
       <SectionHead id="s-numbers" title="Numbers from the stories" />
-      <div className="f-grid f-grid-4">
+      <div className="f-grid f-grid-4 f-cap-more">
         {picks.map(({ paper, m }) => (
           <a key={paper.slug + m.id} className="f-number" href={appHref(m.href)}>
             <span className="label">
